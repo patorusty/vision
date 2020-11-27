@@ -37,6 +37,13 @@ export default new Router({
           )
         },
         {
+          name: "Editar Companias",
+          path: "administracion/companias/:nombre",
+          component: () => import(
+            "@/views/pages/Administracion/Companias/EditCompanias.vue"
+          )
+        },
+        {
           name: "Organizadores",
           path: "administracion/organizadores",
           component: () =>

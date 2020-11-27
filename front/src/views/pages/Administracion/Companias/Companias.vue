@@ -27,6 +27,10 @@
         textoActivo(props.item.activo)
       }}</template>
       <template v-slot:[`item.actions`]="{ item }">
+        <router-link
+                class="links"
+                :to="{ name: 'Editar Companias', params: { nombre: item.nombre } }"
+              >
         <v-icon
           small
           class="mr-2"
@@ -35,6 +39,7 @@
         >
           mdi-pencil
         </v-icon>
+        </router-link>
         <v-icon
           class="ml-2"
           small
@@ -97,8 +102,9 @@ export default {
     ]),
     ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL"]),
     editCompania(nombre) {
-      this.getCompania(nombre);
-      this.SHOW_MODAL(true);
+      this.$router.push({
+        path: `/administracion/companias/${nombre}`
+      });
     },
     openDeleteModal(id) {
       this.idSelected = id;
@@ -119,4 +125,7 @@ export default {
 </script>
 
 <style>
+.links {
+  text-decoration: none
+}
 </style>

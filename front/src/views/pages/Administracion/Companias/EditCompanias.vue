@@ -1,9 +1,5 @@
 <template>
-  <v-card>
-    <v-card-title>
-      <span v-if="!edicion" class="headline">Crear Compania</span>
-      <span v-else class="headline">Editar Compania</span>
-    </v-card-title>
+  <v-card class="mt-0 mx-4 pa-3">
     <v-card-text>
       <v-container>
         <v-form ref="form">
@@ -114,7 +110,7 @@
         </v-form>
       </v-container>
     </v-card-text>
-    <v-card-actions class="d-flex justify-end">
+    <!-- <v-card-actions class="d-flex justify-end">
       <v-btn class="mb-2" color="red" text @click="closeModal">Cerrar</v-btn>
       <v-btn
         class="mb-2"
@@ -128,8 +124,9 @@
       <v-btn class="mb-2" v-else @click="update" text color="green"
         >Guardar</v-btn
       >
-    </v-card-actions>
+    </v-card-actions> -->
   </v-card>
+
 </template>
 
 <script>
@@ -179,12 +176,12 @@ export default {
         }
       }
     },
-    closeModal() {
-      this.HIDE_MODAL(false);
-      this.RESET_COMPANIA();
-      this.$refs.form.resetValidation();
-      this.cuitUsado = false;
-    },
+    // closeModal() {
+    //   this.HIDE_MODAL(false);
+    //   this.RESET_COMPANIA();
+    //   this.$refs.form.resetValidation();
+    //   this.cuitUsado = false;
+    // },
     buscarCuit: debounce(async function () {
       if (this.compania.cuit.length >= 6 && this.compania.cuit != this.compania.cuitOriginal) {
         const resp = await http.search("/companias/busquedaCuit", {
@@ -200,6 +197,7 @@ export default {
   },
   created() {
     this.cargarLocalidades();
+    this.getCompania(this.$route.params.nombre)
   },
   watch: {
     modal() {
@@ -212,4 +210,5 @@ export default {
 </script>
 
 <style>
+
 </style>

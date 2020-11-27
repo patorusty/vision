@@ -1,11 +1,11 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import usuarios from "./modules/usuarios";
+import usuario from "./modules/usuario";
 import modal from "./modules/modal";
 import snackbar from "./modules/snackbar";
-import companias from "./modules/companias";
-import organizadores from "./modules/organizadores";
-import productores from "./modules/productores";
+import compania from "./modules/compania";
+import organizador from "./modules/organizador";
+import productor from "./modules/productor";
 
 Vue.use(Vuex);
 
@@ -29,11 +29,11 @@ export default new Vuex.Store({
   },
   actions: {},
   modules: {
-    usuarios,
+    usuario,
     modal,
     snackbar,
-    companias,
-    organizadores,
-    productores
+    compania,
+    organizador,
+    productor
   }
 });
