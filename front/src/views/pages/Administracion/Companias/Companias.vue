@@ -11,7 +11,11 @@
       ></v-text-field>
       <v-spacer></v-spacer>
       <v-btn color="primary" @click="SHOW_MODAL(false)" dark>Crear</v-btn>
-      <v-dialog @click:outside="HIDE_MODAL(false)" :value="modal" max-width="70%">
+      <v-dialog
+        @click:outside="HIDE_MODAL(false)"
+        :value="modal"
+        max-width="70%"
+      >
         <modal-companias></modal-companias>
       </v-dialog>
     </v-card-title>
@@ -29,17 +33,17 @@
       }}</template>
       <template v-slot:[`item.actions`]="{ item }">
         <router-link
-                class="links"
-                :to="{ name: 'Editar Companias', params: { nombre: item.nombre } }"
-              >
-        <v-icon
-          small
-          class="mr-2"
-          @click="editCompania(item.nombre)"
-          color="success"
+          class="links"
+          :to="{ name: 'Editar Companias', params: { nombre: item.nombre } }"
         >
-          mdi-pencil
-        </v-icon>
+          <v-icon
+            small
+            class="mr-2"
+            @click="editCompania(item.nombre)"
+            color="success"
+          >
+            mdi-pencil
+          </v-icon>
         </router-link>
         <v-icon
           class="ml-2"
@@ -51,11 +55,7 @@
         </v-icon>
       </template>
     </v-data-table>
-    <v-dialog
-      :retain-focus="false"
-      max-width="30%"
-      v-model="modalDelete"
-    >
+    <v-dialog :retain-focus="false" max-width="30%" v-model="modalDelete">
       <v-card class="pa-4">
         <v-card-text>
           <span>Esta seguro que desea eliminar esta Compania?</span>
@@ -73,13 +73,13 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-import { helpers } from '../../../../helpers';
+import { helpers } from "../../../../helpers";
 import ModalCompanias from "./ModalCompanias.vue";
 export default {
   components: {
     ModalCompanias,
   },
-  mixins:[helpers],
+  mixins: [helpers],
   data: () => ({
     search: "",
     idSelected: null,
@@ -105,9 +105,13 @@ export default {
     ]),
     ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL"]),
     editCompania(nombre) {
-      this.$router.push({
-        path: `/administracion/companias/${nombre}`
-      });
+      this.$router
+        .push({
+          path: `/administracion/companias/${nombre}`,
+        })
+        .catch((err) => {
+          throw new Error(`Surgió el siguiente error: ${err}.`);
+        });
     },
     openDeleteModal(id) {
       this.idSelected = id;
@@ -117,7 +121,6 @@ export default {
       this.deleteCompania(this.idSelected);
       this.modalDelete = false;
     },
-
   },
   created() {
     this.getCompanias();
@@ -127,6 +130,6 @@ export default {
 
 <style>
 .links {
-  text-decoration: none
+  text-decoration: none;
 }
 </style>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CodigoProductor;
 use App\Models\Productor;
 use Illuminate\Http\Request;
 
@@ -123,8 +124,12 @@ class ProductorController extends Controller
     {
         try {
             $productor = Productor::find($id);
-            $productor->delete();
-            return response('', 200);
+            if (CodigoProductor::where("productor_id", $productor->id)->exists()) {
+                return response('', 202);
+            } else {
+                $productor->delete();
+                return response('', 200);
+            }
         } catch (\Exception $e) {
             return $e->getMessage();
         }

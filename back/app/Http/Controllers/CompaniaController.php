@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\CodigoOrganizador;
 use App\Models\Compania;
 use Illuminate\Http\Request;
 
@@ -138,9 +139,13 @@ class CompaniaController extends Controller
     public function destroy($id)
     {
         try {
-            $compania = Compania::find($id);
-            $compania->delete();
-            return response('', 200);
+            $compania = Compania::findOrFail($id);
+            if (CodigoOrganizador::where("compania_id", $compania->id)->exists()) {
+                return response('', 202);
+            } else {
+                $compania->delete();
+                return response('', 200);
+            }
         } catch (\Exception $e) {
             return $e->getMessage();
         }

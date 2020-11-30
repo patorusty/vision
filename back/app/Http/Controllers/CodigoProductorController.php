@@ -65,7 +65,6 @@ class CodigoProductorController extends Controller
         $codigo_organizador_id = $request->input('codigo_organizador_id');
         $codigo_productor = $request->input('codigo_productor');
         $compania_id = $request->input('compania_id');
-        dump($codigo_organizador_id, $codigo_productor, $compania_id);
         return ['usado' => CodigoProductor::where([['compania_id', $compania_id], ['codigo_organizador_id', $codigo_organizador_id], ['codigo_productor', $codigo_productor]])->exists()];
     }
 

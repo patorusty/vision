@@ -122,12 +122,20 @@ const actions = {
                 },
                 { root: true }
             );
+        } else if (resp.status === 202) {
+            commit(
+                "snackbar/SHOW_SNACK", {
+                color: "red",
+                snackText: "Existen Códigos Productores relacionados a este Productor"
+            },
+                { root: true }
+            );
         } else {
             commit(
-                "snackbar/SHOW_SNACK"({
-                    color: "success",
-                    snackText: "Algo salió mal..."
-                }),
+                "snackbar/SHOW_SNACK", {
+                color: "success",
+                snackText: "Algo salió mal..."
+            },
                 { root: true }
             );
         }

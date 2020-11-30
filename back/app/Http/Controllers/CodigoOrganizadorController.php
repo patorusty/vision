@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CodigoOrganizador;
+use App\Models\CodigoProductor;
 use Illuminate\Http\Request;
 
 class CodigoOrganizadorController extends Controller
@@ -63,8 +64,12 @@ class CodigoOrganizadorController extends Controller
     {
         try {
             $codigo_organizador = CodigoOrganizador::find($id);
-            $codigo_organizador->delete();
-            return response('', 200);
+            if (CodigoProductor::where("codigo_organizador_id", $codigo_organizador->id)->exists()) {
+                return response('', 202);
+            } else {
+                $codigo_organizador->delete();
+                return response('', 200);
+            }
         } catch (\Exception $e) {
             return $e->getMessage();
         }

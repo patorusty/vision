@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CodigoOrganizador;
 use App\Models\Organizador;
 use Illuminate\Http\Request;
 
@@ -127,8 +128,12 @@ class OrganizadorController extends Controller
     {
         try {
             $organizador = Organizador::find($id);
-            $organizador->delete();
-            return response('', 200);
+            if (CodigoOrganizador::where("organizador_id", $organizador->id)->exists()) {
+                return response('', 202);
+            } else {
+                $organizador->delete();
+                return response('', 200);
+            }
         } catch (\Exception $e) {
             return $e->getMessage();
         }
