@@ -10,10 +10,12 @@ const state = () => ({
         activo: true,
         matriuclaOriginal: '',
         cuitOriginal: ''
-    }
+    },
+    loading: false
 });
 const mutations = {
     SET_PRODUCTORES(state, productores) {
+        state.loading = false
         state.productores = productores;
     },
     SET_PRODUCTOR(state, productor) {
@@ -46,17 +48,17 @@ const mutations = {
 };
 const actions = {
     async getProductores({ commit }) {
-        const resp = await http.load(API_URL);
+        const resp = await http.get(API_URL);
         commit("SET_PRODUCTORES", resp.data);
     },
 
     async getProductor({ commit }, id) {
-        const resp = await http.loadOne(API_URL, id);
+        const resp = await http.getOne(API_URL, id);
         commit("SET_PRODUCTOR", resp.data);
     },
 
     async updateProductor({ commit }, productor) {
-        const resp = await http.update(
+        const resp = await http.put(
             API_URL,
             productor.id,
             productor
@@ -84,7 +86,7 @@ const actions = {
     },
 
     async createProductor({ commit }, productor) {
-        const resp = await http.create(API_URL, productor);
+        const resp = await http.post(API_URL, productor);
         if (resp.status === 201) {
             commit("CREATE_PRODUCTOR", resp.data);
             commit(

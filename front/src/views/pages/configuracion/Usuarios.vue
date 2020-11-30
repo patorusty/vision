@@ -109,6 +109,7 @@ export default {
     deleteUser() {
       this.deleteUsuario(this.idSelected);
       this.modalDelete = false;
+      this.idSelected = "";
     },
     textoActivo(nro) {
       return nro === 1 ? "Activo" : "Inactivo";

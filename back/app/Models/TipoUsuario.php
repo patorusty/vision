@@ -1,13 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Usuarios;
+use App\Models\Usuario;
 use Illuminate\Database\Eloquent\Model;
 
 class TipoUsuario extends Model
 {
-    public function usuarios(){
-        return $this->hasMany(Usuarios::class, 'tipo_usuario_id', 'id');
+    public function usuarios()
+    {
+        return $this->hasMany(Usuario::class, 'tipo_usuario_id', 'id');
     }
 }

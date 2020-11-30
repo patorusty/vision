@@ -3,8 +3,6 @@
 namespace App\Models;
 
 use App\Models\CodigoProductor;
-use App\Models\Companias;
-use App\Models\Organizadores;
 use Illuminate\Database\Eloquent\Model;
 
 class CodigoOrganizador extends Model
@@ -13,7 +11,7 @@ class CodigoOrganizador extends Model
 
     public function organizadores()
     {
-        return $this->belongsTo(Organizadores::class, 'organizador_id');
+        return $this->belongsTo(Organizador::class, 'organizador_id');
 
     }
     public function companias()

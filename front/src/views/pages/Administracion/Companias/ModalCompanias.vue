@@ -152,17 +152,17 @@ export default {
     cuitUsado: false,
   }),
   computed: {
-    ...mapState("companias", ["compania"]),
+    ...mapState("compania", ["compania"]),
     ...mapState("modal", ["modal", "edicion"]),
   },
   methods: {
-    ...mapActions("companias", [
+    ...mapActions("compania", [
       "getCompania",
       "updateCompania",
       "createCompania",
     ]),
     ...mapMutations("modal", ["HIDE_MODAL"]),
-    ...mapMutations("companias", ["RESET_COMPANIA"]),
+    ...mapMutations("compania", ["RESET_COMPANIA"]),
     async create() {
       if (this.$refs.form.validate()) {
         const createResult = await this.createCompania(this.compania);
@@ -187,14 +187,14 @@ export default {
     },
     buscarCuit: debounce(async function () {
       if (this.compania.cuit.length >= 6 && this.compania.cuit != this.compania.cuitOriginal) {
-        const resp = await http.search("/companias/busquedaCuit", {
+        const resp = await http.post("/companias/busquedaCuit", {
           cuit: this.compania.cuit,
         });
         this.cuitUsado = resp.data.usado;
       }
     }, 700),
     async cargarLocalidades() {
-      const resp = await http.load("/localidades");
+      const resp = await http.get("/localidades");
       this.localidades = resp.data;
     },
   },

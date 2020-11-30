@@ -7,15 +7,18 @@ const state = () => ({
     compania: {
         cuit: "",
         activo: true,
-        cuitOriginal:''
-    }
+        cuitOriginal: '',
+    },
+    loading: true
 });
 const mutations = {
     SET_COMPANIAS(state, companias) {
+        state.loading = false
         state.companias = companias
     },
     SET_COMPANIA(state, compania) {
         state.compania = compania
+        state.loading = false
         state.compania.cuitOriginal = compania.cuit
     },
     RESET_COMPANIA(state) {
@@ -24,7 +27,7 @@ const mutations = {
             {
                 cuit: "",
                 activo: true,
-                cuitOriginal:''
+                cuitOriginal: ''
             }
         );
     },
@@ -41,20 +44,23 @@ const mutations = {
 };
 const actions = {
     async getCompanias({ commit }) {
-        const resp = await http.load(API_URL);
+        const resp = await http.get(API_URL);
         commit('SET_COMPANIAS', resp.data)
     },
-    async getCompania({ commit }, nombre) {
-        const resp = await http.loadOne(API_URL, nombre);
+    async getCompania({ commit, dispatch }, nombre) {
+        const resp = await http.getOne(API_URL, nombre);
         commit('SET_COMPANIA', resp.data)
+        dispatch('codigo_organizador/getCodigoOrganizadores', resp.data.id, { root: true })
+        dispatch('codigo_productor/getCodigoProductores', resp.data.id, { root: true })
     },
     async createCompania({ commit }, compania) {
-        const resp = await http.create(API_URL, compania)
+        const resp = await http.post(API_URL, compania)
         if (resp.status === 201) {
             commit("CREATE_COMPANIA", resp.data);
             commit(
                 "snackbar/SHOW_SNACK",
-                {   snackbar: true,
+                {
+                    snackbar: true,
                     color: "success",
                     snackText: "Compania creado con éxito!"
                 },
@@ -64,7 +70,8 @@ const actions = {
         } else {
             commit(
                 "snackbar/SHOW_SNACK",
-                {   snackbar: true,
+                {
+                    snackbar: true,
                     color: "red",
                     snackText: "Algo salió mal, intente nuevamente..."
                 },
@@ -73,7 +80,7 @@ const actions = {
         }
     },
     async updateCompania({ commit }, compania) {
-        const resp = await http.update(
+        const resp = await http.put(
             API_URL,
             compania.id,
             compania

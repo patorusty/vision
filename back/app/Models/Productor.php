@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Clientes;
+use App\Models\Cliente;
 use App\Models\CodigoProductor;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +12,7 @@ class Productor extends Model
 
     public function clientes()
     {
-        return $this->hasMany(Clientes::class, 'productor_id', 'id');
+        return $this->hasMany(Cliente::class, 'productor_id', 'id');
     }
 
     public function codigo_productor()

@@ -10,11 +10,13 @@ const state = () => ({
         activo: true,
         matriuclaOriginal: '',
         cuitOriginal: ''
-    }
+    },
+    loading: false
 });
 const mutations = {
     SET_ORGANIZADORES(state, organizadores) {
         state.organizadores = organizadores;
+        state.loading = false
     },
     SET_ORGANIZADOR(state, organizador) {
         state.organizador = organizador;
@@ -46,17 +48,17 @@ const mutations = {
 };
 const actions = {
     async getOrganizadores({ commit }) {
-        const resp = await http.load(API_URL);
+        const resp = await http.get(API_URL);
         commit("SET_ORGANIZADORES", resp.data);
     },
 
     async getOrganizador({ commit }, id) {
-        const resp = await http.loadOne(API_URL, id);
+        const resp = await http.getOne(API_URL, id);
         commit("SET_ORGANIZADOR", resp.data);
     },
 
     async updateOrganizador({ commit }, organizador) {
-        const resp = await http.update(
+        const resp = await http.put(
             API_URL,
             organizador.id,
             organizador
@@ -84,7 +86,7 @@ const actions = {
     },
 
     async createOrganizador({ commit }, organizador) {
-        const resp = await http.create(API_URL, organizador);
+        const resp = await http.post(API_URL, organizador);
         if (resp.status === 201) {
             commit("CREATE_ORGANIZADOR", resp.data);
             commit(

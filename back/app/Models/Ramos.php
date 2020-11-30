@@ -1,13 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use App\Models\TipoRiesgo;
 use Illuminate\Database\Eloquent\Model;
 
-class Ramos extends Model
+class Ramo extends Model
 {
     public function tipoRiesgo()
     {
-    return $this->hasMany(TipoRiesgo::class, 'ramo_id', 'id');
+        return $this->hasMany(TipoRiesgo::class, 'ramo_id', 'id');
     }
 }

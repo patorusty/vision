@@ -139,7 +139,7 @@ export default {
         this.mailUsado = false;
     },
     cargarTipo_Usuarios() {
-      http.load(this.url).then(r => {
+      http.get(this.url).then(r => {
         this.tipo_usuarios = r.data.data;
       });
     },
@@ -148,7 +148,7 @@ export default {
         this.usuario.email.length >= 6 &&
         this.mailOriginal != this.usuario.email
       ) {
-        const resp = await http.search("/usuario/busquedaMail", {
+        const resp = await http.post("/usuario/busquedaMail", {
           email: this.usuario.email
         });
         this.mailUsado = resp.data.usado;

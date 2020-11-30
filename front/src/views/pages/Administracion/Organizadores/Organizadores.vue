@@ -22,7 +22,11 @@
       :items="organizadores"
       :search="search"
       multi-sort
+      :loading="loading"
     >
+    <template slot="item.activo" slot-scope="props">{{
+        textoActivo(props.item.activo)
+      }}</template>
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon
           small
@@ -45,7 +49,7 @@
     <v-dialog :retain-focus="false" max-width="30%" v-model="modalDelete">
       <v-card class="pa-4">
         <v-card-text>
-          <span>Esta seguro que desea eliminar este organizador?</span>
+          <span>Esta seguro que desea eliminar este Organizador?</span>
         </v-card-text>
         <v-card-actions class="py-0 pt-3 pr-6 d-flex justify-end">
           <v-btn dark color="red" @click="modalDelete = false">Cancelar</v-btn>
@@ -59,12 +63,14 @@
 </template>
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
+import { helpers } from '../../../../helpers';
 import ModalOrganizadores from "./ModalOrganizadores";
 
 export default {
   components: {
     ModalOrganizadores,
   },
+  mixins:[helpers],
   data() {
     return {
       search: "",
@@ -73,20 +79,20 @@ export default {
       headers: [
         { text: "Apellido", value: "apellido" },
         { text: "Nombre", value: "nombre" },
-        { text: "cuit", value: "cuit" },
-        { text: "Mail", value: "email" },
-        { text: "celular", value: "telefono_2" },
+        { text: "CUIT", value: "cuit" },
+        { text: "E-mail", value: "email" },
+        { text: "Celular", value: "telefono_2" },
         { text: "Activo", value: "activo" },
         { text: "Acciones", value: "actions", sortable: false, align: "right" },
       ],
     };
   },
   computed: {
-    ...mapState("organizadores", ["organizadores"]),
+    ...mapState("organizador", ["organizadores", "loading"]),
     ...mapState("modal", ["modal"]),
   },
   methods: {
-    ...mapActions("organizadores", [
+    ...mapActions("organizador", [
       "getOrganizadores",
       "getOrganizador",
       "deleteOrganizador",
@@ -103,6 +109,7 @@ export default {
     deleteOrg() {
       this.deleteOrganizador(this.idSelected);
       this.modalDelete = false;
+      this.idSelected = "";
     },
     textoActivo(nro) {
       return nro === 1 ? "Activo" : "Inactivo";

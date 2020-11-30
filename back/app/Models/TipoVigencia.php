@@ -1,7 +1,8 @@
 <?php
 
-namespace App;
-use App\Polizas;
+namespace App\Models;
+
+use App\Models\Poliza;
 use Illuminate\Database\Eloquent\Model;
 
 class TipoVigencia extends Model
@@ -10,6 +11,6 @@ class TipoVigencia extends Model
 
     public function polizas()
     {
-    return $this->hasMany(Polizas::class, 'tipo_vigencia_id', 'id');
+        return $this->hasMany(Poliza::class, 'tipo_vigencia_id', 'id');
     }
 }

@@ -1,34 +1,32 @@
 import axios from "axios";
 
-const HTTP = axios.create({
+const http = axios.create({
   baseURL: `http://127.0.0.1:8000/api/`
 });
 
 // const RESOURCE_NAME = 'clientes';
 
 export default {
-  load(url) {
-    return HTTP.get(url);
+  get(url) {
+    return http.get(url);
   },
 
-  loadOne(url, id) {
-    return HTTP.get(`${url}/${id}`);
+  getOne(url, id) {
+    return http.get(`${url}/${id}`);
   },
 
-  create(url, data) {
-    return HTTP.post(url, data);
+  post(url, data) {
+    return http.post(url, data);
   },
 
-  update(url, id, data) {
-    return HTTP.put(`${url}/${id}`, data);
+  put(url, id, data) {
+    return http.put(`${url}/${id}`, data);
+  },
+  patch(url, id, data) {
+    return http.patch(`${url}/${id}`, data);
   },
   delete(url, id) {
-    return HTTP.delete(`${url}/${id}`);
+    return http.delete(`${url}/${id}`);
   },
-  search(url, data) {
-    return HTTP.post(url, data);
-  },
-  search2(url, param1, param2) {
-    return HTTP.get(`${url}/${param1}/${param2}`);
-  }
 };
+

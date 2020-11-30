@@ -2,68 +2,71 @@
 
 namespace App\Http\Controllers;
 
-use App\CodigoProductor;
+use App\Models\CodigoProductor;
 use Illuminate\Http\Request;
-use App\Http\Resources\CodigoProductor as CodigoProductorsResource;
-
-
 
 class CodigoProductorController extends Controller
 {
     public function index()
     {
-        $codigo_productores = CodigoProductor::with(['productores', 'codigo_organizador'])->get();
-
-        return CodigoProductorsResource::collection($codigo_productores);
+        //
     }
     public function show($id)
     {
-        $codigo_productores = CodigoProductor::findOrFail($id);
-
-        return new CodigoProductorsResource($codigo_productores);
+        return CodigoProductor::with(['productores', 'codigo_organizador'])->findOrFail($id);
     }
 
     public function indexFiltrado($compania_id)
     {
-        $codigo_productores = CodigoProductor::with(['productores', 'codigo_organizador'])->where('compania_id', $compania_id)->get();
-
-
-        return CodigoProductorsResource::collection($codigo_productores);
+        return CodigoProductor::with(['productores', 'codigo_organizador'])->where('compania_id', $compania_id)->get();
     }
 
     public function store(Request $request)
     {
-        $this->validate($request, []);
 
-        $codigo_productores = CodigoProductor::create([
-            'codigo_productor' => $request->input('codigo_productor'),
-            'codigo_organizador_id' => $request->input('codigo_organizador_id'),
-            'productor_id' => $request->input('productor_id'),
-            'compania_id' => $request->input('compania_id'),
-            'activo' => $request->input('activo'),
-        ]);
+        try {
+            $this->validate($request, []);
 
-        return (['message' => 'guardado']);
+            $codigo_productor = CodigoProductor::create([
+                'codigo_productor' => $request->input('codigo_productor'),
+                'codigo_organizador_id' => $request->input('codigo_organizador_id'),
+                'productor_id' => $request->input('productor_id'),
+                'compania_id' => $request->input('compania_id'),
+                'activo' => $request->input('activo'),
+            ]);
+            $codigo_productor->load(['productores', 'codigo_organizador']);
+            $codigo_productor::with(['productores', 'codigo_organizador']);
+            return response($codigo_productor, 201);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public function update(Request $request, $id)
     {
-        $codigo_productores = CodigoProductor::find($id);
-        $codigo_productores->update([
-            'codigo_productor' => $request->input('codigo_productor'),
-            'codigo_organizador_id' => $request->input('codigo_organizador_id'),
-            'productor_id' => $request->input('productor_id'),
-            'compania_id' => $request->input('compania_id'),
-            'activo' => $request->input('activo'),
-        ]);
+        try {
+            $codigo_productor = CodigoProductor::find($id);
+            $codigo_productor->update([
+                'codigo_productor' => $request->input('codigo_productor'),
+                'codigo_organizador_id' => $request->input('codigo_organizador_id'),
+                'productor_id' => $request->input('productor_id'),
+                'compania_id' => $request->input('compania_id'),
+                'activo' => $request->input('activo'),
+            ]);
+            return response($codigo_productor, 200);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+
     }
 
-    public function searchCP()
+    public function busquedaCP(Request $request)
     {
-        if ($search = \Request::get('q')) {
-            $cp = CodigoProductor::where('codigo_productor', $search)->get();
-        }
-        return CodigoProductorsResource::collection($cp);
+        $codigo_organizador_id = $request->input('codigo_organizador_id');
+        $codigo_productor = $request->input('codigo_productor');
+        $compania_id = $request->input('compania_id');
+        dump($codigo_organizador_id, $codigo_productor, $compania_id);
+        return ['usado' => CodigoProductor::where([['compania_id', $compania_id], ['codigo_organizador_id', $codigo_organizador_id], ['codigo_productor', $codigo_productor]])->exists()];
     }
 
     public function destroy($id)

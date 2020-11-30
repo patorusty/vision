@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\CodigoOrganizadorcontroller;
+use App\Http\Controllers\CodigoProductorcontroller;
 use App\Http\Controllers\CompaniaController;
 use App\Http\Controllers\LocalidadController;
 use App\Http\Controllers\OrganizadorController;
 use App\Http\Controllers\ProductorController;
-use App\Http\Controllers\CodigoOrganizadorcontroller;
-use App\Http\Controllers\CodigoProductorcontroller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,11 +35,13 @@ Route::resource('/configuracion/productores', ProductorController::class);
 Route::post('/productores/busquedaCuit', [ProductorController::class, 'searchCuit']);
 Route::post('/productores/busquedaMatricula', [ProductorController::class, 'searchMatricula']);
 
-Route::Resource('/administracion/codigo_organizadores', CodigoOrganizadorcontroller::class);
-Route::get('/codigo_organizador/compania/{id}', [CodigoOrganizadorcontroller::class, 'indexFiltrado']);
+Route::Resource('/administracion/codigo_organizadores', CodigoOrganizadorController::class);
+Route::get('/codigo_organizador/compania/{id}', [CodigoOrganizadorController::class, 'indexFiltrado']);
+Route::post('/codigo_organizador/busquedaCO', [CodigoOrganizadorController::class, 'busquedaCO']);
 
-Route::Resource('/administracion/codigo_productores', CodigoProductorcontroller::class);
-Route::get('/codigo_productor/compania/{id}', [CodigoProductorcontroller::class, 'indexFiltrado']);
+Route::Resource('/administracion/codigo_productores', CodigoProductorController::class);
+Route::get('/codigo_productor/compania/{id}', [CodigoProductorController::class, 'indexFiltrado']);
+Route::post('/codigo_productor/busquedaCP', [CodigoProductorController::class, 'busquedaCP']);
 
 // Route::Resource('/codigoproductor', 'CodigoProductorController');
 // Route::Resource('/cobertura', 'CoberturaController');

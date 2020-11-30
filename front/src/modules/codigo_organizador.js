@@ -4,7 +4,12 @@ const API_URL = "/administracion/codigo_organizadores";
 
 const state = () => ({
   codigo_organizadores: [],
-  codigo_organizador: {}
+  codigo_organizador: {
+    codigo_organizador: "",
+    coOriginal: '',
+    activo: true
+  },
+  loading: false
 });
 const mutations = {
   SET_CODIGO_ORGANIZADORES(state, codigo_organizadores) {
@@ -12,10 +17,14 @@ const mutations = {
   },
   SET_CODIGO_ORGANIZADOR(state, codigo_organizador) {
     state.codigo_organizador = codigo_organizador;
-
+    state.codigo_organizador.coOriginal = codigo_organizador.codigo_organizador
   },
   RESET_CODIGO_ORGANIZADOR(state) {
-    state.codigo_organizador = Object.assign({}, {});
+    state.codigo_organizador = Object.assign({}, {
+      codigo_organizador: "",
+      coOriginal: "",
+      activo: true
+    });
   },
   UPDATE_CODIGO_ORGANIZADOR(state, codigo_organizador) {
     const item = state.codigo_organizadores.find(
@@ -31,18 +40,18 @@ const mutations = {
   }
 };
 const actions = {
-  async getCodigoOrganizador({ commit }) {
-    const resp = await http.load(API_URL);
+  async getCodigoOrganizadores({ commit }, compania_id) {
+    const resp = await http.getOne('/codigo_organizador/compania', compania_id);
     commit("SET_CODIGO_ORGANIZADORES", resp.data);
   },
 
   async getCodigoOrganizador({ commit }, id) {
-    const resp = await http.loadOne(API_URL, id);
+    const resp = await http.getOne(API_URL, id);
     commit("SET_CODIGO_ORGANIZADOR", resp.data);
   },
 
   async updateCodigoOrganizador({ commit }, codigo_organizador) {
-    const resp = await http.update(
+    const resp = await http.put(
       API_URL,
       codigo_organizador.id,
       codigo_organizador
@@ -53,7 +62,7 @@ const actions = {
         "snackbar/SHOW_SNACK",
         {
           color: "success",
-          snackText: "Codigo Organizador editado con éxito!"
+          snackText: "Código Organizador editado con éxito!"
         },
         { root: true }
       );
@@ -70,14 +79,14 @@ const actions = {
   },
 
   async createCodigoOrganizador({ commit }, codigo_organizador) {
-    const resp = await http.create(API_URL, codigo_organizador);
+    const resp = await http.post(API_URL, codigo_organizador);
     if (resp.status === 201) {
       commit("CREATE_CODIGO_ORGANIZADOR", resp.data);
       commit(
         "snackbar/SHOW_SNACK",
         {
           color: "success",
-          snackText: "Codigo Organizador creado con éxito!"
+          snackText: "Código Organizador creado con éxito!"
         },
         { root: true }
       );
@@ -102,7 +111,7 @@ const actions = {
         "snackbar/SHOW_SNACK",
         {
           color: "success",
-          snackText: "Codigo Organizador eliminado con éxito!"
+          snackText: "Código Organizador eliminado con éxito!"
         },
         { root: true }
       );

@@ -22,6 +22,7 @@
       :items="companias"
       :search="search"
       multi-sort
+      :loading="loading"
     >
       <template slot="item.activo" slot-scope="props">{{
         textoActivo(props.item.activo)
@@ -57,7 +58,7 @@
     >
       <v-card class="pa-4">
         <v-card-text>
-          <span>Esta seguro que desea eliminar esta compania?</span>
+          <span>Esta seguro que desea eliminar esta Compania?</span>
         </v-card-text>
         <v-card-actions class="py-0 pt-3 pr-6 d-flex justify-end">
           <v-btn dark color="red" @click="modalDelete = false">Cancelar</v-btn>
@@ -72,11 +73,13 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
+import { helpers } from '../../../../helpers';
 import ModalCompanias from "./ModalCompanias.vue";
 export default {
   components: {
     ModalCompanias,
   },
+  mixins:[helpers],
   data: () => ({
     search: "",
     idSelected: null,
@@ -91,11 +94,11 @@ export default {
     ],
   }),
   computed: {
-    ...mapState("companias", ["companias"]),
+    ...mapState("compania", ["companias", "loading"]),
     ...mapState("modal", ["modal"]),
   },
   methods: {
-    ...mapActions("companias", [
+    ...mapActions("compania", [
       "getCompanias",
       "getCompania",
       "deleteCompania",
@@ -114,9 +117,7 @@ export default {
       this.deleteCompania(this.idSelected);
       this.modalDelete = false;
     },
-    textoActivo(nro) {
-      return nro === 1 ? "Activo" : "Inactivo";
-    },
+
   },
   created() {
     this.getCompanias();

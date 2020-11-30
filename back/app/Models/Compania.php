@@ -35,6 +35,6 @@ class Compania extends Model
 
     public function polizas()
     {
-        return $this->hasMany(Polizas::class, 'compania_id', 'id');
+        return $this->hasMany(Poliza::class, 'compania_id', 'id');
     }
 }

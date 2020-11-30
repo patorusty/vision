@@ -6,6 +6,8 @@ import snackbar from "./modules/snackbar";
 import compania from "./modules/compania";
 import organizador from "./modules/organizador";
 import productor from "./modules/productor";
+import codigo_organizador  from "./modules/codigo_organizador";
+import codigo_productor  from "./modules/codigo_productor";
 
 Vue.use(Vuex);
 
@@ -34,6 +36,8 @@ export default new Vuex.Store({
     snackbar,
     compania,
     organizador,
-    productor
+    productor,
+    codigo_organizador,
+    codigo_productor
   }
 });

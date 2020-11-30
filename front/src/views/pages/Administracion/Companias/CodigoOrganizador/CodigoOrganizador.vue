@@ -1,6 +1,7 @@
 <template>
   <v-card class="mt-0 mx-4 pa-3">
     <v-card-title>
+      Código Organizador
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
@@ -11,27 +12,31 @@
       ></v-text-field>
       <v-spacer></v-spacer>
       <v-btn color="primary" @click="SHOW_MODAL(false)" dark>Crear</v-btn>
-      <v-dialog @click:outside="HIDE_MODAL(false)" :value="modal" max-width="70%">
-        <modal-productores></modal-productores>
+      <v-dialog
+        @click:outside="HIDE_MODAL(false)"
+        :value="modal"
+        max-width="40%"
+      >
+        <modal-codigo-organizador />
       </v-dialog>
     </v-card-title>
     <v-data-table
       class="pa-2"
       :headers="headers"
       :items-per-page="5"
-      :items="productores"
+      :items="codigo_organizadores"
       :search="search"
       multi-sort
       :loading="loading"
     >
-    <template slot="item.activo" slot-scope="props">{{
+      <template slot="item.activo" slot-scope="props">{{
         textoActivo(props.item.activo)
       }}</template>
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon
           small
+          @click="editCodigoOrganizador(item.id)"
           class="mr-2"
-          @click="editProductor(item.id)"
           color="success"
         >
           mdi-pencil
@@ -49,11 +54,11 @@
     <v-dialog :retain-focus="false" max-width="30%" v-model="modalDelete">
       <v-card class="pa-4">
         <v-card-text>
-          <span>Esta seguro que desea eliminar este Productor?</span>
+          <span>Esta seguro que desea eliminar este Código Organizador?</span>
         </v-card-text>
         <v-card-actions class="py-0 pt-3 pr-6 d-flex justify-end">
           <v-btn dark color="red" @click="modalDelete = false">Cancelar</v-btn>
-          <v-btn class="ml-4" dark color="success" @click="deleteOrg"
+          <v-btn class="ml-4" dark color="success" @click="deleteCodOrg"
             >Confirmar</v-btn
           >
         </v-card-actions>
@@ -61,62 +66,66 @@
     </v-dialog>
   </v-card>
 </template>
+
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-import { helpers } from '../../../../helpers';
-import ModalProductores from "./ModalProductores";
+import ModalCodigoOrganizador from "./ModalCodigoOrganizador";
+import { helpers } from "../../../../../helpers";
 
 export default {
   components: {
-    ModalProductores,
+    ModalCodigoOrganizador,
   },
-  mixins:[helpers],
-  data() {
-    return {
-      search: "",
-      idSelected: null,
-      modalDelete: false,
-      headers: [
-        { text: "Apellido", value: "apellido" },
-        { text: "Nombre", value: "nombre" },
-        { text: "CUIT", value: "cuit" },
-        { text: "E-mail", value: "email" },
-        { text: "Celular", value: "telefono_2" },
-        { text: "Activo", value: "activo" },
-        { text: "Acciones", value: "actions", sortable: false, align: "right" },
-      ],
-    };
-  },
+  mixins: [helpers],
+  data: () => ({
+    search: "",
+    idSelected: "",
+    modalDelete: false,
+  }),
   computed: {
-    ...mapState("productor", ["productores", "loading"]),
-    ...mapState("modal", ["modal"]),
+    ...mapState("compania", ["loading"]),
+    ...mapState("codigo_organizador", ["codigo_organizadores"]),
+    ...mapState("modal", ["modal", "edicion"]),
+    headers() {
+      return [
+        { text: "Apellido", value: "organizadores.apellido" },
+        { text: "Nombre", value: "organizadores.nombre" },
+        { text: "Matricula", value: "organizadores.matricula" },
+        {
+          text: "Codigo Organizador",
+          value: "codigo_organizador",
+        },
+        { text: "Activo", value: "activo" },
+        { text: "Actions", value: "actions", sortable: false, align: "right" },
+      ];
+    },
   },
   methods: {
-    ...mapActions("productor", [
-      "getProductores",
-      "getProductor",
-      "deleteProductor",
+    ...mapActions("organizador", ["getOrganizadores"]),
+    ...mapActions("codigo_organizador", [
+      "getCodigoOrganizador",
+      "deleteCodigoOrganizador",
     ]),
     ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL"]),
-    editProductor(nombre) {
-      this.getProductor(nombre);
+    editCodigoOrganizador(id) {
+      this.getCodigoOrganizador(id);
       this.SHOW_MODAL(true);
     },
     openDeleteModal(id) {
       this.idSelected = id;
       this.modalDelete = true;
     },
-    deleteOrg() {
-      this.deleteProductor(this.idSelected);
+    deleteCodOrg() {
+      this.deleteCodigoOrganizador(this.idSelected);
       this.modalDelete = false;
       this.idSelected = "";
     },
-    textoActivo(nro) {
-      return nro === 1 ? "Activo" : "Inactivo";
-    },
   },
   created() {
-    this.getProductores();
+    this.getOrganizadores();
   },
 };
 </script>
+
+<style>
+</style>

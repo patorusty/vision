@@ -46,7 +46,7 @@
           <v-row>
             <v-col>
               <v-text-field
-                v-model="productor.telefono"
+                v-model="productor.telefono_1"
                 label="Telefono"
                 :rules="[rules.required]"
               ></v-text-field>
@@ -117,18 +117,18 @@ export default {
     },
   }),
   computed: {
-    ...mapState("productores", ["productor"]),
+    ...mapState("productor", ["productor"]),
     ...mapState("modal", ["modal", "edicion"]),
   },
   methods: {
-    ...mapActions("productores", [
+    ...mapActions("productor", [
       "getProductor",
       "resetProductorState",
       "updateProductor",
       "createProductor",
     ]),
     ...mapMutations("modal", ["HIDE_MODAL"]),
-    ...mapMutations("productores", ["RESET_PRODUCTOR"]),
+    ...mapMutations("productor", ["RESET_PRODUCTOR"]),
     async create() {
       if (this.$refs.form.validate()) {
         const createResult = await this.createProductor(this.productor);
@@ -155,7 +155,7 @@ export default {
     },
     buscarCuit: debounce(async function () {
       if (this.productor.cuit.length >= 6 && this.productor.cuit != this.productor.cuitOriginal) {
-        const resp = await http.search("/productores/busquedaCuit", {
+        const resp = await http.post("/productores/busquedaCuit", {
           cuit: this.productor.cuit,
         });
         this.cuitUsado = resp.data.usado;
@@ -163,7 +163,7 @@ export default {
     }, 700),
     buscarMatricula: debounce(async function () {
       if (this.productor.matricula.length >= 3 && this.productor.matricula != this.productor.matriculaOriginal) {
-        const resp = await http.search("/productores/busquedaMatricula", {
+        const resp = await http.post("/productores/busquedaMatricula", {
           matricula: this.productor.matricula,
         });
         this.matriculaUsada = resp.data.usado;

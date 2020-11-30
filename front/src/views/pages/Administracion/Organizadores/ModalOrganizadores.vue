@@ -46,7 +46,7 @@
           <v-row>
             <v-col>
               <v-text-field
-                v-model="organizador.telefono"
+                v-model="organizador.telefono_1"
                 label="Telefono"
                 :rules="[rules.required]"
               ></v-text-field>
@@ -117,18 +117,17 @@ export default {
     },
   }),
   computed: {
-    ...mapState("organizadores", ["organizador"]),
+    ...mapState("organizador", ["organizador"]),
     ...mapState("modal", ["modal", "edicion"]),
   },
   methods: {
-    ...mapActions("organizadores", [
-      "getOrganizador",
+    ...mapActions("organizador", [
       "resetOrganizadorState",
       "updateOrganizador",
       "createOrganizador",
     ]),
     ...mapMutations("modal", ["HIDE_MODAL"]),
-    ...mapMutations("organizadores", ["RESET_ORGANIZADOR"]),
+    ...mapMutations("organizador", ["RESET_ORGANIZADOR"]),
     async create() {
       if (this.$refs.form.validate()) {
         const createResult = await this.createOrganizador(this.organizador);
@@ -154,7 +153,7 @@ export default {
     },
     buscarCuit: debounce(async function () {
       if (this.organizador.cuit.length >= 6  && this.organizador.cuit != this.organizador.cuitOriginal) {
-        const resp = await http.search("/organizadores/busquedaCuit", {
+        const resp = await http.post("/organizadores/busquedaCuit", {
           cuit: this.organizador.cuit,
         });
         this.cuitUsado = resp.data.usado;
@@ -162,7 +161,7 @@ export default {
     }, 700),
     buscarMatricula: debounce(async function () {
       if (this.organizador.matricula.length >= 3 && this.organizador.matricula != this.organizador.matriculaOriginal) {
-        const resp = await http.search("/organizadores/busquedaMatricula", {
+        const resp = await http.post("/organizadores/busquedaMatricula", {
           matricula: this.organizador.matricula,
         });
         this.matriculaUsada = resp.data.usado;

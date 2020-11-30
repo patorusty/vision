@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Compania as CompaniasResource;
 use App\Models\Compania;
-use App\Models\Localidades;
 use Illuminate\Http\Request;
 
 class CompaniaController extends Controller
@@ -30,10 +28,7 @@ class CompaniaController extends Controller
      */
     public function create()
     {
-        $companias = Compania::all();
-        $localidades = Localidades::all();
-
-        return CompaniasResource::collection($companias);
+        //
     }
 
     /**
@@ -81,7 +76,7 @@ class CompaniaController extends Controller
         // $codigo_organizador = CodigoOrganizador::all();
         // $codigo_productor = CodigoProductor::all();
 
-        $compania = Compania::where('nombre', $nombre)->get();
+        $compania = Compania::with(["codigo_organizador.organizadores"])->where('nombre', $nombre)->get();
         return $compania[0];
 
     }

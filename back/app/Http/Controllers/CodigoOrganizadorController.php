@@ -2,65 +2,79 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\CodigoOrganizador as CodigoOrganizadorsResource;
+use App\Models\CodigoOrganizador;
 use Illuminate\Http\Request;
 
 class CodigoOrganizadorController extends Controller
 {
     public function index()
     {
-        $codigo_organizadores = CodigoOrganizador::with('organizadores')->get();
-        return CodigoOrganizadorsResource::collection($codigo_organizadores);
+        return CodigoOrganizador::with('organizadores')->get();
     }
 
     public function show($id)
     {
-        $codigo_organizadores = CodigoOrganizador::findOrFail($id);
-        return new CodigoOrganizadorsResource($codigo_organizadores);
+        return CodigoOrganizador::with("organizadores")->findOrFail($id);
     }
 
     public function indexFiltrado($compania_id)
     {
-        $codigo_organizadores = CodigoOrganizador::with('organizadores')->where('compania_id', $compania_id)->get();
-        return CodigoOrganizadorsResource::collection($codigo_organizadores);
+        return CodigoOrganizador::with('organizadores')->where('compania_id', $compania_id)->get();
     }
 
     public function store(Request $request)
     {
-        $this->validate($request, []);
-        $codigo_organizador = CodigoOrganizador::create([
-            'codigo_organizador' => $request->input('codigo_organizador'),
-            'organizador_id' => $request->input('organizador_id'),
-            'compania_id' => $request->input('compania_id'),
-            'activo' => $request->input('activo'),
-        ]);
+        try {
+            $this->validate($request, []);
+            $codigo_organizador = CodigoOrganizador::create([
+                'codigo_organizador' => $request->input('codigo_organizador'),
+                'organizador_id' => $request->input('organizador_id'),
+                'compania_id' => $request->input('compania_id'),
+                'activo' => $request->input('activo'),
+            ]);
 
-        return (['message' => 'guardado']);
+            $codigo_organizador->load('organizadores');
+            $codigo_organizador::with("organizadores");
+            return response($codigo_organizador, 201);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+
     }
 
     public function update(Request $request, $id)
     {
-        $codigo_organizador = CodigoOrganizador::find($id);
-        $codigo_organizador->update([
-            'codigo_organizador' => $request->input('codigo_organizador'),
-            'organizador_id' => $request->input('organizador_id'),
-            'compania_id' => $request->input('compania_id'),
-            'activo' => $request->input('activo'),
-        ]);
+        try {
+            $codigo_organizador = CodigoOrganizador::find($id);
+            $codigo_organizador->update([
+                'codigo_organizador' => $request->input('codigo_organizador'),
+                'organizador_id' => $request->input('organizador_id'),
+                'compania_id' => $request->input('compania_id'),
+                'activo' => $request->input('activo'),
+            ]);
+            return response($codigo_organizador, 200);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+
     }
 
     public function destroy($id)
     {
-        $codigo_organizador = CodigoOrganizador::find($id);
-        $codigo_organizador->delete();
-        return ['message' => 'Eliminado'];
+        try {
+            $codigo_organizador = CodigoOrganizador::find($id);
+            $codigo_organizador->delete();
+            return response('', 200);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
-    public function searchCO()
+    public function busquedaCO(Request $request)
     {
-        if ($search = \Request::get('q')) {
-            $cos = CodigoOrganizador::where('codigo_organizador', $search)->get();
-        }
-        return CodigoOrganizadorsResource::collection($cos);
+        $codigo = $request->input('codigo');
+        $compania_id = $request->input('compania_id');
+        // dump($codigo, $compania_id);
+        return ['usado' => CodigoOrganizador::where([['compania_id', $compania_id], ['codigo_organizador', $codigo]])->exists()];
     }
 }

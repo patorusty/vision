@@ -1,11 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\AutomotorModelo;
-use App\AutomotorVersion;
-use App\RiesgoAutomotor;
-
+use App\Models\AutomotorModelo;
+use App\Models\RiesgoAutomotor;
 use Illuminate\Database\Eloquent\Model;
 
 class AutomotorMarca extends Model
@@ -14,11 +12,12 @@ class AutomotorMarca extends Model
 
     public function automotor_modelos()
     {
-    return $this->hasMany(AutomotorModelo::class, 'automotor_marca_id', 'id');
+        return $this->hasMany(AutomotorModelo::class, 'automotor_marca_id', 'id');
     }
-    
-    public function riesgo_automotor(){
-    return $this->hasMany(RiesgoAutomotor::class, 'automotor_marca_id', 'id');
+
+    public function riesgo_automotor()
+    {
+        return $this->hasMany(RiesgoAutomotor::class, 'automotor_marca_id', 'id');
     }
-    
+
 }

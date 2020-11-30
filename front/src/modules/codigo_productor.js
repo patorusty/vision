@@ -4,7 +4,12 @@ const API_URL = "/administracion/codigo_productores";
 
 const state = () => ({
   codigo_productores: [],
-  codigo_productor: {}
+  codigo_productor: {
+    codigo_productor: "",
+    cpOriginal: '',
+    activo: true
+  },
+  loading: false
 });
 const mutations = {
   SET_CODIGO_PRODUCTORES(state, codigo_productores) {
@@ -12,10 +17,15 @@ const mutations = {
   },
   SET_CODIGO_PRODUCTOR(state, codigo_productor) {
     state.codigo_productor = codigo_productor;
+    state.codigo_productor.cpOriginal = codigo_productor.codigo_productor
 
   },
   RESET_CODIGO_PRODUCTOR(state) {
-    state.codigo_productor = Object.assign({}, {});
+    state.codigo_productor = Object.assign({}, {
+      codigo_productor: "",
+      cpOriginal: '',
+      activo: true
+    });
   },
   UPDATE_CODIGO_PRODUCTOR(state, codigo_productor) {
     const item = state.codigo_productores.find(
@@ -31,18 +41,18 @@ const mutations = {
   }
 };
 const actions = {
-  async getCodigoProductores({ commit }) {
-    const resp = await http.load(API_URL);
+  async getCodigoProductores({ commit }, compania_id) {
+    const resp = await http.getOne('/codigo_productor/compania', compania_id);
     commit("SET_CODIGO_PRODUCTORES", resp.data);
   },
 
   async getCodigoProductor({ commit }, id) {
-    const resp = await http.loadOne(API_URL, id);
+    const resp = await http.getOne(API_URL, id);
     commit("SET_CODIGO_PRODUCTOR", resp.data);
   },
 
   async updateCodigoProductor({ commit }, codigo_productor) {
-    const resp = await http.update(
+    const resp = await http.put(
       API_URL,
       codigo_productor.id,
       codigo_productor
@@ -53,7 +63,7 @@ const actions = {
         "snackbar/SHOW_SNACK",
         {
           color: "success",
-          snackText: "Codigo Productor editado con éxito!"
+          snackText: "Código Productor editado con éxito!"
         },
         { root: true }
       );
@@ -70,14 +80,14 @@ const actions = {
   },
 
   async createCodigoProductor({ commit }, codigo_productor) {
-    const resp = await http.create(API_URL, codigo_productor);
+    const resp = await http.post(API_URL, codigo_productor);
     if (resp.status === 201) {
       commit("CREATE_CODIGO_PRODUCTOR", resp.data);
       commit(
         "snackbar/SHOW_SNACK",
         {
           color: "success",
-          snackText: "Codigo Productor creado con éxito!"
+          snackText: "Código Productor creado con éxito!"
         },
         { root: true }
       );
@@ -102,7 +112,7 @@ const actions = {
         "snackbar/SHOW_SNACK",
         {
           color: "success",
-          snackText: "Codigo Productor eliminado con éxito!"
+          snackText: "Código Productor eliminado con éxito!"
         },
         { root: true }
       );

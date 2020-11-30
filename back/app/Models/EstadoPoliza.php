@@ -1,7 +1,8 @@
 <?php
 
 namespace App;
-use App\Polizas;
+
+use App\Models\Poliza;
 use Illuminate\Database\Eloquent\Model;
 
 class EstadoPoliza extends Model
@@ -10,6 +11,6 @@ class EstadoPoliza extends Model
 
     public function polizas()
     {
-    return $this->hasMany(Polizas::class, 'estado_poliza_id', 'id');
+        return $this->hasMany(Poliza::class, 'estado_poliza_id', 'id');
     }
 }

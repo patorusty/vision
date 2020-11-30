@@ -36,17 +36,17 @@ const mutations = {
 };
 const actions = {
   async getUsuarios({ commit }) {
-    const resp = await http.load("configuracion/usuarios");
+    const resp = await http.get("configuracion/usuarios");
     commit("SET_USUARIOS", resp.data);
   },
 
   async getUsuario({ commit }, id) {
-    const resp = await http.loadOne("configuracion/usuarios", id);
+    const resp = await http.getOne("configuracion/usuarios", id);
     commit("SET_USUARIO", resp.data);
   },
 
   async updateUsuario({ commit }, usuario) {
-    const resp = await http.update(
+    const resp = await http.put(
       "configuracion/usuarios",
       usuario.id,
       usuario
@@ -73,7 +73,7 @@ const actions = {
   },
 
   async createUsuario({ commit }, usuario) {
-    const resp = await http.create("configuracion/usuarios", usuario);
+    const resp = await http.post("configuracion/usuarios", usuario);
     if (resp.status === 201) {
       commit("CREATE_USUARIO", resp.data);
       commit(
