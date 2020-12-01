@@ -35,7 +35,7 @@
       <template v-slot:[`item.actions`]="{ item }">
         <router-link
           class="links"
-          :to="{ name: 'Editar Companias', params: { nombre: item.nombre } }"
+          :to="{ name: 'Editar Compañía', params: { nombre: item.nombre } }"
         >
           <v-icon
             small

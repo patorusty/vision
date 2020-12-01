@@ -62,7 +62,7 @@ const actions = {
                 {
                     snackbar: true,
                     color: "success",
-                    snackText: "Compania creado con éxito!"
+                    snackText: "Compañía creado con éxito!"
                 },
                 { root: true }
             );
@@ -92,7 +92,7 @@ const actions = {
                 {
                     snackbar: true,
                     color: "success",
-                    snackText: "Compania editada con éxito!"
+                    snackText: "Compañía editada con éxito!"
                 },
                 { root: true }
             );
@@ -118,7 +118,7 @@ const actions = {
                 {
                     snackbar: true,
                     color: "success",
-                    snackText: "Compania eliminada con éxito!"
+                    snackText: "Compañía eliminada con éxito!"
                 },
                 { root: true }
             );
@@ -128,7 +128,7 @@ const actions = {
             commit(
                 "snackbar/SHOW_SNACK", {
                 color: "red",
-                snackText: "Existen Códigos Organizadores relacionados a esta Compania"
+                snackText: "Existen Códigos Organizadores relacionados a esta Compañía"
             },
                 { root: true }
             );

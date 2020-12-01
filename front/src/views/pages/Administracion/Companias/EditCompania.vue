@@ -167,7 +167,7 @@ export default {
     
     volver(){
       this.$router.push({
-              name: 'Companias',
+              name: 'Compañías',
             });
     },
     async update(){

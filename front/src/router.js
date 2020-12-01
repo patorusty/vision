@@ -30,17 +30,17 @@ export default new Router({
         },
 
         {
-          name: "Companias",
+          name: "Compañías",
           path: "administracion/companias",
           component: () => import(
             "@/views/pages/Administracion/Companias/Companias.vue"
           )
         },
         {
-          name: "Editar Companias",
+          name: "Editar Compañía",
           path: "administracion/companias/:nombre",
           component: () => import(
-            "@/views/pages/Administracion/Companias/EditCompanias.vue"
+            "@/views/pages/Administracion/Companias/EditCompania.vue"
           )
         },
         {
