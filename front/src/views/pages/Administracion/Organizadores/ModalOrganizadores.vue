@@ -10,6 +10,7 @@
           <v-row>
             <v-col>
               <v-text-field
+              v-uppercase
                 v-model="organizador.nombre"
                 label="Nombre"
                 :rules="[rules.required]"
@@ -17,6 +18,7 @@
             </v-col>
             <v-col>
               <v-text-field
+              v-uppercase
                 v-model="organizador.apellido"
                 label="Apellido"
                 :rules="[rules.required]"
@@ -26,6 +28,7 @@
           <v-row>
             <v-col>
               <v-text-field
+              v-uppercase
                 v-model="organizador.cuit"
                 label="CUIT"
                 @keyup="buscarCuit"
@@ -37,6 +40,7 @@
             </v-col>
             <v-col>
               <v-text-field
+              v-uppercase
                 v-model="organizador.email"
                 label="Email"
                 :rules="[rules.email, rules.required]"
@@ -46,6 +50,7 @@
           <v-row>
             <v-col>
               <v-text-field
+              v-uppercase
                 v-model="organizador.telefono_1"
                 label="Telefono"
                 :rules="[rules.required]"
@@ -53,6 +58,7 @@
             </v-col>
             <v-col>
               <v-text-field
+              v-uppercase
                 v-model="organizador.telefono_2"
                 label="Telefono Alt."
                 :rules="[rules.required]"
@@ -62,6 +68,7 @@
           <v-row>
             <v-col>
               <v-text-field
+              v-uppercase
                 v-model="organizador.matricula"
                 label="Matricula"
                 @keyup="buscarMatricula"

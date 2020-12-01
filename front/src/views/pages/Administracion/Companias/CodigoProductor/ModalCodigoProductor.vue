@@ -37,6 +37,7 @@
           <v-row>
             <v-col>
               <v-text-field
+              v-uppercase
                 label="Codigo Productor"
                 v-model="codigo_productor.codigo_productor"
                 :rules="[

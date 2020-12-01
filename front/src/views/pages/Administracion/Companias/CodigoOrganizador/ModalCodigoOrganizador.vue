@@ -22,6 +22,7 @@
           <v-row>
             <v-col>
               <v-text-field
+              v-uppercase
                 label="Codigo Organizador"
                 v-model="codigo_organizador.codigo_organizador"
                 :rules="[

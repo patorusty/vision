@@ -10,6 +10,7 @@
                   v-model="compania.nombre"
                   :rules="[rules.required]"
                   label="Nombre"
+                  v-uppercase
                 >
                 </v-text-field>
               </v-col>
@@ -22,6 +23,7 @@
                     !cuitUsado || 'Este CUIT ya está en uso',
                   ]"
                   label="CUIT"
+                  v-uppercase
                 >
                 </v-text-field>
               </v-col>
@@ -31,6 +33,7 @@
                 <v-text-field
                   v-model="compania.codigo_lr"
                   label="Libros Rubricados"
+                  v-uppercase
                 ></v-text-field>
               </v-col>
               <v-col class="d-flex justify-center">
@@ -55,6 +58,7 @@
                   v-model="compania.direccion"
                   :rules="[rules.required]"
                   label="Direccion"
+                  v-uppercase
                 ></v-text-field>
               </v-col>
               <v-col>
@@ -74,6 +78,7 @@
                   :rules="[rules.required]"
                   v-model="compania.telefono_1"
                   label=" Telefono Oficina"
+                  v-uppercase
                 ></v-text-field>
               </v-col>
               <v-col>
@@ -81,6 +86,7 @@
                   :rules="[rules.required]"
                   v-model="compania.telefono_aux"
                   label=" Telefono Auxilio"
+                  v-uppercase
                 ></v-text-field>
               </v-col>
               <v-col>
@@ -88,6 +94,7 @@
                   :rules="[rules.required]"
                   v-model="compania.telefono_siniestros"
                   label=" Telefono Siniestros"
+                  v-uppercase
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -97,6 +104,7 @@
                   :rules="[rules.email, rules.required]"
                   label="Email Emision"
                   v-model="compania.email_emision"
+                  v-uppercase
                 ></v-text-field>
               </v-col>
               <v-col>
@@ -104,27 +112,17 @@
                   :rules="[rules.email, rules.required]"
                   label="Email Siniestros"
                   v-model="compania.email_siniestros"
+                  v-uppercase
                 ></v-text-field>
               </v-col>
             </v-row>
           </v-form>
         </v-container>
       </v-card-text>
-      <!-- <v-card-actions class="d-flex justify-end">
-      <v-btn class="mb-2" color="red" text @click="closeModal">Cerrar</v-btn>
-      <v-btn
-        class="mb-2"
-        v-if="!edicion"
-        color="green"
-        @click="create"
-        text
-        native-type="submit"
-        >Crear</v-btn
-      >
-      <v-btn class="mb-2" v-else @click="update" text color="green"
-        >Guardar</v-btn
-      >
-    </v-card-actions> -->
+      <v-card-actions class="d-flex justify-end">
+        <v-btn class="mb-2" color="red" @click="volver" text>Volver</v-btn>
+        <v-btn class="mb-2" @click="update" text color="green">Guardar</v-btn>
+      </v-card-actions>
     </v-card>
     <codigo-organizador />
     <codigo-productor />
@@ -137,12 +135,12 @@ import http from "../../../../http-request";
 import { helpers } from "../../../../helpers";
 import { debounce } from "debounce";
 import CodigoOrganizador from "./CodigoOrganizador/CodigoOrganizador";
-import CodigoProductor from './CodigoProductor/CodigoProductor';
+import CodigoProductor from "./CodigoProductor/CodigoProductor";
 
 export default {
   components: {
     CodigoOrganizador,
-    CodigoProductor
+    CodigoProductor,
   },
   mixins: [helpers],
   data: () => ({
@@ -166,15 +164,17 @@ export default {
     ...mapMutations("modal", ["HIDE_MODAL"]),
 
     ...mapMutations("compania", ["RESET_COMPANIA"]),
-    async update() {
+    
+    volver(){
+      this.$router.push({
+              name: 'Companias',
+            });
+    },
+    async update(){
       if (this.$refs.form.validate()) {
         const updateResult = await this.updateCompania(this.compania);
-        if (updateResult) {
-          console.log("update");
-        }
       }
     },
-
     buscarCuit: debounce(async function () {
       if (
         this.compania.cuit.length >= 6 &&

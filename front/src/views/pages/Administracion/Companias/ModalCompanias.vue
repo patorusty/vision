@@ -13,11 +13,13 @@
                 v-model="compania.nombre"
                 :rules="[rules.required]"
                 label="Nombre"
+                v-uppercase
               >
               </v-text-field>
             </v-col>
             <v-col>
               <v-text-field
+              v-uppercase
                 v-model="compania.cuit"
                 @keyup="buscarCuit"
                 :rules="[
@@ -32,6 +34,7 @@
           <v-row>
             <v-col>
               <v-text-field
+              v-uppercase
                 v-model="compania.codigo_lr"
                 label="Libros Rubricados"
               ></v-text-field>
@@ -56,6 +59,7 @@
           <v-row>
             <v-col>
               <v-text-field
+              v-uppercase
                 v-model="compania.direccion"
                 :rules="[rules.required]"
                 label="Direccion"
@@ -75,6 +79,7 @@
           <v-row>
             <v-col>
               <v-text-field
+              v-uppercase
                 :rules="[rules.required]"
                 v-model="compania.telefono_1"
                 label=" Telefono Oficina"
@@ -82,6 +87,7 @@
             </v-col>
             <v-col>
               <v-text-field
+              v-uppercase
                 :rules="[rules.required]"
                 v-model="compania.telefono_aux"
                 label=" Telefono Auxilio"
@@ -89,6 +95,7 @@
             </v-col>
             <v-col>
               <v-text-field
+              v-uppercase
                 :rules="[rules.required]"
                 v-model="compania.telefono_siniestros"
                 label=" Telefono Siniestros"
@@ -98,6 +105,7 @@
           <v-row>
             <v-col>
               <v-text-field
+              v-uppercase
                 :rules="[rules.email, rules.required]"
                 label="Email Emision"
                 v-model="compania.email_emision"
@@ -105,6 +113,7 @@
             </v-col>
             <v-col>
               <v-text-field
+              v-uppercase
                 :rules="[rules.email, rules.required]"
                 label="Email Siniestros"
                 v-model="compania.email_siniestros"

@@ -24,6 +24,15 @@ import i18n from './i18n'
 
 Vue.config.productionTip = false
 
+Vue.directive("uppercase", {
+  inserted: function (el, _, vnode) {
+    el.addEventListener("input", async function (e) {
+      e.target.value = e.target.value.toUpperCase();
+      vnode.componentInstance.$emit("input", e.target.value.toUpperCase());
+    });
+  },
+});
+
 new Vue({
   router,
   store,

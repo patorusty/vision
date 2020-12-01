@@ -35,7 +35,7 @@ const mutations = {
         state.companias.push(compania);
     },
     UPDATE_COMPANIA(state, compania) {
-        const item = state.companias.find(item => item.id === compania.id);
+        var item = state.companias.find(item => item.id === compania.id);
         Object.assign(item, compania);
     },
     DELETE_COMPANIA(state, id) {

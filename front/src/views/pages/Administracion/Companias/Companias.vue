@@ -8,6 +8,7 @@
         label="Search"
         single-line
         hide-details
+        v-uppercase
       ></v-text-field>
       <v-spacer></v-spacer>
       <v-btn color="primary" @click="SHOW_MODAL(false)" dark>Crear</v-btn>
