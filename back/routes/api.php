@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CodigoOrganizadorcontroller;
 use App\Http\Controllers\CodigoProductorcontroller;
 use App\Http\Controllers\CompaniaController;
@@ -43,7 +44,8 @@ Route::Resource('/administracion/codigo_productores', CodigoProductorController:
 Route::get('/codigo_productor/compania/{id}', [CodigoProductorController::class, 'indexFiltrado']);
 Route::post('/codigo_productor/busquedaCP', [CodigoProductorController::class, 'busquedaCP']);
 
-// Route::Resource('/codigoproductor', 'CodigoProductorController');
-// Route::Resource('/cobertura', 'CoberturaController');
+Route::Resource('/clientes', ClienteController::class);
+Route::post('/clientes/busquedaCuit', [ClienteController::class, 'searchCuit']);
+Route::post('/clientes/busquedaDNI', [ClienteController::class, 'searchDNI']);
 
 Route::Resource('/localidades', LocalidadController::class);

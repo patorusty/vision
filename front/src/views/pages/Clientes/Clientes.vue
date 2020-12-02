@@ -11,31 +11,27 @@
         v-uppercase
       ></v-text-field>
       <v-spacer></v-spacer>
-      <v-btn color="primary" @click="SHOW_MODAL(false)" dark>Crear</v-btn>
-      <v-dialog
-        @click:outside="HIDE_MODAL(false)"
-        :value="modal"
-        max-width="70%"
-      >
-        <modal-companias></modal-companias>
-      </v-dialog>
+      <v-btn color="primary" @click="createCliente" dark>Crear</v-btn>
     </v-card-title>
     <v-data-table
       class="pa-2"
       :headers="headers"
       :items-per-page="10"
-      :items="companias"
+      :items="clientes"
       :search="search"
       multi-sort
       :loading="loading"
     >
+    <template v-slot:[`item.full_name`]="{ item }">{{ item.nombre }} {{ item.apellido }}</template>
+        <template v-slot:[`item.productor`]="{ item }">{{ item.productores.nombre }} {{ item.productores.apellido }}</template>
+  
       <template slot="item.activo" slot-scope="props">{{
         textoActivo(props.item.activo)
       }}</template>
       <template v-slot:[`item.actions`]="{ item }">
         <router-link
           class="links"
-          :to="{ name: 'Editar Compañía', params: { nombre: item.nombre } }"
+          :to="{ name: 'Editar Cliente', params: { id: item.id } }"
         >
           <v-icon
             small
@@ -58,11 +54,11 @@
     <v-dialog :retain-focus="false" max-width="30%" v-model="modalDelete">
       <v-card class="pa-4">
         <v-card-text>
-          <span>Esta seguro que desea eliminar esta Compania?</span>
+          <span>Esta seguro que desea eliminar esta Cliente?</span>
         </v-card-text>
         <v-card-actions class="py-0 pt-3 pr-6 d-flex justify-end">
           <v-btn dark color="red" @click="modalDelete = false">Cancelar</v-btn>
-          <v-btn class="ml-4" dark color="success" @click="deleteCompany"
+          <v-btn class="ml-4" dark color="success" @click="deleteCliente"
             >Confirmar</v-btn
           >
         </v-card-actions>
@@ -73,47 +69,52 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-import { helpers } from "../../../../helpers";
-import ModalCompanias from "./ModalCompanias.vue";
+import { helpers } from "../../../helpers";
 export default {
-  components: {
-    ModalCompanias,
-  },
   mixins: [helpers],
   data: () => ({
     search: "",
     idSelected: null,
     modalDelete: false,
     headers: [
-      { text: "Nombre", value: "nombre" },
-      { text: "Telefono", value: "telefono_1" },
-      { text: "Tel. Auxilio", value: "telefono_aux" },
-      { text: "Tel. Siniestro", value: "telefono_siniestros" },
-      { text: "Activo", value: "activo" },
+      { text: "Nombre", value: "full_name" },
+      { text: "DNI", value: "nro_dni" },
+      { text: "Celular", value: "celular" },
+      { text: "E-mail", value: "email" },
+      { text: "Productor", value: "productor" },
       { text: "Actions", value: "actions", sortable: false, align: "right" },
     ],
   }),
   computed: {
-    ...mapState("compania", ["companias", "loading"]),
+    ...mapState("cliente", ["clientes", "loading"]),
     ...mapState("modal", ["modal"]),
   },
   methods: {
-    ...mapActions("compania", [
-      "getCompanias",
-      "deleteCompania",
+    ...mapActions("cliente", [
+      "getClientes",
+      "deleteCliente",
     ]),
     ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL"]),
+    createCliente() {
+        this.$router
+        .push({
+          path: '/clientes/create',
+        })
+        .catch((err) => {
+          throw new Error(`Surgió el siguiente error: ${err}.`);
+        });
+    },
     openDeleteModal(id) {
       this.idSelected = id;
       this.modalDelete = true;
     },
-    deleteCompany() {
-      this.deleteCompania(this.idSelected);
+    deleteCliente() {
+      this.deleteCliente(this.idSelected);
       this.modalDelete = false;
     },
   },
   created() {
-    this.getCompanias();
+    this.getClientes();
   },
 };
 </script>

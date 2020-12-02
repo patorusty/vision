@@ -156,12 +156,9 @@ export default {
   }),
   computed: {
     ...mapState("compania", ["compania"]),
-    ...mapState("modal", ["modal", "edicion"]),
   },
   methods: {
-    ...mapActions("compania", ["getCompania", "updateCompania"]),
-
-    ...mapMutations("modal", ["HIDE_MODAL"]),
+    ...mapActions("compania", ["getCompania", "updateCompania", "getCompanias"]),
 
     ...mapMutations("compania", ["RESET_COMPANIA"]),
     
@@ -186,12 +183,9 @@ export default {
         this.cuitUsado = resp.data.usado;
       }
     }, 700),
-    async cargarLocalidades() {
-      const resp = await http.get("/localidades");
-      this.localidades = resp.data;
-    },
   },
   created() {
+    this.getCompanias();
     this.cargarLocalidades();
     this.getCompania(this.$route.params.nombre);
   },

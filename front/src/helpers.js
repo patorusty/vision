@@ -1,3 +1,7 @@
+import http from "./http-request";
+import moment from "moment";
+
+
 export const helpers = {
   methods: {
     localidadesText(item) {
@@ -11,6 +15,27 @@ export const helpers = {
     },
     codigoOrgText(item) {
       return `${item.organizadores.apellido}  ${item.organizadores.nombre} (C.Org:  ${item.codigo_organizador})`;
+    },
+    async cargarLocalidades() {
+      const resp = await http.get("/localidades");
+      this.localidades = resp.data;
+    },
+    formatDate(date) {
+      if (date) {
+        return moment(date).format("DD/MM/YYYY");
+      } else {
+        return "";
+      }
     }
-  }
+  },
+  computed: {
+    fechaFormateada: {
+      set: function () {
+        return this.formatDate(this.cliente.nacimiento);
+      },
+      get: function () {
+        return this.formatDate(this.cliente.nacimiento);
+      },
+    },
+  },
 };

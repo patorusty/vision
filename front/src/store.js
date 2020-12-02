@@ -4,6 +4,7 @@ import usuario from "./modules/usuario";
 import modal from "./modules/modal";
 import snackbar from "./modules/snackbar";
 import compania from "./modules/compania";
+import cliente from "./modules/cliente";
 import organizador from "./modules/organizador";
 import productor from "./modules/productor";
 import codigo_organizador  from "./modules/codigo_organizador";
@@ -35,6 +36,7 @@ export default new Vuex.Store({
     modal,
     snackbar,
     compania,
+    cliente,
     organizador,
     productor,
     codigo_organizador,

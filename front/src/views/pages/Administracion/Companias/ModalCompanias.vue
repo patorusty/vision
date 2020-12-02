@@ -202,10 +202,6 @@ export default {
         this.cuitUsado = resp.data.usado;
       }
     }, 700),
-    async cargarLocalidades() {
-      const resp = await http.get("/localidades");
-      this.localidades = resp.data;
-    },
   },
   created() {
     this.cargarLocalidades();

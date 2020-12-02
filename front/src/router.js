@@ -44,6 +44,27 @@ export default new Router({
           )
         },
         {
+          name: "Clientes",
+          path: "clientes",
+          component: () => import(
+            "@/views/pages/Clientes/Clientes.vue"
+          )
+        },
+        {
+          name: "Crear Cliente",
+          path: "clientes/create",
+          component: () => import(
+            "@/views/pages/Clientes/CreateCliente.vue"
+          )
+        },
+        {
+          name: "Editar Cliente",
+          path: "clientes/:id",
+          component: () => import(
+            "@/views/pages/Clientes/EditCliente.vue"
+          )
+        },
+        {
           name: "Organizadores",
           path: "administracion/organizadores",
           component: () =>
