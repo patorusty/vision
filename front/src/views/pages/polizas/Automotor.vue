@@ -39,7 +39,7 @@
         >{{ formatDate(item.vigencia_desde) }} <br />
                   {{ formatDate(item.vigencia_hasta) }}</template
       >
-      <template v-slot:[`item.envio`]="{ item }">
+      <!-- <template v-slot:[`item.envio`]="{ item }"> -->
 
       }}</template>
 

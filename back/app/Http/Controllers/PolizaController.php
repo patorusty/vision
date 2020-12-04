@@ -150,10 +150,10 @@ class PolizaController extends Controller
     }
     public function searchPoliza()
     {
-        if ($search = Request::get('q')) {
-            $numero = Poliza::where('numero', $search)->get();
-        } 
-        // dd($numero);
+        // if ($search = Request::get('q')) {
+        //     $numero = Poliza::where('numero', $search)->get();
+        // } 
+        // // dd($numero);
     }
     /**
      * Remove the specified resource from storage.
