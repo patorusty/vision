@@ -11,7 +11,11 @@
         v-uppercase
       ></v-text-field>
       <v-spacer></v-spacer>
-      <v-btn color="primary" @click="createCliente" dark>Crear</v-btn>
+      <v-btn
+        color="primary"
+        @click="createCliente"
+        dark
+      >Crear</v-btn>
     </v-card-title>
     <v-data-table
       class="pa-2"
@@ -32,11 +36,12 @@
       <template v-slot:[`item.documento`]="{ item }">
         {{ item.cuit ? item.cuit : item.nro_dni }}
       </template>
-      <template v-slot:[`item.productor`]="{ item }"
-        >{{ item.productores.nombre }} {{ item.productores.apellido }}</template
-      >
+      <template v-slot:[`item.productor`]="{ item }">{{ item.productores.nombre }} {{ item.productores.apellido }}</template>
 
-      <template slot="item.activo" slot-scope="props">{{
+      <template
+        slot="item.activo"
+        slot-scope="props"
+      >{{
         textoActivo(props.item.activo)
       }}</template>
       <template v-slot:[`item.actions`]="{ item }">
@@ -44,7 +49,11 @@
           class="links"
           :to="{ name: 'Editar Cliente', params: { id: item.id } }"
         >
-          <v-icon small class="mr-2" color="success"> mdi-pencil </v-icon>
+          <v-icon
+            small
+            class="mr-2"
+            color="success"
+          > mdi-pencil </v-icon>
         </router-link>
         <v-icon
           class="ml-2"
@@ -56,16 +65,27 @@
         </v-icon>
       </template>
     </v-data-table>
-    <v-dialog :retain-focus="false" max-width="30%" v-model="modalDelete">
+    <v-dialog
+      :retain-focus="false"
+      max-width="30%"
+      v-model="modalDelete"
+    >
       <v-card class="pa-4">
         <v-card-text>
           <span>Esta seguro que desea eliminar esta Cliente?</span>
         </v-card-text>
         <v-card-actions class="py-0 pt-3 pr-6 d-flex justify-end">
-          <v-btn dark color="red" @click="modalDelete = false">Cancelar</v-btn>
-          <v-btn class="ml-4" dark color="success" @click="deleteCliente"
-            >Confirmar</v-btn
-          >
+          <v-btn
+            dark
+            color="red"
+            @click="modalDelete = false"
+          >Cancelar</v-btn>
+          <v-btn
+            class="ml-4"
+            dark
+            color="success"
+            @click="deleteCliente"
+          >Confirmar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -100,7 +120,7 @@ export default {
     createCliente() {
       this.$router
         .push({
-          path: "/clientes/create",
+          path: "/clientes/create"
         })
         .catch(err => {
           throw new Error(`Surgió el siguiente error: ${err}.`);
