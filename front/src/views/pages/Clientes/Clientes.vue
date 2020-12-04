@@ -22,9 +22,13 @@
       multi-sort
       :loading="loading"
     >
-    <template v-slot:[`item.full_name`]="{ item }">{{ item.nombre }} {{ item.apellido }}</template>
-        <template v-slot:[`item.productor`]="{ item }">{{ item.productores.nombre }} {{ item.productores.apellido }}</template>
-  
+      <template v-slot:[`item.full_name`]="{ item }"
+        >{{ item.nombre }} {{ item.apellido }}</template
+      >
+      <template v-slot:[`item.productor`]="{ item }"
+        >{{ item.productores.nombre }} {{ item.productores.apellido }}</template
+      >
+
       <template slot="item.activo" slot-scope="props">{{
         textoActivo(props.item.activo)
       }}</template>
@@ -33,13 +37,7 @@
           class="links"
           :to="{ name: 'Editar Cliente', params: { id: item.id } }"
         >
-          <v-icon
-            small
-            class="mr-2"
-            color="success"
-          >
-            mdi-pencil
-          </v-icon>
+          <v-icon small class="mr-2" color="success"> mdi-pencil </v-icon>
         </router-link>
         <v-icon
           class="ml-2"
@@ -82,25 +80,22 @@ export default {
       { text: "Celular", value: "celular" },
       { text: "E-mail", value: "email" },
       { text: "Productor", value: "productor" },
-      { text: "Actions", value: "actions", sortable: false, align: "right" },
-    ],
+      { text: "Actions", value: "actions", sortable: false, align: "right" }
+    ]
   }),
   computed: {
     ...mapState("cliente", ["clientes", "loading"]),
-    ...mapState("modal", ["modal"]),
+    ...mapState("modal", ["modal"])
   },
   methods: {
-    ...mapActions("cliente", [
-      "getClientes",
-      "deleteCliente",
-    ]),
+    ...mapActions("cliente", ["getClientes", "deleteCliente"]),
     ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL"]),
     createCliente() {
-        this.$router
+      this.$router
         .push({
-          path: '/clientes/create',
+          path: "/clientes/create"
         })
-        .catch((err) => {
+        .catch(err => {
           throw new Error(`Surgió el siguiente error: ${err}.`);
         });
     },
@@ -111,11 +106,11 @@ export default {
     deleteCliente() {
       this.deleteCliente(this.idSelected);
       this.modalDelete = false;
-    },
+    }
   },
   created() {
     this.getClientes();
-  },
+  }
 };
 </script>
 

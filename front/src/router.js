@@ -21,12 +21,12 @@ export default new Router({
         {
           name: "Automotor",
           path: "polizas/automotor",
-          component: () => import("@/views/pages/polizas/Automotor")
+          component: () => import("@/views/pages/Polizas/Automotor")
         },
         {
           name: "OtrosRiesgos",
           path: "polizas/otrosriesgos",
-          component: () => import("@/views/pages/polizas/OtrosRiesgos")
+          component: () => import("@/views/pages/Polizas/OtrosRiesgos")
         },
 
         {
