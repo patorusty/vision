@@ -7,6 +7,7 @@ use App\Http\Controllers\CompaniaController;
 use App\Http\Controllers\LocalidadController;
 use App\Http\Controllers\OrganizadorController;
 use App\Http\Controllers\ProductorController;
+use App\Http\Controllers\PolizaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -47,5 +48,7 @@ Route::post('/codigo_productor/busquedaCP', [CodigoProductorController::class, '
 Route::Resource('/clientes', ClienteController::class);
 Route::post('/clientes/busquedaCuit', [ClienteController::class, 'searchCuit']);
 Route::post('/clientes/busquedaDNI', [ClienteController::class, 'searchDNI']);
+
+Route::Resource('/polizas', PolizaController::class);
 
 Route::Resource('/localidades', LocalidadController::class);

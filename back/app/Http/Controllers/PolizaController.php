@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Polizas;
+use App\Models\Poliza;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Resources\Poliza as PolizasResource;
 
 
 class PolizaController extends Controller
@@ -17,23 +16,20 @@ class PolizaController extends Controller
      */
     public function index()
     {
-        $polizas = Polizas::with(['codigo_productor', 'estado_polizas', 'clientes', 'companias', 'tipo_vigencias'])->get();
+        return Poliza::with(['codigo_productor', 'estado_polizas', 'clientes', 'companias', 'tipo_vigencias', 'riesgo_automotor'])->get();
 
-        return PolizasResource::collection($polizas);
     }
 
     public function numeroDeSolicitud()
     {
         $nro_solicitud =  DB::table('polizas')->orderBy('numero_solicitud', 'DESC')->take(1)->get();
         // toString($nro_solicitud);
-        return new PolizasResource($nro_solicitud);
     }
 
     public function chequeoRenovada($poliza_actual)
     {
-        $poliza = Polizas::where('renueva_numero', $poliza_actual)->get();
+        $poliza = Poliza::where('renueva_numero', $poliza_actual)->get();
 
-        return new PolizasResource($poliza);
     }
 
     /**
@@ -43,9 +39,8 @@ class PolizaController extends Controller
      */
     public function create()
     {
-        $polizas = Polizas::all();
+        $polizas = Poliza::all();
 
-        return PolizasResource::collection($polizas);
     }
 
     /**
@@ -57,7 +52,7 @@ class PolizaController extends Controller
     public function store(Request $request)
     {        
         
-        $poliza = Polizas::create([
+        $poliza = Poliza::create([
             'cliente_id' => $request->input('cliente_id'),
             'compania_id' => $request->input('compania_id'),
             'codigo_productor_id' => $request->input('codigo_productor_id'),
@@ -87,7 +82,6 @@ class PolizaController extends Controller
             'archivada' => $request->input('archivada'),
         ]);
 
-        return new PolizasResource($poliza);
 
     }
 
@@ -99,9 +93,8 @@ class PolizaController extends Controller
      */
     public function show($numero_solicitud)
     {
-        $numero_solicitud = Polizas::where('numero_solicitud', $numero_solicitud)->with(['codigo_productor.productores', 'estado_polizas', 'clientes', 'companias', 'tipo_vigencias'])->get();
+        $numero_solicitud = Poliza::where('numero_solicitud', $numero_solicitud)->with(['codigo_productor.productores', 'estado_polizas', 'clientes', 'companias', 'tipo_vigencias'])->get();
 
-        return new PolizasResource($numero_solicitud);
     }
 
     /**
@@ -124,7 +117,7 @@ class PolizaController extends Controller
      */
     public function update(Request $request, $id)
     {   
-        $poliza = Polizas::find($id);
+        $poliza = Poliza::find($id);
         $poliza->update([
             'cliente_id' => $request->input('cliente_id'),
             'compania_id' => $request->input('compania_id'),
@@ -157,11 +150,10 @@ class PolizaController extends Controller
     }
     public function searchPoliza()
     {
-        if ($search = Request::get('q')) {
-            $numero = Polizas::where('numero', $search)->get();
-        } 
-        // dd($numero);
-        return PolizasResource::collection($numero);
+        // if ($search = Request::get('q')) {
+        //     $numero = Poliza::where('numero', $search)->get();
+        // } 
+        // // dd($numero);
     }
     /**
      * Remove the specified resource from storage.
@@ -171,7 +163,7 @@ class PolizaController extends Controller
      */
     public function destroy($id)
     {
-        $poliza = Polizas::find($id);
+        $poliza = Poliza::find($id);
 
         $poliza->delete();
 
@@ -181,7 +173,7 @@ class PolizaController extends Controller
 
     public function vigencias()
     {
-        $polizas = Polizas::All();
+        $polizas = Poliza::All();
         $hoy = date("Y-m-d H:i:s");
         $hola = 'hola';
         // dd($polizas);
@@ -194,7 +186,6 @@ class PolizaController extends Controller
             return dd($poliza);
         });
         
-        return PolizasResource::collection($polizas);
 
     }
 }

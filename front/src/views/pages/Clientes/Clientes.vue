@@ -87,12 +87,12 @@ export default {
       { text: "Celular", value: "celular" },
       { text: "E-mail", value: "email" },
       { text: "Productor", value: "productor" },
-      { text: "Actions", value: "actions", sortable: false, align: "right" },
-    ],
+      { text: "Actions", value: "actions", sortable: false, align: "right" }
+    ]
   }),
   computed: {
     ...mapState("cliente", ["clientes", "loading"]),
-    ...mapState("modal", ["modal"]),
+    ...mapState("modal", ["modal"])
   },
   methods: {
     ...mapActions("cliente", ["getClientes", "deleteCliente"]),
@@ -102,7 +102,7 @@ export default {
         .push({
           path: "/clientes/create",
         })
-        .catch((err) => {
+        .catch(err => {
           throw new Error(`Surgió el siguiente error: ${err}.`);
         });
     },
@@ -113,11 +113,11 @@ export default {
     deleteCliente() {
       this.deleteCliente(this.idSelected);
       this.modalDelete = false;
-    },
+    }
   },
   created() {
     this.getClientes();
-  },
+  }
 };
 </script>
 

@@ -1,7 +1,6 @@
 <template>
   <v-card class="mt-0 mx-4 pa-3">
     <v-card-title>
-      Nutrition
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
@@ -9,119 +8,123 @@
         label="Search"
         single-line
         hide-details
+        v-uppercase
       ></v-text-field>
+      <v-spacer></v-spacer>
+      <v-btn color="primary" @click="SHOW_MODAL(false)" dark>Crear</v-btn>
+      <v-dialog
+        @click:outside="HIDE_MODAL(false)"
+        :value="modal"
+        max-width="70%"
+      >
+      </v-dialog>
     </v-card-title>
     <v-data-table
+      class="pa-2"
       :headers="headers"
-      :items="desserts"
+      :items-per-page="10"
+      :items="polizas"
       :search="search"
-    ></v-data-table>
+      multi-sort
+      :loading="loading"
+    >
+      <template v-slot:[`item.compania`]="{ item }"
+        >{{ item.companias.nombre }} <br />
+        Cod.({{ item.codigo_productor.codigo_productor }})</template
+      >
+      <template v-slot:[`item.asegurado`]="{ item }"
+        >{{ item.clientes.nombre }} {{ item.clientes.apellido }}</template
+      >
+      <template v-slot:[`item.desde`]="{ item }"
+        >{{ formatDate(item.vigencia_desde) }} <br />
+                  {{ formatDate(item.vigencia_hasta) }}</template
+      >
+      <!-- <template v-slot:[`item.envio`]="{ item }"> -->
+
+      }}</template>
+
+      <template v-slot:[`item.actions`]="{ item }">
+        <!-- <router-link
+          class="links"
+          :to="{ name: 'Editar Compañía', params: { nombre: item.nombre } }"
+        > -->
+          <v-icon small class="mr-2" color="success">
+            mdi-pencil
+          </v-icon>
+        <!-- </router-link> -->
+        <v-icon
+          class="ml-2"
+          small
+          v-on:click.stop="openDeleteModal(item.id)"
+          color="error"
+        >
+          mdi-close
+        </v-icon>
+      </template>
+    </v-data-table>
+    <v-dialog :retain-focus="false" max-width="30%" v-model="modalDelete">
+      <v-card class="pa-4">
+        <v-card-text>
+          <span>Esta seguro que desea eliminar esta Compania?</span>
+        </v-card-text>
+        <v-card-actions class="py-0 pt-3 pr-6 d-flex justify-end">
+          <v-btn dark color="red" @click="modalDelete = false">Cancelar</v-btn>
+          <v-btn class="ml-4" dark color="success" @click="deleteCompany"
+            >Confirmar</v-btn
+          >
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 
 <script>
+import { mapState, mapActions, mapMutations } from "vuex";
+import { helpers } from "../../../helpers";
 export default {
-  name: "Automotor",
-  data() {
-    return {
-      search: "",
-      headers: [
-        {
-          text: "Dessert (100g serving)",
-          align: "start",
-          sortable: false,
-          value: "name"
-        },
-        { text: "Calories", value: "calories" },
-        { text: "Fat (g)", value: "fat" },
-        { text: "Carbs (g)", value: "carbs" },
-        { text: "Protein (g)", value: "protein" },
-        { text: "Iron (%)", value: "iron" },
-        { text: "Acciones", value: "iron" }
-      ],
-      desserts: [
-        {
-          name: "Frozen Yogurt",
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: "1%"
-        },
-        {
-          name: "Ice cream sandwich",
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: "1%"
-        },
-        {
-          name: "Eclair",
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: "7%"
-        },
-        {
-          name: "Cupcake",
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: "8%"
-        },
-        {
-          name: "Gingerbread",
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: "16%"
-        },
-        {
-          name: "Jelly bean",
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: "0%"
-        },
-        {
-          name: "Lollipop",
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: "2%"
-        },
-        {
-          name: "Honeycomb",
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: "45%"
-        },
-        {
-          name: "Donut",
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: "22%"
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: "6%"
-        }
-      ]
-    };
+  components: {},
+  mixins: [helpers],
+  data: () => ({
+    search: "",
+    idSelected: null,
+    modalDelete: false,
+    headers: [
+      { text: "Poliza N°", value: "numero" },
+      { text: "Compania", value: "compania" },
+      { text: "Asegurado", value: "asegurado" },
+      { text: "Patente", value: "riesgo_automotor.patente" },
+      { text: "Vigencia", value: "tipo_vigencias.vigencia" },
+      { text: "Desde / Hasta", value: "desde" },
+      { text: "Estado", value: "estado_polizas.nombre" },
+      { text: "Envío", value: "envio" },
+      { text: "Pago", value: "pago" },
+      { text: "Actions", value: "actions", sortable: false, align: "right" }
+    ]
+  }),
+  computed: {
+    ...mapState("poliza", ["polizas", "loading"]),
+    ...mapState("modal", ["modal"])
+  },
+  methods: {
+    ...mapActions("poliza", ["getPolizas", "deletePoliza"]),
+    ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL"]),
+    openDeleteModal(id) {
+      this.idSelected = id;
+      this.modalDelete = true;
+    },
+    deleteCompany() {
+      this.deletePoliza(this.idSelected);
+      this.modalDelete = false;
+    }
+  },
+  created() {
+    this.getPolizas();
   }
 };
 </script>
+
+<style>
+.links {
+  text-decoration: none;
+}
+</style>
