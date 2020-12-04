@@ -22,9 +22,20 @@
       multi-sort
       :loading="loading"
     >
-    <template v-slot:[`item.full_name`]="{ item }">{{ item.nombre }} {{ item.apellido }}</template>
-        <template v-slot:[`item.productor`]="{ item }">{{ item.productores.nombre }} {{ item.productores.apellido }}</template>
-  
+      <template v-slot:[`item.full_name`]="{ item }">
+        {{
+          item.razon_social
+            ? item.razon_social
+            : item.nombre + " " + item.apellido
+        }}
+      </template>
+      <template v-slot:[`item.documento`]="{ item }">
+        {{ item.cuit ? item.cuit : item.nro_dni }}
+      </template>
+      <template v-slot:[`item.productor`]="{ item }"
+        >{{ item.productores.nombre }} {{ item.productores.apellido }}</template
+      >
+
       <template slot="item.activo" slot-scope="props">{{
         textoActivo(props.item.activo)
       }}</template>
@@ -33,13 +44,7 @@
           class="links"
           :to="{ name: 'Editar Cliente', params: { id: item.id } }"
         >
-          <v-icon
-            small
-            class="mr-2"
-            color="success"
-          >
-            mdi-pencil
-          </v-icon>
+          <v-icon small class="mr-2" color="success"> mdi-pencil </v-icon>
         </router-link>
         <v-icon
           class="ml-2"
@@ -78,7 +83,7 @@ export default {
     modalDelete: false,
     headers: [
       { text: "Nombre", value: "full_name" },
-      { text: "DNI", value: "nro_dni" },
+      { text: "DNI / CUIT", value: "documento" },
       { text: "Celular", value: "celular" },
       { text: "E-mail", value: "email" },
       { text: "Productor", value: "productor" },
@@ -90,15 +95,12 @@ export default {
     ...mapState("modal", ["modal"]),
   },
   methods: {
-    ...mapActions("cliente", [
-      "getClientes",
-      "deleteCliente",
-    ]),
+    ...mapActions("cliente", ["getClientes", "deleteCliente"]),
     ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL"]),
     createCliente() {
-        this.$router
+      this.$router
         .push({
-          path: '/clientes/create',
+          path: "/clientes/create",
         })
         .catch((err) => {
           throw new Error(`Surgió el siguiente error: ${err}.`);
