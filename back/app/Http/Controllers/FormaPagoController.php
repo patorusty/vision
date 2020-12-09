@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\FormaPago;
-use Illuminate\Http\Request;
-use App\Http\Resources\FormaPago as FormaPagosResource;
+use App\Models\FormaPago;
 
 
 class FormaPagoController extends Controller
 {
     public function index()
     {
-        $formapago = FormaPago::all();
+        return FormaPago::all();
 
-        return FormaPagosResource::collection($formapago);
 
     }
 }

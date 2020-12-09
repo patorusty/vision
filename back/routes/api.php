@@ -8,6 +8,8 @@ use App\Http\Controllers\LocalidadController;
 use App\Http\Controllers\OrganizadorController;
 use App\Http\Controllers\ProductorController;
 use App\Http\Controllers\PolizaController;
+use App\Http\Controllers\TipoRiesgoController;
+use App\Http\Controllers\FormaPagoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -50,5 +52,8 @@ Route::post('/clientes/busquedaCuit', [ClienteController::class, 'searchCuit']);
 Route::post('/clientes/busquedaDNI', [ClienteController::class, 'searchDNI']);
 
 Route::Resource('/polizas', PolizaController::class);
+
+Route::Resource('/tiporiesgos', TipoRiesgoController::class);
+Route::Resource('/formapagos', FormaPagoController::class);
 
 Route::Resource('/localidades', LocalidadController::class);

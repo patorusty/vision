@@ -21,12 +21,10 @@
       class="pa-2"
       :headers="headers"
       :items-per-page="10"
-      :items="clientes"
-      :search="search"
-      multi-sort
+      :items="clientesFiltrados"
       :loading="loading"
     >
-      <template v-slot:[`item.full_name`]="{ item }">
+      <template v-slot:[`item.nombre`]="{ item }">
         {{
           item.razon_social
             ? item.razon_social
@@ -84,7 +82,7 @@
             class="ml-4"
             dark
             color="success"
-            @click="deleteCliente"
+            @click="deleteClient"
           >Confirmar</v-btn>
         </v-card-actions>
       </v-card>
@@ -100,19 +98,38 @@ export default {
   data: () => ({
     search: "",
     idSelected: null,
-    modalDelete: false,
-    headers: [
-      { text: "Nombre", value: "full_name" },
-      { text: "DNI / CUIT", value: "documento" },
-      { text: "Celular", value: "celular" },
-      { text: "E-mail", value: "email" },
-      { text: "Productor", value: "productor" },
-      { text: "Actions", value: "actions", sortable: false, align: "right" }
-    ]
+    modalDelete: false
   }),
   computed: {
     ...mapState("cliente", ["clientes", "loading"]),
-    ...mapState("modal", ["modal"])
+    ...mapState("modal", ["modal"]),
+    headers() {
+      return [
+        { text: "Nombre", value: "nombre" },
+        { text: "DNI / CUIT", value: "documento" },
+        { text: "Celular", value: "celular" },
+        { text: "E-mail", value: "email" },
+        { text: "Productor", value: "productor" },
+        { text: "Actions", value: "actions", sortable: false, align: "right" }
+      ];
+    },
+    clientesFiltrados() {
+      return this.clientes.filter(
+        c =>
+          c.email.toUpperCase().includes(this.search.toUpperCase()) ||
+          c.nombre.toUpperCase().includes(this.search.toUpperCase()) ||
+          c.apellido.toUpperCase().includes(this.search.toUpperCase()) ||
+          (c.nro_dni ? c.nro_dni.toString().includes(this.search) : false) ||
+          (c.cuit ? c.cuit.toString().includes(this.search) : false) ||
+          c.celular.toString().includes(this.search) ||
+          c.productores.nombre
+            .toUpperCase()
+            .includes(this.search.toUpperCase()) ||
+          c.productores.apellido
+            .toUpperCase()
+            .includes(this.search.toUpperCase())
+      );
+    }
   },
   methods: {
     ...mapActions("cliente", ["getClientes", "deleteCliente"]),
@@ -130,10 +147,14 @@ export default {
       this.idSelected = id;
       this.modalDelete = true;
     },
-    deleteCliente() {
+    deleteClient() {
       this.deleteCliente(this.idSelected);
       this.modalDelete = false;
     }
+    // customFilter(items, search, filter) {
+    //   search = search.toString().toLowerCase();
+    //   return items.filter(i => Object.keys(i).some(j => filter(i[j], search)));
+    // }
   },
   created() {
     this.getClientes();

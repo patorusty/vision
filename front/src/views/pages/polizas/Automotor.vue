@@ -8,20 +8,13 @@
         label="Search"
         single-line
         hide-details
-        v-uppercase
       ></v-text-field>
       <v-spacer></v-spacer>
       <v-btn
         color="primary"
-        @click="SHOW_MODAL(false)"
+        to="/polizas/automotor/create"
         dark
       >Crear</v-btn>
-      <v-dialog
-        @click:outside="HIDE_MODAL(false)"
-        :value="modal"
-        max-width="70%"
-      >
-      </v-dialog>
     </v-card-title>
     <v-data-table
       class="pa-2"
@@ -34,10 +27,19 @@
     >
       <template v-slot:[`item.compania`]="{ item }">{{ item.companias.nombre }} <br />
         Cod.({{ item.codigo_productor.codigo_productor }})</template>
-      <template v-slot:[`item.asegurado`]="{ item }">{{ item.clientes.nombre }} {{ item.clientes.apellido }}</template>
+      <template v-slot:[`item.asegurado`]="{ item }">
+        <router-link
+          class="links"
+          :to=" {name: 'Editar Cliente', params: {id: item.id}}"
+          target="_blank"
+        >{{ item.clientes.nombre }} {{ item.clientes.apellido }}
+        </router-link>
+      </template>
       <template v-slot:[`item.patente`]="{ item }">{{  patente(item)  }}</template>
       <template v-slot:[`item.desde`]="{ item }">{{ formatDate(item.vigencia_desde) }} <br />
         {{ formatDate(item.vigencia_hasta) }}</template>
+      <template v-slot:[`item.envio`]="{ item }">{{ envio(item) }}</template>
+      <template v-slot:[`item.pago`]="{ item }">{{ formaDePago(item) }}</template>
       <template v-slot:[`item.actions`]="{ item }">
         <router-link
           class="links"
@@ -110,12 +112,10 @@ export default {
     ]
   }),
   computed: {
-    ...mapState("poliza", ["polizas", "loading"]),
-    ...mapState("modal", ["modal"])
+    ...mapState("poliza", ["polizas", "loading"])
   },
   methods: {
     ...mapActions("poliza", ["getPolizas", "deletePoliza"]),
-    ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL"]),
     openDeleteModal(id) {
       this.idSelected = id;
       this.modalDelete = true;
@@ -130,7 +130,77 @@ export default {
           ? "Autos"
           : item.riesgo_automotor[0].patente;
       } else {
-        return "sin riesgo";
+        return "Sin Riesgo";
+      }
+    },
+    envio(item) {
+      if (
+        item.fecha_recepcion !== null &&
+        item.fecha_entrega_original === null &&
+        item.fecha_entrega_correo === null &&
+        item.fecha_entrega_email === null
+      ) {
+        return "Recibida";
+      } else if (
+        item.fecha_recepcion !== null &&
+        item.fecha_entrega_original === null &&
+        item.fecha_entrega_correo !== null &&
+        item.fecha_entrega_email === null
+      ) {
+        return "Enviada por correo";
+      } else if (
+        item.fecha_recepcion !== null &&
+        item.fecha_entrega_original === null &&
+        item.fecha_entrega_correo === null &&
+        item.fecha_entrega_email !== null
+      ) {
+        return "Email";
+      } else if (
+        item.fecha_recepcion !== null &&
+        item.fecha_entrega_original !== null &&
+        item.fecha_entrega_correo === null &&
+        item.fecha_entrega_email === null
+      ) {
+        return "Entregada";
+      } else if (
+        item.fecha_recepcion !== null &&
+        item.fecha_entrega_original !== null &&
+        item.fecha_entrega_correo === null &&
+        item.fecha_entrega_email !== null
+      ) {
+        return "Entregada / Email";
+      } else if (
+        item.fecha_recepcion !== null &&
+        item.fecha_entrega_original !== null &&
+        item.fecha_entrega_correo !== null &&
+        item.fecha_entrega_email !== null
+      ) {
+        return "Entregada / Enviada por Correo / Email";
+      } else if (
+        item.fecha_recepcion !== null &&
+        item.fecha_entrega_original !== null &&
+        item.fecha_entrega_correo !== null &&
+        item.fecha_entrega_email === null
+      ) {
+        return "Entregada / Enviada por Correo";
+      } else if (
+        item.fecha_recepcion !== null &&
+        item.fecha_entrega_original === null &&
+        item.fecha_entrega_correo !== null &&
+        item.fecha_entrega_email !== null
+      ) {
+        return "Enviada por Correo / Email";
+      } else {
+        return "No Recibida";
+      }
+    },
+    formaDePago(item) {
+      if (item.forma_pago_id == 1) {
+        return "TC";
+      } else if (item.forma_pago_id == 2) {
+        return "DC";
+      } else {
+        return "PF / RP";
       }
     }
   },

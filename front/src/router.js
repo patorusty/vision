@@ -24,6 +24,11 @@ export default new Router({
           component: () => import("@/views/pages/Polizas/Automotor")
         },
         {
+          name: "Crear Poliza",
+          path: "polizas/automotor/create",
+          component: () => import("@/views/pages/Polizas/CreateAutomotor")
+        },
+        {
           name: "OtrosRiesgos",
           path: "polizas/otrosriesgos",
           component: () => import("@/views/pages/Polizas/OtrosRiesgos")

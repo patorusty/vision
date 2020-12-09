@@ -16,6 +16,9 @@ export const helpers = {
     codigoOrgText(item) {
       return `${item.organizadores.apellido}  ${item.organizadores.nombre} (C.Org:  ${item.codigo_organizador})`;
     },
+    nombreCompleto(item) {
+      return `${item.apellido}  ${item.nombre}`;
+    },
     async cargarLocalidades() {
       const resp = await http.get("/localidades");
       this.localidades = resp.data;
@@ -26,7 +29,7 @@ export const helpers = {
       } else {
         return "";
       }
-    }
+    },
   },
   computed: {
     fechaFormateada: {

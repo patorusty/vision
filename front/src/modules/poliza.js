@@ -5,7 +5,9 @@ const API_URL = '/polizas';
 const state = () => ({
     polizas: [],
     poliza: {},
-    loading: true
+    loading: true,
+    tipo_riesgos: [],
+    forma_pagos:[]
 });
 const mutations = {
     SET_POLIZAS(state, polizas) {
@@ -31,7 +33,14 @@ const mutations = {
     },
     DELETE_POLIZA(state, id) {
         state.polizas = state.polizas.filter(c => c.id != id);
+    },
+    SET_TIPO_RIESGOS(state, tipo_riesgos) {
+        state.tipo_riesgos = tipo_riesgos
+    },
+    SET_FORMA_PAGOS(state, forma_pagos) {
+        state.forma_pagos = forma_pagos
     }
+
 };
 const actions = {
     async getPolizas({ commit }) {
@@ -122,8 +131,15 @@ const actions = {
                 { root: true }
             );
         }
-    }
-
+    },
+    async getTipoRiesgos({ commit }) {
+        const resp = await http.get('tiporiesgos');
+        commit('SET_TIPO_RIESGOS', resp.data)
+    },
+    async getFormaPagos({ commit }) {
+        const resp = await http.get('formapagos');
+        commit('SET_FORMA_PAGOS', resp.data)
+    },  
 };
 export default {
     namespaced: true,
