@@ -1,10 +1,23 @@
 import http from "../http-request";
+import moment from "moment";
 
 const API_URL = '/polizas';
 
+const setMediodia = (fecha)=>{
+    var m = moment(fecha, 'ddd MMM D YYYY HH:mm:ss ZZ')
+    m.set("hour", 12);
+    m.set("minute", 0);
+    m.set("second", 0);
+    console.log(m);
+    return m.toJSON()
+  }
+
 const state = () => ({
     polizas: [],
-    poliza: {},
+    poliza: {
+        vigencia_desde: setMediodia(moment()),
+        tipo_vigencia_id: 1
+    },
     loading: true,
     tipo_riesgos: [],
     forma_pagos:[],

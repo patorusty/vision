@@ -104,12 +104,18 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
+                    :value="formatDate(poliza.vigencia_desde)"
+                    @click:clear="
+                          $nextTick(() => (poliza.vigencia_desde = null))
+                        "
                     clearable
                     label="Desde"
                     v-on="on"
                   ></v-text-field>
                 </template>
                 <v-date-picker
+                  @change="sumarMes"
+                  v-model="poliza.vigencia_desde"
                   clearable
                   color="primary lighten-1"
                   no-title
@@ -128,12 +134,17 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
+                    :value="formatDate(poliza.vigencia_hasta)"
+                    @click:clear="
+                          $nextTick(() => (poliza.vigencia_hasta = null))
+                        "
                     clearable
                     label="Hasta"
                     v-on="on"
                   ></v-text-field>
                 </template>
                 <v-date-picker
+                  v-model="poliza.vigencia_hasta"
                   clearable
                   color="primary lighten-1"
                   no-title
@@ -154,12 +165,17 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
+                    :value="formatDate(poliza.fecha_solicitud)"
+                    @click:clear="
+                          $nextTick(() => (poliza.fecha_solicitud = null))
+                        "
                     clearable
                     label="Solicitud"
                     v-on="on"
                   ></v-text-field>
                 </template>
                 <v-date-picker
+                  v-model="poliza.fecha_solicitud"
                   clearable
                   color="primary lighten-1"
                   no-title
@@ -178,12 +194,17 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
+                    :value="formatDate(poliza.fecha_emision)"
+                    @click:clear="
+                          $nextTick(() => (poliza.fecha_emision = null))
+                        "
                     clearable
                     label="Emision"
                     v-on="on"
                   ></v-text-field>
                 </template>
                 <v-date-picker
+                  v-model="poliza.fecha_emision"
                   clearable
                   color="primary lighten-1"
                   no-title
@@ -202,12 +223,17 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
+                    :value="formatDate(poliza.fecha_recepcion)"
+                    @click:clear="
+                          $nextTick(() => (poliza.fecha_recepcion = null))
+                        "
                     clearable
                     label="Recepcion"
                     v-on="on"
                   ></v-text-field>
                 </template>
                 <v-date-picker
+                  v-model="poliza.fecha_recepcion"
                   clearable
                   color="primary lighten-1"
                   no-title
@@ -228,12 +254,17 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
+                    :value="formatDate(poliza.fecha_entrega_original)"
+                    @click:clear="
+                          $nextTick(() => (poliza.fecha_entrega_original = null))
+                        "
                     clearable
                     label="Entrega Original"
                     v-on="on"
                   ></v-text-field>
                 </template>
                 <v-date-picker
+                  v-model="poliza.fecha_entrega_original"
                   clearable
                   color="primary lighten-1"
                   no-title
@@ -252,12 +283,17 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
+                    :value="formatDate(poliza.fecha_entrega_mail)"
+                    @click:clear="
+                          $nextTick(() => (poliza.fecha_entrega_mail = null))
+                        "
                     clearable
                     label="Enviado x Mail"
                     v-on="on"
                   ></v-text-field>
                 </template>
                 <v-date-picker
+                  v-model="poliza.fecha_entrega_mail"
                   clearable
                   color="primary lighten-1"
                   no-title
@@ -276,12 +312,17 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
+                    :value="formatDate(poliza.fecha_entrega_correo)"
+                    @click:clear="
+                          $nextTick(() => (poliza.fecha_entrega_correo = null))
+                        "
                     clearable
                     label="Entrega x Correo"
                     v-on="on"
                   ></v-text-field>
                 </template>
                 <v-date-picker
+                  v-model="poliza.fecha_entrega_correo"
                   clearable
                   color="primary lighten-1"
                   no-title
@@ -382,7 +423,10 @@ export default {
         mes,
         "M"
       );
-      console.log(this.poliza.vigencia_hasta);
+      this.poliza.vigencia_hasta.set("hour", 12);
+      this.poliza.vigencia_hasta.set("minute", 0);
+      this.poliza.vigencia_hasta.set("second", 0);
+      this.poliza.vigencia_hasta = this.poliza.vigencia_hasta.toJSON();
     }
   },
   created() {
@@ -391,6 +435,7 @@ export default {
     this.getTipoRiesgos();
     this.getFormaPagos();
     this.getTipoVigencias();
+    this.sumarMes();
   }
 };
 </script>
