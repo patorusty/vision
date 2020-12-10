@@ -10,6 +10,7 @@ use App\Http\Controllers\ProductorController;
 use App\Http\Controllers\PolizaController;
 use App\Http\Controllers\TipoRiesgoController;
 use App\Http\Controllers\FormaPagoController;
+use App\Http\Controllers\TipoVigenciaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -55,5 +56,6 @@ Route::Resource('/polizas', PolizaController::class);
 
 Route::Resource('/tiporiesgos', TipoRiesgoController::class);
 Route::Resource('/formapagos', FormaPagoController::class);
+Route::Resource('/tipovigencias', TipoVigenciaController::class);
 
 Route::Resource('/localidades', LocalidadController::class);

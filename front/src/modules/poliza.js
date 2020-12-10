@@ -7,7 +7,8 @@ const state = () => ({
     poliza: {},
     loading: true,
     tipo_riesgos: [],
-    forma_pagos:[]
+    forma_pagos:[],
+    tipo_vigencias:[]
 });
 const mutations = {
     SET_POLIZAS(state, polizas) {
@@ -39,8 +40,10 @@ const mutations = {
     },
     SET_FORMA_PAGOS(state, forma_pagos) {
         state.forma_pagos = forma_pagos
-    }
-
+    },
+    SET_TIPO_VIGENCIAS(state, tipo_vigencias) {
+        state.tipo_vigencias = tipo_vigencias
+    },
 };
 const actions = {
     async getPolizas({ commit }) {
@@ -139,7 +142,11 @@ const actions = {
     async getFormaPagos({ commit }) {
         const resp = await http.get('formapagos');
         commit('SET_FORMA_PAGOS', resp.data)
-    },  
+    },
+    async getTipoVigencias({ commit }) {
+        const resp = await http.get('tipovigencias');
+        commit('SET_TIPO_VIGENCIAS', resp.data)
+    },   
 };
 export default {
     namespaced: true,

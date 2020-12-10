@@ -22,6 +22,7 @@
           ></v-select>
           <v-select
             v-model="poliza.compania_id"
+            @change="getCodigoProductores(poliza.compania_id)"
             :items="companias"
             item-value="id"
             item-text="nombre"
@@ -42,7 +43,13 @@
           :cols="3"
           class="d-flex flex-column justify-space-between"
         >
-          <v-select label="Código Productor"></v-select>
+          <v-select
+            v-model="poliza.codigo_productor_id"
+            :items="codigo_productores"
+            :item-text="codigoProdText"
+            item-value="id"
+            label="Código Productor"
+          ></v-select>
           <v-text-field label="Poliza Nro"></v-text-field>
           <v-row>
             <v-col class="py-0">
@@ -80,7 +87,14 @@
         <v-col class="d-flex flex-column justify-space-between">
           <v-row>
             <v-col class="py-0 d-flex flex-column justify-space-between">
-              <v-select label="Vigencia"></v-select>
+              <v-select
+                v-model="poliza.tipo_vigencia_id"
+                :items="tipo_vigencias"
+                item-text="vigencia"
+                item-value="id"
+                label="Vigencia"
+                @change="sumarMes"
+              ></v-select>
               <v-menu
                 v-model="calendarioDesde"
                 :close-on-content-click="false"
@@ -292,6 +306,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import moment from "moment";
 import { helpers } from "../../../helpers";
 export default {
   mixins: [helpers],
@@ -325,18 +340,57 @@ export default {
   computed: {
     ...mapState("cliente", ["clientes"]),
     ...mapState("compania", ["companias"]),
-    ...mapState("poliza", ["poliza", "tipo_riesgos", "forma_pagos"])
+    ...mapState("codigo_productor", ["codigo_productores"]),
+    ...mapState("poliza", [
+      "poliza",
+      "tipo_riesgos",
+      "forma_pagos",
+      "tipo_vigencias"
+    ])
   },
   methods: {
     ...mapActions("cliente", ["getClientes"]),
-    ...mapActions("poliza", ["getTipoRiesgos", "getFormaPagos"]),
-    ...mapActions("compania", ["getCompanias"])
+    ...mapActions("poliza", [
+      "getTipoRiesgos",
+      "getFormaPagos",
+      "getTipoVigencias"
+    ]),
+    ...mapActions("compania", ["getCompanias"]),
+    ...mapActions("codigo_productor", ["getCodigoProductores"]),
+    sumarMes(mes) {
+      switch (this.poliza.tipo_vigencia_id) {
+        case 6:
+          mes = 12;
+          break;
+        case 5:
+          mes = 6;
+          break;
+        case 4:
+          mes = 4;
+          break;
+        case 3:
+          mes = 3;
+          break;
+        case 2:
+          mes = 2;
+          break;
+        case 1:
+          mes = 1;
+          break;
+      }
+      this.poliza.vigencia_hasta = moment(this.poliza.vigencia_desde).add(
+        mes,
+        "M"
+      );
+      console.log(this.poliza.vigencia_hasta);
+    }
   },
   created() {
     this.getClientes();
     this.getCompanias();
     this.getTipoRiesgos();
     this.getFormaPagos();
+    this.getTipoVigencias();
   }
 };
 </script>

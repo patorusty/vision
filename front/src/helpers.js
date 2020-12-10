@@ -16,6 +16,9 @@ export const helpers = {
     codigoOrgText(item) {
       return `${item.organizadores.apellido}  ${item.organizadores.nombre} (C.Org:  ${item.codigo_organizador})`;
     },
+    codigoProdText(item) {
+      return `${item.productores.apellido} ${item.productores.nombre} Cod. (${item.codigo_productor})`;
+    },
     nombreCompleto(item) {
       return `${item.apellido}  ${item.nombre}`;
     },
