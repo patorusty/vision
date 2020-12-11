@@ -20,12 +20,6 @@ class PolizaController extends Controller
 
     }
 
-    public function numeroDeSolicitud()
-    {
-        $nro_solicitud =  DB::table('polizas')->orderBy('numero_solicitud', 'DESC')->take(1)->get();
-        // toString($nro_solicitud);
-    }
-
     public function chequeoRenovada($poliza_actual)
     {
         $poliza = Poliza::where('renueva_numero', $poliza_actual)->get();
@@ -154,6 +148,12 @@ class PolizaController extends Controller
         //     $numero = Poliza::where('numero', $search)->get();
         // } 
         // // dd($numero);
+    }
+
+    public function numeroDeSolicitud()
+    {
+        $poliza =  DB::table('polizas')->orderBy('numero_solicitud', 'DESC')->take(1)->get();
+        return $poliza;
     }
     /**
      * Remove the specified resource from storage.
