@@ -1,6 +1,7 @@
 module.exports = {
   devServer: {
     disableHostCheck: true,
+    host: 'app.vision.test'
   },
 
   transpileDependencies: ['vue-world-map', 'vuetify'],

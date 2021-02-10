@@ -68,7 +68,7 @@
     >
       <v-card class="pa-4">
         <v-card-text>
-          <span>Esta seguro que desea eliminar esta Compania?</span>
+          <span>Esta seguro que desea eliminar esta Póliza?</span>
         </v-card-text>
         <v-card-actions class="py-0 pt-3 pr-6 d-flex justify-end">
           <v-btn
@@ -80,7 +80,7 @@
             class="ml-4"
             dark
             color="success"
-            @click="deleteCompany"
+            @click="deletePolicy"
           >Confirmar</v-btn>
         </v-card-actions>
       </v-card>
@@ -120,7 +120,7 @@ export default {
       this.idSelected = id;
       this.modalDelete = true;
     },
-    deleteCompany() {
+    deletePolicy() {
       this.deletePoliza(this.idSelected);
       this.modalDelete = false;
     },
