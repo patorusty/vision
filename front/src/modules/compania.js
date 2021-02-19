@@ -52,6 +52,7 @@ const actions = {
         commit('SET_COMPANIA', resp.data)
         dispatch('codigo_organizador/getCodigoOrganizadores', resp.data.id, { root: true })
         dispatch('codigo_productor/getCodigoProductores', resp.data.id, { root: true })
+        dispatch('cobertura/getCoberturas', resp.data.id, { root: true })
     },
     async createCompania({ commit }, compania) {
         const resp = await http.post(API_URL, compania)

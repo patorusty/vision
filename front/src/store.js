@@ -10,6 +10,7 @@ import organizador from "./modules/organizador";
 import productor from "./modules/productor";
 import codigo_organizador  from "./modules/codigo_organizador";
 import codigo_productor  from "./modules/codigo_productor";
+import cobertura  from "./modules/cobertura";
 
 Vue.use(Vuex);
 
@@ -42,6 +43,7 @@ export default new Vuex.Store({
     organizador,
     productor,
     codigo_organizador,
-    codigo_productor
+    codigo_productor,
+    cobertura
   }
 });

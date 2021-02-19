@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\Companias;
+use App\Models\Compania;
 use App\Models\RiesgoAutomotor;
 use Illuminate\Database\Eloquent\Model;
 
-class Coberturas extends Model
+class Cobertura extends Model
 {
     protected $guarded = [];
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CodigoOrganizadorcontroller;
 use App\Http\Controllers\CodigoProductorcontroller;
+use App\Http\Controllers\CoberturaController;
 use App\Http\Controllers\CompaniaController;
 use App\Http\Controllers\LocalidadController;
 use App\Http\Controllers\OrganizadorController;
@@ -47,6 +48,10 @@ Route::post('/codigo_organizador/busquedaCO', [CodigoOrganizadorController::clas
 Route::Resource('/administracion/codigo_productores', CodigoProductorController::class);
 Route::get('/codigo_productor/compania/{id}', [CodigoProductorController::class, 'indexFiltrado']);
 Route::post('/codigo_productor/busquedaCP', [CodigoProductorController::class, 'busquedaCP']);
+
+Route::Resource('/administracion/coberturas', CoberturaController::class);
+Route::get('/coberturas/compania/{id}', [CoberturaController::class, 'indexFiltrado']);
+Route::post('/coberturas/busquedaCob', [CoberturaController::class, 'busquedaCob']);
 
 Route::Resource('/clientes', ClienteController::class);
 Route::post('/clientes/busquedaCuit', [ClienteController::class, 'searchCuit']);

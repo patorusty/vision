@@ -44,7 +44,10 @@
                 ></v-switch>
               </v-col>
               <v-col class="d-flex justify-center">
-                <v-avatar color="primary" size="62">
+                <v-avatar
+                  color="primary"
+                  size="62"
+                >
                   <span class="white--text headline">62</span>
                 </v-avatar>
               </v-col>
@@ -120,12 +123,23 @@
         </v-container>
       </v-card-text>
       <v-card-actions class="d-flex justify-end">
-        <v-btn class="mb-2" color="red" @click="volver" text>Volver</v-btn>
-        <v-btn class="mb-2" @click="update" text color="green">Guardar</v-btn>
+        <v-btn
+          class="mb-2"
+          color="red"
+          @click="volver"
+          text
+        >Volver</v-btn>
+        <v-btn
+          class="mb-2"
+          @click="update"
+          text
+          color="green"
+        >Guardar</v-btn>
       </v-card-actions>
     </v-card>
     <codigo-organizador />
     <codigo-productor />
+    <coberturas />
   </div>
 </template>
 
@@ -136,59 +150,65 @@ import { helpers } from "../../../../helpers";
 import { debounce } from "debounce";
 import CodigoOrganizador from "./CodigoOrganizador/CodigoOrganizador";
 import CodigoProductor from "./CodigoProductor/CodigoProductor";
+import Coberturas from "./Coberturas/Coberturas";
 
 export default {
   components: {
     CodigoOrganizador,
     CodigoProductor,
+    Coberturas
   },
   mixins: [helpers],
   data: () => ({
     rules: {
-      required: (value) => !!value || "Este campo obligatorio",
-      email: (value) => {
+      required: value => !!value || "Este campo obligatorio",
+      email: value => {
         const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return pattern.test(value) || "Igrese un email válido";
-      },
+      }
     },
     localidades: [],
-    cuitUsado: false,
+    cuitUsado: false
   }),
   computed: {
-    ...mapState("compania", ["compania"]),
+    ...mapState("compania", ["compania"])
   },
   methods: {
-    ...mapActions("compania", ["getCompania", "updateCompania", "getCompanias"]),
+    ...mapActions("compania", [
+      "getCompania",
+      "updateCompania",
+      "getCompanias"
+    ]),
 
     ...mapMutations("compania", ["RESET_COMPANIA"]),
-    
-    volver(){
+
+    volver() {
       this.$router.push({
-              name: 'Compañías',
-            });
+        name: "Compañías"
+      });
     },
-    async update(){
+    async update() {
       if (this.$refs.form.validate()) {
         const updateResult = await this.updateCompania(this.compania);
       }
     },
-    buscarCuit: debounce(async function () {
+    buscarCuit: debounce(async function() {
       if (
         this.compania.cuit.length >= 6 &&
         this.compania.cuit != this.compania.cuitOriginal
       ) {
         const resp = await http.post("/companias/busquedaCuit", {
-          cuit: this.compania.cuit,
+          cuit: this.compania.cuit
         });
         this.cuitUsado = resp.data.usado;
       }
-    }, 700),
+    }, 700)
   },
   created() {
     this.getCompanias();
     this.cargarLocalidades();
     this.getCompania(this.$route.params.nombre);
-  },
+  }
 };
 </script>
 
