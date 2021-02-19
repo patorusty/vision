@@ -157,7 +157,7 @@ export default {
     }
   },
   watch: {
-    modal() {
+    modal3() {
       if (!this.modal3) {
         this.closeModal();
       }

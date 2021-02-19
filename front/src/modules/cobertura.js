@@ -5,7 +5,6 @@ const API_URL = "/administracion/coberturas";
 const state = () => ({
   coberturas: [],
   cobertura: {
-    cobertura: "",
     cobOriginal: '',
     activo: true
   },
@@ -22,7 +21,6 @@ const mutations = {
   },
   RESET_COBERTURA(state) {
     state.cobertura = Object.assign({}, {
-      cobertura: "",
       cobOriginal: '',
       activo: true
     });
