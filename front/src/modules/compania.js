@@ -133,6 +133,14 @@ const actions = {
             },
                 { root: true }
             );
+        } else if (resp.status === 203) {
+            commit(
+                "snackbar/SHOW_SNACK", {
+                color: "red",
+                snackText: "Existen Coberturas relacionadas a esta Compañía"
+            },
+                { root: true }
+            );
         } else {
             commit(
                 "snackbar/SHOW_SNACK", {
