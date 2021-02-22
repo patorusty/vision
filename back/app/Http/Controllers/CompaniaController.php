@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cobertura;
 use App\Models\CodigoOrganizador;
 use App\Models\Compania;
+use App\Models\Poliza;
 use Illuminate\Http\Request;
 
 class CompaniaController extends Controller
@@ -91,6 +92,8 @@ class CompaniaController extends Controller
                 return response('', 202);
             } else if (Cobertura::where("compania_id", $compania->id)->exists()) {
                 return response('', 203);
+            } else if (Poliza::where("compania_id", $compania->id)->exists()) {
+                return response('', 204);
             } else {
                 $compania->delete();
                 return response('', 200);

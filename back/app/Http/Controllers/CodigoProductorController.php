@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CodigoProductor;
+use App\Models\Poliza;
 use Illuminate\Http\Request;
 
 class CodigoProductorController extends Controller
@@ -57,9 +58,16 @@ class CodigoProductorController extends Controller
 
     public function destroy($id)
     {
-        $codigo_productor = CodigoProductor::findOrFail($id);
-        $codigo_productor->delete();
-
-        return ['message' => 'Eliminado'];
+        try {
+            $codigo_productor = CodigoProductor::findOrFail($id);
+            if (Poliza::where("codigo_productor_id", $codigo_productor->id)->exists()) {
+                return response('', 202);
+            } else {
+                $codigo_productor->delete();
+                return response('', 200);
+            }
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 }

@@ -116,7 +116,15 @@ const actions = {
         },
         { root: true }
       );
-    } else {
+    }else if (resp.status === 202) {
+      commit(
+          "snackbar/SHOW_SNACK", {
+          color: "red",
+          snackText: "Existen Pólizas relacionadas a este Código Productor"
+      },
+          { root: true }
+      );
+  } else {
       commit(
         "snackbar/SHOW_SNACK"({
           color: "success",

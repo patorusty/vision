@@ -4,8 +4,6 @@ const http = axios.create({
   baseURL: `http://vision.test/api/`
 });
 
-// const RESOURCE_NAME = 'clientes';
-
 export default {
   get(url) {
     return http.get(url);

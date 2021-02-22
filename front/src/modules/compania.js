@@ -141,6 +141,14 @@ const actions = {
             },
                 { root: true }
             );
+        }else if (resp.status === 204) {
+            commit(
+                "snackbar/SHOW_SNACK", {
+                color: "red",
+                snackText: "Existen Pólizas relacionadas a esta Compañía"
+            },
+                { root: true }
+            );
         } else {
             commit(
                 "snackbar/SHOW_SNACK", {
