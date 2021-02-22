@@ -8,7 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class CodigoProductor extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        'codigo_productor',
+        'codigo_organizador_id',
+        'productor_id',
+        'compania_id',
+        'activo',
+        'created_at',
+        'updated_at',
+    ];
 
     public function productores()
     {

@@ -19,16 +19,6 @@ class ProductorController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -37,16 +27,7 @@ class ProductorController extends Controller
     public function store(Request $request)
     {
         try {
-            $productor = Productor::create([
-                'nombre' => $request->input('nombre'),
-                'apellido' => $request->input('apellido'),
-                'cuit' => $request->input('cuit'),
-                'matricula' => $request->input('matricula'),
-                'email' => $request->input('email'),
-                'telefono_1' => $request->input('telefono_1'),
-                'telefono_2' => $request->input('telefono_2'),
-                'activo' => $request->input('activo'),
-            ]);
+            $productor = Productor::create($request->all());
             return response($productor, 201);
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -65,17 +46,6 @@ class ProductorController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -85,17 +55,8 @@ class ProductorController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $productor = Productor::find($id);
-            $productor->update([
-                'nombre' => $request->input('nombre'),
-                'apellido' => $request->input('apellido'),
-                'cuit' => $request->input('cuit'),
-                'matricula' => $request->input('matricula'),
-                'email' => $request->input('email'),
-                'telefono_1' => $request->input('telefono_1'),
-                'telefono_2' => $request->input('telefono_2'),
-                'activo' => $request->input('activo'),
-            ]);
+            $productor = Productor::findOrFail($id);
+            $productor->fill($request->all())->save();
             return response($productor, 200);
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -123,7 +84,7 @@ class ProductorController extends Controller
     public function destroy($id)
     {
         try {
-            $productor = Productor::find($id);
+            $productor = Productor::findOrFail($id);
             if (CodigoProductor::where("productor_id", $productor->id)->exists()) {
                 return response('', 202);
             } else {

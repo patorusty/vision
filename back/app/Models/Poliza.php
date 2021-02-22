@@ -12,7 +12,37 @@ use Illuminate\Database\Eloquent\Model;
 
 class Poliza extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        'cliente_id',
+        'compania_id',
+        'codigo_productor_id',
+        'tipo_riesgo_id',
+        'numero_solicitud',
+        'numero',
+        'estado_poliza_id',
+        'renueva_numero',
+        'tipo_vigencia_id',
+        'vigencia_dias',
+        'vigencia_desde',
+        'vigencia_hasta',
+        'fecha_solicitud',
+        'fecha_emision',
+        'fecha_recepcion',
+        'fecha_entrega_correo',
+        'fecha_entrega_original',
+        'fecha_entrega_email',
+        'premio',
+        'prima',
+        'plan_pago',
+        'cantidad_cuotas',
+        'forma_pago_id',
+        'detalle_medio_pago',
+        'comision',
+        'descuento',
+        'archivada',
+        'created_at',
+        'updated_at',
+    ];
 
     public function companias()
     {
@@ -63,5 +93,4 @@ class Poliza extends Model
     {
         return $this->hasMany(SiniestroAutomotor::class, 'poliza_id', 'id');
     }
-
 }

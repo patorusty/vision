@@ -22,7 +22,7 @@
           <v-row>
             <v-col>
               <v-text-field
-              v-uppercase
+                v-uppercase
                 label="Codigo Organizador"
                 v-model="codigo_organizador.codigo_organizador"
                 :rules="[
@@ -44,7 +44,12 @@
       </v-container>
     </v-card-text>
     <v-card-actions class="d-flex justify-end">
-      <v-btn class="mb-2" color="red" text @click="closeModal">Cerrar</v-btn>
+      <v-btn
+        class="mb-2"
+        color="red"
+        text
+        @click="closeModal"
+      >Cerrar</v-btn>
       <v-btn
         class="mb-2"
         v-if="!edicion"
@@ -52,11 +57,14 @@
         @click="create"
         text
         native-type="submit"
-        >Crear</v-btn
-      >
-      <v-btn class="mb-2" v-else @click="update" text color="green"
-        >Guardar</v-btn
-      >
+      >Crear</v-btn>
+      <v-btn
+        class="mb-2"
+        v-else
+        @click="update"
+        text
+        color="green"
+      >Guardar</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -71,21 +79,21 @@ export default {
   mixins: [helpers],
   data: () => ({
     rules: {
-      required: (value) => !!value || "Este campo obligatorio",
+      required: value => !!value || "Este campo obligatorio"
     },
-    coUsado: false,
+    coUsado: false
   }),
   computed: {
     ...mapState("codigo_organizador", ["codigo_organizador"]),
     ...mapState("compania", ["compania"]),
     ...mapState("organizador", ["organizadores"]),
-    ...mapState("modal", ["modal", "edicion"]),
+    ...mapState("modal", ["modal", "edicion"])
   },
   methods: {
     ...mapActions("codigo_organizador", [
       "resetCodigoOrganizadorState",
       "updateCodigoOrganizador",
-      "createCodigoOrganizador",
+      "createCodigoOrganizador"
     ]),
     ...mapMutations("modal", ["HIDE_MODAL"]),
     ...mapMutations("codigo_organizador", ["RESET_CODIGO_ORGANIZADOR"]),
@@ -116,7 +124,7 @@ export default {
       this.$refs.form.resetValidation();
       this.coUsado = false;
     },
-    buscarCO: debounce(async function () {
+    buscarCO: debounce(async function() {
       if (
         this.codigo_organizador.codigo_organizador &&
         this.codigo_organizador.codigo_organizador !=
@@ -124,19 +132,19 @@ export default {
       ) {
         const resp = await http.post("/codigo_organizador/busquedaCO", {
           codigo: this.codigo_organizador.codigo_organizador,
-          compania_id: this.compania.id,
+          compania_id: this.compania.id
         });
         this.coUsado = resp.data.usado;
       }
-    }, 500),
+    }, 500)
   },
   watch: {
     modal() {
       if (!this.modal) {
         this.closeModal();
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

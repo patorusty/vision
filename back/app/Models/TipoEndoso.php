@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\DetalleEndoso;
 use App\Models\Endoso;
-use App\Models\TipoEndoso;
 use Illuminate\Database\Eloquent\Model;
 
 class TipoEndoso extends Model

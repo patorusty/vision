@@ -30,38 +30,40 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('/administracion/companias', CompaniaController::class);
+Route::apiResource('/administracion/companias', CompaniaController::class);
 Route::post('/companias/busquedaCuit', [CompaniaController::class, 'search']);
 
-Route::resource('/configuracion/organizadores', OrganizadorController::class);
+Route::apiResource('/configuracion/organizadores', OrganizadorController::class);
 Route::post('/organizadores/busquedaCuit', [OrganizadorController::class, 'searchCuit']);
 Route::post('/organizadores/busquedaMatricula', [OrganizadorController::class, 'searchMatricula']);
 
-Route::resource('/configuracion/productores', ProductorController::class);
+Route::apiResource('/configuracion/productores', ProductorController::class);
 Route::post('/productores/busquedaCuit', [ProductorController::class, 'searchCuit']);
 Route::post('/productores/busquedaMatricula', [ProductorController::class, 'searchMatricula']);
 
-Route::Resource('/administracion/codigo_organizadores', CodigoOrganizadorController::class);
+Route::apiResource('/administracion/codigo_organizadores', CodigoOrganizadorController::class)->parameters([
+    'codigo_organizadores' => 'codigo_organizadores'
+]);
 Route::get('/codigo_organizador/compania/{id}', [CodigoOrganizadorController::class, 'indexFiltrado']);
 Route::post('/codigo_organizador/busquedaCO', [CodigoOrganizadorController::class, 'busquedaCO']);
 
-Route::Resource('/administracion/codigo_productores', CodigoProductorController::class);
+Route::apiResource('/administracion/codigo_productores', CodigoProductorController::class);
 Route::get('/codigo_productor/compania/{id}', [CodigoProductorController::class, 'indexFiltrado']);
 Route::post('/codigo_productor/busquedaCP', [CodigoProductorController::class, 'busquedaCP']);
 
-Route::Resource('/administracion/coberturas', CoberturaController::class);
+Route::apiResource('/administracion/coberturas', CoberturaController::class);
 Route::get('/coberturas/compania/{id}', [CoberturaController::class, 'indexFiltrado']);
 Route::post('/coberturas/busquedaCob', [CoberturaController::class, 'busquedaCob']);
 
-Route::Resource('/clientes', ClienteController::class);
+Route::apiResource('/clientes', ClienteController::class);
 Route::post('/clientes/busquedaCuit', [ClienteController::class, 'searchCuit']);
 Route::post('/clientes/busquedaDNI', [ClienteController::class, 'searchDNI']);
 
-Route::Resource('/polizas', PolizaController::class);
+Route::apiResource('/polizas', PolizaController::class);
 Route::get('/numerosolicitud', [PolizaController::class, 'numeroDeSolicitud']);
 
-Route::Resource('/tiporiesgos', TipoRiesgoController::class);
-Route::Resource('/formapagos', FormaPagoController::class);
-Route::Resource('/tipovigencias', TipoVigenciaController::class);
+Route::apiResource('/tiporiesgos', TipoRiesgoController::class);
+Route::apiResource('/formapagos', FormaPagoController::class);
+Route::apiResource('/tipovigencias', TipoVigenciaController::class);
 
-Route::Resource('/localidades', LocalidadController::class);
+Route::apiResource('/localidades', LocalidadController::class);

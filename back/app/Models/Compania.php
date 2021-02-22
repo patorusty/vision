@@ -10,12 +10,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class Compania extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        'nombre',
+        'cuit',
+        'direccion',
+        'localidad_id',
+        'telefono_1',
+        'telefono_aux',
+        'telefono_siniestros',
+        'email_emision',
+        'email_siniestros',
+        'codigo_lr',
+        'logo',
+        'activo',
+        'color',
+        'created_at',
+        'updated_at',
+    ];
 
     public function localidades()
     {
         return $this->belongsTo(Localidades::class, 'localidad_id');
-
     }
 
     public function codigo_productor()

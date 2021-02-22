@@ -15,9 +15,9 @@ class CoberturaController extends Controller
     }
 
 
-    public function show($id)
+    public function show(Cobertura $cobertura)
     {
-        return Cobertura::findOrFail($id);
+        return $cobertura;
     }
 
     public function indexFiltrado($compania_id)
@@ -31,16 +31,7 @@ class CoberturaController extends Controller
 
         try {
             $this->validate($request, []);
-            $cobertura = Cobertura::create([
-                'nombre' => $request->input('nombre'),
-                'compania_id' => $request->input('compania_id'),
-                'antiguedad' => $request->input('antiguedad'),
-                'todo_riesgo' => $request->input('todo_riesgo'),
-                'franquicia' => $request->input('franquicia'),
-                'activo' => $request->input('activo'),
-                'ajuste' => $request->input('ajuste'),
-                'detalle' => $request->input('detalle'),
-            ]);
+            $cobertura = Cobertura::create($request->all());
             return response($cobertura, 201);
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -50,17 +41,8 @@ class CoberturaController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $cobertura = Cobertura::find($id);
-            $cobertura->update([
-                'nombre' => $request->input('nombre'),
-                'compania_id' => $request->input('compania_id'),
-                'antiguedad' => $request->input('antiguedad'),
-                'todo_riesgo' => $request->input('todo_riesgo'),
-                'franquicia' => $request->input('franquicia'),
-                'activo' => $request->input('activo'),
-                'ajuste' => $request->input('ajuste'),
-                'detalle' => $request->input('detalle'),
-            ]);
+            $cobertura = Cobertura::findOrfail($id);
+            $cobertura->fill($request->all())->save();
             return response($cobertura, 200);
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -70,7 +52,7 @@ class CoberturaController extends Controller
     public function destroy($id)
     {
         try {
-            $cobertura = Cobertura::find($id);
+            $cobertura = Cobertura::findOrfail($id);
             $cobertura->delete();
             return response($cobertura, 200);
         } catch (\Exception $e) {

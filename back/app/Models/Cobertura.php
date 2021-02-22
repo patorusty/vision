@@ -8,7 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cobertura extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        'nombre',
+        'compania_id',
+        'antiguedad',
+        'todo_riesgo',
+        'franquicia',
+        'activo',
+        'ajuste',
+        'detalle',
+        'created_at',
+        'updated_at',
+    ];
 
     public function companias()
     {

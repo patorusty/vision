@@ -27,13 +27,7 @@ class CodigoProductorController extends Controller
         try {
             $this->validate($request, []);
 
-            $codigo_productor = CodigoProductor::create([
-                'codigo_productor' => $request->input('codigo_productor'),
-                'codigo_organizador_id' => $request->input('codigo_organizador_id'),
-                'productor_id' => $request->input('productor_id'),
-                'compania_id' => $request->input('compania_id'),
-                'activo' => $request->input('activo'),
-            ]);
+            $codigo_productor = CodigoProductor::create($request->all());
             $codigo_productor->load(['productores', 'codigo_organizador']);
             $codigo_productor::with(['productores', 'codigo_organizador']);
             return response($codigo_productor, 201);
@@ -45,19 +39,12 @@ class CodigoProductorController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $codigo_productor = CodigoProductor::find($id);
-            $codigo_productor->update([
-                'codigo_productor' => $request->input('codigo_productor'),
-                'codigo_organizador_id' => $request->input('codigo_organizador_id'),
-                'productor_id' => $request->input('productor_id'),
-                'compania_id' => $request->input('compania_id'),
-                'activo' => $request->input('activo'),
-            ]);
+            $codigo_productor = CodigoProductor::findOrFail($id);
+            $codigo_productor->fill($request->all())->save();
             return response($codigo_productor, 200);
         } catch (\Exception $e) {
             return $e->getMessage();
         }
-
     }
 
     public function busquedaCP(Request $request)
@@ -70,9 +57,8 @@ class CodigoProductorController extends Controller
 
     public function destroy($id)
     {
-        $codigo_productores = CodigoProductor::find($id);
-
-        $codigo_productores->delete();
+        $codigo_productor = CodigoProductor::findOrFail($id);
+        $codigo_productor->delete();
 
         return ['message' => 'Eliminado'];
     }

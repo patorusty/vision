@@ -34,21 +34,7 @@ class CompaniaController extends Controller
         try {
             $this->validate($request, []);
 
-            $compania = Compania::create([
-                'nombre' => $request->input('nombre'),
-                'cuit' => $request->input('cuit'),
-                'direccion' => $request->input('direccion'),
-                'localidad_id' => $request->input('localidad_id'),
-                'telefono_1' => $request->input('telefono_1'),
-                'telefono_aux' => $request->input('telefono_aux'),
-                'telefono_siniestros' => $request->input('telefono_siniestros'),
-                'codigo_lr' => $request->input('codigo_lr'),
-                'email_emision' => $request->input('email_emision'),
-                'email_siniestros' => $request->input('email_siniestros'),
-                'activo' => $request->input('activo'),
-                'color' => $request->input('color'),
-                // 'logo' => $request->input('logo'),
-            ]);
+            $compania = Compania::create($request->all());
             return response($compania, 201);
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -63,22 +49,8 @@ class CompaniaController extends Controller
      */
     public function show($nombre)
     {
-        // return Companias::with(['codigo_organizador', 'codigo_productor'])->where('nombre', $nombre)->get();
-        // $codigo_organizador = CodigoOrganizador::all();
-        // $codigo_productor = CodigoProductor::all();
-
         $compania = Compania::with(["codigo_organizador.organizadores"])->where('nombre', $nombre)->get();
         return $compania[0];
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
     }
 
     /**
@@ -91,21 +63,8 @@ class CompaniaController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $compania = Compania::find($id);
-            $compania->update([
-                'nombre' => $request->input('nombre'),
-                'cuit' => $request->input('cuit'),
-                'direccion' => $request->input('direccion'),
-                'localidad_id' => $request->input('localidad_id'),
-                'telefono_1' => $request->input('telefono_1'),
-                'telefono_aux' => $request->input('telefono_aux'),
-                'telefono_siniestros' => $request->input('telefono_siniestros'),
-                'codigo_lr' => $request->input('codigo_lr'),
-                'email_emision' => $request->input('email_emision'),
-                'email_siniestros' => $request->input('email_siniestros'),
-                'activo' => $request->input('activo'),
-                'color' => $request->input('color'),
-            ]);
+            $compania = Compania::findOrFail($id);
+            $compania->fill($request->all())->save();
             return response($compania, 200);
         } catch (\Exception $e) {
             return $e->getMessage();

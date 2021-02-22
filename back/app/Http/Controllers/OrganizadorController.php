@@ -16,17 +16,6 @@ class OrganizadorController extends Controller
     public function index()
     {
         return Organizador::all();
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -38,21 +27,11 @@ class OrganizadorController extends Controller
     public function store(Request $request)
     {
         try {
-            $organizador = Organizador::create([
-                'nombre' => $request->input('nombre'),
-                'apellido' => $request->input('apellido'),
-                'cuit' => $request->input('cuit'),
-                'matricula' => $request->input('matricula'),
-                'email' => $request->input('email'),
-                'telefono_1' => $request->input('telefono_1'),
-                'telefono_2' => $request->input('telefono_2'),
-                'activo' => $request->input('activo'),
-            ]);
+            $organizador = Organizador::create($request->all());
             return response($organizador, 201);
         } catch (\Exception $e) {
             return $e->getMessage();
         }
-
     }
 
     /**
@@ -63,20 +42,9 @@ class OrganizadorController extends Controller
      */
     public function show($id)
     {
-        return Organizador::findOrFail($id);
-
+        return Organizador::findOrFail($id);;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -88,22 +56,12 @@ class OrganizadorController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $organizador = Organizador::find($id);
-            $organizador->update([
-                'nombre' => $request->input('nombre'),
-                'apellido' => $request->input('apellido'),
-                'cuit' => $request->input('cuit'),
-                'matricula' => $request->input('matricula'),
-                'email' => $request->input('email'),
-                'telefono_1' => $request->input('telefono_1'),
-                'telefono_2' => $request->input('telefono_2'),
-                'activo' => $request->input('activo'),
-            ]);
+            $organizador = Organizador::findOrFail($id);
+            $organizador->fill($request->all())->save();
             return response($organizador, 200);
         } catch (\Exception $e) {
             return $e->getMessage();
         }
-
     }
 
     public function searchCuit(Request $req)
@@ -127,7 +85,7 @@ class OrganizadorController extends Controller
     public function destroy($id)
     {
         try {
-            $organizador = Organizador::find($id);
+            $organizador = Organizador::findOrFail($id);
             if (CodigoOrganizador::where("organizador_id", $organizador->id)->exists()) {
                 return response('', 202);
             } else {

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Usuarios;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 use App\Http\Resources\Usuario as UsuariosResource;
 
@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return Usuarios::with(['tipo_usuario'])->get();
+        return Usuario::with(['tipo_usuario'])->get();
 
         // return UsuariosResource::collection($usuarios);
     }
@@ -40,16 +40,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         try {
-            $usuario = Usuarios::create([
-                'nombre' => $request->input('nombre'),
-                'apellido' => $request->input('apellido'),
-                'compania' => $request->input('compania'),
-                'tipo_usuario_id' => $request->input('tipo_usuario_id'),
-                'activo' => $request->input('activo'),
-                'email' => $request->input('email'),
-                'password' => $request->input('password'),
-                // 'avatar' => $request->input('avatar'),
-            ]);
+            $usuario = Usuario::create($request->all());
             return $usuario;
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -64,7 +55,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return Usuarios::findOrFail($id);
+        return Usuario::findOrFail($id);
 
         // return new UsuariosResource($usuario);
     }
@@ -90,7 +81,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $usuario = Usuarios::find($id);
+            $usuario = Usuario::find($id);
             $usuario->update([
                 'nombre' => $request->input('nombre'),
                 'apellido' => $request->input('apellido'),
@@ -116,7 +107,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         try {
-            $usuario = Usuarios::find($id);
+            $usuario = Usuario::find($id);
             $usuario->delete();
             return $usuario;
         } catch (\Exception $e) {
@@ -126,6 +117,6 @@ class UserController extends Controller
     public function searchMail(Request $req)
     {
         $email = $req->input('email');
-        return ['usado' => Usuarios::where('email', $email)->exists()];
+        return ['usado' => Usuario::where('email', $email)->exists()];
     }
 }
