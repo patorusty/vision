@@ -21,17 +21,17 @@ export default new Router({
         {
           name: "Automotor",
           path: "polizas/automotor",
-          component: () => import("@/views/pages/polizas/Automotor.vue")
+          component: () => import("@/views/pages/Polizas/Automotor.vue")
         },
         {
           name: "Crear Poliza",
           path: "polizas/automotor/create",
-          component: () => import("@/views/pages/polizas/CreateAutomotor.vue")
+          component: () => import("@/views/pages/Polizas/CreateAutomotor.vue")
         },
         {
           name: "OtrosRiesgos",
           path: "polizas/otrosriesgos",
-          component: () => import("@/views/pages/polizas/OtrosRiesgos.vue")
+          component: () => import("@/views/pages/Polizas/OtrosRiesgos.vue")
         },
 
         {
@@ -86,7 +86,7 @@ export default new Router({
         {
           name: "Usuarios",
           path: "configuracion/usuarios",
-          component: () => import("@/views/pages/configuracion/Usuarios.vue")
+          component: () => import("@/views/pages/Configuracion/Usuarios.vue")
         },
       ]
 
