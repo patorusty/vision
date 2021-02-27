@@ -29,6 +29,11 @@ export default new Router({
           component: () => import("@/views/pages/Polizas/CreateAutomotor.vue")
         },
         {
+          name: "Editar Poliza",
+          path: "polizas/automotor/:numero_solicitud",
+          component: () => import("@/views/pages/Polizas/EditAutomotor.vue")
+        },
+        {
           name: "OtrosRiesgos",
           path: "polizas/otrosriesgos",
           component: () => import("@/views/pages/Polizas/OtrosRiesgos.vue")

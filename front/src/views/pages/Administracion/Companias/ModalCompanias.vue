@@ -1,14 +1,20 @@
 <template>
   <v-card>
     <v-card-title>
-      <span v-if="!edicion" class="headline">Crear Compania</span>
-      <span v-else class="headline">Editar Compania</span>
+      <span
+        v-if="!edicion"
+        class="headline"
+      >Crear Compania</span>
+      <span
+        v-else
+        class="headline"
+      >Editar Compania</span>
     </v-card-title>
     <v-card-text>
       <v-container>
         <v-form ref="form">
           <v-row>
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-text-field
                 v-model="compania.nombre"
                 :rules="[rules.required]"
@@ -17,9 +23,9 @@
               >
               </v-text-field>
             </v-col>
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-text-field
-              v-uppercase
+                v-uppercase
                 v-model="compania.cuit"
                 @keyup="buscarCuit"
                 :rules="[
@@ -32,14 +38,14 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-text-field
-              v-uppercase
+                v-uppercase
                 v-model="compania.codigo_lr"
                 label="Libros Rubricados"
               ></v-text-field>
             </v-col>
-            <v-col class="d-flex justify-center">
+            <v-col class="pt-0 pb-0 d-flex justify-center">
               <v-switch
                 v-model="compania.activo"
                 label="Activo"
@@ -47,8 +53,11 @@
                 primary
               ></v-switch>
             </v-col>
-            <v-col class="d-flex justify-center">
-              <v-avatar color="primary" size="62">
+            <v-col class="pt-0 pb-0 d-flex justify-center">
+              <v-avatar
+                color="primary"
+                size="62"
+              >
                 <span class="white--text headline">62</span>
               </v-avatar>
             </v-col>
@@ -57,15 +66,15 @@
           </v-col> -->
           </v-row>
           <v-row>
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-text-field
-              v-uppercase
+                v-uppercase
                 v-model="compania.direccion"
                 :rules="[rules.required]"
                 label="Direccion"
               ></v-text-field>
             </v-col>
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-autocomplete
                 :rules="[rules.required]"
                 :items="localidades"
@@ -77,25 +86,25 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-text-field
-              v-uppercase
+                v-uppercase
                 :rules="[rules.required]"
                 v-model="compania.telefono_1"
                 label=" Telefono Oficina"
               ></v-text-field>
             </v-col>
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-text-field
-              v-uppercase
+                v-uppercase
                 :rules="[rules.required]"
                 v-model="compania.telefono_aux"
                 label=" Telefono Auxilio"
               ></v-text-field>
             </v-col>
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-text-field
-              v-uppercase
+                v-uppercase
                 :rules="[rules.required]"
                 v-model="compania.telefono_siniestros"
                 label=" Telefono Siniestros"
@@ -103,17 +112,17 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-text-field
-              v-uppercase
+                v-uppercase
                 :rules="[rules.email, rules.required]"
                 label="Email Emision"
                 v-model="compania.email_emision"
               ></v-text-field>
             </v-col>
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-text-field
-              v-uppercase
+                v-uppercase
                 :rules="[rules.email, rules.required]"
                 label="Email Siniestros"
                 v-model="compania.email_siniestros"
@@ -123,8 +132,13 @@
         </v-form>
       </v-container>
     </v-card-text>
-    <v-card-actions class="d-flex justify-end">
-      <v-btn class="mb-2" color="red" text @click="closeModal">Cerrar</v-btn>
+    <v-card-actions class=" pt-0 pb-0 d-flex justify-end">
+      <v-btn
+        class="mb-2"
+        color="red"
+        text
+        @click="closeModal"
+      >Cerrar</v-btn>
       <v-btn
         class="mb-2"
         v-if="!edicion"
@@ -132,11 +146,14 @@
         @click="create"
         text
         native-type="submit"
-        >Crear</v-btn
-      >
-      <v-btn class="mb-2" v-else @click="update" text color="green"
-        >Guardar</v-btn
-      >
+      >Crear</v-btn>
+      <v-btn
+        class="mb-2"
+        v-else
+        @click="update"
+        text
+        color="green"
+      >Guardar</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -151,24 +168,24 @@ export default {
   mixins: [helpers],
   data: () => ({
     rules: {
-      required: (value) => !!value || "Este campo obligatorio",
-      email: (value) => {
+      required: value => !!value || "Este campo obligatorio",
+      email: value => {
         const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return pattern.test(value) || "Igrese un email válido";
-      },
+      }
     },
     localidades: [],
-    cuitUsado: false,
+    cuitUsado: false
   }),
   computed: {
     ...mapState("compania", ["compania"]),
-    ...mapState("modal", ["modal", "edicion"]),
+    ...mapState("modal", ["modal", "edicion"])
   },
   methods: {
     ...mapActions("compania", [
       "getCompania",
       "updateCompania",
-      "createCompania",
+      "createCompania"
     ]),
     ...mapMutations("modal", ["HIDE_MODAL"]),
     ...mapMutations("compania", ["RESET_COMPANIA"]),
@@ -194,14 +211,17 @@ export default {
       this.$refs.form.resetValidation();
       this.cuitUsado = false;
     },
-    buscarCuit: debounce(async function () {
-      if (this.compania.cuit.length >= 6 && this.compania.cuit != this.compania.cuitOriginal) {
+    buscarCuit: debounce(async function() {
+      if (
+        this.compania.cuit.length >= 6 &&
+        this.compania.cuit != this.compania.cuitOriginal
+      ) {
         const resp = await http.post("/companias/busquedaCuit", {
-          cuit: this.compania.cuit,
+          cuit: this.compania.cuit
         });
         this.cuitUsado = resp.data.usado;
       }
-    }, 700),
+    }, 700)
   },
   created() {
     this.cargarLocalidades();
@@ -211,8 +231,8 @@ export default {
       if (!this.modal) {
         this.closeModal();
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

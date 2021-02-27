@@ -7,7 +7,7 @@ const state = () => ({
   codigo_organizador: {
     codigo_organizador: "",
     coOriginal: '',
-    activo: true
+    activo: 1
   },
   loading: false
 });
@@ -23,7 +23,7 @@ const mutations = {
     state.codigo_organizador = Object.assign({}, {
       codigo_organizador: "",
       coOriginal: "",
-      activo: true
+      activo: 1
     });
   },
   UPDATE_CODIGO_ORGANIZADOR(state, codigo_organizador) {

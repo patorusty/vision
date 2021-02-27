@@ -7,7 +7,7 @@ const state = () => ({
     organizador: {
         cuit: "",
         matricula: "",
-        activo: true,
+        activo: 1,
         matriuclaOriginal: '',
         cuitOriginal: ''
     },
@@ -29,7 +29,7 @@ const mutations = {
             {
                 cuit: "",
                 matricula: "",
-                activo: true,
+                activo: 1,
                 matriculaOriginal: '',
                 cuitOriginal: ''
             }

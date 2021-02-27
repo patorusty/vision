@@ -44,7 +44,8 @@ class PolizaController extends Controller
      */
     public function show($numero_solicitud)
     {
-        $numero_solicitud = Poliza::where('numero_solicitud', $numero_solicitud)->with(['codigo_productor.productores', 'estado_polizas', 'clientes', 'companias', 'tipo_vigencias'])->get();
+        $poliza = Poliza::where('numero_solicitud', $numero_solicitud)->with(['codigo_productor.productores', 'estado_polizas', 'clientes', 'companias', 'tipo_vigencias'])->get();
+        return $poliza[0];
     }
 
     /**
@@ -54,9 +55,10 @@ class PolizaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Poliza $poliza)
+    public function update(Request $request, $id)
     {
         try {
+            $poliza = Poliza::findOrFail($id);
             $poliza->fill($request->all())->save();
             return response($poliza, 200);
         } catch (\Exception $e) {

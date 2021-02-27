@@ -43,7 +43,7 @@
       <template v-slot:[`item.actions`]="{ item }">
         <router-link
           class="links"
-          :to="{ name: 'Automotor' }"
+          :to="{ name: 'Editar Poliza', params: { numero_solicitud: item.numero_solicitud } }"
         >
           <v-icon
             small

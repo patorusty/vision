@@ -374,10 +374,10 @@
           <v-btn
             class="mb-2"
             color="green"
-            @click="create"
+            @click="update"
             text
             native-type="submit"
-          >Crear</v-btn>
+          >Guardar</v-btn>
         </v-card-actions>
       </v-container>
     </v-form>
@@ -434,11 +434,11 @@ export default {
   methods: {
     ...mapActions("cliente", ["getClientes"]),
     ...mapActions("poliza", [
+      "getPoliza",
       "getTipoRiesgos",
       "getFormaPagos",
       "getTipoVigencias",
-      "createPoliza",
-      "cargarUltimoNumeroSolicitud"
+      "updatePoliza"
     ]),
     ...mapActions("compania", ["getCompanias"]),
     ...mapActions("codigo_productor", ["getCodigoProductores"]),
@@ -479,9 +479,9 @@ export default {
       });
       this.RESET_POLIZA();
     },
-    async create() {
+    async update() {
       if (this.$refs.form.validate()) {
-        const createResult = await this.createPoliza(this.poliza);
+        const createResult = await this.updatePoliza(this.poliza);
         if (createResult) {
           this.$router.push({
             name: "Automotor"
@@ -492,13 +492,14 @@ export default {
     }
   },
   created() {
+    console.log(this.$route.params.numero_solicitud);
+    this.getPoliza(this.$route.params.numero_solicitud);
     this.getClientes();
     this.getCompanias();
     this.getTipoRiesgos();
     this.getFormaPagos();
     this.getTipoVigencias();
     this.sumarMes();
-    this.cargarUltimoNumeroSolicitud();
   }
 };
 </script>

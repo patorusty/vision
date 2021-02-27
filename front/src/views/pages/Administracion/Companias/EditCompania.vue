@@ -5,7 +5,7 @@
         <v-container>
           <v-form ref="form">
             <v-row>
-              <v-col>
+              <v-col class="pt-0 pb-0">
                 <v-text-field
                   v-model="compania.nombre"
                   :rules="[rules.required]"
@@ -14,7 +14,7 @@
                 >
                 </v-text-field>
               </v-col>
-              <v-col>
+              <v-col class="pt-0 pb-0">
                 <v-text-field
                   v-model="compania.cuit"
                   @keyup="buscarCuit"
@@ -29,21 +29,21 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col>
+              <v-col class="pt-0 pb-0">
                 <v-text-field
                   v-model="compania.codigo_lr"
                   label="Libros Rubricados"
                   v-uppercase
                 ></v-text-field>
               </v-col>
-              <v-col class="d-flex justify-center">
+              <v-col class="d-flex justify-center pt-0 pb-0">
                 <v-switch
                   v-model="compania.activo"
                   label="Activo"
                   primary
                 ></v-switch>
               </v-col>
-              <v-col class="d-flex justify-center">
+              <v-col class="d-flex justify-center pt-0 pb-0">
                 <v-avatar
                   color="primary"
                   size="62"
@@ -56,7 +56,7 @@
           </v-col> -->
             </v-row>
             <v-row>
-              <v-col>
+              <v-col class="pt-0 pb-0">
                 <v-text-field
                   v-model="compania.direccion"
                   :rules="[rules.required]"
@@ -64,7 +64,7 @@
                   v-uppercase
                 ></v-text-field>
               </v-col>
-              <v-col>
+              <v-col class="pt-0 pb-0">
                 <v-autocomplete
                   :rules="[rules.required]"
                   :items="localidades"
@@ -76,7 +76,7 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col>
+              <v-col class="pt-0 pb-0">
                 <v-text-field
                   :rules="[rules.required]"
                   v-model="compania.telefono_1"
@@ -84,7 +84,7 @@
                   v-uppercase
                 ></v-text-field>
               </v-col>
-              <v-col>
+              <v-col class="pt-0 pb-0">
                 <v-text-field
                   :rules="[rules.required]"
                   v-model="compania.telefono_aux"
@@ -92,7 +92,7 @@
                   v-uppercase
                 ></v-text-field>
               </v-col>
-              <v-col>
+              <v-col class="pt-0 pb-0">
                 <v-text-field
                   :rules="[rules.required]"
                   v-model="compania.telefono_siniestros"
@@ -102,7 +102,7 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col>
+              <v-col class="pt-0 pb-0">
                 <v-text-field
                   :rules="[rules.email, rules.required]"
                   label="Email Emision"
@@ -110,7 +110,7 @@
                   v-uppercase
                 ></v-text-field>
               </v-col>
-              <v-col>
+              <v-col class="pt-0 pb-0">
                 <v-text-field
                   :rules="[rules.email, rules.required]"
                   label="Email Siniestros"

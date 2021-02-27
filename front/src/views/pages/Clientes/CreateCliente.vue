@@ -5,7 +5,10 @@
         <v-card-title> Datos Personales </v-card-title>
         <v-card-text>
           <v-row>
-            <v-col class="pb-0" :cols="3">
+            <v-col
+              class="pb-0"
+              :cols="3"
+            >
               <v-select
                 :rules="[rules.required]"
                 v-model="cliente.tipo_persona"
@@ -19,7 +22,7 @@
           </v-row>
           <v-row>
             <v-col
-              class="pt-0"
+              class="pt-0 pb-0"
               v-if="cliente.tipo_persona === 'Persona Juridica'"
             >
               <v-text-field
@@ -36,7 +39,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col class="pt-0">
+            <v-col class="pt-0 pb-0">
               <v-text-field
                 v-model="cliente.nombre"
                 :rules="[rules.required]"
@@ -44,7 +47,7 @@
                 v-uppercase
               ></v-text-field>
             </v-col>
-            <v-col class="pt-0">
+            <v-col class="pt-0 pb-0">
               <v-text-field
                 v-model="cliente.apellido"
                 :rules="[rules.required]"
@@ -52,7 +55,7 @@
                 v-uppercase
               ></v-text-field>
             </v-col>
-            <v-col class="pt-0">
+            <v-col class="pt-0 pb-0">
               <v-text-field
                 v-model="cliente.nro_dni"
                 :rules="[
@@ -65,7 +68,7 @@
               ></v-text-field>
             </v-col>
             <v-col
-              class="pt-0"
+              class="pt-0 pb-0"
               v-if="cliente.tipo_persona === 'Persona Juridica'"
             >
               <v-text-field
@@ -83,7 +86,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-select
                 :items="condiciones"
                 :rules="[rules.required]"
@@ -95,7 +98,7 @@
               </v-select>
             </v-col>
 
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-menu
                 v-model="calendario"
                 :close-on-content-click="false"
@@ -122,26 +125,37 @@
                   locale="es-la"
                   @input="calendario = false"
                 >
-                  <v-btn text color="primary" @click="menu = false"
-                    >Cancel</v-btn
-                  >
-                  <v-btn text color="primary">OK</v-btn>
+                  <v-btn
+                    text
+                    color="primary"
+                    @click="menu = false"
+                  >Cancel</v-btn>
+                  <v-btn
+                    text
+                    color="primary"
+                  >OK</v-btn>
                 </v-date-picker>
               </v-menu>
             </v-col>
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-radio-group
                 :rules="[rules.required]"
                 v-model="cliente.sexo"
                 row
               >
-                <v-radio label="Masculino" value="M"></v-radio>
-                <v-radio label="Femenino" value="F"></v-radio>
+                <v-radio
+                  label="Masculino"
+                  value="M"
+                ></v-radio>
+                <v-radio
+                  label="Femenino"
+                  value="F"
+                ></v-radio>
               </v-radio-group>
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-text-field
                 v-model="cliente.email"
                 :rules="[rules.required, rules.email]"
@@ -149,7 +163,7 @@
                 v-uppercase
               ></v-text-field>
             </v-col>
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-text-field
                 v-model="cliente.email_alt"
                 label="E-mail Alt."
@@ -158,7 +172,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-textarea
                 rows="1"
                 auto-grow
@@ -171,7 +185,7 @@
         <v-card-title> Dirección </v-card-title>
         <v-card-text>
           <v-row>
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-text-field
                 label="Calle"
                 v-model="cliente.direccion"
@@ -179,7 +193,10 @@
               >
               </v-text-field>
             </v-col>
-            <v-col :cols="3">
+            <v-col
+              class="pt-0 pb-0"
+              :cols="3"
+            >
               <v-text-field
                 label="Número"
                 v-model="cliente.direccion_nro"
@@ -187,27 +204,45 @@
               >
               </v-text-field>
             </v-col>
-            <v-col :cols="1">
-              <v-text-field label="Piso" v-model="cliente.direccion_piso">
+            <v-col
+              class="pt-0 pb-0"
+              :cols="1"
+            >
+              <v-text-field
+                label="Piso"
+                v-model="cliente.direccion_piso"
+              >
               </v-text-field>
             </v-col>
-            <v-col :cols="1">
-              <v-text-field label="Depto" v-model="cliente.direccion_depto">
+            <v-col
+              class="pt-0 pb-0"
+              :cols="1"
+            >
+              <v-text-field
+                label="Depto"
+                v-model="cliente.direccion_depto"
+              >
               </v-text-field>
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-text-field
                 label="Barrio / Country"
                 v-model="cliente.barrio_cerrado"
               >
               </v-text-field>
             </v-col>
-            <v-col :cols="2">
-              <v-text-field label="Lote" v-model="cliente.lote"> </v-text-field>
+            <v-col
+              class="pt-0 pb-0"
+              :cols="2"
+            >
+              <v-text-field
+                label="Lote"
+                v-model="cliente.lote"
+              > </v-text-field>
             </v-col>
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-autocomplete
                 :rules="[rules.required]"
                 :items="localidades"
@@ -222,7 +257,7 @@
         <v-card-title> Teléfonos </v-card-title>
         <v-card-text>
           <v-row>
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-text-field
                 label="Celular"
                 v-model="cliente.celular"
@@ -230,7 +265,7 @@
               >
               </v-text-field>
             </v-col>
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-text-field
                 label="Teléfono"
                 v-model="cliente.telefono_1"
@@ -238,7 +273,7 @@
               >
               </v-text-field>
             </v-col>
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-text-field
                 label="Teléfono Alternativo"
                 v-model="cliente.telefono_2"
@@ -248,7 +283,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
+            <v-col class="pt-0 pb-0">
               <v-textarea
                 rows="1"
                 auto-grow
@@ -263,7 +298,7 @@
             <v-card-title> Productor </v-card-title>
             <v-card-text>
               <v-row>
-                <v-col>
+                <v-col class="pt-0 pb-0">
                   <v-select
                     label="Seleccione Productor"
                     v-model="cliente.productor_id"
@@ -281,7 +316,7 @@
             <v-card-title> Registro </v-card-title>
             <v-card-text>
               <v-row>
-                <v-col>
+                <v-col class="pt-0 pb-0">
                   <v-text-field
                     label="Registro"
                     v-model="cliente.registro"
@@ -289,7 +324,7 @@
                   >
                   </v-text-field>
                 </v-col>
-                <v-col>
+                <v-col class="pt-0 pb-0">
                   <v-menu
                     v-model="calendario2"
                     :close-on-content-click="false"
@@ -354,16 +389,20 @@
           </div>
         </div>
         <v-card-actions class="d-flex justify-end">
-          <v-btn class="mb-2" color="red" text @click="volver">Volver</v-btn>
+          <v-btn
+            class="mb-2"
+            color="red"
+            text
+            @click="volver"
+          >Volver</v-btn>
           <v-btn
             class="mb-2"
             color="green"
             @click="create"
             text
             native-type="submit"
-            >Crear</v-btn
-          ></v-card-actions
-        >
+          >Crear</v-btn>
+        </v-card-actions>
       </v-container>
     </v-form>
   </v-card>
@@ -378,11 +417,11 @@ export default {
   mixins: [helpers],
   data: () => ({
     rules: {
-      required: (value) => !!value || "Este campo obligatorio",
-      email: (value) => {
+      required: value => !!value || "Este campo obligatorio",
+      email: value => {
         const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return pattern.test(value) || "Igrese un email válido";
-      },
+      }
     },
     localidades: [],
     cuitUsado: false,
@@ -395,55 +434,55 @@ export default {
     tipos_persona: [
       {
         value: "Persona Fisica",
-        text: "Persona Fisica",
+        text: "Persona Fisica"
       },
       {
         value: "Persona Juridica",
-        text: "Persona Juridica",
-      },
+        text: "Persona Juridica"
+      }
     ],
     condiciones: [
       {
         value: "Consumidor Final",
-        text: "Consumidor Final",
+        text: "Consumidor Final"
       },
       {
         value: "Monotributo",
-        text: "Monotributo",
+        text: "Monotributo"
       },
       {
         value: "Resp. Inscripto",
-        text: "Resp. Inscripto",
-      },
-    ],
+        text: "Resp. Inscripto"
+      }
+    ]
   }),
   computed: {
     ...mapState("cliente", ["cliente"]),
-    ...mapState("productor", ["productores"]),
+    ...mapState("productor", ["productores"])
   },
   methods: {
     ...mapActions("cliente", ["createCliente", "getClientes"]),
     ...mapMutations("cliente", ["RESET_CLIENTE"]),
     ...mapActions("productor", ["getProductores"]),
 
-    buscarCuit: debounce(async function () {
+    buscarCuit: debounce(async function() {
       if (
         this.cliente.cuit.length >= 6 &&
         this.cliente.cuit != this.cliente.cuitOriginal
       ) {
         const resp = await http.post("/clientes/busquedaCuit", {
-          cuit: this.cliente.cuit,
+          cuit: this.cliente.cuit
         });
         this.cuitUsado = resp.data.usado;
       }
     }, 700),
-    buscarDNI: debounce(async function () {
+    buscarDNI: debounce(async function() {
       if (
         this.cliente.nro_dni.length >= 4 &&
         this.cliente.nro_dni != this.cliente.dniOriginal
       ) {
         const resp = await http.post("/clientes/busquedaDNI", {
-          dni: this.cliente.nro_dni,
+          dni: this.cliente.nro_dni
         });
         this.dniUsado = resp.data.usado;
       }
@@ -452,7 +491,7 @@ export default {
     upload() {},
     volver() {
       this.$router.push({
-        name: "Clientes",
+        name: "Clientes"
       });
       this.RESET_CLIENTE();
     },
@@ -461,18 +500,18 @@ export default {
         const createResult = await this.createCliente(this.cliente);
         if (createResult) {
           this.$router.push({
-            name: "Clientes",
+            name: "Clientes"
           });
           this.RESET_CLIENTE();
         }
       }
-    },
+    }
   },
   created() {
     this.getClientes();
     this.cargarLocalidades();
     this.getProductores();
-  },
+  }
 };
 </script>
 

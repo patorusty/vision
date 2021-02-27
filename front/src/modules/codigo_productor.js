@@ -7,7 +7,7 @@ const state = () => ({
   codigo_productor: {
     codigo_productor: "",
     cpOriginal: '',
-    activo: true
+    activo: 1
   },
   loading: false
 });
@@ -24,7 +24,7 @@ const mutations = {
     state.codigo_productor = Object.assign({}, {
       codigo_productor: "",
       cpOriginal: '',
-      activo: true
+      activo: 1
     });
   },
   UPDATE_CODIGO_PRODUCTOR(state, codigo_productor) {

@@ -6,7 +6,7 @@ const state = () => ({
   coberturas: [],
   cobertura: {
     cobOriginal: '',
-    activo: true
+    activo: 1
   },
   loading: false
 });
@@ -22,7 +22,7 @@ const mutations = {
   RESET_COBERTURA(state) {
     state.cobertura = Object.assign({}, {
       cobOriginal: '',
-      activo: true
+      activo: 1
     });
   },
   UPDATE_COBERTURA(state, cobertura) {

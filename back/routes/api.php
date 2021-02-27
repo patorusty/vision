@@ -59,8 +59,8 @@ Route::apiResource('/clientes', ClienteController::class);
 Route::post('/clientes/busquedaCuit', [ClienteController::class, 'searchCuit']);
 Route::post('/clientes/busquedaDNI', [ClienteController::class, 'searchDNI']);
 
-Route::apiResource('/polizas', PolizaController::class);
 Route::get('/numerosolicitud', [PolizaController::class, 'numeroDeSolicitud']);
+Route::apiResource('/polizas', PolizaController::class);
 
 Route::apiResource('/tiporiesgos', TipoRiesgoController::class);
 Route::apiResource('/formapagos', FormaPagoController::class);
