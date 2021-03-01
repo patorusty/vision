@@ -19,7 +19,7 @@
               </v-select>
             </v-col>
           </v-row>
-          
+
           <v-row>
             <v-col>
               <v-select
@@ -37,7 +37,7 @@
           <v-row>
             <v-col>
               <v-text-field
-              v-uppercase
+                v-uppercase
                 label="Codigo Productor"
                 v-model="codigo_productor.codigo_productor"
                 :rules="[
@@ -59,7 +59,12 @@
       </v-container>
     </v-card-text>
     <v-card-actions class="d-flex justify-end">
-      <v-btn class="mb-2" color="red" text @click="closeModal">Cerrar</v-btn>
+      <v-btn
+        class="mb-2"
+        color="red"
+        text
+        @click="closeModal"
+      >Cerrar</v-btn>
       <v-btn
         class="mb-2"
         v-if="!edicion2"
@@ -67,11 +72,14 @@
         @click="create"
         text
         native-type="submit"
-        >Crear</v-btn
-      >
-      <v-btn class="mb-2" v-else @click="update" text color="green"
-        >Guardar</v-btn
-      >
+      >Crear</v-btn>
+      <v-btn
+        class="mb-2"
+        v-else
+        @click="update"
+        text
+        color="green"
+      >Guardar</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -86,23 +94,22 @@ export default {
   mixins: [helpers],
   data: () => ({
     rules: {
-      required: (value) => !!value || "Este campo obligatorio",
+      required: value => !!value || "Este campo obligatorio"
     },
-    cpUsado: false,
+    cpUsado: false
   }),
   computed: {
     ...mapState("codigo_productor", ["codigo_productor"]),
     ...mapState("compania", ["compania"]),
     ...mapState("productor", ["productores"]),
     ...mapState("organizador", ["organizadores"]),
-    ...mapState("codigo_organizador", ['codigo_organizadores']),
-    ...mapState("modal", ["modal2", "edicion2"]),
+    ...mapState("codigo_organizador", ["codigo_organizadores"]),
+    ...mapState("modal", ["modal2", "edicion2"])
   },
   methods: {
     ...mapActions("codigo_productor", [
-      "resetCodigoProductorState",
       "updateCodigoProductor",
-      "createCodigoProductor",
+      "createCodigoProductor"
     ]),
     ...mapMutations("modal", ["HIDE_MODAL2"]),
     ...mapMutations("codigo_productor", ["RESET_CODIGO_PRODUCTOR"]),
@@ -133,7 +140,7 @@ export default {
       this.$refs.form.resetValidation();
       this.cpUsado = false;
     },
-    buscarCP: debounce(async function () {
+    buscarCP: debounce(async function() {
       if (
         this.codigo_productor.codigo_productor &&
         this.codigo_productor.codigo_productor !=
@@ -142,19 +149,19 @@ export default {
         const resp = await http.post("/codigo_productor/busquedaCP", {
           codigo_productor: this.codigo_productor.codigo_productor,
           codigo_organizador_id: this.codigo_productor.codigo_organizador_id,
-          compania_id: this.compania.id,
+          compania_id: this.compania.id
         });
         this.cpUsado = resp.data.usado;
       }
-    }, 500),
+    }, 500)
   },
   watch: {
     modal2() {
       if (!this.modal2) {
         this.closeModal();
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

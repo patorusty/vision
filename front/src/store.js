@@ -11,6 +11,8 @@ import productor from "./modules/productor";
 import codigo_organizador  from "./modules/codigo_organizador";
 import codigo_productor  from "./modules/codigo_productor";
 import cobertura  from "./modules/cobertura";
+import endoso  from "./modules/endoso";
+import siniestro  from "./modules/siniestro";
 
 Vue.use(Vuex);
 
@@ -44,6 +46,8 @@ export default new Vuex.Store({
     productor,
     codigo_organizador,
     codigo_productor,
-    cobertura
+    cobertura,
+    endoso,
+    siniestro
   }
 });

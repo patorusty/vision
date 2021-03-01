@@ -356,6 +356,7 @@
               <v-row>
                 <v-col class=" mt-0 py-0">
                   <v-textarea
+                    v-model="poliza.detalle_medio_pago"
                     class="mt-0 pt-0"
                     label="Detalle"
                   ></v-textarea>
@@ -477,7 +478,6 @@ export default {
       this.$router.push({
         name: "Automotor"
       });
-      this.RESET_POLIZA();
     },
     async create() {
       if (this.$refs.form.validate()) {
@@ -499,6 +499,9 @@ export default {
     this.getTipoVigencias();
     this.sumarMes();
     this.cargarUltimoNumeroSolicitud();
+  },
+  beforeDestroy() {
+    this.RESET_POLIZA();
   }
 };
 </script>

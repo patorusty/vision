@@ -16,12 +16,13 @@ const state = () => ({
   poliza: {
     vigencia_desde: setMediodia(moment()),
     tipo_vigencia_id: 6,
-    fecha_solicitud: setMediodia(moment())
+    fecha_solicitud: setMediodia(moment()),
+    endosos: []
   },
   loading: true,
   tipo_riesgos: [],
   forma_pagos: [],
-  tipo_vigencias: []
+  tipo_vigencias: [],
 });
 const mutations = {
   SET_POLIZAS(state, polizas) {
@@ -33,19 +34,13 @@ const mutations = {
     state.loading = false;
   },
   RESET_POLIZA(state) {
-    state = Object.assign(
+    state.poliza = Object.assign(
       {},
       {
-        polizas: [],
-        poliza: {
           vigencia_desde: setMediodia(moment()),
           tipo_vigencia_id: 6,
-          fecha_solicitud: setMediodia(moment())
-        },
-        loading: true,
-        tipo_riesgos: [],
-        forma_pagos: [],
-        tipo_vigencias: []
+          fecha_solicitud: setMediodia(moment()),
+          endosos: []
       }
     );
   },
@@ -70,7 +65,10 @@ const mutations = {
   },
   SET_NUMERO_SOLICITUD(state, numero_solicitud) {
     state.poliza.numero_solicitud = numero_solicitud;
-  }
+  },
+  // SET_ENDOSOS_POR_POLIZA(state, endosos) {
+  //   state.poliza.endosos = endosos;  
+  // },
 };
 const actions = {
   async getPolizas({ commit }) {
@@ -80,6 +78,10 @@ const actions = {
   async getPoliza({ commit, dispatch }, id) {
     const resp = await http.getOne(API_URL, id);
     commit("SET_POLIZA", resp.data);
+    dispatch('endoso/getEndososDePoliza', id, {root:true})
+    dispatch('siniestro/getSiniestrosDePoliza', id, {root:true})
+    dispatch('endoso/getTipoEndosos', null, {root:true})
+    dispatch('endoso/getDetalleEndosos', null, {root:true})
   },
   async createPoliza({ commit }, poliza) {
     const resp = await http.post(API_URL, poliza);

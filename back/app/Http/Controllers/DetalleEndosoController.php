@@ -2,16 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\DetalleEndosos;
+use App\Models\DetalleEndoso;
 use Illuminate\Http\Request;
-use App\Http\Resources\DetalleEndoso as DetalleEndososResource;
 
 
 class DetalleEndosoController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return DetalleEndoso::all();
+    }
+
     public function filtro($id)
     {
-        $detalles = DetalleEndosos::with('tipo_endoso')->where('tipo_endoso_id', $id)->get();
-        return DetalleEndososResource::collection($detalles);
+        return DetalleEndoso::with('tipo_endoso')->where('tipo_endoso_id', $id)->get();
     }
 }

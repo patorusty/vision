@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Coberturas;
+use App\Models\Cobertura;
 use App\Models\CodigoOrganizador;
 use App\Models\CodigoProductor;
 use App\Models\Localidades;
@@ -45,7 +45,7 @@ class Compania extends Model
 
     public function coberturas()
     {
-        return $this->hasMany(Coberturas::class, 'compania_id', 'id');
+        return $this->hasMany(Cobertura::class, 'compania_id', 'id');
     }
 
     public function polizas()

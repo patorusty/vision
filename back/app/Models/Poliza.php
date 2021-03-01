@@ -8,6 +8,7 @@ use App\Models\RiesgoAutomotor;
 use App\Models\SiniestroAutomotor;
 use App\Models\TipoRiesgo;
 use App\Models\TipoVigencia;
+use App\Models\Endoso;
 use Illuminate\Database\Eloquent\Model;
 
 class Poliza extends Model
@@ -86,7 +87,7 @@ class Poliza extends Model
 
     public function endosos()
     {
-        return $this->hasMany(Endosos::class, 'poliza_id', 'id');
+        return $this->hasMany(Endoso::class, 'poliza_id', 'id');
     }
 
     public function siniestros()

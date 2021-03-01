@@ -11,37 +11,33 @@ class AutomotorAnioController extends Controller
 {
     public function index()
     {
-        $automotor_anio = AutomotorAnio::all();
-
-        return AutomotorAniosResource::collection($automotor_anio);
+        return AutomotorAnio::all();
     }
     public function show($id)
     {
-        $automotor_anio = AutomotorAnio::findOrFail($id);
-
-        return new AutomotorAniosResource($automotor_anio);
+        return AutomotorAnio::findOrFail($id);
     }
     public function filtro($anio, $modelo)
     {
         // $automotor_anio = AutomotorAnio::where('anio_id', $anio)->with(['automotor_version.automotor_modelo'])->whereIn(['automotor_version->automotor_modelo_id', $modelo])->get();
-        
-        $automotor_anio = AutomotorAnio::where('anio_id', $anio)->with(['automotor_version.automotor_modelo'])->whereHas('automotor_version',function ($q) use ($modelo){
-            $q->whereHas('automotor_modelo', function ($q) use ($modelo){
+
+        $automotor_anio = AutomotorAnio::where('anio_id', $anio)->with(['automotor_version.automotor_modelo'])->whereHas('automotor_version', function ($q) use ($modelo) {
+            $q->whereHas('automotor_modelo', function ($q) use ($modelo) {
                 $q->where('id', $modelo);
-             });
-         })->get();
+            });
+        })->get();
 
 
 
-        return AutomotorAniosResource::collection($automotor_anio);
+        return $automotor_anio;
     }
 
     public function filtroXAnio($id)
     {
         $automotor_anio = AutomotorAnio::where('anio_id', $id)->with(['automotor_version.automotor_modelo', 'anios'])->get();
-        return AutomotorAniosResource::collection($automotor_anio);
+        return $automotor_anio;
     }
-    
+
     public function store(Request $request)
     {
         $this->validate($request, []);

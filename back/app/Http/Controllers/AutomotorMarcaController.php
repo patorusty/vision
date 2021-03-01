@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\AutomotorMarca;
+use App\Models\AutomotorMarca;
 use Illuminate\Http\Request;
 use App\Http\Resources\AutomotorMarca as AutomotorMarcasResource;
 
@@ -11,15 +11,11 @@ class AutomotorMarcaController extends Controller
 {
     public function index()
     {
-        $automotor_marca = AutomotorMarca::all();
-        
-        return AutomotorMarcasResource::collection($automotor_marca);
+        return AutomotorMarca::all();
     }
     public function show($id)
     {
-        $automotor_marca = AutomotorMarca::findOrFail($id);
-
-        return new AutomotorMarcasResource($automotor_marca);
+        return AutomotorMarca::findOrFail($id);
     }
     public function store(Request $request)
     {
@@ -53,7 +49,6 @@ class AutomotorMarcaController extends Controller
         if ($search = \Request::get('q')) {
             $marca = AutomotorMarca::where('nombre', $search)->get();
         }
-        return AutomotorMarcasResource::collection($marca);
+        return $marca;
     }
-    
 }

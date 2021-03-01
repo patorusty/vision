@@ -12,6 +12,10 @@ use App\Http\Controllers\PolizaController;
 use App\Http\Controllers\TipoRiesgoController;
 use App\Http\Controllers\FormaPagoController;
 use App\Http\Controllers\TipoVigenciaController;
+use App\Http\Controllers\EndosoController;
+use App\Http\Controllers\TipoEndosoController;
+use App\Http\Controllers\DetalleEndosoController;
+use App\Http\Controllers\SiniestroAutomotorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -61,6 +65,14 @@ Route::post('/clientes/busquedaDNI', [ClienteController::class, 'searchDNI']);
 
 Route::get('/numerosolicitud', [PolizaController::class, 'numeroDeSolicitud']);
 Route::apiResource('/polizas', PolizaController::class);
+
+Route::apiResource('/endosos', EndosoController::class);
+Route::get('/endosos/indexFiltrado/{poliza_id}', [EndosoController::class, 'indexFiltrado']);
+Route::apiResource('/tipoendosos', TipoEndosoController::class);
+Route::apiResource('/detalleendosos', DetalleEndosoController::class);
+
+Route::apiResource('/siniestros', SiniestroAutomotorController::class);
+Route::get('/siniestros/indexFiltrado/{poliza_id}', [SiniestroAutomotorController::class, 'indexFiltrado']);
 
 Route::apiResource('/tiporiesgos', TipoRiesgoController::class);
 Route::apiResource('/formapagos', FormaPagoController::class);

@@ -3,6 +3,11 @@ import moment from "moment";
 
 
 export const helpers = {
+  data: () => ({
+    rules: {
+      required: (value) => !!value || "Este campo obligatorio",
+    },
+  }),
   methods: {
     localidadesText(item) {
       return `${item.nombre} - ${item.codigo_postal}`;
@@ -21,6 +26,9 @@ export const helpers = {
     },
     nombreCompleto(item) {
       return `${item.apellido}  ${item.nombre}`;
+    },
+    textCompleto(nro) {
+      return nro === 1 || nro === true ? "SI" : "NO";
     },
     async cargarLocalidades() {
       const resp = await http.get("/localidades");

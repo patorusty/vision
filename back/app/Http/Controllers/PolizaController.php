@@ -32,8 +32,12 @@ class PolizaController extends Controller
      */
     public function store(Request $request)
     {
-
-        $poliza = Poliza::create($request->all());
+        try {
+            $poliza = Poliza::create($request->all());
+            return response($poliza, 201);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -44,7 +48,7 @@ class PolizaController extends Controller
      */
     public function show($numero_solicitud)
     {
-        $poliza = Poliza::where('numero_solicitud', $numero_solicitud)->with(['codigo_productor.productores', 'estado_polizas', 'clientes', 'companias', 'tipo_vigencias'])->get();
+        $poliza = Poliza::where('numero_solicitud', $numero_solicitud)->with(['codigo_productor.productores', 'estado_polizas', 'clientes', 'companias', 'tipo_vigencias', 'endosos.tipo_endoso', 'endosos.detalle_endoso', 'siniestros'])->get();
         return $poliza[0];
     }
 

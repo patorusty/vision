@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\SiniestroAutomotor;
+use App\Models\SiniestroAutomotor;
 use Illuminate\Http\Request;
 use App\Http\Resources\SiniestroAutomotor as SiniestroAutomotorsResource;
 
@@ -16,27 +16,12 @@ class SiniestroAutomotorController extends Controller
      */
     public function index()
     {
-        
-        $siniestros = SiniestroAutomotor::with(['polizas.clientes','polizas.companias'])->get();
 
-        return SiniestroAutomotorsResource::collection($siniestros);
-
+        return SiniestroAutomotor::with(['polizas.clientes', 'polizas.companias'])->get();
     }
     public function indexFiltrado($poliza_id)
     {
-        $siniestros = SiniestroAutomotor::where('poliza_id', $poliza_id)->get();
-
-        return SiniestroAutomotorsResource::collection($siniestros);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return SiniestroAutomotor::where('poliza_id', $poliza_id)->get();
     }
 
     /**
@@ -47,28 +32,12 @@ class SiniestroAutomotorController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->validate($request, [
-     
-        // ]);
-
-        $siniestro = SiniestroAutomotor::create([
-            'poliza_id' => $request->input('poliza_id'),
-            'numero_siniestro' => $request->input('numero_siniestro'),
-            'fecha_denuncia' => $request->input('fecha_denuncia'),
-            'fecha_siniestro' => $request->input('fecha_siniestro'),
-            'fecha_completo' => $request->input('fecha_completo'),
-            'tipo_reclamo' => $request->input('tipo_reclamo'),
-            'estado_siniestro' => $request->input('estado_siniestro'),
-            'inspeccion' => $request->input('inspeccion'),
-            'orden_trabajo' => $request->input('orden_trabajo'),
-            'cleas' => $request->input('cleas'),
-            'ciavscia' => $request->input('ciavscia'),
-            'culpabilidad' => $request->input('culpabilidad'),
-            'taller' => $request->input('taller'),
-            'detalle' => $request->input('detalle'),
-        ]);
-
-        return (['message' => 'guardado']);
+        try {
+            $siniestro = SiniestroAutomotor::create($request->all());
+            return response($siniestro, 201);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -79,23 +48,7 @@ class SiniestroAutomotorController extends Controller
      */
     public function show($id)
     {
-        $siniestro = SiniestroAutomotor::findOrFail($id);
-        $siniestro = SiniestroAutomotor::with(['polizas.clientes', 'polizas.riesgo_automotor', 'polizas.companias', 'polizas.riesgo_automotor', 'polizas.riesgo_automotor.automotor_marca', 'polizas.riesgo_automotor.automotor_version', 'polizas.riesgo_automotor.cobertura'])->findOrFail($id);
-
-
-        return new SiniestroAutomotorsResource($siniestro);
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return SiniestroAutomotor::with(['polizas.clientes', 'polizas.riesgo_automotor', 'polizas.companias', 'polizas.riesgo_automotor', 'polizas.riesgo_automotor.automotor_marca', 'polizas.riesgo_automotor.automotor_version', 'polizas.riesgo_automotor.cobertura'])->findOrFail($id);
     }
 
     /**
@@ -107,26 +60,16 @@ class SiniestroAutomotorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $siniestro = SiniestroAutomotor::find($id);
-        $siniestro->update([
-            'poliza_id' => $request->input('poliza_id'),
-            'numero_siniestro' => $request->input('numero_siniestro'),
-            'fecha_denuncia' => $request->input('fecha_denuncia'),
-            'fecha_siniestro' => $request->input('fecha_siniestro'),
-            'fecha_completo' => $request->input('fecha_completo'),
-            'tipo_reclamo' => $request->input('tipo_reclamo'),
-            'estado_siniestro' => $request->input('estado_siniestro'),
-            'inspeccion' => $request->input('inspeccion'),
-            'orden_trabajo' => $request->input('orden_trabajo'),
-            'cleas' => $request->input('cleas'),
-            'ciavscia' => $request->input('ciavscia'),
-            'culpabilidad' => $request->input('culpabilidad'),
-            'taller' => $request->input('taller'),
-            'detalle' => $request->input('detalle'),
-        ]);
+        try {
+            $siniestro = SiniestroAutomotor::findOrFail($id);
+            $siniestro->fill($request->all())->save();
+            return response($siniestro, 200);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
-   
+
 
     /**
      * Remove the specified resource from storage.
@@ -136,10 +79,12 @@ class SiniestroAutomotorController extends Controller
      */
     public function destroy($id)
     {
-        $siniestro = SiniestroAutomotor::find($id);
-        
-        $siniestro->delete();
-
-        return ['message'=> 'Eliminado'];
+        try {
+            $siniestro = SiniestroAutomotor::find($id);
+            $siniestro->delete();
+            return response('', 200);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 }

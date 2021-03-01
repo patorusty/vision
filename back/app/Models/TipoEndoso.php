@@ -10,7 +10,7 @@ class TipoEndoso extends Model
 {
     public function endosos()
     {
-        return $this->hasMany(Endoso::class, 'tipo_endoso_id', 'id');
+        return $this->belongsTo(Endoso::class, 'tipo_endoso_id', 'id');
     }
 
     public function detalleEndosos()

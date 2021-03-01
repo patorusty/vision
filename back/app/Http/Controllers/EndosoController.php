@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Endosos;
-use App\TipoEndosos;
-use App\DetalleEndosos;
-use App\Polizas;
+use App\Models\Endoso;
 use Illuminate\Http\Request;
-use App\Http\Resources\Endoso as EndososResource;
 
 
 class EndosoController extends Controller
@@ -19,32 +15,19 @@ class EndosoController extends Controller
      */
     public function index()
     {
-        $endosos = Endosos::with(['tipo_endosos','polizas.clientes','polizas.companias', 'polizas.riesgo_automotor'])->get();
-
-        return EndososResource::collection($endosos);
+        $endosos = Endoso::with(['tipo_endosos', 'polizas.clientes', 'polizas.companias', 'polizas.riesgo_automotor'])->get();
+        return $endosos;
     }
     public function indexFiltrado($poliza_id)
     {
-        $endosos = Endosos::with(['tipo_endosos', 'detalle_endosos'])->where('poliza_id', $poliza_id)->get();
-
-        return EndososResource::collection($endosos);
+        $endosos = Endoso::with(['tipo_endoso', 'detalle_endoso'])->where('poliza_id', $poliza_id)->get();
+        return $endosos;
     }
 
     public function anulaciones($poliza_id)
     {
-        $endoso = Endosos::where('poliza_id', $poliza_id)->where('tipo_endoso_id', 1)->get();
-        return new EndososResource($endoso);
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        
+        $endoso = Endoso::where('poliza_id', $poliza_id)->where('tipo_endoso_id', 1)->get();
+        return $endoso;
     }
 
     /**
@@ -55,22 +38,16 @@ class EndosoController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->validate($request, [
-        // ]);
+        try {
+            $this->validate($request, []);
 
-        $endoso = Endosos::create([
-            'poliza_id' => $request->input('poliza_id'),
-            'tipo_endoso_id' => $request->input('tipo_endoso_id'),
-            'detalle_endoso_id' => $request->input('detalle_endoso_id'),
-            'fecha_solicitud' => $request->input('fecha_solicitud'),
-            'fecha_emision' => $request->input('fecha_emision'),
-            'detalle' => $request->input('detalle'),
-            'numero_endoso' => $request->input('numero_endoso'),
-            'completo' => $request->input('completo'),
-        ]);
-
-        return (['message' => 'guardado']);
-
+            $endoso = Endoso::create($request->all());
+            $endoso->load(['tipo_endoso', 'polizas.clientes', 'polizas.riesgo_automotor', 'polizas.companias', 'polizas.riesgo_automotor', 'polizas.riesgo_automotor.automotor_marca', 'polizas.riesgo_automotor.automotor_version', 'polizas.riesgo_automotor.cobertura']);
+            $endoso::with(['tipo_endoso', 'polizas.clientes', 'polizas.riesgo_automotor', 'polizas.companias', 'polizas.riesgo_automotor', 'polizas.riesgo_automotor.automotor_marca', 'polizas.riesgo_automotor.automotor_version', 'polizas.riesgo_automotor.cobertura']);
+            return response($endoso, 201);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -81,23 +58,7 @@ class EndosoController extends Controller
      */
     public function show($id)
     {
-        $endoso = Endosos::with(['tipo_endosos','polizas.clientes', 'polizas.riesgo_automotor', 'polizas.companias', 'polizas.riesgo_automotor', 'polizas.riesgo_automotor.automotor_marca', 'polizas.riesgo_automotor.automotor_version', 'polizas.riesgo_automotor.cobertura'])->findOrFail($id);
-        
-        return new EndososResource($endoso);
-    }
-
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-    
-
+        return Endoso::with(['tipo_endoso', 'polizas.clientes', 'polizas.riesgo_automotor', 'polizas.companias', 'polizas.riesgo_automotor', 'polizas.riesgo_automotor.automotor_marca', 'polizas.riesgo_automotor.automotor_version', 'polizas.riesgo_automotor.cobertura'])->findOrFail($id);
     }
 
     /**
@@ -109,22 +70,17 @@ class EndosoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $endoso = Endosos::find($id);
-        $endoso->update([
-            'poliza_id' => $request->input('poliza_id'),
-            'tipo_endoso_id' => $request->input('tipo_endoso_id'),
-            'detalle_endoso_id' => $request->input('detalle_endoso_id'),
-            'fecha_solicitud' => $request->input('fecha_solicitud'),
-            'fecha_emision' => $request->input('fecha_emision'),
-            'detalle' => $request->input('detalle'),
-            'numero_endoso' => $request->input('numero_endoso'),
-            'completo' => $request->input('completo'),
-        ]);
+        try {
+            $endoso = Endoso::findOrFail($id);
+            $endoso->fill($request->all())->save();
+            return response($endoso, 200);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public function search()
     {
-       
     }
 
     /**
@@ -135,10 +91,12 @@ class EndosoController extends Controller
      */
     public function destroy($id)
     {
-        $endoso = Endosos::find($id);
-
-        $endoso->delete();
-
-        return ['message'=>'Eliminado'];
+        try {
+            $endoso = Endoso::findOrFail($id);
+            $endoso->delete();
+            return response('', 200);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 }

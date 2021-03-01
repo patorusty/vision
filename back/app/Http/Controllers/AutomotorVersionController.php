@@ -2,31 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\AutomotorVersion;
+use App\Models\AutomotorVersion;
 use Illuminate\Http\Request;
-use App\Http\Resources\AutomotorVersion as AutomotorVersionsResource;
 
 class AutomotorVersionController extends Controller
 {
     public function index()
     {
-        $automotor_version = AutomotorVersion::all();
-
-        return AutomotorVersionsResource::collection($automotor_version);
+        return AutomotorVersion::all();
     }
     public function show($id)
     {
-        $automotor_version = AutomotorVersion::with('automotor_anios')->find($id);
-
-        return new AutomotorVersionsResource($automotor_version);
+        return AutomotorVersion::with('automotor_anios')->find($id);
     }
     public function filtro($id)
     {
-        $versiones = AutomotorVersion::where('automotor_modelo_id', $id)->with(['automotor_modelo.automotor_marca', 'automotor_anios'])->get();
-        return AutomotorVersionsResource::collection($versiones);
+        return AutomotorVersion::where('automotor_modelo_id', $id)->with(['automotor_modelo.automotor_marca', 'automotor_anios'])->get();
     }
-    
-   
 
     public function store(Request $request)
     {
@@ -61,7 +53,6 @@ class AutomotorVersionController extends Controller
         if ($search = \Request::get('q')) {
             $version = AutomotorVersion::where('nombre', $search)->get();
         }
-        return AutomotorVersionsResource::collection($version);
-
+        return $version;
     }
 }

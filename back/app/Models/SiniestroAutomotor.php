@@ -8,7 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class SiniestroAutomotor extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        "poliza_id",
+        "numero_siniestro",
+        "fecha_denuncia",
+        "fecha_siniestro",
+        "fecha_completo",
+        "tipo_reclamo",
+        "estado_siniestro",
+        "inspeccion",
+        "orden_trabajo",
+        "cleas",
+        "ciavscia",
+        "culpabilidad",
+        "taller",
+        "detalle",
+        "created_at",
+        "updated_at",
+    ];
 
     public function polizas()
     {
