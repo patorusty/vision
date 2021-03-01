@@ -10,7 +10,7 @@ class AutomotorMarca extends Model
 {
     protected $guarded = [];
 
-    public function automotor_modelos()
+    public function modelos()
     {
         return $this->hasMany(AutomotorModelo::class, 'automotor_marca_id', 'id');
     }
@@ -19,5 +19,4 @@ class AutomotorMarca extends Model
     {
         return $this->hasMany(RiesgoAutomotor::class, 'automotor_marca_id', 'id');
     }
-
 }

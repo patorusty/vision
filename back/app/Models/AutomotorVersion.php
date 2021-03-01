@@ -11,12 +11,12 @@ class AutomotorVersion extends Model
 {
     protected $guarded = [];
 
-    public function automotor_modelo()
+    public function modelo()
     {
         return $this->belongsTo(AutomotorModelo::class, 'automotor_modelo_id');
     }
 
-    public function automotor_anios()
+    public function anios()
     {
         return $this->hasMany(AutomotorAnio::class, 'automotor_version_id', 'id');
     }
