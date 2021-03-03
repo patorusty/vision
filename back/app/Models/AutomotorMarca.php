@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\AutomotorModelo;
+use App\Models\AutomotorVersion;
 use App\Models\RiesgoAutomotor;
 use Illuminate\Database\Eloquent\Model;
 

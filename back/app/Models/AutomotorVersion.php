@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\AutomotorAnio;
+use App\Models\Anio;
 use App\Models\AutomotorModelo;
 use App\Models\RiesgoAutomotor;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class AutomotorVersion extends Model
 {
     protected $guarded = [];
+    protected $table = "automotor_versions";
 
     public function modelo()
     {
@@ -18,7 +19,7 @@ class AutomotorVersion extends Model
 
     public function anios()
     {
-        return $this->hasMany(AutomotorAnio::class, 'automotor_version_id', 'id');
+        return $this->belongsToMany(Anio::class, 'anio_version', 'automotor_version_id', 'anio_id');
     }
 
     public function riesgo_automotor()

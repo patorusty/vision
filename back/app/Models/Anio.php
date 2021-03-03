@@ -1,15 +1,16 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\AutomotorAnio;
+use App\Models\AutomotorVersion;
 use Illuminate\Database\Eloquent\Model;
 
 class Anio extends Model
 {
     protected $guarded = [];
 
-    public function automotor_anios(){
-        return $this->hasMany(AutomotorAnio::class, 'anio_id', 'id');
+    public function versiones()
+    {
+        return $this->belongsToMany(AutomotorVersion::class, 'anio_version', 'anio_id', 'automotor_version_id');
     }
 }

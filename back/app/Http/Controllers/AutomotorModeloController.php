@@ -4,14 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\AutomotorModelo;
 use Illuminate\Http\Request;
-use App\Http\Resources\AutomotorModelo as AutomotorModelosResource;
-use DB;
 
 class AutomotorModeloController extends Controller
 {
     public function index()
     {
-        return AutomotorModelo::with('automotor_version')->get();
+        return AutomotorModelo::with('versiones.anios')->get();
     }
     public function show($id)
     {
@@ -19,7 +17,8 @@ class AutomotorModeloController extends Controller
     }
     public function filtro($id)
     {
-        return AutomotorModelo::with('automotor_marca')->where('automotor_marca_id', $id)->get();
+        $modelo = AutomotorModelo::with('marca')->where('automotor_marca_id', $id)->get();
+        return $modelo[0];
     }
 
     public function store(Request $request)

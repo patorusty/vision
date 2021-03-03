@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Anio;
+use App\Models\Anio;
 use Illuminate\Http\Request;
 
 

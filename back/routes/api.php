@@ -15,6 +15,10 @@ use App\Http\Controllers\TipoVigenciaController;
 use App\Http\Controllers\EndosoController;
 use App\Http\Controllers\TipoEndosoController;
 use App\Http\Controllers\DetalleEndosoController;
+use App\Http\Controllers\AutomotorMarcaController;
+use App\Http\Controllers\AnioController;
+use App\Http\Controllers\AutomotorModeloController;
+use App\Http\Controllers\AutomotorAnioController;
 use App\Http\Controllers\SiniestroAutomotorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -73,6 +77,19 @@ Route::apiResource('/detalleendosos', DetalleEndosoController::class);
 
 Route::apiResource('/siniestros', SiniestroAutomotorController::class);
 Route::get('/siniestros/indexFiltrado/{poliza_id}', [SiniestroAutomotorController::class, 'indexFiltrado']);
+
+Route::apiResource('/administracion/marcas', AutomotorMarcaController::class);
+Route::apiResource('/administracion/modelos', AutomotorModeloController::class);
+Route::apiResource('/administracion/versiones', AutomotorVersionController::class);
+Route::apiResource('/anios', AnioController::class);
+Route::get('/modelos/filtrar/{id}', [AutomotorModeloController::class, 'filtro']);
+Route::get('/versiones/filtrar/{id}', [AutomotorVersionController::class, 'filtro']);
+Route::get('/anios/filtrar/{anio}/{version}', [AutomotorAnioController::class, 'filtro']);
+Route::get('/anios/filtrar/{id}', [AutomotorAnioController::class, 'filtroXAnio']);
+Route::get('/marcas/busquedaMarca', [AutomotorMarcaController::class, 'searchMarca']);
+Route::get('/marcas/marcaxanio/{anio}', [AutomotorMarcaController::class, 'filtroXanio']);
+Route::get('/modelos/busquedaModelo', [AutomotorModeloController::class, 'searchModelo']);
+Route::get('/versiones/busquedaVersion', [AutomotorVersionController::class, 'searchVersion']);
 
 Route::apiResource('/tiporiesgos', TipoRiesgoController::class);
 Route::apiResource('/formapagos', FormaPagoController::class);
