@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Poliza;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 
 class PolizaController extends Controller
@@ -113,5 +114,45 @@ class PolizaController extends Controller
         $polizas->map(function ($poliza) {
             return dd($poliza);
         });
+    }
+
+    function checkPolizas()
+    {
+        $hoy = Carbon::now();
+
+        $polizas = Poliza::all();
+        foreach ($polizas as $poliza) {
+            if (!$poliza["estado_id" == 1]) {
+                switch ($poliza) {
+                    case $hoy->isAfter($poliza['vigencia_desde']) && $hoy->isBefore($poliza['vigencia_hasta']->subMonth()) && !$poliza['renueva_numero']:
+                        $poliza["estado_id"] = 2;
+                        //VIGENTE
+                        break;
+                    case $hoy->isAfter($poliza['vigencia_hasta']->subMonth()) && $hoy->isBefore($poliza['vigencia_hasta']) && !$poliza['renueva_numero']:
+                        $poliza["estado_id"] = 3;
+                        //VIGENTE A RENOVAR
+                        break;
+                    case $hoy->isAfter($poliza['vigencia_desde']) && $hoy->isBefore($poliza['vigencia_hasta']) && $poliza['renueva_numero']:
+                        $poliza["estado_id"] = 6;
+                        //VIGENTE RENOVADA
+                        break;
+                    case $hoy->isAfter($poliza['vigencia_hasta']) && $poliza['renueva_numero']:
+                        $poliza["estado_id"] = 4;
+                        //CUMPLIDA RENOVADA
+                        break;
+                    case $hoy->isAfter($poliza['vigencia_hasta']):
+                        $poliza["estado_id"] = 5;
+                        //CUMPLIDA
+                        break;
+                    case $hoy->isBefore($poliza['vigencia_desde']):
+                        $poliza["estado_id"] = 1;
+                        // PENDIENTE
+                        break;
+                    default:
+                        # code...
+                        break;
+                }
+            }
+        }
     }
 }
