@@ -54,6 +54,20 @@ export default new Router({
           )
         },
         {
+          name: "Siniestros",
+          path: "siniestros",
+          component: () => import(
+            "@/views/pages/Siniestros/Siniestros.vue"
+          )
+        },
+        {
+          name: "Endosos",
+          path: "endosos",
+          component: () => import(
+            "@/views/pages/Endosos/Endosos.vue"
+          )
+        },
+        {
           name: "Clientes",
           path: "clientes",
           component: () => import(

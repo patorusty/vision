@@ -13,7 +13,10 @@
     v-bind="$attrs"
   >
     <template v-slot:img="props">
-      <v-img :gradient="`to bottom, ${barColor}`" v-bind="props" />
+      <v-img
+        :gradient="`to bottom, ${barColor}`"
+        v-bind="props"
+      />
     </template>
 
     <v-list-item two-line>
@@ -27,23 +30,37 @@
 
     <v-divider class="mb-1" />
 
-    <v-list dense nav>
+    <v-list
+      dense
+      nav
+    >
       <base-item-group :item="profile" />
     </v-list>
 
     <v-divider class="mb-2" />
 
-    <v-list expand nav>
+    <v-list
+      expand
+      nav
+    >
       <!-- Style cascading bug  -->
       <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
       <div />
 
       <template v-for="(item, i) in computedItems">
         <!-- <router-link :key="`group-${i}`" :to='item.to'> -->
-        <base-item-group v-if="item.children" :key="`group-${i}`" :item="item">
+        <base-item-group
+          v-if="item.children"
+          :key="`group-${i}`"
+          :item="item"
+        >
           <!--  -->
-        </base-item-group> 
-        <base-item v-else :key="`item-${i}`" :item="item" />
+        </base-item-group>
+        <base-item
+          v-else
+          :key="`item-${i}`"
+          :item="item"
+        />
         <!-- </router-link> -->
       </template>
 
@@ -88,12 +105,12 @@ export default {
       {
         icon: "mdi-alert",
         title: "Siniestros",
-        to: "/polizas/siniestros"
+        to: "/siniestros"
       },
       {
         icon: "mdi-note",
         title: "Endosos",
-        to: "/polizas/endosos"
+        to: "/endosos"
       },
       {
         icon: "mdi-account",
