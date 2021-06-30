@@ -1,13 +1,13 @@
 <template>
   <v-card>
     <v-card-title>
-      <span>Crear Riesgo Automotor</span>
+      <span>Crear Otros Riesgos</span>
     </v-card-title>
     <v-card-text>
       <v-container>
         <v-row>
           <v-col class=" mt-0 py-0">
-            <div>Automotor</div>
+            <div>Otros</div>
           </v-col>
         </v-row>
       </v-container>
@@ -37,10 +37,10 @@ export default {
   }),
   computed: {
     ...mapState("poliza", ["tipo_riesgos"]),
-    ...mapState("modal", ["modal_ra"])
+    ...mapState("modal", ["modal_or"])
   },
   methods: {
-    ...mapMutations("modal", ["HIDE_MODAL_RA"]),
+    ...mapMutations("modal", ["HIDE_MODAL_OR"]),
     create() {},
     close() {}
   }

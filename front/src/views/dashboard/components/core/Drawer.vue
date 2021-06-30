@@ -94,13 +94,8 @@ export default {
       },
       {
         icon: "mdi-car",
-        title: "Automotor",
-        to: "/polizas/automotor"
-      },
-      {
-        icon: "mdi-file",
-        title: "Otros Riesgos",
-        to: "/polizas/otrosriesgos"
+        title: "Polizas",
+        to: "/polizas"
       },
       {
         icon: "mdi-alert",

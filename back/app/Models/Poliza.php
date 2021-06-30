@@ -9,6 +9,7 @@ use App\Models\SiniestroAutomotor;
 use App\Models\TipoRiesgo;
 use App\Models\TipoVigencia;
 use App\Models\Endoso;
+use App\Models\OtroRiesgo;
 use Illuminate\Database\Eloquent\Model;
 
 class Poliza extends Model
@@ -60,7 +61,7 @@ class Poliza extends Model
         return $this->belongsTo(CodigoProductor::class, 'codigo_productor_id');
     }
 
-    public function tipoRiesgo()
+    public function tipo_de_riesgo()
     {
         return $this->belongsTo(TipoRiesgo::class, 'tipo_riesgo_id');
     }
@@ -83,6 +84,11 @@ class Poliza extends Model
     public function riesgo_automotor()
     {
         return $this->hasMany(RiesgoAutomotor::class, 'poliza_id', 'id');
+    }
+
+    public function otro_riesgo()
+    {
+        return $this->hasMany(OtroRiesgo::class, 'poliza_id', 'id');
     }
 
     public function endosos()

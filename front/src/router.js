@@ -20,25 +20,19 @@ export default new Router({
         // Dashboard
         {
           name: "Automotor",
-          path: "polizas/automotor",
-          component: () => import("@/views/pages/Polizas/Automotor.vue")
+          path: "polizas",
+          component: () => import("@/views/pages/Polizas/Polizas.vue")
         },
         {
           name: "Crear Poliza",
           path: "polizas/automotor/create",
-          component: () => import("@/views/pages/Polizas/CreateAutomotor.vue")
+          component: () => import("@/views/pages/Polizas/CreatePoliza.vue")
         },
         {
           name: "Editar Poliza",
           path: "polizas/automotor/:numero_solicitud",
-          component: () => import("@/views/pages/Polizas/EditAutomotor.vue")
+          component: () => import("@/views/pages/Polizas/EditPoliza.vue")
         },
-        {
-          name: "OtrosRiesgos",
-          path: "polizas/otrosriesgos",
-          component: () => import("@/views/pages/Polizas/OtrosRiesgos.vue")
-        },
-
         {
           name: "Compañías",
           path: "administracion/companias",

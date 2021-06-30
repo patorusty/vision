@@ -1,13 +1,20 @@
 <template>
   <v-card>
     <v-card-title>
-      <span>Crear Riesgo Automotor</span>
+      <span>Crear Riesgo</span>
     </v-card-title>
     <v-card-text>
       <v-container>
         <v-row>
           <v-col class=" mt-0 py-0">
-            <div>Automotor</div>
+            <v-select
+              v-model="tipo_riesgo_id"
+              :items="tipo_riesgos"
+              item-value="id"
+              item-text="nombre"
+              label="Elegir tipo de riesgo"
+              class="mr-5"
+            ></v-select>
           </v-col>
         </v-row>
       </v-container>
@@ -37,11 +44,19 @@ export default {
   }),
   computed: {
     ...mapState("poliza", ["tipo_riesgos"]),
-    ...mapState("modal", ["modal_ra"])
+    ...mapState("modal", ["modal", "modal_ra", "modal_or"])
   },
   methods: {
-    ...mapMutations("modal", ["HIDE_MODAL_RA"]),
-    create() {},
+    ...mapMutations("modal", ["HIDE_MODAL", "SHOW_MODAL_RA", "SHOW_MODAL_OR"]),
+    create() {
+      if (this.tipo_riesgo_id == 1) {
+        this.HIDE_MODAL(false);
+        this.SHOW_MODAL_RA(true);
+      } else {
+        this.HIDE_MODAL(false);
+        this.SHOW_MODAL_OR(true);
+      }
+    },
     close() {}
   }
 };

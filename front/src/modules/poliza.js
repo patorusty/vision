@@ -75,13 +75,20 @@ const actions = {
     const resp = await http.get(API_URL);
     commit("SET_POLIZAS", resp.data);
   },
-  async getPoliza({ commit, dispatch }, id) {
+  async getPoliza({ commit, dispatch, state }, id) {
     const resp = await http.getOne(API_URL, id);
     commit("SET_POLIZA", resp.data);
     dispatch('endoso/getEndososDePoliza', id, {root:true})
     dispatch('siniestro/getSiniestrosDePoliza', id, {root:true})
     dispatch('endoso/getTipoEndosos', null, {root:true})
     dispatch('endoso/getDetalleEndosos', null, {root:true})
+    if (
+      state.poliza.riesgo_automotor.length < 1 ||
+      state.poliza.otro_riesgo.length < 1
+    ) {
+      commit(
+        "modal/SHOW_MODAL",true, {root:true});
+    }
   },
   async createPoliza({ commit }, poliza) {
     const resp = await http.post(API_URL, poliza);

@@ -392,6 +392,25 @@
         <tabla-siniestros />
       </v-col>
     </v-row>
+    <v-dialog
+      @click:outside="HIDE_MODAL(false)"
+      :value="modal"
+      max-width="20%"
+    >
+      <modal-crear-riesgo />
+    </v-dialog>
+    <v-dialog
+      :value="modal_ra"
+      max-width="20%"
+    >
+      <modal-riesgo-automotor />
+    </v-dialog>
+    <v-dialog
+      :value="modal_or"
+      max-width="20%"
+    >
+      <modal-otros-riesgos />
+    </v-dialog>
   </div>
 </template>
 
@@ -401,9 +420,19 @@ import moment from "moment";
 import { helpers } from "../../../helpers";
 import TablaEndosos from "./Endosos/TablaEndosos";
 import TablaSiniestros from "./Siniestros/TablaSiniestros";
+import ModalCrearRiesgo from "./Riesgos/ModalCrearRiesgo";
+import ModalOtrosRiesgos from "./Riesgos/Otros Riesgos/ModalOtrosRiesgos";
+import ModalRiesgoAutomotor from "./Riesgos/Automotor/ModalRiesgoAutomotor";
+
 export default {
   mixins: [helpers],
-  components: { TablaEndosos, TablaSiniestros },
+  components: {
+    TablaEndosos,
+    TablaSiniestros,
+    ModalCrearRiesgo,
+    ModalOtrosRiesgos,
+    ModalRiesgoAutomotor
+  },
   data: () => ({
     calendarioDesde: false,
     calendarioHasta: false,
@@ -443,7 +472,8 @@ export default {
       "tipo_riesgos",
       "forma_pagos",
       "tipo_vigencias"
-    ])
+    ]),
+    ...mapState("modal", ["modal", "modal_ra", "modal_or"])
   },
   methods: {
     ...mapActions("cliente", ["getClientes"]),
@@ -457,6 +487,7 @@ export default {
     ...mapActions("compania", ["getCompanias"]),
     ...mapActions("codigo_productor", ["getCodigoProductores"]),
     ...mapMutations("poliza", ["RESET_POLIZA"]),
+    ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL"]),
     sumarMes(mes) {
       switch (this.poliza.tipo_vigencia_id) {
         case 6:
@@ -504,6 +535,16 @@ export default {
         }
       }
     }
+    // checkIfHasRiesgo() {
+    //   console.log(this.poliza.riesgo_automotor);
+    //   console.log(this.poliza.otro_riesgo);
+    //   if (
+    //     this.poliza.riesgo_automotor.length < 1 ||
+    //     this.poliza.otro_riesgo.length < 1
+    //   ) {
+    //     this.SHOW_MODAL(true);
+    //   }
+    // }
   },
   created() {
     this.getPoliza(this.$route.params.numero_solicitud);
@@ -512,6 +553,7 @@ export default {
     this.getTipoRiesgos();
     this.getFormaPagos();
     this.getTipoVigencias();
+    // this.checkIfHasRiesgo();
     this.sumarMes();
   },
   beforeDestroy() {
