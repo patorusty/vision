@@ -20,22 +20,22 @@ class RiesgoAutomotor extends Model
         return $this->belongsTo(Poliza::class, 'poliza_id');
     }
 
-    public function automotor_anio()
+    public function anio()
     {
         return $this->belongsTo(AutomotorAnio::class, 'automotor_anio_id');
     }
 
-    public function automotor_marca()
+    public function marca()
     {
         return $this->belongsTo(AutomotorMarca::class, 'automotor_marca_id');
     }
 
-    public function automotor_modelo()
+    public function modelo()
     {
         return $this->belongsTo(AutomotorModelo::class, 'automotor_modelo_id');
     }
 
-    public function automotor_version()
+    public function version()
     {
         return $this->belongsTo(AutomotorVersion::class, 'automotor_version_id');
     }
@@ -49,5 +49,4 @@ class RiesgoAutomotor extends Model
     {
         return $this->belongsToMany(ImagenRA::class);
     }
-
 }

@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class AutomotorVersion extends Model
 {
-    protected $guarded = [];
-    protected $table = "automotor_versions";
+    protected $fillable = ['nombre', "automotor_modelo_id", 'updated_at', 'created_at'];
+    protected $table = "automotor_versiones";
 
     public function modelo()
     {

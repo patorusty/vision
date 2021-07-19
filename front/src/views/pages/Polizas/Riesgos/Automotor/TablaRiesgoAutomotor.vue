@@ -14,13 +14,13 @@
       <v-spacer></v-spacer>
       <v-btn
         color="primary"
-        @click="SHOW_MODAL(false);"
+        @click="create"
         dark
       >Crear</v-btn>
       <v-dialog
-        @click:outside="HIDE_MODAL(false)"
-        :value="modal"
-        max-width="40%"
+        @click:outside="HIDE_MODAL_RA(false)"
+        :value="modal_ra"
+        max-width="80%"
       >
         <modal-riesgo-automotor />
       </v-dialog>
@@ -29,15 +29,14 @@
       class="pa-2"
       :headers="headers"
       :items-per-page="5"
-      :items="riesgo_automotores"
+      :items="poliza.riesgo_automotor"
       :search="search"
       multi-sort
-      :loading="loading"
     >
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon
           small
-          @click="editCodigoOrganizador(item.id)"
+          @click="editRiesgoAutomotor(item)"
           class="mr-2"
           color="success"
         >
@@ -82,7 +81,7 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-import ModalRiesgoAutomotor from "./ModalRiesgoAutomotor";
+import ModalRiesgoAutomotor from "./ModalRiesgoAutomotor/ModalRiesgoAutomotor";
 import { helpers } from "../../../../../helpers";
 
 export default {
@@ -96,17 +95,18 @@ export default {
     modalDelete: false
   }),
   computed: {
-    ...mapState("modal", ["modal"]),
+    ...mapState("modal", ["modal_ra"]),
+    ...mapState("poliza", ["poliza"]),
     headers() {
       return [
-        { text: "Tipo", value: "riesgo_automotor.tipo" },
-        { text: "Marca", value: "riesgo_automotor.marca" },
-        { text: "Patente", value: "riesgo_automotor.patente" },
+        // { text: "Tipo", value: "riesgo_automotor.tipo" },
+        { text: "Marca", value: "marca.nombre" },
+        { text: "Patente", value: "patente" },
         {
           text: "Suma Asegurada",
-          value: "riesgo_automotor.valor_total"
+          value: "valor_total"
         },
-        { text: "Cobertura", value: "riesgo_automotor.cobertura.nombre" },
+        { text: "Cobertura", value: "cobertura.nombre" },
         { text: "Actions", value: "actions", sortable: false, align: "right" }
       ];
     }
@@ -116,10 +116,23 @@ export default {
       "getRiesgoAutomotor",
       "deleteRiesgoAutomotor"
     ]),
-    ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL"]),
-    editRiesgoAutomotor(id) {
-      this.getRiesgoAutomotor(id);
-      this.SHOW_MODAL(true);
+    ...mapActions("anio", ["getAnios"]),
+    ...mapActions("marca", ["getMarcas"]),
+    ...mapActions("modelo", ["getModelos"]),
+    ...mapActions("version", ["getVersiones"]),
+    ...mapMutations("modal", ["SHOW_MODAL_RA", "HIDE_MODAL_RA"]),
+    ...mapMutations("version", ["UPDATE_MODELO_ID"]),
+    ...mapMutations("riesgo", [
+      "SET_RIESGO_AUTOMOTOR",
+      "RESET_RIESGO_AUTOMOTOR"
+    ]),
+    editRiesgoAutomotor(item) {
+      this.SET_RIESGO_AUTOMOTOR(item);
+      this.SHOW_MODAL_RA(true);
+    },
+    create() {
+      this.RESET_RIESGO_AUTOMOTOR();
+      this.SHOW_MODAL_RA(false);
     },
     openDeleteModal(id) {
       this.idSelected = id;
@@ -131,7 +144,12 @@ export default {
       this.idSelected = "";
     }
   },
-  created() {}
+  created() {
+    this.getAnios();
+    this.getMarcas();
+    this.getModelos();
+    this.getVersiones();
+  }
 };
 </script>
 

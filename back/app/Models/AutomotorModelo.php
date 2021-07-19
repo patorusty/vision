@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AutomotorModelo extends Model
 {
-    protected $guarded = [];
+    protected $fillable = ['nombre', "automotor_marca_id", 'updated_at', 'created_at'];
 
     public function versiones()
     {

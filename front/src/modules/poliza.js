@@ -21,6 +21,7 @@ const state = () => ({
   },
   loading: true,
   tipo_riesgos: [],
+  riesgo:{},
   forma_pagos: [],
   tipo_vigencias: [],
 });
@@ -69,6 +70,9 @@ const mutations = {
   // SET_ENDOSOS_POR_POLIZA(state, endosos) {
   //   state.poliza.endosos = endosos;  
   // },
+  SET_RIESGO(state, riesgo) {
+    state.riesgo = riesgo;
+  },
 };
 const actions = {
   async getPolizas({ commit }) {
@@ -82,13 +86,14 @@ const actions = {
     dispatch('siniestro/getSiniestrosDePoliza', id, {root:true})
     dispatch('endoso/getTipoEndosos', null, {root:true})
     dispatch('endoso/getDetalleEndosos', null, {root:true})
-    if (
-      state.poliza.riesgo_automotor.length < 1 ||
-      state.poliza.otro_riesgo.length < 1
-    ) {
-      commit(
-        "modal/SHOW_MODAL",true, {root:true});
-    }
+    dispatch('cobertura/getCoberturas', resp.data.compania_id, {root:true})
+    // if (
+    //   state.poliza.riesgo_automotor.length < 1 ||
+    //   state.poliza.otro_riesgo.length < 1
+    // ) {
+    //   commit(
+    //     "modal/SHOW_MODAL",true, {root:true});
+    // }
   },
   async createPoliza({ commit }, poliza) {
     const resp = await http.post(API_URL, poliza);

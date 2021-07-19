@@ -97,6 +97,12 @@ export default new Router({
             import("@/views/pages/Administracion/Productores/Productores.vue")
         },
         {
+          name: "Marca/Modelo/Version",
+          path: "administracion/mmv",
+          component: () =>
+            import("@/views/pages/Administracion/MMV/MMV.vue")
+        },
+        {
           name: "Usuarios",
           path: "configuracion/usuarios",
           component: () => import("@/views/pages/Configuracion/Usuarios.vue")

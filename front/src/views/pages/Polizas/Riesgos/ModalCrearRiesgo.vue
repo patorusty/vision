@@ -48,16 +48,21 @@ export default {
   },
   methods: {
     ...mapMutations("modal", ["HIDE_MODAL", "SHOW_MODAL_RA", "SHOW_MODAL_OR"]),
+    ...mapMutations("poliza", ["SET_RIESGO"]),
     create() {
+      this.setTipoRiesgo();
+      this.HIDE_MODAL(false);
       if (this.tipo_riesgo_id == 1) {
-        this.HIDE_MODAL(false);
         this.SHOW_MODAL_RA(true);
       } else {
-        this.HIDE_MODAL(false);
         this.SHOW_MODAL_OR(true);
       }
     },
-    close() {}
+    close() {},
+    setTipoRiesgo() {
+      var riesgo = this.tipo_riesgos.filter(i => i.id == this.tipo_riesgo_id);
+      this.SET_RIESGO(riesgo[0]);
+    }
   }
 };
 </script>

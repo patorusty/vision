@@ -384,6 +384,7 @@
         </v-container>
       </v-form>
     </v-card>
+    <tabla-riesgo-automotor v-if="poliza.tipo_riesgo_id == 1" />
     <v-row>
       <v-col>
         <tabla-endosos />
@@ -392,7 +393,7 @@
         <tabla-siniestros />
       </v-col>
     </v-row>
-    <v-dialog
+    <!-- <v-dialog
       @click:outside="HIDE_MODAL(false)"
       :value="modal"
       max-width="20%"
@@ -407,10 +408,10 @@
     </v-dialog>
     <v-dialog
       :value="modal_or"
-      max-width="20%"
+      max-width="50%"
     >
       <modal-otros-riesgos />
-    </v-dialog>
+    </v-dialog> -->
   </div>
 </template>
 
@@ -421,8 +422,8 @@ import { helpers } from "../../../helpers";
 import TablaEndosos from "./Endosos/TablaEndosos";
 import TablaSiniestros from "./Siniestros/TablaSiniestros";
 import ModalCrearRiesgo from "./Riesgos/ModalCrearRiesgo";
+import TablaRiesgoAutomotor from "./Riesgos/Automotor/TablaRiesgoAutomotor";
 import ModalOtrosRiesgos from "./Riesgos/Otros Riesgos/ModalOtrosRiesgos";
-import ModalRiesgoAutomotor from "./Riesgos/Automotor/ModalRiesgoAutomotor";
 
 export default {
   mixins: [helpers],
@@ -431,7 +432,7 @@ export default {
     TablaSiniestros,
     ModalCrearRiesgo,
     ModalOtrosRiesgos,
-    ModalRiesgoAutomotor
+    TablaRiesgoAutomotor
   },
   data: () => ({
     calendarioDesde: false,

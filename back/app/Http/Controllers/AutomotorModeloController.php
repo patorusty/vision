@@ -3,58 +3,64 @@
 namespace App\Http\Controllers;
 
 use App\Models\AutomotorModelo;
+use App\Models\AutomotorVersion;
 use Illuminate\Http\Request;
 
 class AutomotorModeloController extends Controller
 {
     public function index()
     {
-        return AutomotorModelo::with('versiones.anios')->get();
+        return AutomotorModelo::all();
     }
     public function show($id)
     {
         return AutomotorModelo::findOrFail($id);
     }
-    public function filtro($id)
-    {
-        $modelo = AutomotorModelo::with('marca')->where('automotor_marca_id', $id)->get();
-        return $modelo[0];
-    }
+    // public function filtroMarca($id)
+    // {
+    //     $modelo = AutomotorModelo::with('marca')->where('automotor_marca_id', $id)->get();
+    //     return $modelo[0];
+    // }
 
     public function store(Request $request)
     {
-        $this->validate($request, []);
-
-        $automotor_modelo = AutomotorModelo::create([
-            'automotor_marca_id' => $request->input('automotor_marca_id'),
-            'nombre' => $request->input('nombre'),
-        ]);
-
-        return (['message' => 'guardado']);
+        try {
+            $modelo = AutomotorModelo::create($request->all());
+            return response($modelo, 201);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public function update(Request $request, $id)
     {
-        $automotor_modelo = AutomotorModelo::find($id);
-        $automotor_modelo->update([
-            'automotor_marca_id' => $request->input('automotor_marca_id'),
-            'nombre' => $request->input('nombre'),
-        ]);
+        try {
+            $modelo = AutomotorModelo::findOrFail($id);
+            $modelo->fill($request->all())->save();
+            return response($modelo, 200);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
     public function destroy($id)
     {
-        $automotor_modelo = AutomotorModelo::find($id);
-
-        $automotor_modelo->delete();
-
-        return ['message' => 'Eliminado'];
+        try {
+            $modelo = AutomotorModelo::findOrFail($id);
+            if (AutomotorVersion::where("automotor_modelo_id", $modelo->id)->exists()) {
+                return response('', 202);
+            } else {
+                $modelo->delete();
+                return response('', 200);
+            }
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
-    public function searchModelo()
+    public function searchModelo(Request $req)
     {
-        if ($search = \Request::get('q')) {
-            $modelo = AutomotorModelo::where('nombre', $search)->get();
-        }
-        return $modelo;
+        $nombre = $req->input('nombre');
+        $marca_id = $req->input('id');
+        return ['usado' => AutomotorModelo::where('automotor_marca_id', $marca_id)->where('nombre', $nombre)->exists()];
     }
 }

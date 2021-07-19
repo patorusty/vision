@@ -13,32 +13,32 @@ class AutomotorVersionController extends Controller
     }
     public function show($id)
     {
-        return AutomotorVersion::with('automotor_anios')->find($id);
+        return AutomotorVersion::findOrFail($id);
     }
-    public function filtro($id)
-    {
-        return AutomotorVersion::where('automotor_modelo_id', $id)->with(['automotor_modelo.automotor_marca', 'automotor_anios'])->get();
-    }
+    // public function filtro($id)
+    // {
+    //     return AutomotorVersion::where('automotor_modelo_id', $id)->with(['automotor_modelo.automotor_marca', 'automotor_anios'])->get();
+    // }
 
     public function store(Request $request)
     {
-        $this->validate($request, []);
-
-        $automotor_version = AutomotorVersion::create([
-            'automotor_modelo_id' => $request->input('automotor_modelo_id'),
-            'nombre' => $request->input('nombre'),
-        ]);
-
-        return (['message' => 'guardado']);
+        try {
+            $version = AutomotorVersion::create($request->all());
+            return response($version, 201);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public function update(Request $request, $id)
     {
-        $automotor_version = AutomotorVersion::find($id);
-        $automotor_version->update([
-            'automotor_modelo_id' => $request->input('automotor_modelo_id'),
-            'nombre' => $request->input('nombre'),
-        ]);
+        try {
+            $version = AutomotorVersion::findOrFail($id);
+            $version->fill($request->all())->save();
+            return response($version, 200);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
     public function destroy($id)
     {
@@ -48,11 +48,10 @@ class AutomotorVersionController extends Controller
 
         return ['message' => 'Eliminado'];
     }
-    public function searchVersion()
+    public function searchVersion(Request $req)
     {
-        if ($search = \Request::get('q')) {
-            $version = AutomotorVersion::where('nombre', $search)->get();
-        }
-        return $version;
+        $nombre = $req->input('nombre');
+        $modelo_id = $req->input('id');
+        return ['usado' => AutomotorVersion::where('automotor_modelo_id', $modelo_id)->where('nombre', $nombre)->exists()];
     }
 }

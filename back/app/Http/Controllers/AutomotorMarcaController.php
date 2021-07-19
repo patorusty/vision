@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AutomotorMarca;
+use App\Models\AutomotorModelo;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -10,9 +11,8 @@ class AutomotorMarcaController extends Controller
 {
     public function index()
     {
-        return AutomotorMarca::with(['modelos.versiones.anios' => function ($query) {
-            $query->where('anio_id', "=", "2013");
-        }])->get();
+        // return AutomotorMarca::with(['modelos.versiones.anios'])->get();
+        return AutomotorMarca::all();
     }
 
     public function filtroXanio($anio)
@@ -30,36 +30,42 @@ class AutomotorMarcaController extends Controller
     }
     public function store(Request $request)
     {
-        $this->validate($request, []);
-
-        $automotor_marca = AutomotorMarca::create([
-            'nombre' => $request->input('nombre'),
-        ]);
-
-        return (['message' => 'guardado']);
+        try {
+            $marca = AutomotorMarca::create($request->all());
+            return response($marca, 201);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public function update(Request $request, $id)
     {
-        $automotor_marca = AutomotorMarca::find($id);
-        $automotor_marca->update([
-            'nombre' => $request->input('nombre'),
-        ]);
+        try {
+            $marca = AutomotorMarca::findOrFail($id);
+            $marca->fill($request->all())->save();
+            return response($marca, 200);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
     public function destroy($id)
     {
-        $automotor_marca = AutomotorMarca::find($id);
-
-        $automotor_marca->delete();
-
-        return ['message' => 'Eliminado'];
+        try {
+            $marca = AutomotorMarca::findOrFail($id);
+            if (AutomotorModelo::where("automotor_marca_id", $marca->id)->exists()) {
+                return response('', 202);
+            } else {
+                $marca->delete();
+                return response('', 200);
+            }
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
-    public function searchMarca()
+    public function searchMarca(Request $req)
     {
-        // if ($search = \Request::get('q')) {
-        //     $marca = AutomotorMarca::where('nombre', $search)->get();
-        // }
-        // return $marca;
+        $nombre = $req->input('nombre');
+        return ['usado' => AutomotorMarca::where('nombre', $nombre)->exists()];
     }
 }

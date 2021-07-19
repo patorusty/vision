@@ -6,6 +6,7 @@ const state = () => ({
     modal3: false,
     edicion3: false,
     modal_ra: false,
+    edicion_ra: false,
     edicion_or:false,
     modal_or: false,
 })

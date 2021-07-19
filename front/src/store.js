@@ -13,6 +13,11 @@ import codigo_productor  from "./modules/codigo_productor";
 import cobertura  from "./modules/cobertura";
 import endoso  from "./modules/endoso";
 import siniestro  from "./modules/siniestro";
+import riesgo  from "./modules/riesgo";
+import marca  from "./modules/marca";
+import modelo  from "./modules/modelo";
+import version  from "./modules/version";
+import anio  from "./modules/anio";
 
 Vue.use(Vuex);
 
@@ -48,6 +53,11 @@ export default new Vuex.Store({
     codigo_productor,
     cobertura,
     endoso,
-    siniestro
+    siniestro,
+    riesgo,
+    marca,
+    modelo,
+    version,
+    anio,
   }
 });

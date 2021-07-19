@@ -51,5 +51,19 @@ export const helpers = {
         return this.formatDate(this.cliente.nacimiento);
       },
     },
+    modelosFiltrados() {
+      return this.modelos.filter(item =>
+        this.marca_id != 0
+          ? item.automotor_marca_id === this.marca_id
+          : item.automotor_marca_id != 0
+      );
+    },
+    versionesFiltradas() {
+      return this.versiones.filter(item =>
+        this.modelo_id != 0
+          ? item.automotor_modelo_id === this.modelo_id
+          : item.automotor_modelo_id != 0
+      );
+    }
   },
 };
