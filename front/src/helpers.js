@@ -41,6 +41,10 @@ export const helpers = {
         return "";
       }
     },
+    toUpper(nombre, e) {
+      if (this[`${nombre}`] != null)
+        this[`${nombre}`] = this[`${nombre}`].toUpperCase();
+    },
   },
   computed: {
     fechaFormateada: {

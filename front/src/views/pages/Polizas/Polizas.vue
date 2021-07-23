@@ -41,7 +41,7 @@
       multi-sort
       :loading="loading"
     >
-      <template v-slot:[`item.compania`]="{ item }">{{ item.companias.nombre }} <br />
+      <template v-slot:[`item.compania`]="{ item }">{{ item.compania.nombre }} <br />
         Cod.({{ item.codigo_productor.codigo_productor }})</template>
       <template v-slot:[`item.asegurado`]="{ item }">
         <router-link
@@ -121,7 +121,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from "vuex";
+import { mapState, mapActions } from "vuex";
 import { helpers } from "../../../helpers";
 export default {
   components: {},
@@ -138,7 +138,7 @@ export default {
       { text: "Dominio", value: "dominio" },
       { text: "Vigencia", value: "tipo_vigencias.vigencia" },
       { text: "Desde / Hasta", value: "desde" },
-      { text: "Estado", value: "estado_polizas.nombre" },
+      { text: "Estado", value: "estado.nombre" },
       { text: "Envío", value: "envio" },
       { text: "Pago", value: "pago" },
       { text: "Actions", value: "actions", sortable: false, align: "right" }

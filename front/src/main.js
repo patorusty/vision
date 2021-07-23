@@ -21,6 +21,8 @@ import './plugins/vee-validate'
 import './plugins/vue-world-map'
 import vuetify from './plugins/vuetify'
 import i18n from './i18n'
+import VueMask from 'v-mask'
+Vue.use(VueMask)
 
 Vue.config.productionTip = false
 
@@ -31,6 +33,12 @@ Vue.directive("uppercase", {
       vnode.componentInstance.$emit("input", e.target.value.toUpperCase());
     });
   },
+});
+
+Vue.filter("upper", function (value) {
+  if (!value) return "";
+  value = value.toString();
+  return value.toUpperCase();
 });
 
 new Vue({

@@ -40,7 +40,7 @@
       </template>
       <template v-slot:[`item.compania`]="{ item }">
         {{
-          item.polizas.companias.nombre
+          item.polizas.compania.nombre
         }}
       </template>
       <template v-slot:[`item.fechaSiniestro`]="{ item }">

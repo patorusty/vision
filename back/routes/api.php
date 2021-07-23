@@ -21,6 +21,8 @@ use App\Http\Controllers\AutomotorModeloController;
 use App\Http\Controllers\AutomotorAnioController;
 use App\Http\Controllers\AutomotorVersionController;
 use App\Http\Controllers\SiniestroAutomotorController;
+use App\Http\Controllers\RiesgoAutomotorController;
+use App\Http\Controllers\ImagenRAController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -70,6 +72,12 @@ Route::post('/clientes/busquedaDNI', [ClienteController::class, 'searchDNI']);
 
 Route::get('/numerosolicitud', [PolizaController::class, 'numeroDeSolicitud']);
 Route::apiResource('/polizas', PolizaController::class);
+
+Route::apiResource('/riesgo_automotor', RiesgoAutomotorController::class);
+Route::post('/imagenes_r_a', [ImagenRAController::class, 'uploadFile']);
+Route::delete('/imagenes_r_a/{id}', [ImagenRAController::class, 'destroy']);
+Route::get('/riesgo_automotores/{id}', [RiesgoAutomotorController::class, 'indexFiltrado']);
+Route::get('/polizas/busquedaPolizaId/{id}', [RiesgoAutomotorController::class, 'searchPoliza']);
 
 Route::apiResource('/endosos', EndosoController::class);
 Route::get('/endosos/indexFiltrado/{poliza_id}', [EndosoController::class, 'indexFiltrado']);

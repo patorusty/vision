@@ -46,7 +46,18 @@ class Poliza extends Model
         'updated_at',
     ];
 
-    public function companias()
+    protected $dates = [
+        'vigencia_desde',
+        'vigencia_hasta',
+        'fecha_solicitud',
+        'fecha_emision',
+        'fecha_recepcion',
+        'fecha_entrega_correo',
+        'fecha_entrega_original',
+        'fecha_entrega_email',
+    ];
+
+    public function compania()
     {
         return $this->belongsTo(Compania::class, 'compania_id');
     }
@@ -66,7 +77,7 @@ class Poliza extends Model
         return $this->belongsTo(TipoRiesgo::class, 'tipo_riesgo_id');
     }
 
-    public function estado_polizas()
+    public function estado()
     {
         return $this->belongsTo(EstadoPoliza::class, 'estado_poliza_id');
     }

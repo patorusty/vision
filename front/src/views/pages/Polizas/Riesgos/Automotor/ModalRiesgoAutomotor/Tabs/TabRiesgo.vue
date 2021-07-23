@@ -1,5 +1,8 @@
 <template>
   <v-card flat>
+    <v-card-subtitle class="py-0">
+      Vehiculo
+    </v-card-subtitle>
     <v-card-text>
       <v-row>
         <v-col class="d-flex flex-column justify-space-between">
@@ -17,7 +20,7 @@
             v-model="riesgo_automotor.automotor_anio_id"
             :rules="[rules.required]"
           ></v-autocomplete>
-          <v-autocomplete
+          <!-- <v-autocomplete
             class="mt-6"
             :items="marcas"
             item-text="nombre"
@@ -26,7 +29,37 @@
             v-model="riesgo_automotor.automotor_marca_id"
             @input="updateMarcaId"
             :rules="[rules.required]"
-          ></v-autocomplete>
+          ></v-autocomplete> -->
+
+          <v-combobox
+            v-model="riesgo_automotor.automotor_marca_id"
+            :items="marcas"
+            item-text="nombre"
+            item-value="id"
+            :search-input.sync="searchMarca"
+            @update:search-input="toUpper('searchMarca')"
+            clearable
+            label="Marca"
+            menu-props="closeOnContentClick"
+            :rules="[rules.required]"
+            class="mt-6"
+          >
+            <template v-slot:no-data>
+              <p class="grey--text text--darken-1 pa-2 mb-0">
+                "{{ searchMarca | upper }}" no existe, click
+                &nbsp;
+                <a @click.prevent="
+                        crearAbuelo(
+                          'abuela_paterna_padre',
+                          1,
+                          searchMarca
+                        )
+                      ">AQUI</a>
+                &nbsp;para crearla
+              </p>
+            </template>
+          </v-combobox>
+
           <v-autocomplete
             class="mt-6"
             :items="modelosFiltrados"
@@ -67,8 +100,20 @@
             </v-col>
             <v-col class="py-0">
               <v-text-field
+                v-if="riesgo_automotor.tipo_patente == 0"
+                placeholder="ABC123"
+                v-mask="'AAA###'"
                 v-model="riesgo_automotor.patente"
                 :rules="[rules.required]"
+                v-uppercase
+              ></v-text-field>
+              <v-text-field
+                v-else
+                placeholder="AB123CD"
+                v-mask="'AA###AA'"
+                v-model="riesgo_automotor.patente"
+                :rules="[rules.required]"
+                v-uppercase
               ></v-text-field>
             </v-col>
           </v-row>
@@ -76,16 +121,19 @@
             label="Motor"
             v-model="riesgo_automotor.nro_motor"
             :rules="[rules.required]"
+            v-uppercase
           ></v-text-field>
           <v-text-field
             label="Chasis"
             v-model="riesgo_automotor.nro_chasis"
             :rules="[rules.required]"
+            v-uppercase
           ></v-text-field>
           <v-text-field
             label="Valor Vehiculo"
             v-model="riesgo_automotor.valor_vehiculo"
             :rules="[rules.required]"
+            v-uppercase
           ></v-text-field>
           <v-row>
             <v-col class="py-0">
@@ -133,6 +181,7 @@
           <v-text-field
             label="Color"
             v-model="riesgo_automotor.color"
+            v-uppercase
           ></v-text-field>
           <v-text-field
             label="Valor Total"
@@ -155,6 +204,7 @@ import { helpers } from "../../../../../../../helpers";
 export default {
   mixins: [helpers],
   data: () => ({
+    searchMarca: null,
     tipo_vehiculos: [
       {
         value: "Automotor",
@@ -308,17 +358,20 @@ export default {
     ...mapState("anio", ["anios"]),
     ...mapState("cobertura", ["coberturas"]),
     suma() {
-      return (
-        parseInt(this.riesgo_automotor.valor_vehiculo) +
-        parseInt(this.riesgo_automotor.valor_gnc) +
-        parseInt(this.riesgo_automotor.valor_accesorio_01) +
-        parseInt(this.riesgo_automotor.valor_accesorio_02)
-      );
+      return this.riesgo_automotor.valor_vehiculo != null
+        ? parseInt(this.riesgo_automotor.valor_vehiculo) +
+            parseInt(this.riesgo_automotor.valor_gnc) +
+            parseInt(this.riesgo_automotor.valor_accesorio_01) +
+            parseInt(this.riesgo_automotor.valor_accesorio_02)
+        : "";
     }
   },
   methods: {
     ...mapActions("modelo", ["updateMarcaId"]),
-    ...mapMutations("version", ["UPDATE_MODELO_ID"])
+    ...mapMutations("version", ["UPDATE_MODELO_ID"]),
+    change() {
+      this.riesgo_automotor.patente = null;
+    }
   }
 };
 </script>

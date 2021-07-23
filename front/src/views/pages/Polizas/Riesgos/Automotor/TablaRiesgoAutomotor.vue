@@ -18,6 +18,9 @@
         dark
       >Crear</v-btn>
       <v-dialog
+        fullscreen
+        hide-overlay
+        transition="dialog-bottom-transition"
         @click:outside="HIDE_MODAL_RA(false)"
         :value="modal_ra"
         max-width="80%"
@@ -29,7 +32,7 @@
       class="pa-2"
       :headers="headers"
       :items-per-page="5"
-      :items="poliza.riesgo_automotor"
+      :items="riesgo_automotores"
       :search="search"
       multi-sort
     >
@@ -96,6 +99,7 @@ export default {
   }),
   computed: {
     ...mapState("modal", ["modal_ra"]),
+    ...mapState("riesgo", ["riesgo_automotores"]),
     ...mapState("poliza", ["poliza"]),
     headers() {
       return [
@@ -112,10 +116,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("riesgo_automotor", [
-      "getRiesgoAutomotor",
-      "deleteRiesgoAutomotor"
-    ]),
+    ...mapActions("riesgo", ["getRiesgoAutomotor", "deleteRiesgoAutomotor"]),
     ...mapActions("anio", ["getAnios"]),
     ...mapActions("marca", ["getMarcas"]),
     ...mapActions("modelo", ["getModelos"]),
@@ -124,7 +125,8 @@ export default {
     ...mapMutations("version", ["UPDATE_MODELO_ID"]),
     ...mapMutations("riesgo", [
       "SET_RIESGO_AUTOMOTOR",
-      "RESET_RIESGO_AUTOMOTOR"
+      "RESET_RIESGO_AUTOMOTOR",
+      "SET_RIESGO_AUTOMOTORES"
     ]),
     editRiesgoAutomotor(item) {
       this.SET_RIESGO_AUTOMOTOR(item);
@@ -149,6 +151,7 @@ export default {
     this.getMarcas();
     this.getModelos();
     this.getVersiones();
+    this.SET_RIESGO_AUTOMOTORES(this.poliza.riesgo_automotor);
   }
 };
 </script>

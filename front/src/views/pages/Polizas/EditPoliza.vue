@@ -303,9 +303,9 @@
                     >
                       <template v-slot:activator="{ on }">
                         <v-text-field
-                          :value="formatDate(poliza.fecha_entrega_mail)"
+                          :value="formatDate(poliza.fecha_entrega_email)"
                           @click:clear="
-                          $nextTick(() => (poliza.fecha_entrega_mail = null))
+                          $nextTick(() => (poliza.fecha_entrega_email = null))
                         "
                           clearable
                           label="Enviado x Mail"
@@ -313,7 +313,7 @@
                         ></v-text-field>
                       </template>
                       <v-date-picker
-                        v-model="poliza.fecha_entrega_mail"
+                        v-model="poliza.fecha_entrega_email"
                         clearable
                         color="primary lighten-1"
                         no-title
@@ -521,7 +521,7 @@ export default {
     },
     volver() {
       this.$router.push({
-        name: "Automotor"
+        name: "Polizas"
       });
       // this.RESET_POLIZA();
     },
@@ -530,7 +530,7 @@ export default {
         const createResult = await this.updatePoliza(this.poliza);
         if (createResult) {
           this.$router.push({
-            name: "Automotor"
+            name: "Polizas"
           });
           this.RESET_POLIZA();
         }

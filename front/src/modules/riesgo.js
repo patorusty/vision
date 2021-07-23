@@ -1,58 +1,63 @@
 import http from "../http-request";
 
-const API_URL = '/configuracion/productores';
+const API_URL = '/riesgo_automotor';
+const API_URL_RA = '/riesgo_automotor';
 
 const state = () => ({
-    riesgo_automotor:{},
-    otro_riesgo:{},
+    riesgo_automotor: {
+        tipo_patente: 0
+    },
+    riesgo_automotores: [],
+    otro_riesgo: {},
     loading: false
 });
 const mutations = {
-    SET_PRODUCTORES(state, productores) {
+    SET_RIESGO_AUTOMOTORES(state, riesgo_automotores) {
         state.loading = false
-        state.productores = productores;
+        state.riesgo_automotores = riesgo_automotores;
     },
     SET_RIESGO_AUTOMOTOR(state, riesgo_automotor) {
         state.riesgo_automotor = riesgo_automotor;
     },
     RESET_RIESGO_AUTOMOTOR(state) {
-        state.riesgo_automotor = Object.assign({},{});
+        state.riesgo_automotor = Object.assign({}, { tipo_patente: 0 });
     },
-    UPDATE_PRODUCTOR(state, productor) {
-        const item = state.productores.find(item => item.id === productor.id);
-        Object.assign(item, productor);
+    UPDATE_RIESGO_AUTOMOTOR(state, riesgo_automotor) {
+        const item = state.riesgo_automotores.find(item => item.id === riesgo_automotor.id);
+        console.log(riesgo_automotor);
+        Object.assign(item, riesgo_automotor);
     },
-    CREATE_PRODUCTOR(state, productor) {
-        state.productores.push(productor);
+    CREATE_RIESGO_AUTOMOTOR(state, riesgo_automotor) {
+        state.riesgo_automotores.push(riesgo_automotor);
     },
-    DELETE_PRODUCTOR(state, id) {
-        state.productores = state.productores.filter(u => u.id != id);
+    DELETE_RIESGO_AUTOMOTOR(state, id) {
+        state.riesgo_automotores = state.riesgo_automotores.filter(u => u.id != id);
     }
 };
 const actions = {
-    async getProductores({ commit }) {
-        const resp = await http.get(API_URL);
-        commit("SET_PRODUCTORES", resp.data);
+    async getRiesgoAutomotores({ commit }) {
+        const resp = await http.get(API_URL_RA);
+        commit("SET_RIESGO_AUTOMOTORES", resp.data);
     },
 
     async getRiesgoAutomotor({ commit }) {
-        // const resp = await http.getOne(API_URL, id);
+        // const resp = await http.getOne(API_URL_RA, id);
         // commit("SET_RIESGO_AUTOMOTOR", resp.data);
     },
 
-    async updateProductor({ commit }, productor) {
+    async updateRiesgoAutomotor({ commit }, riesgo_automotor) {
         const resp = await http.put(
-            API_URL,
-            productor.id,
-            productor
+            API_URL_RA,
+            riesgo_automotor.id,
+            riesgo_automotor
         );
         if (resp.status === 200) {
-            commit("UPDATE_PRODUCTOR", resp.data);
+            commit("UPDATE_RIESGO_AUTOMOTOR", resp.data);
             commit(
                 "snackbar/SHOW_SNACK",
                 {
                     color: "success",
-                    snackText: "Productor editado con éxito!"
+                    snackText: "Riesgo editado con éxito!"
                 },
                 { root: true }
             );
@@ -68,15 +73,15 @@ const actions = {
         }
     },
 
-    async createProductor({ commit }, productor) {
-        const resp = await http.post(API_URL, productor);
+    async createRiesgoAutomotor({ commit }, riesgo_automotor) {
+        const resp = await http.post(API_URL_RA, riesgo_automotor);
         if (resp.status === 201) {
-            commit("CREATE_PRODUCTOR", resp.data);
+            commit("CREATE_RIESGO_AUTOMOTOR", resp.data);
             commit(
                 "snackbar/SHOW_SNACK",
                 {
                     color: "success",
-                    snackText: "Productor creado con éxito!"
+                    snackText: "Riesgo creado con éxito!"
                 },
                 { root: true }
             );
@@ -93,24 +98,16 @@ const actions = {
         }
     },
 
-    async deleteProductor({ commit }, id) {
-        const resp = await http.delete(API_URL, id);
+    async deleteRiesgoAutomotor({ commit }, id) {
+        const resp = await http.delete(API_URL_RA, id);
         if (resp.status === 200) {
-            commit("DELETE_PRODUCTOR", id);
+            commit("DELETE_RIESGO_AUTOMOTOR", id);
             commit(
                 "snackbar/SHOW_SNACK",
                 {
                     color: "success",
-                    snackText: "Productor eliminado con éxito!"
+                    snackText: "Riesgo eliminado con éxito!"
                 },
-                { root: true }
-            );
-        } else if (resp.status === 202) {
-            commit(
-                "snackbar/SHOW_SNACK", {
-                color: "red",
-                snackText: "Existen Códigos Productores relacionados a este Productor"
-            },
                 { root: true }
             );
         } else {

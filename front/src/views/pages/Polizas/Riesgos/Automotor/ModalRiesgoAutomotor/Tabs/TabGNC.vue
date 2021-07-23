@@ -6,7 +6,7 @@
     <v-card-text>
       <v-row>
         <v-col
-          class="pb-0"
+          class="py`-0"
           cols="4"
         >
           <v-select
@@ -16,7 +16,7 @@
           ></v-select>
         </v-col>
         <v-col
-          class="pb-0"
+          class="py`-0"
           cols="4"
         >
           <v-text-field
@@ -34,21 +34,21 @@
     </v-card-subtitle>
     <v-card-text>
       <v-row>
-        <v-col class="pb-0">
+        <v-col class="py`-0">
           <v-text-field
             :disabled="riesgo_automotor.gnc == false"
             v-model="riesgo_automotor.gnc_nro_oblea"
             label="Nro Oblea"
           ></v-text-field>
         </v-col>
-        <v-col class="pb-0">
+        <v-col class="py`-0">
           <v-text-field
             v-model="riesgo_automotor.gnc_marca_cilindro"
             :disabled="riesgo_automotor.gnc == false"
             label="Marca Cilindro"
           ></v-text-field>
         </v-col>
-        <v-col class="pb-0">
+        <v-col class="py`-0">
           <v-text-field
             v-model="riesgo_automotor.gnc_marca_regulador"
             :disabled="riesgo_automotor.gnc == false"
@@ -57,7 +57,7 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col class="pb-0">
+        <v-col class="py`-0">
           <v-menu
             v-model="calendarioVencimientoOblea"
             :close-on-content-click="false"
@@ -90,30 +90,33 @@
             </v-date-picker>
           </v-menu>
         </v-col>
-        <v-col class="pb-0">
+        <v-col class="py`-0">
           <v-text-field
             v-model="riesgo_automotor.gnc_nro_cilindro"
             :disabled="riesgo_automotor.gnc == false"
             label="Nro Cilindro"
+            v-uppercase
           ></v-text-field>
         </v-col>
-        <v-col class="pb-0">
+        <v-col class="py`-0">
           <v-text-field
             v-model="riesgo_automotor.gnc_nro_regulador"
             :disabled="riesgo_automotor.gnc == false"
             label="Nro Regulador"
+            v-uppercase
           ></v-text-field>
         </v-col>
       </v-row>
       <v-row>
         <v-col
-          class="pb-0"
+          class="py`-0"
           cols="4"
         >
           <v-text-field
             v-model="riesgo_automotor.valor_gnc"
             :disabled="riesgo_automotor.gnc == false"
             label="Valor GNC"
+            v-uppercase
           ></v-text-field>
         </v-col>
       </v-row>
@@ -124,41 +127,45 @@
     <v-card-text>
       <v-row>
         <v-col
-          class="pb-0"
+          class="py`-0"
           cols="4"
         >
           <v-text-field
             v-model="riesgo_automotor.accesorio_01"
             label="Accesorio Nro 1"
+            v-uppercase
           ></v-text-field>
         </v-col>
         <v-col
-          class="pb-0"
+          class="py`-0"
           cols="4"
         >
           <v-text-field
             v-model="riesgo_automotor.valor_accesorio_01"
             label="Valor Nro 1"
+            v-uppercase
           ></v-text-field>
         </v-col>
       </v-row>
       <v-row>
         <v-col
-          class="pb-0"
+          class="py`-0"
           cols="4"
         >
           <v-text-field
             v-model="riesgo_automotor.accesorio_02"
             label="Accesorio Nro 2"
+            v-uppercase
           ></v-text-field>
         </v-col>
         <v-col
-          class="pb-0"
+          class="py`-0"
           cols="4"
         >
           <v-text-field
             v-model="riesgo_automotor.valor_accesorio_02"
             label="Valor Nro 2"
+            v-uppercase
           ></v-text-field>
         </v-col>
       </v-row>
@@ -167,7 +174,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
+import { mapState } from "vuex";
 import { helpers } from "../../../../../../../helpers";
 export default {
   mixins: [helpers],

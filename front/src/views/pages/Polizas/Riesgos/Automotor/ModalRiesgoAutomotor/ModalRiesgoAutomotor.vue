@@ -1,9 +1,9 @@
 <template>
   <v-card>
-    <v-card-title>
+    <!-- <v-card-title>
       <span v-if="edicion_ra">Editar Riesgo Automotor</span>
       <span v-else>Crear Riesgo Automotor</span>
-    </v-card-title>
+    </v-card-title> -->
     <v-card-text>
       <v-form ref="form">
         <v-tabs vertical>
@@ -64,9 +64,18 @@
         class="mb-2"
         color="red"
         text
-        @click="close"
+        @click="closeModal"
       >Cerrar</v-btn>
       <v-btn
+        v-if="edicion_ra"
+        class="mb-2"
+        color="green"
+        @click="update"
+        text
+        native-type="submit"
+      >Guardar</v-btn>
+      <v-btn
+        v-else
         class="mb-2"
         color="green"
         @click="create"
@@ -98,32 +107,39 @@ export default {
     ...mapState("version", ["versiones", "modelo_id", "loading"]),
     ...mapState("marca", ["marcas"]),
     ...mapState("modelo", ["modelos", "marca_id"]),
-    ...mapState("anio", ["anios"])
+    ...mapState("anio", ["anios"]),
+    ...mapState("riesgo", ["riesgo_automotor"])
   },
   methods: {
     ...mapActions("modelo", ["updateMarcaId"]),
+    ...mapActions("riesgo", ["createRiesgoAutomotor", "updateRiesgoAutomotor"]),
     ...mapMutations("version", ["UPDATE_MODELO_ID"]),
     ...mapMutations("modal", ["HIDE_MODAL_RA"]),
     ...mapMutations("riesgo", ["RESET_RIESGO_AUTOMOTOR"]),
-    create() {
+    async create() {
       if (this.$refs.form.validate()) {
-        // const createResult = await this.createCompania(this.compania);
-        // if (createResult) {
-        //   this.closeModal();
+        const createResult = await this.createRiesgoAutomotor(
+          this.riesgo_automotor
+        );
+        if (createResult) {
+          this.closeModal();
+        }
       }
     },
-    update() {
+    async update() {
       if (this.$refs.form.validate()) {
-        // const createResult = await this.createCompania(this.compania);
-        // if (createResult) {
-        //   this.closeModal();
-        // }
+        const createResult = await this.updateRiesgoAutomotor(
+          this.riesgo_automotor
+        );
+        if (createResult) {
+          this.closeModal();
+        }
       }
     },
-    close() {
+    closeModal() {
       this.HIDE_MODAL_RA(false);
       this.RESET_RIESGO_AUTOMOTOR();
-      // this.$refs.form.resetValidation();
+      this.$refs.form.resetValidation();
     }
   }
 };

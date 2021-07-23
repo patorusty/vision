@@ -19,7 +19,7 @@ export default new Router({
 
         // Dashboard
         {
-          name: "Automotor",
+          name: "Polizas",
           path: "polizas",
           component: () => import("@/views/pages/Polizas/Polizas.vue")
         },

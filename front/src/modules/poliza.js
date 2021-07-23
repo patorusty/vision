@@ -65,7 +65,11 @@ const mutations = {
     state.tipo_vigencias = tipo_vigencias;
   },
   SET_NUMERO_SOLICITUD(state, numero_solicitud) {
-    state.poliza.numero_solicitud = numero_solicitud;
+    if (numero_solicitud == 0) {
+      state.poliza.numero_solicitud = 1;
+    } else {
+      state.poliza.numero_solicitud = numero_solicitud + 1;
+    }
   },
   // SET_ENDOSOS_POR_POLIZA(state, endosos) {
   //   state.poliza.endosos = endosos;  
@@ -186,7 +190,11 @@ const actions = {
   },
   async cargarUltimoNumeroSolicitud({ commit }) {
     const resp = await http.get("numerosolicitud");
-    commit("SET_NUMERO_SOLICITUD", resp.data[0].numero_solicitud);
+    if(resp.data.length > 0){
+      commit("SET_NUMERO_SOLICITUD", resp.data[0].numero_solicitud);
+    } else {
+      commit("SET_NUMERO_SOLICITUD", 0);
+    }
   }
 };
 export default {

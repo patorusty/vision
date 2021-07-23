@@ -17,7 +17,7 @@ class PolizaController extends Controller
      */
     public function index()
     {
-        return Poliza::with(['codigo_productor', 'estado_polizas', 'clientes', 'companias', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo'])->get();
+        return Poliza::with(['codigo_productor', 'estado', 'clientes', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo'])->get();
     }
 
     public function chequeoRenovada($poliza_actual)
@@ -35,6 +35,7 @@ class PolizaController extends Controller
     {
         try {
             $poliza = Poliza::create($request->all());
+            $this->checkOnePoliza($poliza);
             return response($poliza, 201);
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -49,7 +50,7 @@ class PolizaController extends Controller
      */
     public function show($numero_solicitud)
     {
-        $poliza = Poliza::where('numero_solicitud', $numero_solicitud)->with(['codigo_productor.productores', 'estado_polizas', 'clientes', 'companias', 'tipo_vigencias', 'endosos.tipo_endoso', 'endosos.detalle_endoso', 'siniestros', 'riesgo_automotor.marca', 'riesgo_automotor.modelo', 'riesgo_automotor.cobertura', 'otro_riesgo'])->get();
+        $poliza = Poliza::where('numero_solicitud', $numero_solicitud)->with(['codigo_productor.productores', 'estado', 'clientes', 'compania', 'tipo_vigencias', 'endosos.tipo_endoso', 'endosos.detalle_endoso', 'siniestros', 'riesgo_automotor.marca', 'riesgo_automotor.modelo', 'riesgo_automotor.cobertura', 'otro_riesgo'])->get();
         return $poliza[0];
     }
 
@@ -122,36 +123,78 @@ class PolizaController extends Controller
 
         $polizas = Poliza::all();
         foreach ($polizas as $poliza) {
-            if (!$poliza["estado_id" == 1]) {
+            if (!$poliza["estado_poliza_id" == 1]) {
                 switch ($poliza) {
                     case $hoy->isAfter($poliza['vigencia_desde']) && $hoy->isBefore($poliza['vigencia_hasta']->subMonth()) && !$poliza['renueva_numero']:
-                        $poliza["estado_id"] = 2;
+                        $poliza["estado_poliza_id"] = 2;
                         //VIGENTE
                         break;
                     case $hoy->isAfter($poliza['vigencia_hasta']->subMonth()) && $hoy->isBefore($poliza['vigencia_hasta']) && !$poliza['renueva_numero']:
-                        $poliza["estado_id"] = 3;
+                        $poliza["estado_poliza_id"] = 3;
                         //VIGENTE A RENOVAR
                         break;
                     case $hoy->isAfter($poliza['vigencia_desde']) && $hoy->isBefore($poliza['vigencia_hasta']) && $poliza['renueva_numero']:
-                        $poliza["estado_id"] = 6;
+                        $poliza["estado_poliza_id"] = 6;
                         //VIGENTE RENOVADA
                         break;
                     case $hoy->isAfter($poliza['vigencia_hasta']) && $poliza['renueva_numero']:
-                        $poliza["estado_id"] = 4;
+                        $poliza["estado_poliza_id"] = 4;
                         //CUMPLIDA RENOVADA
                         break;
                     case $hoy->isAfter($poliza['vigencia_hasta']):
-                        $poliza["estado_id"] = 5;
+                        $poliza["estado_poliza_id"] = 5;
                         //CUMPLIDA
                         break;
                     case $hoy->isBefore($poliza['vigencia_desde']):
-                        $poliza["estado_id"] = 1;
+                        $poliza["estado_poliza_id"] = 1;
                         // PENDIENTE
                         break;
                     default:
                         # code...
                         break;
                 }
+            }
+        }
+    }
+
+    function checkOnePoliza($poliza)
+    {
+        $hoy = Carbon::now();
+        if (!$poliza["estado_poliza_id" == 1]) {
+            switch ($poliza) {
+                case $hoy->isAfter($poliza['vigencia_desde']) && $hoy->isBefore($poliza['vigencia_hasta']->subMonth()) && !$poliza['renueva_numero']:
+                    $poliza["estado_poliza_id"] = 2;
+                    $poliza->save();
+                    //VIGENTE
+                    break;
+                case $hoy->isAfter($poliza['vigencia_hasta']->subMonth()) && $hoy->isBefore($poliza['vigencia_hasta']) && !$poliza['renueva_numero']:
+                    $poliza["estado_poliza_id"] = 3;
+                    $poliza->save();
+                    //VIGENTE A RENOVAR
+                    break;
+                case $hoy->isAfter($poliza['vigencia_desde']) && $hoy->isBefore($poliza['vigencia_hasta']) && $poliza['renueva_numero']:
+                    $poliza["estado_poliza_id"] = 6;
+                    $poliza->save();
+                    //VIGENTE RENOVADA
+                    break;
+                case $hoy->isAfter($poliza['vigencia_hasta']) && $poliza['renueva_numero']:
+                    $poliza["estado_poliza_id"] = 4;
+                    $poliza->save();
+                    //CUMPLIDA RENOVADA
+                    break;
+                case $hoy->isAfter($poliza['vigencia_hasta']):
+                    $poliza["estado_poliza_id"] = 5;
+                    $poliza->save();
+                    //CUMPLIDA
+                    break;
+                case $hoy->isBefore($poliza['vigencia_desde']):
+                    $poliza["estado_poliza_id"] = 1;
+                    $poliza->save();
+                    // PENDIENTE
+                    break;
+                default:
+                    # code...
+                    break;
             }
         }
     }
