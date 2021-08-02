@@ -46,7 +46,7 @@
       </template>
       <template v-slot:[`item.fechaCompleto`]="{ item }">
         {{
-          formatDate(item.fecha_completo)
+          dateOrNo(item.fecha_completo)
         }}
       </template>
       <template v-slot:[`item.actions`]="{ item }">

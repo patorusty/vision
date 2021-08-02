@@ -41,6 +41,13 @@ export const helpers = {
         return "";
       }
     },
+    dateOrNo(date) {
+      if (date) {
+        return moment(date).format("DD/MM/YYYY");
+      } else {
+        return "NO";
+      }
+    },
     toUpper(nombre, e) {
       if (this[`${nombre}`] != null)
         this[`${nombre}`] = this[`${nombre}`].toUpperCase();

@@ -5,7 +5,7 @@ const API_URL = '/administracion/modelos';
 const state = () => ({
     modelos: [],
     modelo: {},
-    marca_id: 1,
+    marca_id: null,
     loading: false
 });
 const mutations = {
@@ -78,6 +78,8 @@ const actions = {
         const resp = await http.post(API_URL, modelo);
         if (resp.status === 201) {
             commit("CREATE_MODELO", resp.data);
+            commit("SET_MODELO", resp.data);
+            commit("version/RESET_MODELO_ID", resp.data.id,{ root: true });
             commit(
                 "snackbar/SHOW_SNACK",
                 {
@@ -127,6 +129,13 @@ const actions = {
             },
                 { root: true }
             );
+        }
+    },
+
+    async getModelosPorMArca({ commit, state }) {
+        if (state.marca_id) {
+            const resp = await http.getOne('/modelos/filtrar', state.marca_id);
+            commit("SET_MODELOS", resp.data);
         }
     },
 

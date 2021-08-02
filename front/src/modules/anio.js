@@ -15,12 +15,13 @@ const mutations = {
     },
     SET_ANIO(state, anio) {
         state.anio = anio;
-        state.anio.nombreOriginal = anio.nombre;
+        // state.anio.nombreOriginal = anio.nombre;
     },
     RESET_ANIO(state) {
         state.anio = Object.assign({},{});
     },
     UPDATE_ANIO(state, anio) {
+        console.log(anio)
         const item = state.anios.find(item => item.id === anio.id);
         Object.assign(item, anio);
     },

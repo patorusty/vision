@@ -27,12 +27,12 @@ class SiniestroAutomotor extends Model
         "updated_at",
     ];
 
-    public function polizas()
+    public function poliza()
     {
         return $this->belongsTo(Poliza::class, 'poliza_id');
     }
 
-    public function notas_siniestros()
+    public function notas_siniestro()
     {
         return $this->hasMany(NotaSiniestroAut::class, 'siniestro_automotor_id', 'id');
     }

@@ -24,8 +24,10 @@ const mutations = {
     },
     UPDATE_RIESGO_AUTOMOTOR(state, riesgo_automotor) {
         const item = state.riesgo_automotores.find(item => item.id === riesgo_automotor.id);
-        console.log(riesgo_automotor);
         Object.assign(item, riesgo_automotor);
+    },
+    UPDATE_KV(state, pair){
+        state.riesgo_automotor = {...state.riesgo_automotor, ...pair};
     },
     CREATE_RIESGO_AUTOMOTOR(state, riesgo_automotor) {
         state.riesgo_automotores.push(riesgo_automotor);

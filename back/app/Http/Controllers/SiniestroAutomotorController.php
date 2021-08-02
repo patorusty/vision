@@ -17,7 +17,7 @@ class SiniestroAutomotorController extends Controller
     public function index()
     {
 
-        return SiniestroAutomotor::with(['polizas.clientes', 'polizas.companias'])->get();
+        return SiniestroAutomotor::with(['poliza.cliente', 'poliza.compania'])->get();
     }
     public function indexFiltrado($poliza_id)
     {
@@ -48,7 +48,7 @@ class SiniestroAutomotorController extends Controller
      */
     public function show($id)
     {
-        return SiniestroAutomotor::with(['polizas.clientes', 'polizas.riesgo_automotor', 'polizas.companias', 'polizas.riesgo_automotor', 'polizas.riesgo_automotor.automotor_marca', 'polizas.riesgo_automotor.automotor_version', 'polizas.riesgo_automotor.cobertura'])->findOrFail($id);
+        return SiniestroAutomotor::with(['poliza.cliente', 'poliza.riesgo_automotor', 'poliza.compania', 'poliza.riesgo_automotor', 'poliza.riesgo_automotor.automotor_marca', 'poliza.riesgo_automotor.automotor_version', 'poliza.riesgo_automotor.cobertura'])->findOrFail($id);
     }
 
     /**

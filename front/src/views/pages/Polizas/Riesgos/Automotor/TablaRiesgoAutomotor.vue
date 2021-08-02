@@ -122,7 +122,6 @@ export default {
     ...mapActions("modelo", ["getModelos"]),
     ...mapActions("version", ["getVersiones"]),
     ...mapMutations("modal", ["SHOW_MODAL_RA", "HIDE_MODAL_RA"]),
-    ...mapMutations("version", ["UPDATE_MODELO_ID"]),
     ...mapMutations("riesgo", [
       "SET_RIESGO_AUTOMOTOR",
       "RESET_RIESGO_AUTOMOTOR",

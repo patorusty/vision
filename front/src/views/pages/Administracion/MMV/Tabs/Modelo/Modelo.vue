@@ -133,8 +133,7 @@ export default {
       this.deleteModelo(this.idSelected);
       this.modalDelete = false;
       this.idSelected = "";
-    },
-    filtroMarca() {}
+    }
   }
 };
 </script>

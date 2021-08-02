@@ -6,7 +6,8 @@ const state = () => ({
     versiones: [],
     version: {},
     loading: false,
-    modelo_id: 3
+    modelo_id: null,
+    anio_id: null
 });
 const mutations = {
     SET_VERSIONES(state, versiones) {
@@ -35,12 +36,23 @@ const mutations = {
     },
     RESET_MODELO_ID(state, el) {
         state.modelo_id = el.id;
+    },
+    UPDATE_ANIO_ID(state, anio_id) {
+        state.anio_id = anio_id
     }
 };
 const actions = {
     async getVersiones({ commit }) {
         const resp = await http.get(API_URL);
         commit("SET_VERSIONES", resp.data);
+    },
+
+    async getVersionesPorModeloYanio({ commit, state }) {
+        if (state.modelo_id && state.anio_id) {
+            const obj = { modelo_id : state.modelo_id, anio_id : state.anio_id }
+            const resp = await http.post('/anios/filtrar', obj);
+            commit("SET_VERSIONES", resp.data.versiones);
+        }
     },
 
     async getVersion({ commit }, id) {
@@ -81,6 +93,7 @@ const actions = {
         const resp = await http.post(API_URL, version);
         if (resp.status === 201) {
             commit("CREATE_VERSION", resp.data);
+            commit("SET_VERSION", resp.data);
             commit(
                 "snackbar/SHOW_SNACK",
                 {

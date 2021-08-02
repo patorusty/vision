@@ -17,7 +17,7 @@ class PolizaController extends Controller
      */
     public function index()
     {
-        return Poliza::with(['codigo_productor', 'estado', 'clientes', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo'])->get();
+        return Poliza::with(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo'])->get();
     }
 
     public function chequeoRenovada($poliza_actual)
@@ -50,7 +50,7 @@ class PolizaController extends Controller
      */
     public function show($numero_solicitud)
     {
-        $poliza = Poliza::where('numero_solicitud', $numero_solicitud)->with(['codigo_productor.productores', 'estado', 'clientes', 'compania', 'tipo_vigencias', 'endosos.tipo_endoso', 'endosos.detalle_endoso', 'siniestros', 'riesgo_automotor.marca', 'riesgo_automotor.modelo', 'riesgo_automotor.cobertura', 'otro_riesgo'])->get();
+        $poliza = Poliza::where('numero_solicitud', $numero_solicitud)->with(['codigo_productor.productores', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'endosos.tipo_endoso', 'endosos.detalle_endoso', 'siniestros', 'riesgo_automotor.marca', 'riesgo_automotor.modelo', 'riesgo_automotor.cobertura', 'otro_riesgo'])->get();
         return $poliza[0];
     }
 

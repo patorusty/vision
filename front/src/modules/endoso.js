@@ -11,8 +11,8 @@ const state = () => ({
 });
 const mutations = {
     SET_ENDOSOS(state, endosos) {
-        state.loading = false
         state.endosos = endosos
+        state.loading = false
     },
     SET_ENDOSO(state, endoso) {
         state.endoso = endoso

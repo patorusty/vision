@@ -16,11 +16,10 @@ class AutomotorModeloController extends Controller
     {
         return AutomotorModelo::findOrFail($id);
     }
-    // public function filtroMarca($id)
-    // {
-    //     $modelo = AutomotorModelo::with('marca')->where('automotor_marca_id', $id)->get();
-    //     return $modelo[0];
-    // }
+    public function filtroMarca($id)
+    {
+        return AutomotorModelo::where('automotor_marca_id', $id)->get();
+    }
 
     public function store(Request $request)
     {

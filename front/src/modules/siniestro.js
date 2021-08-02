@@ -9,8 +9,8 @@ const state = () => ({
 });
 const mutations = {
     SET_SINIESTROS(state, siniestros) {
-        state.loading = false
         state.siniestros = siniestros
+        state.loading = false
     },
     SET_SINIESTRO(state, siniestro) {
         state.siniestro = siniestro

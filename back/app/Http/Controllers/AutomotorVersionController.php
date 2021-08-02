@@ -15,10 +15,14 @@ class AutomotorVersionController extends Controller
     {
         return AutomotorVersion::findOrFail($id);
     }
-    // public function filtro($id)
-    // {
-    //     return AutomotorVersion::where('automotor_modelo_id', $id)->with(['automotor_modelo.automotor_marca', 'automotor_anios'])->get();
-    // }
+    public function filtro(Request $request)
+    {
+        $modelo_id = $request->input('modelo_id');
+        $anio_id = $request->input('anio_id');
+        return AutomotorVersion::where('automotor_modelo_id', $modelo_id)->with(["anios" => function ($query) use ($anio_id) {
+            $query->where('anio', $anio_id);
+        }])->get();
+    }
 
     public function store(Request $request)
     {

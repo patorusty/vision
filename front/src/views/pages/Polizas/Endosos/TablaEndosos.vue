@@ -36,11 +36,6 @@
           item.tipo_endoso.nombre
         }}
       </template>
-      <template v-slot:[`item.detalle`]="{ item }">
-        {{
-          item.detalle_endoso.nombre
-        }}
-      </template>
       <template v-slot:[`item.endosoCompleto`]="{ item }">
         {{
           textCompleto(item.completo)
@@ -114,7 +109,7 @@ export default {
       return [
         { text: "Fecha", value: "fecha" },
         { text: "Tipo", value: "tipo" },
-        { text: "Detalle", value: "detalle" },
+        { text: "Detalle", value: "detalle_endoso.nombre" },
         { text: "Completo", value: "endosoCompleto" },
         { text: "Actions", value: "actions", sortable: false, align: "right" }
       ];

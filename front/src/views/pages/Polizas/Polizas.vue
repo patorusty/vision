@@ -46,9 +46,9 @@
       <template v-slot:[`item.asegurado`]="{ item }">
         <router-link
           class="links"
-          :to=" {name: 'Editar Cliente', params: {id: item.id}}"
+          :to=" {name: 'Editar Cliente', params: {id: item.cliente.id}}"
           target="_blank"
-        >{{ item.clientes.nombre }} {{ item.clientes.apellido }}
+        >{{ item.cliente.nombre }} {{ item.cliente.apellido }}
         </router-link>
       </template>
       <template v-slot:[`item.dominio`]="{ item }">

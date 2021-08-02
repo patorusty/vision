@@ -20,11 +20,6 @@
       multi-sort
       :loading="loading"
     >
-      <template v-slot:[`item.poliza_numero`]="{ item }">
-        {{
-          item.polizas.numero
-        }}
-      </template>
       <template v-slot:[`item.tipo`]="{ item }">
         {{
           item.tipo_endoso.nombre
@@ -32,12 +27,12 @@
       </template>
       <template v-slot:[`item.asegurado`]="{ item }">
         {{
-          item.polizas.clientes.apellido + " " + item.polizas.clientes.nombre
+          nombreCompleto(item.poliza.cliente)
         }}
       </template>
       <template v-slot:[`item.compania`]="{ item }">
         {{
-          item.polizas.compania.nombre
+          item.poliza.compania.nombre
         }}
       </template>
       <template v-slot:[`item.fecha_solicitud`]="{ item }">
@@ -116,7 +111,7 @@ export default {
     ...mapState("endoso", ["endosos", "tipo_endosos", "loading"]),
     headers() {
       return [
-        { text: "Póliza Nro.", value: "poliza_numero" },
+        { text: "Póliza Nro.", value: "poliza.numero" },
         { text: "Tipo", value: "tipo" },
         { text: "Asegurado", value: "asegurado" },
         { text: "Compañia", value: "compania" },

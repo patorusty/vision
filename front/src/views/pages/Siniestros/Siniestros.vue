@@ -28,19 +28,9 @@
       multi-sort
       :loading="loading"
     >
-      <template v-slot:[`item.poliza_numero`]="{ item }">
-        {{
-          item.polizas.numero
-        }}
-      </template>
       <template v-slot:[`item.asegurado`]="{ item }">
         {{
-          item.polizas.clientes.apellido + " " + item.polizas.clientes.nombre
-        }}
-      </template>
-      <template v-slot:[`item.compania`]="{ item }">
-        {{
-          item.polizas.compania.nombre
+          nombreCompleto(item.poliza.cliente)
         }}
       </template>
       <template v-slot:[`item.fechaSiniestro`]="{ item }">
@@ -112,22 +102,31 @@ export default {
   data: () => ({
     search: "",
     idSelected: "",
-    modalDelete: false
+    modalDelete: false,
+    headers: [
+      { text: "Póliza Nro.", value: "poliza.numero" },
+      { text: "Numero", value: "numero_siniestro" },
+      { text: "Asegurado", value: "asegurado" },
+      { text: "Compañia", value: "poliza.compania.nombre" },
+      { text: "F. Siniestro", value: "fechaSiniestro" },
+      { text: "Completo", value: "fecha_completo" },
+      { text: "Actions", value: "actions", sortable: false, align: "right" }
+    ]
   }),
   computed: {
     ...mapState("modal", ["modal3", "edicion3"]),
-    ...mapState("siniestro", ["siniestros", "loading"]),
-    headers() {
-      return [
-        { text: "Póliza Nro.", value: "poliza_numero" },
-        { text: "Numero", value: "numero_siniestro" },
-        { text: "Asegurado", value: "asegurado" },
-        { text: "Compañia", value: "compania" },
-        { text: "F. Siniestro", value: "fechaSiniestro" },
-        { text: "Completo", value: "fecha_completo" },
-        { text: "Actions", value: "actions", sortable: false, align: "right" }
-      ];
-    }
+    ...mapState("siniestro", ["siniestros", "loading"])
+    // headers() {
+    //   return [
+    //     { text: "Póliza Nro.", value: "poliza.numero" },
+    //     { text: "Numero", value: "numero_siniestro" },
+    //     { text: "Asegurado", value: "asegurado" },
+    //     { text: "Compañia", value: "compania.nombre" },
+    //     { text: "F. Siniestro", value: "fechaSiniestro" },
+    //     { text: "Completo", value: "fecha_completo" },
+    //     { text: "Actions", value: "actions", sortable: false, align: "right" }
+    //   ];
+    // }
   },
   methods: {
     ...mapActions("siniestro", [

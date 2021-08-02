@@ -18,67 +18,71 @@
             item-value="id"
             label="Año"
             v-model="riesgo_automotor.automotor_anio_id"
+            @input="updateAnio"
             :rules="[rules.required]"
-          ></v-autocomplete>
-          <!-- <v-autocomplete
-            class="mt-6"
-            :items="marcas"
-            item-text="nombre"
-            item-value="id"
-            label="Marca"
-            v-model="riesgo_automotor.automotor_marca_id"
-            @input="updateMarcaId"
-            :rules="[rules.required]"
-          ></v-autocomplete> -->
-
-          <v-combobox
-            v-model="riesgo_automotor.automotor_marca_id"
-            :items="marcas"
-            item-text="nombre"
-            item-value="id"
-            :search-input.sync="searchMarca"
-            @update:search-input="toUpper('searchMarca')"
+            return_object
             clearable
-            label="Marca"
-            menu-props="closeOnContentClick"
-            :rules="[rules.required]"
-            class="mt-6"
-          >
-            <template v-slot:no-data>
-              <p class="grey--text text--darken-1 pa-2 mb-0">
-                "{{ searchMarca | upper }}" no existe, click
-                &nbsp;
-                <a @click.prevent="
-                        crearAbuelo(
-                          'abuela_paterna_padre',
-                          1,
-                          searchMarca
-                        )
-                      ">AQUI</a>
-                &nbsp;para crearla
-              </p>
-            </template>
-          </v-combobox>
-
+          ></v-autocomplete>
           <v-autocomplete
             class="mt-6"
-            :items="modelosFiltrados"
+            :items="marcas"
+            item-text="nombre"
+            item-value="id"
+            label="Marca"
+            v-model="riesgo_automotor.automotor_marca_id"
+            @input="updateMarca"
+            :rules="[rules.required]"
+            clearable
+            no-data-text="No se encontraron registros"
+          ></v-autocomplete>
+          <v-autocomplete
+            class="mt-6"
+            :items="modelos"
             item-text="nombre"
             item-value="id"
             label="Modelo"
-            @input="UPDATE_MODELO_ID"
+            :search-input.sync="searchModelo"
+            @update:search-input="toUpper('searchModelo')"
             v-model="riesgo_automotor.automotor_modelo_id"
             :rules="[rules.required]"
-          ></v-autocomplete>
+            clearable
+            menu-props="closeOnContentClick"
+            @input="updateModelo"
+            no-data-text="No se encontraron registros"
+          ><template
+              v-if="searchModelo"
+              v-slot:no-data
+            >
+              <p class="grey--text text--darken-1 pa-2 mb-0">
+                "{{ searchModelo | upper }}" no existe, click &nbsp;
+                <a @click="createModel(searchModelo)">AQUI</a>
+                &nbsp;para crearla
+              </p>
+            </template></v-autocomplete>
           <v-autocomplete
             class="mt-6"
-            :items="versionesFiltradas"
+            :items="versiones"
             item-text="nombre"
             item-value="id"
             label="Version"
+            :search-input.sync="searchVersion"
+            @update:search-input="toUpper('searchVersion')"
             v-model="riesgo_automotor.automotor_version_id"
             :rules="[rules.required]"
-          ></v-autocomplete>
+            clearable
+            menu-props="closeOnContentClick"
+            no-data-text="No se encontraron registros"
+          ><template
+              v-if="searchVersion"
+              v-slot:no-data
+            >
+              <p class="grey--text text--darken-1 pa-2 mb-0">
+                "{{ searchVersion | upper }}" no existe, click &nbsp;
+                <a @click.prevent="crearVersion(searchVersion)">AQUI</a>
+                &nbsp;para crearla
+              </p>
+            </template>
+          </v-autocomplete>
           <v-autocomplete
             class="mt-6"
             :items="coberturas"
@@ -204,7 +208,8 @@ import { helpers } from "../../../../../../../helpers";
 export default {
   mixins: [helpers],
   data: () => ({
-    searchMarca: null,
+    searchModelo: null,
+    searchVersion: null,
     tipo_vehiculos: [
       {
         value: "Automotor",
@@ -352,10 +357,10 @@ export default {
   }),
   computed: {
     ...mapState("riesgo", ["riesgo_automotor"]),
-    ...mapState("version", ["versiones", "modelo_id"]),
+    ...mapState("version", ["version", "versiones", "modelo_id"]),
     ...mapState("marca", ["marcas"]),
-    ...mapState("modelo", ["modelos", "marca_id"]),
-    ...mapState("anio", ["anios"]),
+    ...mapState("modelo", ["modelos", "marca_id", "modelo"]),
+    ...mapState("anio", ["anio", "anios"]),
     ...mapState("cobertura", ["coberturas"]),
     suma() {
       return this.riesgo_automotor.valor_vehiculo != null
@@ -367,10 +372,67 @@ export default {
     }
   },
   methods: {
-    ...mapActions("modelo", ["updateMarcaId"]),
-    ...mapMutations("version", ["UPDATE_MODELO_ID"]),
+    ...mapMutations("riesgo", ["UPDATE_RIESGO_AUTOMOTOR", "UPDATE_KV"]),
+    ...mapMutations("anio", ["SET_ANIO"]),
+    ...mapActions("modelo", ["getModelosPorMArca", "createModelo"]),
+    ...mapMutations("modelo", ["UPDATE_MARCA_ID"]),
+    ...mapActions("version", ["createVersion", "getVersionesPorModeloYanio"]),
+    ...mapMutations("version", [
+      "RESET_VERSION",
+      "UPDATE_MODELO_ID",
+      "UPDATE_ANIO_ID"
+    ]),
+    async createModel(nombre) {
+      const model = {
+        nombre: nombre.trim(),
+        automotor_marca_id: this.marca_id
+      };
+      const createResult = await this.createModelo(model);
+      if (createResult) {
+        this.UPDATE_KV({ automotor_modelo_id: this.modelo.id });
+      }
+    },
+    async crearVersion(nombre) {
+      const vers = { nombre: nombre, automotor_modelo_id: this.modelo.id };
+      const createResult = await this.createVersion(vers);
+      if (createResult) {
+        this.UPDATE_KV({ automotor_version_id: this.version.id });
+      }
+    },
     change() {
       this.riesgo_automotor.patente = null;
+    },
+    updateAnio(a) {
+      this.SET_ANIO({ id: a, anio: a });
+    },
+    updateMarca() {
+      this.UPDATE_MARCA_ID(this.riesgo_automotor.automotor_marca_id);
+      this.getModelosPorMArca();
+    },
+    updateModelo() {
+      this.UPDATE_MODELO_ID(this.riesgo_automotor.automotor_modelo_id);
+      this.UPDATE_ANIO_ID(this.riesgo_automotor.automotor_anio_id);
+      this.getVersionesPorModeloYanio();
+    }
+  },
+  watch: {
+    "riesgo_automotor.automotor_marca_id": function() {
+      if (this.riesgo_automotor.automotor_marca_id == null) {
+        this.riesgo_automotor.automotor_modelo_id = null;
+        this.riesgo_automotor.automotor_version_id = null;
+      }
+    },
+    "riesgo_automotor.automotor_modelo_id": function() {
+      if (this.riesgo_automotor.automotor_modelo_id == null) {
+        this.riesgo_automotor.automotor_version_id = null;
+      }
+    },
+    "riesgo_automotor.automotor_anio_id": function() {
+      if (this.riesgo_automotor.automotor_anio_id == null) {
+        this.riesgo_automotor.automotor_modelo_id = null;
+        this.riesgo_automotor.automotor_marca_id = null;
+        this.riesgo_automotor.automotor_version_id = null;
+      }
     }
   }
 };

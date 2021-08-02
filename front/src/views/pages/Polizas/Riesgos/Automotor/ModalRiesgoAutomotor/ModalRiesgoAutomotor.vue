@@ -113,7 +113,6 @@ export default {
   methods: {
     ...mapActions("modelo", ["updateMarcaId"]),
     ...mapActions("riesgo", ["createRiesgoAutomotor", "updateRiesgoAutomotor"]),
-    ...mapMutations("version", ["UPDATE_MODELO_ID"]),
     ...mapMutations("modal", ["HIDE_MODAL_RA"]),
     ...mapMutations("riesgo", ["RESET_RIESGO_AUTOMOTOR"]),
     async create() {

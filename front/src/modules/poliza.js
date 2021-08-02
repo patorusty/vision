@@ -83,11 +83,11 @@ const actions = {
     const resp = await http.get(API_URL);
     commit("SET_POLIZAS", resp.data);
   },
-  async getPoliza({ commit, dispatch, state }, id) {
-    const resp = await http.getOne(API_URL, id);
+  async getPoliza({ commit, dispatch }, numero_solicitud) {
+    const resp = await http.getOne(API_URL, numero_solicitud);
+    dispatch('endoso/getEndososDePoliza', resp.data.id, {root:true})
+    dispatch('siniestro/getSiniestrosDePoliza', resp.data.id, {root:true})
     commit("SET_POLIZA", resp.data);
-    dispatch('endoso/getEndososDePoliza', id, {root:true})
-    dispatch('siniestro/getSiniestrosDePoliza', id, {root:true})
     dispatch('endoso/getTipoEndosos', null, {root:true})
     dispatch('endoso/getDetalleEndosos', null, {root:true})
     dispatch('cobertura/getCoberturas', resp.data.compania_id, {root:true})

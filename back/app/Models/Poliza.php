@@ -62,7 +62,7 @@ class Poliza extends Model
         return $this->belongsTo(Compania::class, 'compania_id');
     }
 
-    public function clientes()
+    public function cliente()
     {
         return $this->belongsTo(Cliente::class, 'cliente_id');
     }

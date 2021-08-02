@@ -23,7 +23,7 @@ class Endoso extends Model
         "updated_at"
     ];
 
-    public function polizas()
+    public function poliza()
     {
         return $this->belongsTo(Poliza::class, 'poliza_id');
     }
