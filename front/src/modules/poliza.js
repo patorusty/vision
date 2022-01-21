@@ -24,6 +24,7 @@ const state = () => ({
   riesgo:{},
   forma_pagos: [],
   tipo_vigencias: [],
+  estados:[]
 });
 const mutations = {
   SET_POLIZAS(state, polizas) {
@@ -63,6 +64,8 @@ const mutations = {
   },
   SET_TIPO_VIGENCIAS(state, tipo_vigencias) {
     state.tipo_vigencias = tipo_vigencias;
+  },SET_ESTADOS(state, estados) {
+    state.estados = estados;
   },
   SET_NUMERO_SOLICITUD(state, numero_solicitud) {
     if (numero_solicitud == 0) {
@@ -187,6 +190,10 @@ const actions = {
   async getTipoVigencias({ commit }) {
     const resp = await http.get("tipovigencias");
     commit("SET_TIPO_VIGENCIAS", resp.data);
+  },
+  async getEstados({ commit }) {
+    const resp = await http.get("estado_polizas");
+    commit("SET_ESTADOS", resp.data);
   },
   async cargarUltimoNumeroSolicitud({ commit }) {
     const resp = await http.get("numerosolicitud");

@@ -58,7 +58,7 @@
               <v-select
                 label="Detalle Endoso"
                 v-model="endoso.detalle_endoso_id"
-                :items="detalle_endosos"
+                :items="detalle_endosos_por_tipo"
                 item-text="nombre"
                 item-value="id"
                 :rules="[rules.required]"
@@ -157,7 +157,12 @@ export default {
   computed: {
     ...mapState("endoso", ["endoso", "tipo_endosos", "detalle_endosos"]),
     ...mapState("modal", ["modal2", "edicion2"]),
-    ...mapState("poliza", ["poliza"])
+    ...mapState("poliza", ["poliza"]),
+    detalle_endosos_por_tipo() {
+      return this.endoso.tipo_endoso_id == 1
+        ? this.detalle_endosos.filter(e => e.tipo_endoso_id == 1)
+        : this.detalle_endosos.filter(e => e.tipo_endoso_id == 2);
+    }
   },
   methods: {
     ...mapMutations("modal", ["HIDE_MODAL2"]),

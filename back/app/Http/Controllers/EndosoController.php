@@ -42,8 +42,8 @@ class EndosoController extends Controller
             $this->validate($request, []);
 
             $endoso = Endoso::create($request->all());
-            $endoso->load(['tipo_endoso', 'poliza.cliente', 'poliza.riesgo_automotor', 'poliza.compania', 'poliza.riesgo_automotor', 'poliza.riesgo_automotor.automotor_marca', 'poliza.riesgo_automotor.automotor_version', 'poliza.riesgo_automotor.cobertura']);
-            $endoso::with(['tipo_endoso', 'poliza.cliente', 'poliza.riesgo_automotor', 'poliza.compania', 'poliza.riesgo_automotor', 'poliza.riesgo_automotor.automotor_marca', 'poliza.riesgo_automotor.automotor_version', 'poliza.riesgo_automotor.cobertura']);
+            $endoso->load(['tipo_endoso', 'poliza.cliente', 'poliza.riesgo_automotor', 'poliza.compania', 'poliza.riesgo_automotor', 'poliza.riesgo_automotor.marca', 'poliza.riesgo_automotor.version', 'poliza.riesgo_automotor.cobertura']);
+            $endoso::with(['tipo_endoso', 'poliza.cliente', 'poliza.riesgo_automotor', 'poliza.compania', 'poliza.riesgo_automotor', 'poliza.riesgo_automotor.marca', 'poliza.riesgo_automotor.version', 'poliza.riesgo_automotor.cobertura']);
             return response($endoso, 201);
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -58,7 +58,7 @@ class EndosoController extends Controller
      */
     public function show($id)
     {
-        return Endoso::with(['tipo_endoso', 'poliza.cliente', 'poliza.riesgo_automotor', 'poliza.compania', 'poliza.riesgo_automotor', 'poliza.riesgo_automotor.automotor_marca', 'poliza.riesgo_automotor.automotor_version', 'poliza.riesgo_automotor.cobertura'])->findOrFail($id);
+        return Endoso::with(['tipo_endoso', 'poliza.cliente', 'poliza.riesgo_automotor', 'poliza.compania', 'poliza.riesgo_automotor', 'poliza.riesgo_automotor.marca', 'poliza.riesgo_automotor.version', 'poliza.riesgo_automotor.cobertura'])->findOrFail($id);
     }
 
     /**

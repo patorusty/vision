@@ -23,6 +23,7 @@ use App\Http\Controllers\AutomotorVersionController;
 use App\Http\Controllers\SiniestroAutomotorController;
 use App\Http\Controllers\RiesgoAutomotorController;
 use App\Http\Controllers\ImagenRAController;
+use App\Http\Controllers\EstadoPolizaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -103,5 +104,6 @@ Route::post('/versiones/busquedaVersion', [AutomotorVersionController::class, 's
 Route::apiResource('/tiporiesgos', TipoRiesgoController::class);
 Route::apiResource('/formapagos', FormaPagoController::class);
 Route::apiResource('/tipovigencias', TipoVigenciaController::class);
+Route::apiResource('/estado_polizas', EstadoPolizaController::class);
 
 Route::apiResource('/localidades', LocalidadController::class);

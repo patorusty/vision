@@ -19,7 +19,7 @@ class RiesgoAutomotorController extends Controller
 
     public function searchPoliza($id)
     {
-        return RiesgoAutomotor::where('poliza_id', $id)->with('automotor_marca', 'automotor_modelo', 'automotor_version', 'automotor_anio', 'cobertura')->get();
+        return RiesgoAutomotor::where('poliza_id', $id)->with('marca', 'modelo', 'version', 'anio', 'cobertura')->get();
     }
 
     /**
@@ -53,7 +53,7 @@ class RiesgoAutomotorController extends Controller
 
     public function indexFiltrado($poliza_id)
     {
-        return RiesgoAutomotor::with(['automotor_marca', 'automotor_modelo', 'automotor_version', 'automotor_anio', 'cobertura'])->where('poliza_id', $poliza_id)->get();
+        return RiesgoAutomotor::with(['marca', 'modelo', 'version', 'anio', 'cobertura'])->where('poliza_id', $poliza_id)->get();
     }
 
     /**

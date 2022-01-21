@@ -2,7 +2,10 @@
   <v-card class="mt-0 mx-4 pa-3">
     <v-card-title>
       <v-row>
-        <v-col cols="3">
+        <v-col
+          cols="3"
+          class="pb-0"
+        >
           <v-select
             v-model="tipo_riesgo_id"
             :items="riesgos"
@@ -12,17 +15,16 @@
             class="mr-5"
           ></v-select>
         </v-col>
-        <v-col cols="7">
-          <v-text-field
-            v-model="search"
-            append-icon="mdi-magnify"
-            label="Search"
-            single-line
-            hide-details
-            class="mr-3 ml-3 mb-5"
-          ></v-text-field>
+        <v-col
+          cols="7"
+          class="pb-0"
+        >
+          <v-spacer></v-spacer>
         </v-col>
-        <v-col cols="2">
+        <v-col
+          cols="2"
+          class="pb-0"
+        >
           <v-btn
             color="primary"
             to="/polizas/automotor/create"
@@ -31,13 +33,66 @@
           >Crear</v-btn>
         </v-col>
       </v-row>
+      <v-row>
+        <v-col>
+          <v-text-field
+            v-model="poliza"
+            label="Nro de Poliza"
+            single-line
+            hide-details
+            class="mr-3 ml-3"
+          ></v-text-field>
+        </v-col>
+        <v-col>
+          <v-text-field
+            v-model="patente"
+            label="Patente"
+            single-line
+            hide-details
+            class="mr-3 ml-3"
+          ></v-text-field>
+        </v-col>
+        <v-col>
+          <v-text-field
+            v-model="cliente"
+            label="Cliente"
+            single-line
+            hide-details
+            class="mr-3 ml-3"
+          ></v-text-field>
+        </v-col>
+        <v-col>
+          <v-select
+            v-model="compania_id"
+            :items="companias"
+            item-value="id"
+            item-text="nombre"
+            label="Compania"
+            class="mr-5"
+          ></v-select>
+        </v-col>
+        <v-col>
+          <v-autocomplete
+            no-data-text="Sin Datos"
+            v-model="filtroEstado"
+            :items="estados"
+            multiple
+            item-text="nombre"
+            item-value="id"
+            label="Estado"
+          >
+            <template v-slot:selection="{ item, index }">
+              <span v-if="index === 0">{{ item.nombre }}</span>
+            </template>
+          </v-autocomplete>
+        </v-col>
+      </v-row>
     </v-card-title>
     <v-data-table
       class="pa-2"
       :headers="headers"
       :items-per-page="10"
       :items="tableData"
-      :search="search"
       multi-sort
       :loading="loading"
     >
@@ -128,38 +183,72 @@ export default {
   mixins: [helpers],
   data: () => ({
     tipo_riesgo_id: 1,
-    search: "",
+    poliza: "",
+    patente: "",
+    compania_id: 0,
+    cliente: "",
     idSelected: null,
     modalDelete: false,
-    headers: [
-      { text: "Poliza N°", value: "numero" },
-      { text: "Compania", value: "compania" },
-      { text: "Asegurado", value: "asegurado" },
-      { text: "Dominio", value: "dominio" },
-      { text: "Vigencia", value: "tipo_vigencias.vigencia" },
-      { text: "Desde / Hasta", value: "desde" },
-      { text: "Estado", value: "estado.nombre" },
-      { text: "Envío", value: "envio" },
-      { text: "Pago", value: "pago" },
-      { text: "Actions", value: "actions", sortable: false, align: "right" }
-    ]
+    filtroEstado: []
   }),
   computed: {
-    ...mapState("poliza", ["polizas", "loading", "tipo_riesgos"]),
+    ...mapState("poliza", ["polizas", "loading", "tipo_riesgos", "estados"]),
+    ...mapState("compania", ["companias"]),
     tableData() {
-      return this.polizas.filter(item =>
-        this.tipo_riesgo_id != 0
-          ? item.tipo_riesgo_id === this.tipo_riesgo_id
-          : item.tipo_riesgo_id != 0
+      return this.polizas.filter(
+        item =>
+          (this.tipo_riesgo_id != 0
+            ? item.tipo_riesgo_id === this.tipo_riesgo_id
+            : item.tipo_riesgo_id != 0) &&
+          (this.compania_id != 0
+            ? item.compania_id === this.compania_id
+            : item.compania_id != 0) &&
+          (this.filtroEstado.length > 0
+            ? this.filtroEstado.includes(item.estado_poliza_id)
+            : item.estado_poliza_id != 0)
+        // &&
+        // (this.patente != "" && item.riesgo_automotor > 0
+        //   ? item.riesgo_automotor[0].patente
+        //       .toLowerCase()
+        //       .includes(this.patente.toLowerCase())
+        //   : item.riesgo_automotor != null)
       );
     },
     riesgos() {
       var r = [...this.tipo_riesgos, { id: 0, nombre: "TODOS" }];
       return r;
+    },
+    headers() {
+      return [
+        {
+          text: "Poliza N°",
+          value: "numero",
+          filterable: true
+        },
+        {
+          text: "Compania",
+          value: "compania",
+          filterable: true
+        },
+        { text: "Asegurado", value: "asegurado" },
+        { text: "Dominio", value: "dominio" },
+        { text: "Vigencia", value: "tipo_vigencias.vigencia" },
+        { text: "Desde / Hasta", value: "desde" },
+        { text: "Estado", value: "estado.nombre" },
+        { text: "Envío", value: "envio" },
+        { text: "Pago", value: "pago" },
+        { text: "Actions", value: "actions", sortable: false, align: "right" }
+      ];
     }
   },
   methods: {
-    ...mapActions("poliza", ["getPolizas", "deletePoliza", "getTipoRiesgos"]),
+    ...mapActions("poliza", [
+      "getPolizas",
+      "deletePoliza",
+      "getTipoRiesgos",
+      "getEstados"
+    ]),
+    ...mapActions("compania", ["getCompanias"]),
     openDeleteModal(id) {
       this.idSelected = id;
       this.modalDelete = true;
@@ -173,9 +262,10 @@ export default {
         return item.riesgo_automotor.length > 1
           ? "Autos"
           : item.riesgo_automotor[0].patente;
-      } else if (item.tipo_riesgo_id == 2 && item.otro_riesgo.length > 0) {
-        return `<v-icon small class="mr-2" color="success"> mdi-pencil </v-icon>`;
       }
+      // else if (item.tipo_riesgo_id == 2 && item.otro_riesgo.length > 0) {
+      //   return `<v-icon small class="mr-2" color="success"> mdi-pencil </v-icon>`;
+      // }
     },
     envio(item) {
       if (
@@ -250,7 +340,9 @@ export default {
   },
   created() {
     this.getPolizas();
+    this.getCompanias();
     this.getTipoRiesgos();
+    this.getEstados();
   }
 };
 </script>
