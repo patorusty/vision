@@ -1,0 +1,83 @@
+
+# Created by https://www.toptal.com/developers/gitignore/api/laravel,vuejs,vscode,osx
+# Edit at https://www.toptal.com/developers/gitignore?templates=laravel,vuejs,vscode,osx
+
+### Laravel ###
+back/vendor/
+back/node_modules/
+back/npm-debug.log
+back/yarn-error.log
+back/.env
+back
+
+# Laravel 4 specific
+back/bootstrap/compiled.php
+back/app/storage/
+
+# Laravel 5 & Lumen specific
+back/public/storage/
+back/public/hot/
+
+# Laravel 5 & Lumen specific with changed public path
+back/public_html/storage/
+back/public_html/hot/
+
+storage/*.key
+back/.env
+back/Homestead.yaml
+back/Homestead.json
+back/.vagrant
+back/.phpunit.result.cache
+
+# Laravel IDE helper
+back/*.meta.*
+back/_ide_*
+
+### OSX ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+### vscode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+### Vuejs ###
+# Recommended template: Node.gitignore
+
+front/dist/
+front/node_modules/
+front/npm-debug.log
+front/yarn-error.log
+
+# End of https://www.toptal.com/developers/gitignore/api/laravel,vuejs,vscode,osx
+.env.prod
+.env

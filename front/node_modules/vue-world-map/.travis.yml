@@ -1,0 +1,12 @@
+language: node_js
+node_js: "7"
+install: npm i
+script:
+ - npm run lint
+ - npm run test
+notifications:
+  email: false
+deploy:
+  provider: npm
+  email: "ghrehh@gmail.com"
+  api_key: $api_key
