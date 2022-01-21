@@ -104,7 +104,7 @@ export default new Router({
         },
         {
           name: "Usuarios",
-          path: "configuracion/usuarios",
+          path: "configuracion/usuarios", 
           component: () => import("@/views/pages/Configuracion/Usuarios.vue")
         },
       ]

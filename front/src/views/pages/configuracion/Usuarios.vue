@@ -11,8 +11,16 @@
           hide-details
         ></v-text-field>
         <v-spacer></v-spacer>
-        <v-btn color="primary" @click="SHOW_MODAL(false)" dark>Crear</v-btn>
-        <v-dialog v-model="modal" persistent max-width="600px">
+        <v-btn
+          color="primary"
+          @click="SHOW_MODAL(false)"
+          dark
+        >Crear</v-btn>
+        <v-dialog
+          v-model="modal"
+          persistent
+          max-width="600px"
+        >
           <modal-usuarios> </modal-usuarios>
         </v-dialog>
       </v-card-title>
@@ -24,10 +32,13 @@
         :search="search"
         multi-sort
       >
-        <template slot="item.activo" slot-scope="props">{{
+        <template
+          slot="item.activo"
+          slot-scope="props"
+        >{{
           textoActivo(props.item.activo)
         }}</template>
-        <template v-slot:item.actions="{ item }">
+        <template v-slot:[`item.acciones`]="{ item }">
           <v-icon
             small
             class="mr-2"
@@ -44,7 +55,10 @@
           >
             mdi-close
           </v-icon>
-          <v-dialog max-width="30%" v-model="modalDelete">
+          <v-dialog
+            max-width="30%"
+            v-model="modalDelete"
+          >
             <v-card class="pa-4">
               <v-card-title>
                 <v-row>
@@ -53,12 +67,17 @@
               </v-card-title>
               <v-row>
                 <v-col class="py-0 pt-3 pr-6 d-flex justify-end">
-                  <v-btn dark color="red" @click="modalDelete = false"
-                    >Cancelar</v-btn
-                  >
-                  <v-btn class="ml-4" dark color="success" @click="deleteUser"
-                    >Confirmar</v-btn
-                  >
+                  <v-btn
+                    dark
+                    color="red"
+                    @click="modalDelete = false"
+                  >Cancelar</v-btn>
+                  <v-btn
+                    class="ml-4"
+                    dark
+                    color="success"
+                    @click="deleteUser"
+                  >Confirmar</v-btn>
                 </v-col>
               </v-row>
             </v-card>
@@ -93,7 +112,7 @@ export default {
   },
   computed: {
     ...mapState("usuarios", ["usuarios"]),
-    ...mapState("modal", ["modal"]),
+    ...mapState("modal", ["modal"])
   },
   methods: {
     ...mapActions("usuarios", ["getUsuarios", "getUsuario", "deleteUsuario"]),
