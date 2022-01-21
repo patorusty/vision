@@ -102,11 +102,11 @@ export default new Router({
           component: () =>
             import("@/views/pages/Administracion/MMV/MMV.vue")
         },
-        {
-          name: "Usuarios",
-          path: "configuracion/usuarios", 
-          component: () => import("@/views/pages/Configuracion/Usuarios.vue")
-        },
+        // {
+        //   name: "Usuarios",
+        //   path: "configuracion/usuarios", 
+        //   component: () => import("@/views/pages/Configuracion/Usuarios.vue")
+        // },
       ]
 
     }
