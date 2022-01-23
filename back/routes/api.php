@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClienteController;
-use App\Http\Controllers\CodigoOrganizadorcontroller;
+use App\Http\Controllers\CodigoOrganizadorController;
 use App\Http\Controllers\CodigoProductorController;
 use App\Http\Controllers\CoberturaController;
 use App\Http\Controllers\CompaniaController;
