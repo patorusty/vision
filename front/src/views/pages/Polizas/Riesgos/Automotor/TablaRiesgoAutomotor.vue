@@ -36,6 +36,9 @@
       :search="search"
       multi-sort
     >
+      <template v-slot:[`item.suma`]="{ item }">
+        {{ suma(item) }}
+      </template>
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon
           small
@@ -108,7 +111,7 @@ export default {
         { text: "Patente", value: "patente" },
         {
           text: "Suma Asegurada",
-          value: "valor_total"
+          value: "suma"
         },
         { text: "Cobertura", value: "cobertura.nombre" },
         { text: "Actions", value: "actions", sortable: false, align: "right" }

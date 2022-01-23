@@ -1,7 +1,21 @@
 <template>
   <v-card class="mt-0 mx-4 pa-3">
     <v-card-title>
-      Endosos
+      <v-row>
+        <v-col
+          cols="4"
+          class="pb-0"
+        >
+          <v-select
+            v-model="tipo_endoso_id"
+            :items="tipoEndosos"
+            item-value="id"
+            item-text="nombre"
+            label="Tipo Endosos"
+            class="mr-5"
+          ></v-select>
+        </v-col>
+      </v-row>
       <v-spacer></v-spacer>
       <v-dialog
         @click:outside="HIDE_MODAL2(false)"
@@ -15,7 +29,7 @@
       class="pa-2"
       :headers="headers"
       :items-per-page="5"
-      :items="endosos"
+      :items="tableData"
       :search="search"
       multi-sort
       :loading="loading"
@@ -38,11 +52,6 @@
       <template v-slot:[`item.fecha_solicitud`]="{ item }">
         {{
           formatDate(item.fecha_solicitud)
-        }}
-      </template>
-      <template v-slot:[`item.completo`]="{ item }">
-        {{
-          textCompleto(item.completo)
         }}
       </template>
       <template v-slot:[`item.actions`]="{ item }">
@@ -104,7 +113,8 @@ export default {
   data: () => ({
     search: "",
     idSelected: "",
-    modalDelete: false
+    modalDelete: false,
+    tipo_endoso_id: 1
   }),
   computed: {
     ...mapState("modal", ["modal2", "edicion2"]),
@@ -116,9 +126,19 @@ export default {
         { text: "Asegurado", value: "asegurado" },
         { text: "Compañia", value: "compania" },
         { text: "F. Solicitud", value: "fecha_solicitud" },
-        { text: "Completo", value: "completo" },
         { text: "Actions", value: "actions", sortable: false, align: "right" }
       ];
+    },
+    tableData() {
+      return this.endosos.filter(item =>
+        this.tipo_endoso_id != 0
+          ? item.tipo_endoso_id === this.tipo_endoso_id
+          : item.tipo_endoso_id != 0
+      );
+    },
+    tipoEndosos() {
+      var r = [...this.tipo_endosos, { id: 0, nombre: "TODOS" }];
+      return r;
     }
   },
   methods: {

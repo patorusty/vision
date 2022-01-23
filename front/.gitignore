@@ -73,10 +73,10 @@ Temporary Items
 ### Vuejs ###
 # Recommended template: Node.gitignore
 
-front/dist/
-front/node_modules/
-front/npm-debug.log
-front/yarn-error.log
+dist/
+node_modules/
+npm-debug.log
+yarn-error.log
 
 # End of https://www.toptal.com/developers/gitignore/api/laravel,vuejs,vscode,osx
 .env.prod

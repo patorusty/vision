@@ -52,6 +52,14 @@ export const helpers = {
       if (this[`${nombre}`] != null)
         this[`${nombre}`] = this[`${nombre}`].toUpperCase();
     },
+    suma(riesgo) {
+      return riesgo.valor_vehiculo != null
+        ? parseInt(riesgo.valor_vehiculo) +
+            parseInt(riesgo.valor_gnc) +
+            parseInt(riesgo.valor_accesorio_01) +
+            parseInt(riesgo.valor_accesorio_02)
+        : "";
+    }
   },
   computed: {
     fechaFormateada: {
@@ -75,6 +83,7 @@ export const helpers = {
           ? item.automotor_modelo_id === this.modelo_id
           : item.automotor_modelo_id != 0
       );
-    }
+    },
+    
   },
 };
