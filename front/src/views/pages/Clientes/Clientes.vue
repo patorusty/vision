@@ -116,18 +116,19 @@ export default {
     clientesFiltrados() {
       return this.clientes.filter(
         c =>
-          c.email.toUpperCase().includes(this.search.toUpperCase()) ||
+          // c.email.toUpperCase().includes(this.search.toUpperCase()) ||
           c.nombre.toUpperCase().includes(this.search.toUpperCase()) ||
           c.apellido.toUpperCase().includes(this.search.toUpperCase()) ||
           (c.nro_dni ? c.nro_dni.toString().includes(this.search) : false) ||
-          (c.cuit ? c.cuit.toString().includes(this.search) : false) ||
-          c.celular.toString().includes(this.search) ||
-          c.productores.nombre
-            .toUpperCase()
-            .includes(this.search.toUpperCase()) ||
-          c.productores.apellido
-            .toUpperCase()
-            .includes(this.search.toUpperCase())
+          (c.cuit ? c.cuit.toString().includes(this.search) : false)
+        // ||
+        // c.celular.toString().includes(this.search) ||
+        // c.productores.nombre
+        //   .toUpperCase()
+        //   .includes(this.search.toUpperCase()) ||
+        // c.productores.apellido
+        //   .toUpperCase()
+        //   .includes(this.search.toUpperCase())
       );
     }
   },

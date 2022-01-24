@@ -114,7 +114,7 @@ export default {
     search: "",
     idSelected: "",
     modalDelete: false,
-    tipo_endoso_id: 1
+    tipo_endoso_id: 0
   }),
   computed: {
     ...mapState("modal", ["modal2", "edicion2"]),

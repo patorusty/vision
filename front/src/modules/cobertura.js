@@ -43,6 +43,10 @@ const actions = {
     const resp = await http.getOne('/coberturas/compania', compania_id);
     commit("SET_COBERTURAS", resp.data);
   },
+  async getCoberturasActivas({ commit }, compania_id) {
+    const resp = await http.getOne('/coberturas_activas/compania', compania_id);
+    commit("SET_COBERTURAS", resp.data);
+  },
 
   async getCobertura({ commit }, id) {
     const resp = await http.getOne(API_URL, id);

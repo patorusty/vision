@@ -52,7 +52,7 @@
             class="mr-3 ml-3"
           ></v-text-field>
         </v-col>
-        <v-col>
+        <v-col cols="4">
           <v-text-field
             v-model="cliente"
             label="Cliente"
@@ -69,6 +69,8 @@
             item-text="nombre"
             label="Compania"
             class="mr-5"
+            :clearable="compania_id != 0"
+            @click:clear="$nextTick(() => (compania_id = 0))"
           ></v-select>
         </v-col>
         <v-col>
@@ -80,6 +82,8 @@
             item-text="nombre"
             item-value="id"
             label="Estado"
+            :clearable="filtroEstado != 0"
+            @click:clear="$nextTick(() => (filtroEstado = []))"
           >
             <template v-slot:selection="{ item, index }">
               <span v-if="index === 0">{{ item.nombre }}</span>
@@ -205,13 +209,35 @@ export default {
             : item.compania_id != 0) &&
           (this.filtroEstado.length > 0
             ? this.filtroEstado.includes(item.estado_poliza_id)
-            : item.estado_poliza_id != 0)
-        // &&
-        // (this.patente != "" && item.riesgo_automotor > 0
-        //   ? item.riesgo_automotor[0].patente
-        //       .toLowerCase()
-        //       .includes(this.patente.toLowerCase())
-        //   : item.riesgo_automotor != null)
+            : item.estado_poliza_id != 0) &&
+          (this.cliente != ""
+            ? item.cliente.apellido
+                .toUpperCase()
+                .includes(this.cliente.toUpperCase()) ||
+              item.cliente.nombre
+                .toUpperCase()
+                .includes(this.cliente.toUpperCase())
+            : item.cliente.apellido
+                .toUpperCase()
+                .includes(this.cliente.toUpperCase()) != "") &&
+          (this.patente != "" && item.tipo_riesgo_id == 1
+            ? item.riesgo_automotor.find(riesgo =>
+                riesgo.patente
+                  .toUpperCase()
+                  .includes(this.patente.toUpperCase())
+              )
+            : item.riesgo_automotor.find(riesgo =>
+                riesgo.patente
+                  .toUpperCase()
+                  .includes(this.patente.toUpperCase())
+              ) != "") &&
+          (this.compania_id != 0
+            ? item.compania_id === this.compania_id
+            : item.tipo_riesgo_id != 0) &&
+          (this.poliza != ""
+            ? item.numero.toUpperCase().includes(this.poliza.toUpperCase())
+            : item.numero.toUpperCase().includes(this.poliza.toUpperCase()) !=
+              "")
       );
     },
     riesgos() {

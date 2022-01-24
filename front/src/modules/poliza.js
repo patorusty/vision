@@ -93,7 +93,7 @@ const actions = {
     commit("SET_POLIZA", resp.data);
     dispatch('endoso/getTipoEndosos', null, {root:true})
     dispatch('endoso/getDetalleEndosos', null, {root:true})
-    dispatch('cobertura/getCoberturas', resp.data.compania_id, {root:true})
+    dispatch('cobertura/getCoberturasActivas', resp.data.compania_id, {root:true})
     // if (
     //   state.poliza.riesgo_automotor.length < 1 ||
     //   state.poliza.otro_riesgo.length < 1

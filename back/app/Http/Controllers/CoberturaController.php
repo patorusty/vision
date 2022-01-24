@@ -25,6 +25,11 @@ class CoberturaController extends Controller
         return Cobertura::where('compania_id', $compania_id)->get();
     }
 
+    public function indexFiltradoActivo($compania_id)
+    {
+        return Cobertura::where([['compania_id', $compania_id], ["activo", 1]])->get();
+    }
+
 
     public function store(Request $request)
     {

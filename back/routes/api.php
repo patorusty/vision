@@ -65,6 +65,7 @@ Route::post('/codigo_productor/busquedaCP', [CodigoProductorController::class, '
 
 Route::apiResource('/administracion/coberturas', CoberturaController::class);
 Route::get('/coberturas/compania/{id}', [CoberturaController::class, 'indexFiltrado']);
+Route::get('/coberturas_activas/compania/{id}', [CoberturaController::class, 'indexFiltradoActivo']);
 Route::post('/coberturas/busquedaCob', [CoberturaController::class, 'busquedaCob']);
 
 Route::apiResource('/clientes', ClienteController::class);
