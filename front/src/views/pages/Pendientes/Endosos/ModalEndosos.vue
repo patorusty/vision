@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title>
-      <span>Endosos</span>
+      <span>Endososssss</span>
     </v-card-title>
     <v-card-text>
       <v-container>
@@ -56,7 +56,7 @@
             </v-col>
             <v-col class=" mt-0 py-0">
               <v-select
-                label="Detalle Endoso"
+                label="Detalle Endososss"
                 v-model="endoso.detalle_endoso_id"
                 :items="detalle_endosos_por_tipo"
                 item-text="nombre"

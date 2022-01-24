@@ -20,6 +20,16 @@ class PolizaController extends Controller
         return Poliza::with(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo'])->get();
     }
 
+    public function polizasPendientes()
+    {
+        return Poliza::with(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo'])->whereNull(["numero", "renueva_numero"])->get();
+    }
+
+    public function polizasARenovar()
+    {
+        return Poliza::with(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo'])->whereNull("numero")->whereNotNull("renueva_numero")->get();
+    }
+
     public function chequeoRenovada($poliza_actual)
     {
         $poliza = Poliza::where('renueva_numero', $poliza_actual)->get();

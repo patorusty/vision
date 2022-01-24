@@ -13,6 +13,8 @@ const setMediodia = fecha => {
 
 const state = () => ({
   polizas: [],
+  polizas_a_renovar:[],
+  polizas_pendientes:[],
   poliza: {
     vigencia_desde: setMediodia(moment()),
     tipo_vigencia_id: 6,
@@ -30,6 +32,14 @@ const mutations = {
   SET_POLIZAS(state, polizas) {
     state.loading = false;
     state.polizas = polizas;
+  },
+  SET_POLIZAS_PENDIENTES(state, polizas) {
+    state.loading = false;
+    state.polizas_pendientes = polizas;
+  },
+  SET_POLIZAS_A_RENOVAR(state, polizas) {
+    state.loading = false;
+    state.polizas_a_renovar = polizas;
   },
   SET_POLIZA(state, poliza) {
     state.poliza = poliza;
@@ -85,6 +95,14 @@ const actions = {
   async getPolizas({ commit }) {
     const resp = await http.get(API_URL);
     commit("SET_POLIZAS", resp.data);
+  },
+  async getPolizasPendientes ({commit}) {
+    const resp = await http.get("/polizas/pendientes");
+    commit("SET_POLIZAS_PENDIENTES", resp.data);
+  },
+  async getPolizasARenovar ({commit}) {
+    const resp = await http.get("/polizas/a_renovar");
+    commit("SET_POLIZAS_A_RENOVAR", resp.data);
   },
   async getPoliza({ commit, dispatch }, numero_solicitud) {
     const resp = await http.getOne(API_URL, numero_solicitud);

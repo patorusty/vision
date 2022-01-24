@@ -73,6 +73,8 @@ Route::post('/clientes/busquedaCuit', [ClienteController::class, 'searchCuit']);
 Route::post('/clientes/busquedaDNI', [ClienteController::class, 'searchDNI']);
 
 Route::get('/numerosolicitud', [PolizaController::class, 'numeroDeSolicitud']);
+Route::get('/polizas/pendientes', [PolizaController::class, 'polizasPendientes']);
+Route::get('/polizas/a_renovar', [PolizaController::class, 'polizasARenovar']);
 Route::apiResource('/polizas', PolizaController::class);
 
 Route::apiResource('/riesgo_automotor', RiesgoAutomotorController::class);

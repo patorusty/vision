@@ -96,15 +96,20 @@ export default {
         title: "Polizas",
         to: "/polizas"
       },
+      // {
+      //   icon: "mdi-alert",
+      //   title: "Siniestros",
+      //   to: "/siniestros"
+      // },
+      // {
+      //   icon: "mdi-note",
+      //   title: "Endosos",
+      //   to: "/endosos"
+      // },
       {
         icon: "mdi-alert",
-        title: "Siniestros",
-        to: "/siniestros"
-      },
-      {
-        icon: "mdi-note",
-        title: "Endosos",
-        to: "/endosos"
+        title: "Pendientes",
+        to: "/pendientes"
       },
       {
         icon: "mdi-account",

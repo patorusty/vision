@@ -17,7 +17,7 @@ class SiniestroAutomotorController extends Controller
     public function index()
     {
 
-        return SiniestroAutomotor::with(['poliza.cliente', 'poliza.compania'])->get();
+        return SiniestroAutomotor::with(['poliza.cliente', 'poliza.compania'])->where('fecha_completo', "=", null)->get();
     }
     public function indexFiltrado($poliza_id)
     {

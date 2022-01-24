@@ -62,6 +62,13 @@ export default new Router({
           )
         },
         {
+          name: "Pendientes",
+          path: "pendientes",
+          component: () => import(
+            "@/views/pages/Pendientes/Pendientes.vue"
+          )
+        },
+        {
           name: "Clientes",
           path: "clientes",
           component: () => import(

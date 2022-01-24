@@ -84,6 +84,10 @@ export const helpers = {
           : item.automotor_modelo_id != 0
       );
     },
-    
+    detalle_endosos_por_tipo() {
+      return this.endoso.tipo_endoso_id == 1
+        ? this.detalle_endosos.filter(e => e.tipo_endoso_id == 1)
+        : this.detalle_endosos.filter(e => e.tipo_endoso_id == 2);
+    }
   },
 };

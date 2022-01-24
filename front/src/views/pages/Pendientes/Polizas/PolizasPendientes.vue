@@ -1,102 +1,15 @@
 <template>
-  <v-card class="mt-0 mx-4 pa-3">
+  <v-card
+    class="mt-0 mx-4 pa-3"
+    elevation="0"
+  >
     <v-card-title>
-      <v-row>
-        <v-col
-          cols="3"
-          class="pb-0"
-        >
-          <v-select
-            v-model="tipo_riesgo_id"
-            :items="riesgos"
-            item-value="id"
-            item-text="nombre"
-            label="Tipo Riesgo"
-            class="mr-5"
-          ></v-select>
-        </v-col>
-        <v-col
-          cols="7"
-          class="pb-0"
-        >
-          <v-spacer></v-spacer>
-        </v-col>
-        <v-col
-          cols="2"
-          class="pb-0"
-        >
-          <v-btn
-            color="primary"
-            to="/polizas/automotor/create"
-            dark
-            class="ml-5"
-          >Crear</v-btn>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="4">
-          <v-text-field
-            v-model="cliente"
-            label="Cliente"
-            single-line
-            hide-details
-            class="mr-3 ml-3"
-          ></v-text-field>
-        </v-col>
-        <v-col>
-          <v-text-field
-            v-model="poliza"
-            label="Nro de Poliza"
-            single-line
-            hide-details
-            class="mr-3 ml-3"
-          ></v-text-field>
-        </v-col>
-        <v-col>
-          <v-text-field
-            v-model="patente"
-            label="Patente"
-            single-line
-            hide-details
-            class="mr-3 ml-3"
-          ></v-text-field>
-        </v-col>
-        <v-col>
-          <v-select
-            v-model="compania_id"
-            :items="companias"
-            item-value="id"
-            item-text="nombre"
-            label="Compania"
-            class="mr-5"
-            :clearable="compania_id != 0"
-            @click:clear="$nextTick(() => (compania_id = 0))"
-          ></v-select>
-        </v-col>
-        <v-col>
-          <v-autocomplete
-            no-data-text="Sin Datos"
-            v-model="filtroEstado"
-            :items="estados"
-            multiple
-            item-text="nombre"
-            item-value="id"
-            label="Estado"
-            :clearable="filtroEstado != 0"
-            @click:clear="$nextTick(() => (filtroEstado = []))"
-          >
-            <template v-slot:selection="{ item, index }">
-              <span v-if="index === 0">{{ item.nombre }}</span>
-            </template>
-          </v-autocomplete>
-        </v-col>
-      </v-row>
     </v-card-title>
     <v-data-table
       class="pa-2"
       :headers="headers"
       :items-per-page="10"
-      :items="tableData"
+      :items="polizas_pendientes"
       multi-sort
       :loading="loading"
     >
@@ -181,7 +94,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-import { helpers } from "../../../helpers";
+import { helpers } from "../../../../helpers";
 export default {
   components: {},
   mixins: [helpers],
@@ -196,54 +109,13 @@ export default {
     filtroEstado: []
   }),
   computed: {
-    ...mapState("poliza", ["polizas", "loading", "tipo_riesgos", "estados"]),
+    ...mapState("poliza", [
+      "polizas_pendientes",
+      "loading",
+      "tipo_riesgos",
+      "estados"
+    ]),
     ...mapState("compania", ["companias"]),
-    tableData() {
-      return this.polizas.filter(
-        item =>
-          (this.tipo_riesgo_id != 0
-            ? item.tipo_riesgo_id === this.tipo_riesgo_id
-            : item.tipo_riesgo_id != 0) &&
-          (this.compania_id != 0
-            ? item.compania_id === this.compania_id
-            : item.compania_id != 0) &&
-          (this.filtroEstado.length > 0
-            ? this.filtroEstado.includes(item.estado_poliza_id)
-            : item.estado_poliza_id != 0) &&
-          (this.cliente != ""
-            ? item.cliente.apellido
-                .toUpperCase()
-                .includes(this.cliente.toUpperCase()) ||
-              item.cliente.nombre
-                .toUpperCase()
-                .includes(this.cliente.toUpperCase())
-            : item.cliente.apellido
-                .toUpperCase()
-                .includes(this.cliente.toUpperCase()) != "") &&
-          (this.patente != "" && item.tipo_riesgo_id == 1
-            ? item.riesgo_automotor.find(riesgo =>
-                riesgo.patente
-                  .toUpperCase()
-                  .includes(this.patente.toUpperCase())
-              )
-            : item.riesgo_automotor.find(riesgo =>
-                riesgo.patente
-                  .toUpperCase()
-                  .includes(this.patente.toUpperCase())
-              ) != "") &&
-          (this.compania_id != 0
-            ? item.compania_id === this.compania_id
-            : item.tipo_riesgo_id != 0) &&
-          (this.poliza != ""
-            ? item.numero.toUpperCase().includes(this.poliza.toUpperCase())
-            : item.numero.toUpperCase().includes(this.poliza.toUpperCase()) !=
-              "")
-      );
-    },
-    riesgos() {
-      var r = [...this.tipo_riesgos, { id: 0, nombre: "TODOS" }];
-      return r;
-    },
     headers() {
       return [
         {
@@ -269,7 +141,7 @@ export default {
   },
   methods: {
     ...mapActions("poliza", [
-      "getPolizas",
+      "getPolizasPendientes",
       "deletePoliza",
       "getTipoRiesgos",
       "getEstados"
@@ -365,7 +237,7 @@ export default {
     }
   },
   created() {
-    this.getPolizas();
+    this.getPolizasPendientes();
     this.getCompanias();
     this.getTipoRiesgos();
     this.getEstados();
