@@ -27,7 +27,8 @@ class ClienteController extends Controller
     {
         try {
             $cliente = Cliente::create($request->all());
-
+            $cliente->load(['productores']);
+            $cliente::with(['productores']);
             return response($cliente, 201);
         } catch (\Exception $e) {
             return $e->getMessage();

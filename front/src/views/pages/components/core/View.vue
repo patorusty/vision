@@ -24,29 +24,29 @@
 </template>
 
 <script>
-  export default {
-    name: 'PagesCoreView',
+export default {
+  name: "PagesCoreView",
 
-    data: () => ({
-      srcs: {
-        '/pages/lock': 'lock.jpg',
-        '/pages/login': 'login.jpg',
-        '/pages/pricing': 'pricing.jpg',
-        '/pages/register': 'register.jpg',
-      },
-    }),
+  data: () => ({
+    srcs: {
+      "/pages/lock": "lock.jpg",
+      "/pages/login": "login.jpg",
+      "/pages/pricing": "pricing.jpg",
+      "/pages/register": "register.jpg"
+    }
+  }),
 
-    computed: {
-      src () {
-        return this.srcs[this.$route.path]
-      },
-      styles () {
-        const paddingTop = this.$vuetify.breakpoint.mdAndUp ? 175 : 100
-        const paddingBottom = this.$vuetify.breakpoint.mdAndUp ? 175 : 150
-        return {
-          padding: `${paddingTop}px 0 ${paddingBottom}px 0`,
-        }
-      },
+  computed: {
+    src() {
+      return this.srcs[this.$route.path];
     },
+    styles() {
+      const paddingTop = this.$vuetify.breakpoint.mdAndUp ? 175 : 100;
+      const paddingBottom = this.$vuetify.breakpoint.mdAndUp ? 175 : 150;
+      return {
+        padding: `${paddingTop}px 0 ${paddingBottom}px 0`
+      };
+    }
   }
+};
 </script>

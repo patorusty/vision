@@ -16,6 +16,16 @@
         @click="createCliente"
         dark
       >Crear</v-btn>
+      <v-dialog
+        fullscreen
+        hide-overlay
+        transition="dialog-bottom-transition"
+        @click:outside="HIDE_MODAL(false)"
+        :value="modal"
+        max-width="80%"
+      >
+        <modal-cliente />
+      </v-dialog>
     </v-card-title>
     <v-data-table
       class="pa-2"
@@ -28,13 +38,13 @@
         {{
           item.razon_social
             ? item.razon_social
-            : item.nombre + " " + item.apellido
+            : nombreCompleto(item)
         }}
       </template>
       <template v-slot:[`item.documento`]="{ item }">
         {{ item.cuit ? item.cuit : item.nro_dni }}
       </template>
-      <template v-slot:[`item.productor`]="{ item }">{{ item.productores.nombre }} {{ item.productores.apellido }}</template>
+      <template v-slot:[`item.productor`]="{ item }">{{ nombreCompleto(item.productores) }}</template>
 
       <template
         slot="item.activo"
@@ -43,16 +53,12 @@
         textoActivo(props.item.activo)
       }}</template>
       <template v-slot:[`item.actions`]="{ item }">
-        <router-link
-          class="links"
-          :to="{ name: 'Editar Cliente', params: { id: item.id } }"
-        >
-          <v-icon
-            small
-            class="mr-2"
-            color="success"
-          > mdi-pencil </v-icon>
-        </router-link>
+        <v-icon
+          small
+          class="mr-2"
+          color="success"
+          v-on:click.stop="editCliente(item)"
+        > mdi-pencil </v-icon>
         <v-icon
           class="ml-2"
           small
@@ -92,9 +98,11 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
+import ModalCliente from "./ModalCliente.vue";
 import { helpers } from "../../../helpers";
 export default {
   mixins: [helpers],
+  components: { ModalCliente },
   data: () => ({
     search: "",
     idSelected: null,
@@ -133,16 +141,23 @@ export default {
     }
   },
   methods: {
-    ...mapActions("cliente", ["getClientes", "deleteCliente"]),
+    ...mapActions("cliente", ["getClientes", "deleteCliente", "RESET_CLIENTE"]),
+    ...mapMutations("cliente", ["SET_CLIENTE", "RESET_CLIENTE"]),
     ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL"]),
     createCliente() {
-      this.$router
-        .push({
-          path: "/clientes/create"
-        })
-        .catch(err => {
-          throw new Error(`Surgió el siguiente error: ${err}.`);
-        });
+      this.RESET_CLIENTE();
+      this.SHOW_MODAL(false);
+      // this.$router
+      //   .push({
+      //     path: "/clientes/create"
+      //   })
+      //   .catch(err => {
+      //     throw new Error(`Surgió el siguiente error: ${err}.`);
+      //   });
+    },
+    editCliente(item) {
+      this.SET_CLIENTE(item);
+      this.SHOW_MODAL(true);
     },
     openDeleteModal(id) {
       this.idSelected = id;

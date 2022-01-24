@@ -5,14 +5,37 @@
         <v-card-text>
           <v-row>
             <v-col :cols="3">
-              <v-select
+              <v-autocomplete
                 v-model="poliza.cliente_id"
                 :items="clientes"
                 item-value="id"
                 :item-text="nombreCompleto"
                 label="Asegurado"
                 :rules="[rules.required]"
-              ></v-select>
+              >
+                <template v-slot:append-outer>
+                  <v-tooltip top>
+                    <template v-slot:activator="{ on }">
+                      <v-icon
+                        class="mr-1 icon-action"
+                        v-on="on"
+                        @click="createCliente"
+                      >mdi-plus-thick</v-icon>
+                      <v-dialog
+                        fullscreen
+                        hide-overlay
+                        transition="dialog-bottom-transition"
+                        @click:outside="HIDE_MODAL(false)"
+                        :value="modal"
+                        max-width="80%"
+                      >
+                        <modal-cliente />
+                      </v-dialog>
+                    </template>
+                    <span>Agregar</span>
+                  </v-tooltip>
+                </template>
+              </v-autocomplete>
               <v-select
                 v-model="poliza.tipo_riesgo_id"
                 :items="tipo_riesgos"
@@ -388,9 +411,11 @@
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
 import moment from "moment";
+import ModalCliente from "../Clientes/ModalCliente.vue";
 import { helpers } from "../../../helpers";
 export default {
   mixins: [helpers],
+  components: { ModalCliente },
   data: () => ({
     calendarioDesde: false,
     calendarioHasta: false,
@@ -425,6 +450,7 @@ export default {
     ...mapState("cliente", ["clientes"]),
     ...mapState("compania", ["companias"]),
     ...mapState("codigo_productor", ["codigo_productores"]),
+    ...mapState("modal", ["modal"]),
     ...mapState("poliza", [
       "poliza",
       "tipo_riesgos",
@@ -444,6 +470,8 @@ export default {
     ...mapActions("compania", ["getCompanias"]),
     ...mapActions("codigo_productor", ["getCodigoProductores"]),
     ...mapMutations("poliza", ["RESET_POLIZA"]),
+    ...mapMutations("cliente", ["RESET_CLIENTE"]),
+    ...mapMutations("modal", ["SHOW_MODAL"]),
     sumarMes(mes) {
       switch (this.poliza.tipo_vigencia_id) {
         case 6:
@@ -478,6 +506,10 @@ export default {
       this.$router.push({
         name: "Polizas"
       });
+    },
+    createCliente() {
+      this.RESET_CLIENTE();
+      this.SHOW_MODAL(false);
     },
     async create() {
       if (this.$refs.form.validate()) {

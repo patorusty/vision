@@ -18,24 +18,24 @@
 </template>
 
 <script>
-  export default {
-    name: 'PagesCoreView',
+export default {
+  name: "PagesCoreView",
 
-    data: () => ({
-      srcs: {
-        '/pages/lock': 'lock.jpg',
-        '/pages/login': 'login.jpg',
-        '/pages/pricing': 'pricing.jpg',
-        '/pages/register': 'register.jpg',
-      },
-    }),
+  data: () => ({
+    srcs: {
+      "/pages/lock": "lock.jpg",
+      "/pages/login": "login.jpg",
+      "/pages/pricing": "pricing.jpg",
+      "/pages/register": "register.jpg"
+    }
+  }),
 
-    computed: {
-      src () {
-        return this.srcs[this.$route.path]
-      },
-    },
+  computed: {
+    src() {
+      return this.srcs[this.$route.path];
+    }
   }
+};
 </script>
 
 <style lang="sass">

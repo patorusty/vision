@@ -43,7 +43,7 @@ const mutations = {
     },
     UPDATE_CLIENTE(state, cliente) {
         var item = state.clientes.find(item => item.id === cliente.id);
-       return Object.assign(item, cliente);
+        return Object.assign(item, cliente);
     },
     DELETE_CLIENTE(state, id) {
         state.clientes = state.clientes.filter(c => c.id != id);
