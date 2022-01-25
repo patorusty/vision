@@ -366,7 +366,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .links {
   text-decoration: none;
 }

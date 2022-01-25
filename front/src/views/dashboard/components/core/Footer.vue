@@ -40,7 +40,7 @@ export default {
 };
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 #dashboard-core-footer
   a
     font-size: .825rem

@@ -28,13 +28,13 @@
 </template>
 
 <script>
-  export default {
-    name: 'PagesError',
-  }
+export default {
+  name: "PagesError"
+};
 </script>
 
-<style lang="sass">
-  .error-page
-    h1
-      font-size: 12rem
+<style scoped lang="sass">
+.error-page
+  h1
+    font-size: 12rem
 </style>

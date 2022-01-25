@@ -264,7 +264,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .smooth-enter-active,
 .smooth-leave-active {
   transition: opacity 0.5s;
