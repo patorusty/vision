@@ -13,5 +13,10 @@ module.exports = {
       localeDir: 'locales',
       enableInSFC: false,
     },
+  },
+
+  css: {
+    modules: true,
+    sourceMap: true
   }
 }
