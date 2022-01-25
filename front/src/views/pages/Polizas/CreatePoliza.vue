@@ -516,7 +516,8 @@ export default {
         const createResult = await this.createPoliza(this.poliza);
         if (createResult) {
           this.$router.push({
-            name: "Polizas"
+            name: "Editar Poliza",
+            params: { numero_solicitud: this.poliza.numero_solicitud }
           });
           this.RESET_POLIZA();
         }

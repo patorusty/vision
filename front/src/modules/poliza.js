@@ -58,6 +58,7 @@ const mutations = {
   },
   CREATE_POLIZA(state, poliza) {
     state.polizas.push(poliza);
+    state.poliza = poliza;
   },
   UPDATE_POLIZA(state, poliza) {
     var item = state.polizas.find(item => item.id === poliza.id);
