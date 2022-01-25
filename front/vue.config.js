@@ -16,7 +16,7 @@ module.exports = {
   },
 
   css: {
-    modules: true,
-    sourceMap: true
+    extract: false,
+    modules: true
   }
 }
