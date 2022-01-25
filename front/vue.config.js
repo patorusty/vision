@@ -16,7 +16,7 @@ module.exports = {
   },
 
   css: {
-    extract: false,
-    modules: true
+    extract: true,
+    modules: false
   }
 }
