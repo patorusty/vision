@@ -13,6 +13,5 @@ module.exports = {
       localeDir: 'locales',
       enableInSFC: false,
     },
-  },
-  css: { extract: false }
+  }
 }
