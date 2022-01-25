@@ -53,11 +53,12 @@ export const helpers = {
         this[`${nombre}`] = this[`${nombre}`].toUpperCase();
     },
     suma(riesgo) {
+      var valor = riesgo.valor_vehiculo === undefined || riesgo.valor_vehiculo === null ? 0 : parseInt(riesgo.valor_vehiculo)
+      var gnc = riesgo.valor_gnc === undefined || riesgo.valor_gnc === null ? 0 : parseInt(riesgo.valor_gnc)
+      var ac1 = riesgo.valor_accesorio_01 === undefined || riesgo.valor_accesorio_01 === null ? 0 : parseInt(riesgo.valor_accesorio_01)
+      var ac2 = riesgo.valor_accesorio_02 === undefined || riesgo.valor_accesorio_02 === null ? 0 : parseInt(riesgo.valor_accesorio_02)
       return riesgo.valor_vehiculo != null
-        ? parseInt(riesgo.valor_vehiculo) +
-            parseInt(riesgo.valor_gnc) +
-            parseInt(riesgo.valor_accesorio_01) +
-            parseInt(riesgo.valor_accesorio_02)
+        ? valor+gnc+ac1+ac2
         : "";
     }
   },

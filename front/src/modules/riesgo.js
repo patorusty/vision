@@ -5,7 +5,13 @@ const API_URL_RA = '/riesgo_automotor';
 
 const state = () => ({
     riesgo_automotor: {
-        tipo_patente: 0
+        tipo_patente: 0,
+        automotor_tipo: "Automotor",
+        equipo_rastreo: "No",
+        uso: "Particular",
+        combustible: "Nafta",
+        estado_general: "Muy Bueno",
+        ajuste: "0%"
     },
     riesgo_automotores: [],
     otro_riesgo: {},
@@ -20,7 +26,14 @@ const mutations = {
         state.riesgo_automotor = riesgo_automotor;
     },
     RESET_RIESGO_AUTOMOTOR(state) {
-        state.riesgo_automotor = Object.assign({}, { tipo_patente: 0 });
+        state.riesgo_automotor = Object.assign({}, { 
+            tipo_patente: 0 , 
+            automotor_tipo: "Automotor", 
+            equipo_rastreo: "No", 
+            uso: "Particular" ,
+            combustible: "Nafta",
+            estado_general: "Muy Bueno",
+            ajuste: "0%"});
     },
     UPDATE_RIESGO_AUTOMOTOR(state, riesgo_automotor) {
         const item = state.riesgo_automotores.find(item => item.id === riesgo_automotor.id);

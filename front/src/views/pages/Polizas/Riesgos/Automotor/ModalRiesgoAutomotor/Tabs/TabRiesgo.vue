@@ -189,7 +189,7 @@
           ></v-text-field>
           <v-text-field
             label="Valor Total"
-            v-model="suma"
+            v-model="valorTotal"
           ></v-text-field>
           <v-textarea
             rows="2"
@@ -316,6 +316,10 @@ export default {
       {
         value: "Cabriolet",
         text: "Cabriolet"
+      },
+      {
+        value: "Trailer",
+        text: "Trailer"
       }
     ],
     ajustes: [
@@ -362,13 +366,8 @@ export default {
     ...mapState("modelo", ["modelos", "marca_id", "modelo"]),
     ...mapState("anio", ["anio", "anios"]),
     ...mapState("cobertura", ["coberturas"]),
-    suma() {
-      return this.riesgo_automotor.valor_vehiculo != null
-        ? parseInt(this.riesgo_automotor.valor_vehiculo) +
-            parseInt(this.riesgo_automotor.valor_gnc) +
-            parseInt(this.riesgo_automotor.valor_accesorio_01) +
-            parseInt(this.riesgo_automotor.valor_accesorio_02)
-        : "";
+    valorTotal() {
+      return this.suma(this.riesgo_automotor);
     }
   },
   methods: {

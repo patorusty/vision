@@ -102,7 +102,7 @@ export default {
     tipo_riesgo_id: null
   }),
   computed: {
-    ...mapState("poliza", ["tipo_riesgos"]),
+    ...mapState("poliza", ["poliza", "tipo_riesgos"]),
     ...mapState("modal", ["modal_ra", "edicion_ra"]),
     ...mapState("version", ["versiones", "modelo_id", "loading"]),
     ...mapState("marca", ["marcas"]),
@@ -117,6 +117,10 @@ export default {
     ...mapMutations("riesgo", ["RESET_RIESGO_AUTOMOTOR"]),
     async create() {
       if (this.$refs.form.validate()) {
+        if (this.riesgo_automotor.tipo_carroceria == "Trailer") {
+          this.riesgo_automotor.patente = "101" + this.riesgo_automotor.patente;
+        }
+        this.riesgo_automotor.poliza_id = this.poliza.id;
         const createResult = await this.createRiesgoAutomotor(
           this.riesgo_automotor
         );

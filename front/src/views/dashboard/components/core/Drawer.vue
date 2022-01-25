@@ -107,7 +107,7 @@ export default {
       //   to: "/endosos"
       // },
       {
-        icon: "mdi-alert",
+        icon: "mdi-clipboard-clock",
         title: "Pendientes",
         to: "/pendientes"
       },

@@ -41,6 +41,7 @@
             single-line
             hide-details
             class="mr-3 ml-3"
+            v-uppercase
           ></v-text-field>
         </v-col>
         <v-col>
@@ -59,6 +60,7 @@
             single-line
             hide-details
             class="mr-3 ml-3"
+            v-uppercase
           ></v-text-field>
         </v-col>
         <v-col>
@@ -211,33 +213,17 @@ export default {
             ? this.filtroEstado.includes(item.estado_poliza_id)
             : item.estado_poliza_id != 0) &&
           (this.cliente != ""
-            ? item.cliente.apellido
-                .toUpperCase()
-                .includes(this.cliente.toUpperCase()) ||
-              item.cliente.nombre
-                .toUpperCase()
-                .includes(this.cliente.toUpperCase())
-            : item.cliente.apellido
-                .toUpperCase()
-                .includes(this.cliente.toUpperCase()) != "") &&
+            ? item.cliente.apellido.includes(this.cliente) ||
+              item.cliente.nombre.includes(this.cliente)
+            : item.cliente.apellido) &&
           (this.patente != "" && item.tipo_riesgo_id == 1
             ? item.riesgo_automotor.find(riesgo =>
-                riesgo.patente
-                  .toUpperCase()
-                  .includes(this.patente.toUpperCase())
+                riesgo.patente.includes(this.patente)
               )
-            : item.riesgo_automotor.find(riesgo =>
-                riesgo.patente
-                  .toUpperCase()
-                  .includes(this.patente.toUpperCase())
-              ) != "") &&
-          (this.compania_id != 0
+            : item.riesgo_automotor) &&
+          (this.compania_id != 0 && item.compania_id != null
             ? item.compania_id === this.compania_id
-            : item.tipo_riesgo_id != 0) &&
-          (this.poliza != ""
-            ? item.numero.toUpperCase().includes(this.poliza.toUpperCase())
-            : item.numero.toUpperCase().includes(this.poliza.toUpperCase()) !=
-              "")
+            : item.tipo_riesgo_id != 0)
       );
     },
     riesgos() {
@@ -249,7 +235,14 @@ export default {
         {
           text: "Poliza N°",
           value: "numero",
-          filterable: true
+          filterable: true,
+          filter: value => {
+            if (!this.poliza) return true;
+
+            return (value + "")
+              .toLowerCase()
+              .includes(this.poliza.toLowerCase());
+          }
         },
         {
           text: "Compania",

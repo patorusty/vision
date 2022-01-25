@@ -3,14 +3,6 @@
     <v-card-title>
       Detalle de Riesgo
       <v-spacer></v-spacer>
-      <v-text-field
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="Search"
-        single-line
-        hide-details
-        v-uppercase
-      ></v-text-field>
       <v-spacer></v-spacer>
       <v-btn
         color="primary"
@@ -108,6 +100,7 @@ export default {
       return [
         // { text: "Tipo", value: "riesgo_automotor.tipo" },
         { text: "Marca", value: "marca.nombre" },
+        { text: "Version", value: "version.nombre" },
         { text: "Patente", value: "patente" },
         {
           text: "Suma Asegurada",

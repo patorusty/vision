@@ -32,6 +32,7 @@ class RiesgoAutomotorController extends Controller
     {
         try {
             $ra = RiesgoAutomotor::create($request->all());
+            $ra->load(["marca", "modelo", "version", "anio", "cobertura"]);
             return response($ra, 201);
         } catch (\Exception $e) {
             return $e->getMessage();
