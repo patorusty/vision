@@ -14,9 +14,4 @@ module.exports = {
       enableInSFC: false,
     },
   },
-
-  css: {
-    extract: true,
-    modules: false
-  }
 }
