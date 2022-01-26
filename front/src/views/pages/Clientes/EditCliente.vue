@@ -463,7 +463,7 @@ export default {
   methods: {
     ...mapActions("cliente", ["getCliente", "updateCliente", "getClientes"]),
     ...mapMutations("cliente", ["RESET_CLIENTE"]),
-    ...mapActions("productor", ["getProductores"]),
+    ...mapActions("productor", ["getProductoresActivos"]),
 
     buscarCuit: debounce(async function() {
       if (
@@ -511,7 +511,7 @@ export default {
     this.getCliente(this.$route.params.id);
     this.getClientes();
     this.cargarLocalidades();
-    this.getProductores();
+    this.getProductoresActivos();
   },
   beforeDestroy() {
     this.RESET_CLIENTE();

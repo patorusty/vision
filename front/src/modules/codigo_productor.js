@@ -45,7 +45,10 @@ const actions = {
     const resp = await http.getOne('/codigo_productor/compania', compania_id);
     commit("SET_CODIGO_PRODUCTORES", resp.data);
   },
-
+  async getCodigoProductoresActivos({ commit }, compania_id) {
+    const resp = await http.getOne('/codigo_productor_activo/compania', compania_id);
+    commit("SET_CODIGO_PRODUCTORES", resp.data);
+  },
   async getCodigoProductor({ commit }, id) {
     const resp = await http.getOne(API_URL, id);
     commit("SET_CODIGO_PRODUCTOR", resp.data);

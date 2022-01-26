@@ -472,7 +472,7 @@ export default {
   methods: {
     ...mapActions("cliente", ["createCliente", "getClientes", "updateCliente"]),
     ...mapMutations("cliente", ["RESET_CLIENTE"]),
-    ...mapActions("productor", ["getProductores"]),
+    ...mapActions("productor", ["getProductoresActivos"]),
     ...mapMutations("modal", ["HIDE_MODAL"]),
 
     buscarCuit: debounce(async function() {
@@ -530,7 +530,7 @@ export default {
   created() {
     this.getClientes();
     this.cargarLocalidades();
-    this.getProductores();
+    this.getProductoresActivos();
   }
 };
 </script>

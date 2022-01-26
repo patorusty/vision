@@ -18,6 +18,11 @@ class ProductorController extends Controller
         return Productor::all();
     }
 
+    public function productoresActivos()
+    {
+        return Productor::where("activo", 1)->get();
+    }
+
     /**
      * Store a newly created resource in storage.
      *

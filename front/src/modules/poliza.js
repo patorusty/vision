@@ -16,6 +16,7 @@ const state = () => ({
   polizas_a_renovar:[],
   polizas_pendientes:[],
   poliza: {
+    tipo_riesgo_id: 1,
     vigencia_desde: setMediodia(moment()),
     tipo_vigencia_id: 6,
     fecha_solicitud: setMediodia(moment()),
@@ -49,6 +50,7 @@ const mutations = {
     state.poliza = Object.assign(
       {},
       {
+          tipo_riesgo_id: 1,
           vigencia_desde: setMediodia(moment()),
           tipo_vigencia_id: 6,
           fecha_solicitud: setMediodia(moment()),

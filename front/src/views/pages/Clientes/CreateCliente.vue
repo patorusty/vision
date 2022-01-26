@@ -460,7 +460,7 @@ export default {
   methods: {
     ...mapActions("cliente", ["createCliente", "getClientes"]),
     ...mapMutations("cliente", ["RESET_CLIENTE"]),
-    ...mapActions("productor", ["getProductores"]),
+    ...mapActions("productor", ["getProductoresActivos"]),
 
     buscarCuit: debounce(async function() {
       if (
@@ -507,7 +507,7 @@ export default {
   created() {
     this.getClientes();
     this.cargarLocalidades();
-    this.getProductores();
+    this.getProductoresActivos();
   }
 };
 </script>

@@ -47,6 +47,10 @@ const actions = {
         const resp = await http.get(API_URL);
         commit('SET_COMPANIAS', resp.data)
     },
+    async getCompaniasActivas({ commit }) {
+        const resp = await http.get('/administracion/companias_activas');
+        commit('SET_COMPANIAS', resp.data)
+    },
     async getCompania({ commit, dispatch }, nombre) {
         const resp = await http.getOne(API_URL, nombre);
         commit('SET_COMPANIA', resp.data)

@@ -50,7 +50,7 @@
               >
               </v-text-field>
             </v-col>
-            <v-col class="py-0">
+            <!-- <v-col class="py-0">
               <v-select
                 label="Ajuste"
                 v-model="cobertura.ajuste"
@@ -58,7 +58,7 @@
                 :rules="[rules.required]"
               >
               </v-select>
-            </v-col>
+            </v-col> -->
           </v-row>
           <v-row>
             <v-col class="py-0">

@@ -46,7 +46,7 @@
               ></v-select>
               <v-select
                 v-model="poliza.compania_id"
-                @change="getCodigoProductores(poliza.compania_id)"
+                @change="getCodigoProductoresActivos(poliza.compania_id)"
                 :items="companias"
                 item-value="id"
                 item-text="nombre"
@@ -467,8 +467,8 @@ export default {
       "createPoliza",
       "cargarUltimoNumeroSolicitud"
     ]),
-    ...mapActions("compania", ["getCompanias"]),
-    ...mapActions("codigo_productor", ["getCodigoProductores"]),
+    ...mapActions("compania", ["getCompaniasActivas"]),
+    ...mapActions("codigo_productor", ["getCodigoProductoresActivos"]),
     ...mapMutations("poliza", ["RESET_POLIZA"]),
     ...mapMutations("cliente", ["RESET_CLIENTE"]),
     ...mapMutations("modal", ["SHOW_MODAL"]),
@@ -526,7 +526,7 @@ export default {
   },
   created() {
     this.getClientes();
-    this.getCompanias();
+    this.getCompaniasActivas();
     this.getTipoRiesgos();
     this.getFormaPagos();
     this.getTipoVigencias();

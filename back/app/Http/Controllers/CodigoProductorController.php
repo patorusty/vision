@@ -22,6 +22,11 @@ class CodigoProductorController extends Controller
         return CodigoProductor::with(['productores', 'codigo_organizador'])->where('compania_id', $compania_id)->get();
     }
 
+    public function indexFiltradoActivo($compania_id)
+    {
+        return CodigoProductor::with(['productores', 'codigo_organizador'])->where([['compania_id', "=", $compania_id], ['activo', "=", 1]])->get();
+    }
+
     public function store(Request $request)
     {
 

@@ -25,7 +25,7 @@
               <v-select
                 label="Seleccione Código Organizador"
                 v-model="codigo_productor.codigo_organizador_id"
-                :items="codigo_organizadores"
+                :items="co_activos"
                 :item-text="codigoOrgText"
                 item-value="id"
                 :rules="[rules.required]"
@@ -104,7 +104,10 @@ export default {
     ...mapState("productor", ["productores"]),
     ...mapState("organizador", ["organizadores"]),
     ...mapState("codigo_organizador", ["codigo_organizadores"]),
-    ...mapState("modal", ["modal2", "edicion2"])
+    ...mapState("modal", ["modal2", "edicion2"]),
+    co_activos() {
+      return this.codigo_organizadores.filter(co => co.activo == 1);
+    }
   },
   methods: {
     ...mapActions("codigo_productor", [

@@ -124,7 +124,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("productor", ["getProductores"]),
+    ...mapActions("productor", ["getProductoresActivos"]),
     ...mapActions("codigo_productor", [
       "getCodigoProductor",
       "deleteCodigoProductor"
@@ -145,7 +145,7 @@ export default {
     }
   },
   created() {
-    this.getProductores();
+    this.getProductoresActivos();
   }
 };
 </script>

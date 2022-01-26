@@ -121,7 +121,7 @@ export default {
           text: "Franquicia",
           value: "franquicia"
         },
-        { text: "Ajuste", value: "ajuste" },
+        // { text: "Ajuste", value: "ajuste" },
         { text: "Activa", value: "activo" },
         { text: "Actions", value: "actions", sortable: false, align: "right" }
       ];

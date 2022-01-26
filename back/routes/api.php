@@ -42,6 +42,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get("/administracion/companias_activas", [CompaniaController::class, 'companiasActivas']);
 Route::apiResource('/administracion/companias', CompaniaController::class);
 Route::post('/companias/busquedaCuit', [CompaniaController::class, 'search']);
 
@@ -49,6 +50,7 @@ Route::apiResource('/configuracion/organizadores', OrganizadorController::class)
 Route::post('/organizadores/busquedaCuit', [OrganizadorController::class, 'searchCuit']);
 Route::post('/organizadores/busquedaMatricula', [OrganizadorController::class, 'searchMatricula']);
 
+Route::get('/poductores_activos', [ProductorController::class, 'productoresActivos']);
 Route::apiResource('/configuracion/productores', ProductorController::class);
 Route::post('/productores/busquedaCuit', [ProductorController::class, 'searchCuit']);
 Route::post('/productores/busquedaMatricula', [ProductorController::class, 'searchMatricula']);
@@ -59,8 +61,10 @@ Route::apiResource('/administracion/codigo_organizadores', CodigoOrganizadorCont
 Route::get('/codigo_organizador/compania/{id}', [CodigoOrganizadorController::class, 'indexFiltrado']);
 Route::post('/codigo_organizador/busquedaCO', [CodigoOrganizadorController::class, 'busquedaCO']);
 
+
 Route::apiResource('/administracion/codigo_productores', CodigoProductorController::class);
 Route::get('/codigo_productor/compania/{id}', [CodigoProductorController::class, 'indexFiltrado']);
+Route::get('/codigo_productor_activo/compania/{id}', [CodigoProductorController::class, 'indexFiltradoActivo']);
 Route::post('/codigo_productor/busquedaCP', [CodigoProductorController::class, 'busquedaCP']);
 
 Route::apiResource('/administracion/coberturas', CoberturaController::class);

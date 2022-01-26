@@ -24,6 +24,11 @@ class CompaniaController extends Controller
         return Compania::all();
     }
 
+    public function companiasActivas()
+    {
+        return Compania::where("activo", 1)->get();
+    }
+
     /**
      * Store a newly created resource in storage.
      *

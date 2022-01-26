@@ -51,7 +51,10 @@ const actions = {
         const resp = await http.get(API_URL);
         commit("SET_PRODUCTORES", resp.data);
     },
-
+    async getProductoresActivos({ commit }) {
+        const resp = await http.get('/poductores_activos');
+        commit("SET_PRODUCTORES", resp.data);
+    },
     async getProductor({ commit }, id) {
         const resp = await http.getOne(API_URL, id);
         commit("SET_PRODUCTOR", resp.data);

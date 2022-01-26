@@ -25,12 +25,12 @@
             </v-icon>
             A. Prendario
           </v-tab>
-          <v-tab>
+          <!-- <v-tab>
             <v-icon left>
               mdi-camera-plus-outline
             </v-icon>
             Fotos
-          </v-tab>
+          </v-tab> -->
           <v-tab-item>
             <tab-riesgo />
           </v-tab-item>
@@ -44,7 +44,7 @@
           <v-tab-item>
             <tab-acreedor-prendario></tab-acreedor-prendario>
           </v-tab-item>
-          <v-tab-item>
+          <!-- <v-tab-item>
             <v-card flat>
               <v-card-text>
                 <p>
@@ -55,7 +55,7 @@
                 </p>
               </v-card-text>
             </v-card>
-          </v-tab-item>
+          </v-tab-item> -->
         </v-tabs>
       </v-form>
     </v-card-text>
