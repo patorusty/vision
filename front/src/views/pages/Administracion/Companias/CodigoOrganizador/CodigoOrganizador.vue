@@ -3,16 +3,13 @@
     <v-card-title>
       Código Organizador
       <v-spacer></v-spacer>
-      <v-text-field
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="Search"
-        single-line
-        hide-details
-        v-uppercase
-      ></v-text-field>
+
       <v-spacer></v-spacer>
-      <v-btn color="primary" @click="SHOW_MODAL(false)" dark>Crear</v-btn>
+      <v-btn
+        color="primary"
+        @click="SHOW_MODAL(false)"
+        dark
+      >Crear</v-btn>
       <v-dialog
         @click:outside="HIDE_MODAL(false)"
         :value="modal"
@@ -30,7 +27,10 @@
       multi-sort
       :loading="loading"
     >
-      <template slot="item.activo" slot-scope="props">{{
+      <template
+        slot="item.activo"
+        slot-scope="props"
+      >{{
         textoActivo(props.item.activo)
       }}</template>
       <template v-slot:[`item.actions`]="{ item }">
@@ -52,16 +52,27 @@
         </v-icon>
       </template>
     </v-data-table>
-    <v-dialog :retain-focus="false" max-width="30%" v-model="modalDelete">
+    <v-dialog
+      :retain-focus="false"
+      max-width="30%"
+      v-model="modalDelete"
+    >
       <v-card class="pa-4">
         <v-card-text>
           <span>Esta seguro que desea eliminar este Código Organizador?</span>
         </v-card-text>
         <v-card-actions class="py-0 pt-3 pr-6 d-flex justify-end">
-          <v-btn dark color="red" @click="modalDelete = false">Cancelar</v-btn>
-          <v-btn class="ml-4" dark color="success" @click="deleteCodOrg"
-            >Confirmar</v-btn
-          >
+          <v-btn
+            dark
+            color="red"
+            @click="modalDelete = false"
+          >Cancelar</v-btn>
+          <v-btn
+            class="ml-4"
+            dark
+            color="success"
+            @click="deleteCodOrg"
+          >Confirmar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -75,13 +86,13 @@ import { helpers } from "../../../../../helpers";
 
 export default {
   components: {
-    ModalCodigoOrganizador,
+    ModalCodigoOrganizador
   },
   mixins: [helpers],
   data: () => ({
     search: "",
     idSelected: "",
-    modalDelete: false,
+    modalDelete: false
   }),
   computed: {
     ...mapState("compania", ["loading"]),
@@ -94,18 +105,18 @@ export default {
         { text: "Matricula", value: "organizadores.matricula" },
         {
           text: "Codigo Organizador",
-          value: "codigo_organizador",
+          value: "codigo_organizador"
         },
         { text: "Activo", value: "activo" },
-        { text: "Actions", value: "actions", sortable: false, align: "right" },
+        { text: "Actions", value: "actions", sortable: false, align: "right" }
       ];
-    },
+    }
   },
   methods: {
     ...mapActions("organizador", ["getOrganizadores"]),
     ...mapActions("codigo_organizador", [
       "getCodigoOrganizador",
-      "deleteCodigoOrganizador",
+      "deleteCodigoOrganizador"
     ]),
     ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL"]),
     editCodigoOrganizador(id) {
@@ -120,11 +131,11 @@ export default {
       this.deleteCodigoOrganizador(this.idSelected);
       this.modalDelete = false;
       this.idSelected = "";
-    },
+    }
   },
   created() {
     this.getOrganizadores();
-  },
+  }
 };
 </script>
 

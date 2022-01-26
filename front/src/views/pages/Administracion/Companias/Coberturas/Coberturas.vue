@@ -3,14 +3,7 @@
     <v-card-title>
       Coberturas
       <v-spacer></v-spacer>
-      <v-text-field
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="Search"
-        single-line
-        hide-details
-        v-uppercase
-      ></v-text-field>
+
       <v-spacer></v-spacer>
       <v-btn
         color="primary"
