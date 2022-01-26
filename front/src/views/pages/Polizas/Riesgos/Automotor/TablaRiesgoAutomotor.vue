@@ -120,7 +120,6 @@ export default {
     ...mapMutations("modal", ["SHOW_MODAL_RA", "HIDE_MODAL_RA"]),
     ...mapMutations("riesgo", [
       "SET_RIESGO_AUTOMOTOR",
-      "RESET_RIESGO_AUTOMOTOR",
       "SET_RIESGO_AUTOMOTORES"
     ]),
     editRiesgoAutomotor(item) {
@@ -146,7 +145,6 @@ export default {
     this.getMarcas();
     this.getModelos();
     this.getVersiones();
-    this.SET_RIESGO_AUTOMOTORES(this.poliza.riesgo_automotor);
   }
 };
 </script>
