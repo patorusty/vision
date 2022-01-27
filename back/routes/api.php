@@ -24,6 +24,8 @@ use App\Http\Controllers\SiniestroAutomotorController;
 use App\Http\Controllers\RiesgoAutomotorController;
 use App\Http\Controllers\ImagenRAController;
 use App\Http\Controllers\EstadoPolizaController;
+use App\Http\Controllers\TipoUsuarioController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +43,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('/configuracion/usuarios', UserController::class);
+Route::get('/configuracion/tipousuario', [TipoUsuarioController::class, "index"]);
+Route::post("/usuario/busquedaMail", [UserController::class, 'searchMail']);
 
 Route::get("/administracion/companias_activas", [CompaniaController::class, 'companiasActivas']);
 Route::apiResource('/administracion/companias', CompaniaController::class);

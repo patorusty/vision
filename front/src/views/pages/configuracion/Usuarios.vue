@@ -38,52 +38,50 @@
         >{{
           textoActivo(props.item.activo)
         }}</template>
-        <template v-slot:[`item.acciones`]="{ item }">
+        <template v-slot:[`item.actions`]="{ item }">
           <v-icon
             small
             class="mr-2"
-            @click="editUsuario(item.id)"
             color="success"
-          >
-            mdi-pencil
-          </v-icon>
+            v-on:click.stop="editUsuario(item.id)"
+          > mdi-pencil </v-icon>
           <v-icon
             class="ml-2"
             small
-            @click="openDeleteModal(item.id)"
+            v-on:click.stop="openDeleteModal(item.id)"
             color="error"
           >
             mdi-close
           </v-icon>
-          <v-dialog
-            max-width="30%"
-            v-model="modalDelete"
-          >
-            <v-card class="pa-4">
-              <v-card-title>
-                <v-row>
-                  <v-col>Esta seguro que desea eliminar este usuario?</v-col>
-                </v-row>
-              </v-card-title>
-              <v-row>
-                <v-col class="py-0 pt-3 pr-6 d-flex justify-end">
-                  <v-btn
-                    dark
-                    color="red"
-                    @click="modalDelete = false"
-                  >Cancelar</v-btn>
-                  <v-btn
-                    class="ml-4"
-                    dark
-                    color="success"
-                    @click="deleteUser"
-                  >Confirmar</v-btn>
-                </v-col>
-              </v-row>
-            </v-card>
-          </v-dialog>
         </template>
       </v-data-table>
+      <v-dialog
+        max-width="30%"
+        v-model="modalDelete"
+      >
+        <v-card class="pa-4">
+          <v-card-title>
+            <v-row>
+              <v-col>Esta seguro que desea eliminar este usuario?</v-col>
+            </v-row>
+          </v-card-title>
+          <v-row>
+            <v-col class="py-0 pt-3 pr-6 d-flex justify-end">
+              <v-btn
+                dark
+                color="red"
+                @click="modalDelete = false"
+              >Cancelar</v-btn>
+              <v-btn
+                class="ml-4"
+                dark
+                color="success"
+                @click="deleteUser"
+              >Confirmar</v-btn>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-dialog>
     </v-card>
   </v-container>
 </template>
@@ -111,11 +109,16 @@ export default {
     };
   },
   computed: {
-    ...mapState("usuarios", ["usuarios"]),
+    ...mapState("usuario", ["usuarios"]),
     ...mapState("modal", ["modal"])
   },
   methods: {
-    ...mapActions("usuarios", ["getUsuarios", "getUsuario", "deleteUsuario"]),
+    ...mapActions("usuario", [
+      "getUsuarios",
+      "getUsuario",
+      "deleteUsuario",
+      "getTipoUsuarios"
+    ]),
     ...mapMutations("modal", ["SHOW_MODAL"]),
     editUsuario(id) {
       this.getUsuario(id);
@@ -135,7 +138,8 @@ export default {
     }
   },
   created() {
-    // this.getUsuarios();
+    this.getUsuarios();
+    this.getTipoUsuarios();
   }
 };
 </script>
