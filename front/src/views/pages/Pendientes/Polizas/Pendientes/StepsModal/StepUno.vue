@@ -16,7 +16,7 @@
           <v-row>
             <v-col cols="4">
               <v-text-field
-                label="Poliza"
+                label="Poliza Nro:"
                 v-model="poliza.numero"
               >
               </v-text-field>

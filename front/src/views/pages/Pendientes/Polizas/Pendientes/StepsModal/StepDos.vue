@@ -25,7 +25,7 @@
                 </v-col>
                 <v-col>
                   <div class="text-subtitle-1">
-                    {{"Modelo: " + riesgo.modelo.nombre}}
+                    {{"Modelo: " + riesgo.version.nombre}}
                   </div>
                 </v-col>
               </v-row>
