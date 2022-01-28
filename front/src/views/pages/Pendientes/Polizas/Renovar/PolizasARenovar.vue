@@ -9,7 +9,7 @@
       class="pa-2"
       :headers="headers"
       :items-per-page="10"
-      :items="polizas_pendientes"
+      :items="polizas_a_renovar"
       multi-sort
       :loading="loading"
     >
@@ -94,7 +94,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-import { helpers } from "../../../../helpers";
+import { helpers } from "../../../../../helpers";
 export default {
   components: {},
   mixins: [helpers],
@@ -110,7 +110,7 @@ export default {
   }),
   computed: {
     ...mapState("poliza", [
-      "polizas_pendientes",
+      "polizas_a_renovar",
       "loading",
       "tipo_riesgos",
       "estados"
@@ -141,7 +141,7 @@ export default {
   },
   methods: {
     ...mapActions("poliza", [
-      "getPolizasPendientes",
+      "getPolizasARenovar",
       "deletePoliza",
       "getTipoRiesgos",
       "getEstados"
@@ -237,7 +237,7 @@ export default {
     }
   },
   created() {
-    this.getPolizasPendientes();
+    this.getPolizasARenovar();
     this.getCompanias();
     this.getTipoRiesgos();
     this.getEstados();

@@ -22,7 +22,7 @@ class PolizaController extends Controller
 
     public function polizasPendientes()
     {
-        return Poliza::with(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo'])->whereNull(["numero", "renueva_numero"])->get();
+        return Poliza::with(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo', 'riesgo_automotor.anio', "riesgo_automotor.marca", "riesgo_automotor.modelo", "riesgo_automotor.version"])->whereNull(["numero", "renueva_numero"])->get();
     }
 
     public function polizasARenovar()

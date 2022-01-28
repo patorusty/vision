@@ -9,7 +9,7 @@
       class="pa-2"
       :headers="headers"
       :items-per-page="10"
-      :items="polizas_a_renovar"
+      :items="polizas_pendientes"
       multi-sort
       :loading="loading"
     >
@@ -45,16 +45,12 @@
       <template v-slot:[`item.envio`]="{ item }">{{ envio(item) }}</template>
       <template v-slot:[`item.pago`]="{ item }">{{ formaDePago(item) }}</template>
       <template v-slot:[`item.actions`]="{ item }">
-        <router-link
-          class="links"
-          :to="{ name: 'Editar Poliza', params: { numero_solicitud: item.numero_solicitud } }"
-        >
-          <v-icon
-            small
-            class="mr-2"
-            color="success"
-          > mdi-pencil </v-icon>
-        </router-link>
+        <v-icon
+          small
+          class="mr-2"
+          color="success"
+          v-on:click.stop="openModalPendiente(item)"
+        > mdi-pencil </v-icon>
         <v-icon
           class="ml-2"
           small
@@ -65,6 +61,13 @@
         </v-icon>
       </template>
     </v-data-table>
+    <v-dialog
+      @click:outside="closeModalPend"
+      :value="modal"
+      max-width="40%"
+    >
+      <modal-polizas-pendientes />
+    </v-dialog>
     <v-dialog
       :retain-focus="false"
       max-width="30%"
@@ -93,13 +96,14 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-import { helpers } from "../../../../helpers";
+import { mapState, mapActions, mapMutations } from "vuex";
+import { helpers } from "../../../../../helpers";
+import ModalPolizasPendientes from "./ModalPolizasPendientes.vue";
 export default {
-  components: {},
+  components: { ModalPolizasPendientes },
   mixins: [helpers],
   data: () => ({
-    tipo_riesgo_id: 1,
+    ipo_riesgo_id: 1,
     poliza: "",
     patente: "",
     compania_id: 0,
@@ -110,11 +114,12 @@ export default {
   }),
   computed: {
     ...mapState("poliza", [
-      "polizas_a_renovar",
+      "polizas_pendientes",
       "loading",
       "tipo_riesgos",
       "estados"
     ]),
+    ...mapState("modal", ["modal"]),
     ...mapState("compania", ["companias"]),
     headers() {
       return [
@@ -141,15 +146,29 @@ export default {
   },
   methods: {
     ...mapActions("poliza", [
-      "getPolizasARenovar",
+      "getPolizasPendientes",
       "deletePoliza",
+      "getPoliza",
       "getTipoRiesgos",
       "getEstados"
     ]),
     ...mapActions("compania", ["getCompanias"]),
+    ...mapActions("cobertura", ["getCoberturasActivas"]),
+    ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL", "SET_STEP"]),
+    ...mapMutations("poliza", ["SET_POLIZA"]),
+    ...mapMutations("riesgo", ["SET_RIESGO_AUTOMOTORES"]),
+    openModalPendiente(item) {
+      this.SET_POLIZA(item);
+      this.getCoberturasActivas(item.compania_id);
+      this.SET_RIESGO_AUTOMOTORES(item.riesgo_automotor);
+      this.SHOW_MODAL(true);
+    },
     openDeleteModal(id) {
       this.idSelected = id;
       this.modalDelete = true;
+    },
+    closeModalPend() {
+      this.HIDE_MODAL(false), this.SET_STEP(1);
     },
     deletePolicy() {
       this.deletePoliza(this.idSelected);
@@ -237,7 +256,7 @@ export default {
     }
   },
   created() {
-    this.getPolizasARenovar();
+    this.getPolizasPendientes();
     this.getCompanias();
     this.getTipoRiesgos();
     this.getEstados();

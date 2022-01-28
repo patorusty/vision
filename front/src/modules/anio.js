@@ -21,7 +21,6 @@ const mutations = {
         state.anio = Object.assign({},{});
     },
     UPDATE_ANIO(state, anio) {
-        console.log(anio)
         const item = state.anios.find(item => item.id === anio.id);
         Object.assign(item, anio);
     },

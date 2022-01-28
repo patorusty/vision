@@ -99,7 +99,7 @@ const actions = {
     const resp = await http.get(API_URL);
     commit("SET_POLIZAS", resp.data);
   },
-  async getPolizasPendientes ({commit}) {
+  async getPolizasPendientes ({commit, dispatch}) {
     const resp = await http.get("/polizas/pendientes");
     commit("SET_POLIZAS_PENDIENTES", resp.data);
   },

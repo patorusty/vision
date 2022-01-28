@@ -26,6 +26,7 @@ use App\Http\Controllers\ImagenRAController;
 use App\Http\Controllers\EstadoPolizaController;
 use App\Http\Controllers\TipoUsuarioController;
 use App\Http\Controllers\UserController;
+use App\Models\RiesgoAutomotor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

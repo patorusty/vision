@@ -209,158 +209,20 @@ export default {
   mixins: [helpers],
   data: () => ({
     searchModelo: null,
-    searchVersion: null,
-    tipo_vehiculos: [
-      {
-        value: "Automotor",
-        text: "Automotor"
-      },
-      {
-        value: "Camion",
-        text: "Camion"
-      },
-      {
-        value: "Trailer",
-        text: "Trailer"
-      }
-    ],
-    tipo_patentes: [
-      {
-        value: 0,
-        text: "Nacional"
-      },
-      {
-        value: 1,
-        text: "Mercosur"
-      }
-    ],
-    combustibles: [
-      {
-        value: "Nafta",
-        text: "Nafta"
-      },
-      {
-        value: "Diesel",
-        text: "Diesel"
-      },
-      {
-        value: "GNC",
-        text: "GNC"
-      }
-    ],
-    estados: [
-      {
-        value: "Muy Bueno",
-        text: "Muy Bueno"
-      },
-      {
-        value: "Bueno",
-        text: "Bueno"
-      },
-      {
-        value: "Regular",
-        text: "Regular"
-      }
-    ],
-    usos: [
-      {
-        value: "Particular",
-        text: "Particular"
-      },
-      {
-        value: "Comercial",
-        text: "Comercial"
-      },
-      {
-        value: "Particular / Comercial",
-        text: "Particular / Comercial"
-      },
-      {
-        value: "Remise",
-        text: "Remise"
-      },
-      {
-        value: "Cabify / Uber",
-        text: "Cabify / Uber"
-      }
-    ],
-    tipo_carrocerias: [
-      {
-        value: "Sedan 3 Puertas",
-        text: "Sedan 3 Puertas"
-      },
-      {
-        value: "Sedan 4 Puertas",
-        text: "Sedan 4 Puertas"
-      },
-      {
-        value: "Sedan 5 Puertas",
-        text: "Sedan 5 Puertas"
-      },
-      {
-        value: "Rural",
-        text: "Rural"
-      },
-      {
-        value: "Utilitario",
-        text: "Utilitario"
-      },
-      {
-        value: "Berlina",
-        text: "Berlina"
-      },
-      {
-        value: "Coupe",
-        text: "Coupe"
-      },
-      {
-        value: "Cabriolet",
-        text: "Cabriolet"
-      },
-      {
-        value: "Trailer",
-        text: "Trailer"
-      }
-    ],
-    ajustes: [
-      {
-        value: "0%",
-        text: "0%"
-      },
-      {
-        value: "10%",
-        text: "10%"
-      },
-      {
-        value: "20%",
-        text: "20%"
-      },
-      {
-        value: "30%",
-        text: "30%"
-      }
-    ],
-    equipos_rastreo: [
-      {
-        value: "No",
-        text: "No"
-      },
-      {
-        value: "Lo Jack",
-        text: "Lo Jack"
-      },
-      {
-        value: "Ituran",
-        text: "Ituran"
-      },
-      {
-        value: "Otro",
-        text: "Otro"
-      }
-    ]
+    searchVersion: null
   }),
   computed: {
-    ...mapState("riesgo", ["riesgo_automotor"]),
+    ...mapState("riesgo", [
+      "riesgo_automotor",
+      "tipo_vehiculos",
+      "tipo_patentes",
+      "combustibles",
+      "estados",
+      "usos",
+      "tipo_cerrocerias",
+      "ajustes",
+      "equipos_rastreo"
+    ]),
     ...mapState("version", ["version", "versiones", "modelo_id"]),
     ...mapState("marca", ["marcas"]),
     ...mapState("modelo", ["modelos", "marca_id", "modelo"]),

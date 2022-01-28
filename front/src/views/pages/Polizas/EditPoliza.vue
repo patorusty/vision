@@ -537,8 +537,6 @@ export default {
       }
     }
     // checkIfHasRiesgo() {
-    //   console.log(this.poliza.riesgo_automotor);
-    //   console.log(this.poliza.otro_riesgo);
     //   if (
     //     this.poliza.riesgo_automotor.length < 1 ||
     //     this.poliza.otro_riesgo.length < 1

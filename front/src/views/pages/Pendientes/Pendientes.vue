@@ -26,8 +26,8 @@
 <script>
 import Siniestros from "./Siniestros/Siniestros.vue";
 import Endosos from "./Endosos/Endosos.vue";
-import PolizasPendientes from "./Polizas/PolizasPendientes.vue";
-import PolizasARenovar from "./Polizas/PolizasARenovar.vue";
+import PolizasPendientes from "./Polizas/Pendientes/PolizasPendientes.vue";
+import PolizasARenovar from "./Polizas/Renovar/PolizasARenovar.vue";
 
 export default {
   components: { Siniestros, Endosos, PolizasPendientes, PolizasARenovar },

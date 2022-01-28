@@ -9,6 +9,7 @@ const state = () => ({
     edicion_ra: false,
     edicion_or:false,
     modal_or: false,
+    step: 1
 })
 const mutations = {
   SHOW_MODAL(state, val) {
@@ -50,6 +51,9 @@ const mutations = {
   HIDE_MODAL_OR(state, val) {
     state.modal_or = false;
     state.edicion_or = val;
+  },
+  SET_STEP(state, val) {
+  state.step = val
   }
 };
 export default {

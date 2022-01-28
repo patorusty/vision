@@ -120,7 +120,8 @@ export default {
     ...mapMutations("modal", ["SHOW_MODAL_RA", "HIDE_MODAL_RA"]),
     ...mapMutations("riesgo", [
       "SET_RIESGO_AUTOMOTOR",
-      "SET_RIESGO_AUTOMOTORES"
+      "SET_RIESGO_AUTOMOTORES",
+      "RESET_RIESGO_AUTOMOTOR"
     ]),
     editRiesgoAutomotor(item) {
       this.SET_RIESGO_AUTOMOTOR(item);
