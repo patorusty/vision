@@ -15,8 +15,8 @@
           v-for="riesgo in riesgo_automotores"
           v-bind:key="riesgo.id"
         >
-          <v-container>
-            <v-form ref="form">
+          <v-form ref="form">
+            <v-container>
               <v-row>
                 <v-col>
                   <div class="text-subtitle-1">
@@ -66,8 +66,8 @@
                   ></v-select>
                 </v-col>
               </v-row>
-            </v-form>
-          </v-container>
+            </v-container>
+          </v-form>
           <v-card-actions class="d-flex justify-end">
             <v-btn
               class="mb-2"
@@ -81,6 +81,12 @@
               text
               color="green"
             >Guardar</v-btn>
+            <v-btn
+              class="mb-2"
+              color="red"
+              text
+              @click="closeModal"
+            >Cerrar</v-btn>
           </v-card-actions>
         </v-tab-item>
       </v-tabs-items>
@@ -116,7 +122,7 @@ export default {
   },
   mixins: [helpers],
   methods: {
-    ...mapActions("riesgo", ["updateRiesgos"]),
+    ...mapActions("riesgo", ["updateRiesgoAutomotor"]),
     ...mapMutations("poliza", ["RESET_POLIZA"]),
     ...mapMutations("modal", ["HIDE_MODAL", "SET_STEP"]),
     closeModal() {
@@ -125,10 +131,7 @@ export default {
     },
     async update(riesgo) {
       // if (this.$refs.form.validate()) {
-      //   const createResult = await this.updateRiesgoAutomotor(riesgo);
-      //   if (createResult) {
-      //     this.closeModal();
-      //   }
+      const createResult = await this.updateRiesgoAutomotor(riesgo);
       // }
     },
     atras() {

@@ -230,8 +230,8 @@ export default {
   },
   mixins: [helpers],
   methods: {
-    ...mapActions("poliza", ["updatePoliza"]),
-    ...mapMutations("poliza", ["RESET_POLIZA"]),
+    ...mapActions("poliza", ["updatePolizaPendiente"]),
+    ...mapMutations("poliza", ["RESET_POLIZA", "DELETE_POLIZA_PENDIENTE"]),
     ...mapMutations("modal", ["HIDE_MODAL", "SET_STEP"]),
     closeModal() {
       this.HIDE_MODAL(false);
@@ -239,18 +239,18 @@ export default {
       // this.$refs.form.resetValidation();
     },
     async update() {
-      this.poliza.riesgo_automotor.length > 0
-        ? this.SET_STEP(2)
-        : this.closeModal();
-
-      // if (this.$refs.form.validate()) {
-      //   const createResult = await this.updatePoliza(this.poliza);
-      //   if (createResult) {
-      //     this.poliza.riesgo_automotor.length > 0
-      //       ? this.SET_STEP(2)
-      //       : this.closeModal();
-      //   }
-      // }
+      if (this.$refs.form.validate()) {
+        if (this.poliza.numero) {
+          const createResult = await this.updatePolizaPendiente(this.poliza);
+          if (createResult) {
+            this.DELETE_POLIZA_PENDIENTE(this.poliza.id);
+            this.poliza.riesgo_automotor.length > 0
+              ? this.SET_STEP(2)
+              : this.closeModal();
+          }
+        }
+        this.SET_STEP(2);
+      }
     }
   }
 };

@@ -66,8 +66,15 @@ const mutations = {
     var item = state.polizas.find(item => item.id === poliza.id);
     return Object.assign(item, poliza);
   },
+  UPDATE_POLIZA_PENDIENTE(state, poliza) {
+    var item = state.polizas_pendientes.find(item => item.id === poliza.id);
+    return Object.assign(item, poliza);
+  },
   DELETE_POLIZA(state, id) {
     state.polizas = state.polizas.filter(c => c.id != id);
+  },
+  DELETE_POLIZA_PENDIENTE(state, id) {
+    state.polizas_pendientes = state.polizas_pendientes.filter(c => c.id != id);
   },
   SET_TIPO_RIESGOS(state, tipo_riesgos) {
     state.tipo_riesgos = tipo_riesgos;
@@ -154,7 +161,35 @@ const actions = {
   async updatePoliza({ commit }, poliza) {
     const resp = await http.put(API_URL, poliza.id, poliza);
     if (resp.status === 200) {
+      console.log(resp.data);
       commit("UPDATE_POLIZA", resp.data);
+      commit(
+        "snackbar/SHOW_SNACK",
+        {
+          snackbar: true,
+          color: "success",
+          snackText: "Poliza editada con éxito!"
+        },
+        { root: true }
+      );
+      return true;
+    } else {
+      commit(
+        "snackbar/SHOW_SNACK",
+        {
+          snackbar: true,
+          color: "red",
+          snackText: "Algo salió mal, intente nuevamente..."
+        },
+        { root: true }
+      );
+    }
+  },
+  async updatePolizaPendiente({ commit }, poliza) {
+    const resp = await http.put(API_URL, poliza.id, poliza);
+    if (resp.status === 200) {
+      console.log(resp.data);
+      commit("UPDATE_POLIZA_PENDIENTE", resp.data);
       commit(
         "snackbar/SHOW_SNACK",
         {
