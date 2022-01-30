@@ -161,7 +161,6 @@ const actions = {
   async updatePoliza({ commit }, poliza) {
     const resp = await http.put(API_URL, poliza.id, poliza);
     if (resp.status === 200) {
-      console.log(resp.data);
       commit("UPDATE_POLIZA", resp.data);
       commit(
         "snackbar/SHOW_SNACK",
@@ -188,7 +187,6 @@ const actions = {
   async updatePolizaPendiente({ commit }, poliza) {
     const resp = await http.put(API_URL, poliza.id, poliza);
     if (resp.status === 200) {
-      console.log(resp.data);
       commit("UPDATE_POLIZA_PENDIENTE", resp.data);
       commit(
         "snackbar/SHOW_SNACK",
@@ -212,6 +210,93 @@ const actions = {
       );
     }
   },
+  async renewPoliza({commit, state, dispatch}, numero_solicitud) {
+    const respStatus = [];
+    const resp = await http.getOne(API_URL, numero_solicitud);
+    commit("SET_POLIZA", resp.data);
+    await dispatch('cargarUltimoNumeroSolicitud')
+    commit('riesgo/SET_RIESGO_AUTOMOTORES', state.poliza.riesgo_automotor, {root:true})
+    const newPoliza = {
+      cliente_id: state.poliza.cliente_id,
+      tipo_riesgo_id : state.poliza.tipo_riesgo_id,
+      compania_id : state.poliza.compania_id,
+      codigo_productor_id : state.poliza.codigo_productor_id,
+      renueva_numero : state.poliza.numero,
+      tipo_vigencia_id : state.poliza.tipo_vigencia_id,
+      vigencia_desde : state.poliza.vigencia_hasta,
+      numero_solicitud:state.poliza.numero_solicitud,
+      fecha_solicitud : moment(),
+      forma_pago_id: state.poliza.forma_pago_id,
+      plan_pago: state.poliza.plan_pago,
+      cantidad_cuotas: state.poliza.cantidad_cuotas,
+      detalle_medio_pago: state.poliza.detalle_medio_pago
+    }
+    var mes = null;
+    switch (state.poliza.tipo_vigencia_id) {
+      case 6:
+        mes = 12;
+        break;
+      case 5:
+        mes = 6;
+        break;
+      case 4:
+        mes = 4;
+        break;
+      case 3:
+        mes = 3;
+        break;
+      case 2:
+        mes = 2;
+        break;
+      case 1:
+        mes = 1;
+        break;
+    }
+    const vigencia_hasta = moment(newPoliza.vigencia_desde).add(
+      mes,
+      "M"
+    );
+    vigencia_hasta.set("hour", 12);
+    vigencia_hasta.set("minute", 0);
+    vigencia_hasta.set("second", 0);
+    newPoliza.vigencia_hasta = vigencia_hasta;
+    const respP = await http.post(API_URL, newPoliza);
+    respStatus.push(respP.status);
+
+    state.poliza.riesgo_automotor.forEach(async riesgo => {
+      const newRiesgo = { ...riesgo }
+      delete newRiesgo.id;
+      delete newRiesgo.valor_vehiculo;
+      const respR = await http.post('/riesgo_automotor', newRiesgo)
+      respStatus.push(respR.status);
+    });
+    var finalStatus = false
+    respStatus.forEach(e => {
+      e === 201 ? finalStatus = true : finalStatus = false
+    });
+    if (finalStatus) {
+      commit(
+        "snackbar/SHOW_SNACK",
+        {
+          snackbar: true,
+          color: "success",
+          snackText: "Poliza renovada con éxito!"
+        },
+        { root: true }
+      );
+      commit("modal/HIDE_MODAL", false, { root: true });
+    } else {
+      commit(
+        "snackbar/SHOW_SNACK",
+        {
+          color: "success",
+          snackText: "Algo salió mal..."
+        },
+        { root: true }
+      );
+    }
+  },
+
   async deletePoliza({ commit }, id) {
     const resp = await http.delete(API_URL, id);
     if (resp.status === 200) {

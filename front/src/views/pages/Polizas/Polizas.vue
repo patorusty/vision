@@ -145,6 +145,13 @@
           > mdi-pencil </v-icon>
         </router-link>
         <v-icon
+          small
+          v-on:click.stop="openRenewModal(item.numero_solicitud)"
+          color="success"
+        >
+          mdi-refresh
+        </v-icon>
+        <v-icon
           class="ml-2"
           small
           v-on:click.stop="openDeleteModal(item.id)"
@@ -263,6 +270,7 @@ export default {
   methods: {
     ...mapActions("poliza", [
       "getPolizas",
+      "renewPoliza",
       "deletePoliza",
       "getTipoRiesgos",
       "getEstados"
@@ -285,6 +293,9 @@ export default {
       // else if (item.tipo_riesgo_id == 2 && item.otro_riesgo.length > 0) {
       //   return `<v-icon small class="mr-2" color="success"> mdi-pencil </v-icon>`;
       // }
+    },
+    openRenewModal(numero_solicitud) {
+      this.renewPoliza(numero_solicitud);
     },
     envio(item) {
       if (
