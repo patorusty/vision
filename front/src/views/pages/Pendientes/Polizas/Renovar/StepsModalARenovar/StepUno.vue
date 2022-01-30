@@ -229,7 +229,7 @@ export default {
   mixins: [helpers],
   methods: {
     ...mapActions("poliza", ["updatePolizaRenovada"]),
-    ...mapMutations("poliza", ["RESET_POLIZA", "DELETE_POLIZA_PENDIENTE"]),
+    ...mapMutations("poliza", ["RESET_POLIZA", "DELETE_POLIZA_A_RENOVAR"]),
     ...mapMutations("modal", ["HIDE_MODAL", "SET_STEP"]),
     closeModal() {
       this.HIDE_MODAL(false), this.SET_STEP(1);
@@ -239,7 +239,7 @@ export default {
         if (this.poliza.numero) {
           const createResult = await this.updatePolizaRenovada(this.poliza);
           if (createResult) {
-            this.DELETE_POLIZA_PENDIENTE(this.poliza.id);
+            this.DELETE_POLIZA_A_RENOVAR(this.poliza.id);
             this.poliza.riesgo_automotor.length > 0
               ? this.SET_STEP(2)
               : this.closeModal();

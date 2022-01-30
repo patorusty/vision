@@ -80,6 +80,9 @@ const mutations = {
   DELETE_POLIZA_PENDIENTE(state, id) {
     state.polizas_pendientes = state.polizas_pendientes.filter(c => c.id != id);
   },
+  DELETE_POLIZA_A_RENOVAR(state, id) {
+    state.polizas_a_renovar = state.polizas_a_renovar.filter(c => c.id != id);
+  },
   SET_TIPO_RIESGOS(state, tipo_riesgos) {
     state.tipo_riesgos = tipo_riesgos;
   },
