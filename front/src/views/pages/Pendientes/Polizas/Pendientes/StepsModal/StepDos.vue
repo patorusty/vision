@@ -126,8 +126,7 @@ export default {
     ...mapMutations("poliza", ["RESET_POLIZA"]),
     ...mapMutations("modal", ["HIDE_MODAL", "SET_STEP"]),
     closeModal() {
-      this.HIDE_MODAL(false);
-      // this.$refs.form.resetValidation();
+      this.HIDE_MODAL(false), this.SET_STEP(1);
     },
     async update(riesgo) {
       // if (this.$refs.form.validate()) {
