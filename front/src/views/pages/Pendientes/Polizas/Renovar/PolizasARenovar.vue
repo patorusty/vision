@@ -45,16 +45,12 @@
       <template v-slot:[`item.envio`]="{ item }">{{ envio(item) }}</template>
       <template v-slot:[`item.pago`]="{ item }">{{ formaDePago(item) }}</template>
       <template v-slot:[`item.actions`]="{ item }">
-        <router-link
-          class="links"
-          :to="{ name: 'Editar Poliza', params: { numero_solicitud: item.numero_solicitud } }"
-        >
-          <v-icon
-            small
-            class="mr-2"
-            color="success"
-          > mdi-pencil </v-icon>
-        </router-link>
+        <v-icon
+          small
+          class="mr-2"
+          color="success"
+          v-on:click.stop="openModalPendiente(item)"
+        > mdi-pencil </v-icon>
         <v-icon
           class="ml-2"
           small
@@ -65,6 +61,13 @@
         </v-icon>
       </template>
     </v-data-table>
+    <v-dialog
+      @click:outside="closeModalPend"
+      :value="modal"
+      max-width="40%"
+    >
+      <modal-polizas-pendientes />
+    </v-dialog>
     <v-dialog
       :retain-focus="false"
       max-width="30%"
@@ -93,10 +96,11 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 import { helpers } from "../../../../../helpers";
+import ModalPolizasPendientes from "../ModalPolizasPendientes.vue";
 export default {
-  components: {},
+  components: { ModalPolizasPendientes },
   mixins: [helpers],
   data: () => ({
     tipo_riesgo_id: 1,
@@ -115,6 +119,7 @@ export default {
       "tipo_riesgos",
       "estados"
     ]),
+    ...mapState("modal", ["modal"]),
     ...mapState("compania", ["companias"]),
     headers() {
       return [
@@ -147,6 +152,10 @@ export default {
       "getEstados"
     ]),
     ...mapActions("compania", ["getCompanias"]),
+    ...mapActions("cobertura", ["getCoberturasActivas"]),
+    ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL", "SET_STEP"]),
+    ...mapMutations("poliza", ["SET_POLIZA"]),
+    ...mapMutations("riesgo", ["SET_RIESGO_AUTOMOTORES"]),
     openDeleteModal(id) {
       this.idSelected = id;
       this.modalDelete = true;
@@ -154,6 +163,15 @@ export default {
     deletePolicy() {
       this.deletePoliza(this.idSelected);
       this.modalDelete = false;
+    },
+    openModalPendiente(item) {
+      this.SET_POLIZA(item);
+      this.getCoberturasActivas(item.compania_id);
+      this.SET_RIESGO_AUTOMOTORES(item.riesgo_automotor);
+      this.SHOW_MODAL(true);
+    },
+    closeModalPend() {
+      this.HIDE_MODAL(false), this.SET_STEP(1);
     },
     dominio(item) {
       if (item.tipo_riesgo_id == 1 && item.riesgo_automotor.length > 0) {

@@ -27,7 +27,7 @@ class PolizaController extends Controller
 
     public function polizasARenovar()
     {
-        return Poliza::with(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo'])->whereNull("numero")->whereNotNull("renueva_numero")->get();
+        return Poliza::with(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo', 'riesgo_automotor.anio', "riesgo_automotor.marca", "riesgo_automotor.modelo", "riesgo_automotor.version"])->whereNull("numero")->whereNotNull("renueva_numero")->get();
     }
 
     public function chequeoRenovada($poliza_actual)
@@ -46,6 +46,8 @@ class PolizaController extends Controller
         try {
             $poliza = Poliza::create($request->all());
             $this->checkOnePoliza($poliza);
+            $poliza->load(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo']);
+            $poliza::with(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo']);
             return response($poliza, 201);
         } catch (\Exception $e) {
             return $e->getMessage();

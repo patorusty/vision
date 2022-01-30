@@ -60,7 +60,7 @@ export const helpers = {
       return riesgo.valor_vehiculo != null
         ? valor+gnc+ac1+ac2
         : "";
-    }
+    },
   },
   computed: {
     fechaFormateada: {

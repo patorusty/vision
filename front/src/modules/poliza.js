@@ -70,6 +70,10 @@ const mutations = {
     var item = state.polizas_pendientes.find(item => item.id === poliza.id);
     return Object.assign(item, poliza);
   },
+  UPDATE_POLIZA_RENOVADA(state, poliza) {
+    var item = state.polizas_a_renovar.find(item => item.id === poliza.id);
+    return Object.assign(item, poliza);
+  },
   DELETE_POLIZA(state, id) {
     state.polizas = state.polizas.filter(c => c.id != id);
   },
@@ -224,7 +228,7 @@ const actions = {
       renueva_numero : state.poliza.numero,
       tipo_vigencia_id : state.poliza.tipo_vigencia_id,
       vigencia_desde : state.poliza.vigencia_hasta,
-      numero_solicitud:state.poliza.numero_solicitud,
+      numero_solicitud: state.poliza.numero_solicitud,
       fecha_solicitud : moment(),
       forma_pago_id: state.poliza.forma_pago_id,
       plan_pago: state.poliza.plan_pago,
@@ -262,7 +266,6 @@ const actions = {
     newPoliza.vigencia_hasta = vigencia_hasta;
     const respP = await http.post(API_URL, newPoliza);
     respStatus.push(respP.status);
-
     state.poliza.riesgo_automotor.forEach(async riesgo => {
       const newRiesgo = { ...riesgo }
       delete newRiesgo.id;
@@ -271,6 +274,7 @@ const actions = {
       const respR = await http.post('/riesgo_automotor', newRiesgo)
       respStatus.push(respR.status);
     });
+    commit("CREATE_POLIZA", respP.data);
     var finalStatus = false
     respStatus.forEach(e => {
       e === 201 ? finalStatus = true : finalStatus = false
@@ -292,6 +296,33 @@ const actions = {
         {
           color: "success",
           snackText: "Algo salió mal..."
+        },
+        { root: true }
+      );
+    }
+  },
+
+  async updatePolizaRenovada({ commit }, poliza) {
+    const resp = await http.put(API_URL, poliza.id, poliza);
+    if (resp.status === 200) {
+      commit("UPDATE_POLIZA_RENOVADA", resp.data);
+      commit(
+        "snackbar/SHOW_SNACK",
+        {
+          snackbar: true,
+          color: "success",
+          snackText: "Poliza editada con éxito!"
+        },
+        { root: true }
+      );
+      return true;
+    } else {
+      commit(
+        "snackbar/SHOW_SNACK",
+        {
+          snackbar: true,
+          color: "red",
+          snackText: "Algo salió mal, intente nuevamente..."
         },
         { root: true }
       );

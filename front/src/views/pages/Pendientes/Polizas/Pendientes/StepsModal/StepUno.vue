@@ -127,12 +127,10 @@
               <v-text-field
                 v-model="poliza.premio"
                 label="Premio"
-                :rules="[rules.required]"
               ></v-text-field>
               <v-text-field
                 v-model="poliza.comision"
                 label="Comision"
-                :rules="[rules.required]"
               ></v-text-field>
             </v-col>
             <v-col cols="3">

@@ -98,7 +98,7 @@
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
 import { helpers } from "../../../../../helpers";
-import ModalPolizasPendientes from "./ModalPolizasPendientes.vue";
+import ModalPolizasPendientes from "../ModalPolizasPendientes.vue";
 export default {
   components: { ModalPolizasPendientes },
   mixins: [helpers],
@@ -150,22 +150,23 @@ export default {
       "deletePoliza",
       "getPoliza",
       "getTipoRiesgos",
-      "getEstados"
+      "getEstados",
+      "getFormaPagos"
     ]),
     ...mapActions("compania", ["getCompanias"]),
     ...mapActions("cobertura", ["getCoberturasActivas"]),
     ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL", "SET_STEP"]),
     ...mapMutations("poliza", ["SET_POLIZA"]),
     ...mapMutations("riesgo", ["SET_RIESGO_AUTOMOTORES"]),
+    openDeleteModal(id) {
+      this.idSelected = id;
+      this.modalDelete = true;
+    },
     openModalPendiente(item) {
       this.SET_POLIZA(item);
       this.getCoberturasActivas(item.compania_id);
       this.SET_RIESGO_AUTOMOTORES(item.riesgo_automotor);
       this.SHOW_MODAL(true);
-    },
-    openDeleteModal(id) {
-      this.idSelected = id;
-      this.modalDelete = true;
     },
     closeModalPend() {
       this.HIDE_MODAL(false), this.SET_STEP(1);
@@ -260,6 +261,7 @@ export default {
     this.getCompanias();
     this.getTipoRiesgos();
     this.getEstados();
+    this.getFormaPagos();
   }
 };
 </script>
