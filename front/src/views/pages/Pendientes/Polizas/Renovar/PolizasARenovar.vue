@@ -66,7 +66,7 @@
       :value="modal"
       max-width="40%"
     >
-      <modal-polizas-pendientes />
+      <modal-polizas-a-renovar />
     </v-dialog>
     <v-dialog
       :retain-focus="false"
@@ -98,9 +98,9 @@
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
 import { helpers } from "../../../../../helpers";
-import ModalPolizasPendientes from "../ModalPolizasPendientes.vue";
+import ModalPolizasARenovar from "./ModalPolizasARenovar.vue";
 export default {
-  components: { ModalPolizasPendientes },
+  components: { ModalPolizasARenovar },
   mixins: [helpers],
   data: () => ({
     tipo_riesgo_id: 1,

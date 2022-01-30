@@ -98,7 +98,7 @@
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
 import { helpers } from "../../../../../helpers";
-import ModalPolizasPendientes from "../ModalPolizasPendientes.vue";
+import ModalPolizasPendientes from "./ModalPolizasPendientes.vue";
 export default {
   components: { ModalPolizasPendientes },
   mixins: [helpers],

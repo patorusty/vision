@@ -11,9 +11,9 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-import StepUno from "./Pendientes/StepsModal/StepUno.vue";
-import StepDos from "./Pendientes/StepsModal/StepDos.vue";
-import { helpers } from "../../../../helpers";
+import StepUno from "./StepsModalPendiente/StepUno.vue";
+import StepDos from "./StepsModalPendiente/StepDos.vue";
+import { helpers } from "../../../../../helpers";
 
 export default {
   components: { StepUno, StepDos },
