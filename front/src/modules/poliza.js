@@ -267,6 +267,7 @@ const actions = {
       const newRiesgo = { ...riesgo }
       delete newRiesgo.id;
       delete newRiesgo.valor_vehiculo;
+      newRiesgo.poliza_id = respP.data.id;
       const respR = await http.post('/riesgo_automotor', newRiesgo)
       respStatus.push(respR.status);
     });
