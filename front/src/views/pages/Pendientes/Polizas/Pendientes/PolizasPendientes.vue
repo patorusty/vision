@@ -156,7 +156,7 @@ export default {
     ...mapActions("compania", ["getCompanias"]),
     ...mapActions("cobertura", ["getCoberturasActivas"]),
     ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL", "SET_STEP"]),
-    ...mapMutations("poliza", ["SET_POLIZA"]),
+    ...mapMutations("poliza", ["SET_POLIZA", "RESET_POLIZA"]),
     ...mapMutations("riesgo", ["SET_RIESGO_AUTOMOTORES"]),
     openDeleteModal(id) {
       this.idSelected = id;
@@ -169,7 +169,9 @@ export default {
       this.SHOW_MODAL(true);
     },
     closeModalPend() {
-      this.HIDE_MODAL(false), this.SET_STEP(1);
+      this.HIDE_MODAL(false);
+      this.SET_STEP(1);
+      this.RESET_POLIZA();
     },
     deletePolicy() {
       this.deletePoliza(this.idSelected);

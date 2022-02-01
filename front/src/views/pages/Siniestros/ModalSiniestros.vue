@@ -185,23 +185,10 @@ export default {
   data: () => ({
     fechaDenuncia: false,
     fechaSinistestro: false,
-    fechaCompleto: false,
-    tipo_reclamos: [
-      { value: "DAÑO A ASEGURADO (Reclamo a Tercero)" },
-      { value: "DAÑO A ASEGURADO (Cleas)" },
-      { value: "DAÑO A ASEGURADO (Cia. vs Cia.)" },
-      { value: "DAÑO PARCIAL (Todo Riesgo)" },
-      { value: "SIN RECLAMO (Daño a Tercero)" }
-    ],
-    estados: [
-      { value: "Abierto" },
-      { value: "Abierto (Reclamo Legal)" },
-      { value: "Cerrado" },
-      { value: "Cerrado (Reclamo por cuenta propia)" }
-    ]
+    fechaCompleto: false
   }),
   computed: {
-    ...mapState("siniestro", ["siniestro"]),
+    ...mapState("siniestro", ["siniestro", "tipo_reclamos", "estados"]),
     ...mapState("poliza", ["poliza"]),
     ...mapState("modal", ["modal3", "edicion3"])
   },

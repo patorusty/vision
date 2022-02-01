@@ -30,7 +30,16 @@
       :search="search"
       multi-sort
       :loading="loading"
+      :item-class="itemRowBackground"
     >
+      <template v-slot:[`item.numero_siniestro`]="{ item }">
+        <v-chip
+          :color="itemRowBackground(item)"
+          dark
+        >
+          {{ item.numero_siniestro }}
+        </v-chip>
+      </template>
       <template v-slot:[`item.asegurado`]="{ item }">
         {{
           nombreCompleto(item.poliza.cliente)
@@ -141,9 +150,29 @@ export default {
       this.modalDelete = true;
     },
     deleteSin() {
-      this.deleteEndoso(this.idSelected);
+      this.deleteSiniestro(this.idSelected);
       this.modalDelete = false;
       this.idSelected = "";
+    },
+    itemRowBackground(item) {
+      switch (item.tipo_reclamo) {
+        case "DAÑO A ASEGURADO (Reclamo a Tercero)":
+        case "CHOQUE EN CADENA":
+          return "orange lighten-2";
+        case "DAÑO A ASEGURADO (Cleas)":
+        case "DAÑO A ASEGURADO (Cia. vs Cia.)":
+        case "DAÑO PARCIAL (Todo Riesgo)":
+          return "deep-purple lighten-2";
+        case "SIN RECLAMO (Daño a Tercero)":
+          return "light-green lighten-2";
+        case "CRISTALES LATERALES":
+        case "PARABRISAS":
+        case "LUNETA":
+        case "ROBO PARCIAL":
+          return "yellow lighten-2";
+        case "ROBO TOTAL":
+          return "red lighten-1";
+      }
     }
   },
   created() {
@@ -151,6 +180,20 @@ export default {
   }
 };
 </script>
-
 <style>
+.style-1 {
+  background-color: rgb(253, 161, 40);
+}
+.style-2 {
+  background-color: rgb(149, 57, 253);
+}
+.style-3 {
+  background-color: rgb(134, 223, 107);
+}
+.style-4 {
+  background-color: rgb(223, 215, 107);
+}
+.style-5 {
+  background-color: rgb(255, 79, 79);
+}
 </style>

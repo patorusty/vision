@@ -5,6 +5,25 @@ const API_URL = '/siniestros';
 const state = () => ({
     siniestros: [],
     siniestro: {},
+    tipo_reclamos: [
+        { value: "DAÑO A ASEGURADO (Reclamo a Tercero)" }, // Naranja
+        { value: "DAÑO A ASEGURADO (Cleas)" }, // Violeta
+        { value: "DAÑO A ASEGURADO (Cia. vs Cia.)" }, // Violeta
+        { value: "DAÑO PARCIAL (Todo Riesgo)" }, // Violeta
+        { value: "SIN RECLAMO (Daño a Tercero)" }, // Verde
+        { value: "CRISTALES LATERALES" }, // Amarillo
+        { value: "PARABRISAS" }, // Amarillo
+        { value: "LUNETA" }, // Amarillo
+        { value: "ROBO TOTAL" }, // Rojo
+        { value: "ROBO PARCIAL" }, // Amarillo
+        { value: "CHOQUE EN CADENA" } // Naranja
+    ],
+    estados: [
+        { value: "Abierto" },
+        { value: "Abierto (Reclamo Legal)" },
+        { value: "Cerrado" },
+        { value: "Cerrado (Reclamo por cuenta propia)" }
+    ],
     loading: true
 });
 const mutations = {
