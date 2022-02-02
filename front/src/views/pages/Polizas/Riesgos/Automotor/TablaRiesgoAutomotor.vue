@@ -29,7 +29,7 @@
       multi-sort
     >
       <template v-slot:[`item.suma`]="{ item }">
-        {{ suma(item) }}
+        <div>{{ suma(item)}}</div>
       </template>
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon

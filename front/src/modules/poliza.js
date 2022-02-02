@@ -16,6 +16,7 @@ const state = () => ({
   polizas_a_renovar:[],
   polizas_pendientes:[],
   poliza: {
+    estado_poliza_id: 0,
     tipo_riesgo_id: 1,
     vigencia_desde: setMediodia(moment()),
     tipo_vigencia_id: 6,
@@ -49,12 +50,16 @@ const mutations = {
   RESET_POLIZA(state) {
     state.poliza = Object.assign(
       {},
-      {
+      {   
+          estado_poliza_id: 0,
           tipo_riesgo_id: 1,
           vigencia_desde: setMediodia(moment()),
           tipo_vigencia_id: 6,
           fecha_solicitud: setMediodia(moment()),
-          endosos: []
+          endosos: [],
+          cliente:{ nombre: "",
+                    apellido: ""
+                  }
       }
     );
   },
@@ -140,6 +145,7 @@ const actions = {
     // }
   },
   async createPoliza({ commit }, poliza) {
+    console.log(poliza);
     const resp = await http.post(API_URL, poliza);
     if (resp.status === 201) {
       commit("CREATE_POLIZA", resp.data);
@@ -303,9 +309,10 @@ const actions = {
         { root: true }
       );
     }
+    await dispatch('checkPolizas');
   },
 
-  async updatePolizaRenovada({ commit }, poliza) {
+  async updatePolizaRenovada({ commit , dispatch }, poliza) {
     const resp = await http.put(API_URL, poliza.id, poliza);
     if (resp.status === 200) {
       commit("UPDATE_POLIZA_RENOVADA", resp.data);
@@ -330,9 +337,10 @@ const actions = {
         { root: true }
       );
     }
+    await dispatch('checkPolizas');
   },
 
-  async deletePoliza({ commit }, id) {
+  async deletePoliza({ commit , dispatch }, id) {
     const resp = await http.delete(API_URL, id);
     if (resp.status === 200) {
       commit("DELETE_POLIZA", id);
@@ -356,6 +364,7 @@ const actions = {
         { root: true }
       );
     }
+    await dispatch('checkPolizas');
   },
   async getTipoRiesgos({ commit }) {
     const resp = await http.get("tiporiesgos");
@@ -380,6 +389,10 @@ const actions = {
     } else {
       commit("SET_NUMERO_SOLICITUD", 0);
     }
+  },
+  async checkPolizas() {
+    const resp = await http.get('/checkpolizas');
+    console.log(resp.data);
   }
 };
 export default {

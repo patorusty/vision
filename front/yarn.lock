@@ -12116,6 +12116,11 @@
   "resolved" "https://registry.npmjs.org/text-extensions/-/text-extensions-1.9.0.tgz"
   "version" "1.9.0"
 
+"text-mask-addons@^3.8.0":
+  "integrity" "sha1-F7Ye9mWk82gR8uofAaIjtL5hqyY="
+  "resolved" "https://registry.npmjs.org/text-mask-addons/-/text-mask-addons-3.8.0.tgz"
+  "version" "3.8.0"
+
 "text-table@^0.2.0":
   "integrity" "sha1-f17oI66AUgfACvLfSoTsP8+lcLQ="
   "resolved" "https://registry.npmjs.org/text-table/-/text-table-0.2.0.tgz"

@@ -17,17 +17,17 @@ class PolizaController extends Controller
      */
     public function index()
     {
-        return Poliza::with(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo'])->get();
+        return Poliza::with(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo'])->orderBy('id', 'DESC')->get();
     }
 
     public function polizasPendientes()
     {
-        return Poliza::with(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo', 'riesgo_automotor.anio', "riesgo_automotor.marca", "riesgo_automotor.modelo", "riesgo_automotor.version"])->whereNull(["numero", "renueva_numero"])->get();
+        return Poliza::with(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo', 'riesgo_automotor.anio', "riesgo_automotor.marca", "riesgo_automotor.modelo", "riesgo_automotor.version"])->whereNull(["numero", "renueva_numero"])->orderBy('id', 'DESC')->get();
     }
 
     public function polizasARenovar()
     {
-        return Poliza::with(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo', 'riesgo_automotor.anio', "riesgo_automotor.marca", "riesgo_automotor.modelo", "riesgo_automotor.version"])->whereNull("numero")->whereNotNull("renueva_numero")->get();
+        return Poliza::with(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo', 'riesgo_automotor.anio', "riesgo_automotor.marca", "riesgo_automotor.modelo", "riesgo_automotor.version"])->whereNull("numero")->whereNotNull("renueva_numero")->orderBy('id', 'DESC')->get();
     }
 
     public function chequeoRenovada($poliza_actual)
@@ -78,6 +78,7 @@ class PolizaController extends Controller
         try {
             $poliza = Poliza::findOrFail($id);
             $poliza->fill($request->all())->save();
+            $this->checkOnePoliza($poliza);
             return response($poliza, 200);
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -158,7 +159,7 @@ class PolizaController extends Controller
                         //CUMPLIDA
                         break;
                     case $hoy->isBefore($poliza['vigencia_desde']):
-                        $poliza["estado_poliza_id"] = 1;
+                        $poliza["estado_poliza_id"] = 7;
                         // PENDIENTE
                         break;
                     default:
@@ -167,6 +168,7 @@ class PolizaController extends Controller
                 }
             }
         }
+        return ["message" => "listo"];
     }
 
     function checkOnePoliza($poliza)
@@ -200,7 +202,7 @@ class PolizaController extends Controller
                     //CUMPLIDA
                     break;
                 case $hoy->isBefore($poliza['vigencia_desde']):
-                    $poliza["estado_poliza_id"] = 1;
+                    $poliza["estado_poliza_id"] = 7;
                     $poliza->save();
                     // PENDIENTE
                     break;

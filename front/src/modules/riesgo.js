@@ -11,7 +11,11 @@ const state = () => ({
         uso: "Particular",
         combustible: "Nafta",
         estado_general: "Muy Bueno",
-        ajuste: "0%"
+        ajuste: "0%",
+        valor_vehiculo: null,
+        valor_gnc: null,
+        valor_accesorio_01: null,
+        valor_accesorio_02: null,
     },
     riesgo_automotores: [],
     otro_riesgo: {},
@@ -165,6 +169,7 @@ const state = () => ({
         }
     ]
 });
+
 const mutations = {
     SET_RIESGO_AUTOMOTORES(state, riesgo_automotores) {
         state.loading = false
@@ -181,7 +186,11 @@ const mutations = {
             uso: "Particular" ,
             combustible: "Nafta",
             estado_general: "Muy Bueno",
-            ajuste: "0%"});
+            ajuste: "0%",
+            valor_vehiculo: null,
+            valor_gnc: null,
+            valor_accesorio_01: null,
+            valor_accesorio_02: null,});
     },
     UPDATE_RIESGO_AUTOMOTOR(state, riesgo_automotor) {
         const item = state.riesgo_automotores.find(item => item.id === riesgo_automotor.id);
@@ -289,5 +298,4 @@ export default {
     state,
     mutations,
     actions,
-    getters: {}
 };

@@ -32,12 +32,12 @@
       :loading="loading"
       :item-class="itemRowBackground"
     >
-      <template v-slot:[`item.numero_siniestro`]="{ item }">
+      <template v-slot:[`item.tipo_reclamo`]="{ item }">
         <v-chip
           :color="itemRowBackground(item)"
           dark
         >
-          {{ item.numero_siniestro }}
+          {{ item.tipo_reclamo }}
         </v-chip>
       </template>
       <template v-slot:[`item.asegurado`]="{ item }">
@@ -113,6 +113,7 @@ export default {
     headers: [
       { text: "Póliza Nro.", value: "poliza.numero" },
       { text: "Numero", value: "numero_siniestro" },
+      { text: "Tipo de Reclamo", value: "tipo_reclamo" },
       { text: "Asegurado", value: "asegurado" },
       { text: "Compañia", value: "poliza.compania.nombre" },
       { text: "F. Siniestro", value: "fechaSiniestro" },
@@ -122,17 +123,6 @@ export default {
   computed: {
     ...mapState("modal", ["modal3", "edicion3"]),
     ...mapState("siniestro", ["siniestros", "loading"])
-    // headers() {
-    //   return [
-    //     { text: "Póliza Nro.", value: "poliza.numero" },
-    //     { text: "Numero", value: "numero_siniestro" },
-    //     { text: "Asegurado", value: "asegurado" },
-    //     { text: "Compañia", value: "compania.nombre" },
-    //     { text: "F. Siniestro", value: "fechaSiniestro" },
-    //     { text: "Completo", value: "fecha_completo" },
-    //     { text: "Actions", value: "actions", sortable: false, align: "right" }
-    //   ];
-    // }
   },
   methods: {
     ...mapActions("siniestro", [

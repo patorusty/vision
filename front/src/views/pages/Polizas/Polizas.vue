@@ -131,6 +131,12 @@
       </template>
       <template v-slot:[`item.desde`]="{ item }">{{ formatDate(item.vigencia_desde) }} <br />
         {{ formatDate(item.vigencia_hasta) }}</template>
+      <template v-slot:[`item.estado`]="{ item }">
+        <v-chip
+          :color="itemRowColor(item)"
+          dark
+        >{{item.estado.nombre}}</v-chip>
+      </template>
       <template v-slot:[`item.envio`]="{ item }">{{ envio(item) }}</template>
       <template v-slot:[`item.pago`]="{ item }">{{ formaDePago(item) }}</template>
       <template v-slot:[`item.actions`]="{ item }">
@@ -260,7 +266,7 @@ export default {
         { text: "Dominio", value: "dominio" },
         { text: "Vigencia", value: "tipo_vigencias.vigencia" },
         { text: "Desde / Hasta", value: "desde" },
-        { text: "Estado", value: "estado.nombre" },
+        { text: "Estado", value: "estado" },
         { text: "Envío", value: "envio" },
         { text: "Pago", value: "pago" },
         { text: "Actions", value: "actions", sortable: false, align: "right" }
@@ -296,6 +302,19 @@ export default {
     },
     openRenewModal(numero_solicitud) {
       this.renewPoliza(numero_solicitud);
+    },
+    itemRowColor(item) {
+      switch (item.estado_poliza_id) {
+        case 1:
+          return "red lighten-1";
+        case 4:
+        case 5:
+          return "light-green lighten-2";
+        case "SIN RECLAMO (Daño a Tercero)":
+          return "light-green lighten-2";
+        case 7:
+          return "grey lighten-2";
+      }
     },
     envio(item) {
       if (

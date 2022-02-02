@@ -87,6 +87,7 @@ Route::get('/numerosolicitud', [PolizaController::class, 'numeroDeSolicitud']);
 Route::get('/polizas/pendientes', [PolizaController::class, 'polizasPendientes']);
 Route::get('/polizas/a_renovar', [PolizaController::class, 'polizasARenovar']);
 Route::apiResource('/polizas', PolizaController::class);
+Route::get('/checkpolizas', [PolizaController::class, 'checkPolizas']);
 
 Route::apiResource('/riesgo_automotor', RiesgoAutomotorController::class);
 Route::post('/imagenes_r_a', [ImagenRAController::class, 'uploadFile']);

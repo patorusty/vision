@@ -54,7 +54,7 @@ const actions = {
         const resp = await http.getOne('/endosos/indexFiltrado', id);
         commit('SET_ENDOSOS', resp.data)
     },
-    async createEndoso({ commit }, endoso) {
+    async createEndoso({ commit, dispatch }, endoso) {
         const resp = await http.post(API_URL, endoso)
         if (resp.status === 201) {
             commit("CREATE_ENDOSO", resp.data);
@@ -79,8 +79,9 @@ const actions = {
                 { root: true }
             );
         }
+        await dispatch('poliza/checkPolizas');
     },
-    async updateEndoso({ commit }, endoso) {
+    async updateEndoso({ commit, dispatch }, endoso) {
         const resp = await http.put(
             API_URL,
             endoso.id,
@@ -109,8 +110,9 @@ const actions = {
                 { root: true }
             );
         }
+        await dispatch('poliza/checkPolizas');
     },
-    async deleteEndoso({ commit }, id) {
+    async deleteEndoso({ commit, dispatch }, id) {
         const resp = await http.delete(API_URL, id);
         if (resp.status === 200) {
             commit("DELETE_ENDOSO", id);
@@ -134,6 +136,7 @@ const actions = {
                 { root: true }
             );
         }
+        await dispatch('poliza/checkPolizas');
     },
     async getTipoEndosos({ commit }) {
         const resp = await http.get("tipoendosos");

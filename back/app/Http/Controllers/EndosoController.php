@@ -15,12 +15,12 @@ class EndosoController extends Controller
      */
     public function index()
     {
-        $endosos = Endoso::with(['tipo_endoso', 'poliza.cliente', 'poliza.compania', 'poliza.riesgo_automotor'])->where('completo', 0)->get();
+        $endosos = Endoso::with(['tipo_endoso', 'poliza.cliente', 'poliza.compania', 'poliza.riesgo_automotor'])->where('completo', 0)->orderBy('id', 'DESC')->get();
         return $endosos;
     }
     public function indexFiltrado($poliza_id)
     {
-        $endosos = Endoso::with(['tipo_endoso', 'detalle_endoso'])->where('poliza_id', $poliza_id)->get();
+        $endosos = Endoso::with(['tipo_endoso', 'detalle_endoso'])->where('poliza_id', $poliza_id)->orderBy('id', 'DESC')->get();
         return $endosos;
     }
 

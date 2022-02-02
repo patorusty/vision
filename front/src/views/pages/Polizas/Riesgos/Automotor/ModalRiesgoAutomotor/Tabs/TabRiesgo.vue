@@ -137,7 +137,6 @@
             label="Valor Vehiculo"
             v-model="riesgo_automotor.valor_vehiculo"
             :rules="[rules.required]"
-            v-uppercase
           ></v-text-field>
           <v-row>
             <v-col class="py-0">
@@ -219,7 +218,7 @@ export default {
       "combustibles",
       "estados",
       "usos",
-      "tipo_cerrocerias",
+      "tipo_carrocerias",
       "ajustes",
       "equipos_rastreo"
     ]),
@@ -228,8 +227,13 @@ export default {
     ...mapState("modelo", ["modelos", "marca_id", "modelo"]),
     ...mapState("anio", ["anio", "anios"]),
     ...mapState("cobertura", ["coberturas"]),
-    valorTotal() {
-      return this.suma(this.riesgo_automotor);
+    valorTotal: {
+      get: function() {
+        return this.suma(this.riesgo_automotor);
+      },
+      set: function() {
+        return this.suma(this.riesgo_automotor);
+      }
     }
   },
   methods: {

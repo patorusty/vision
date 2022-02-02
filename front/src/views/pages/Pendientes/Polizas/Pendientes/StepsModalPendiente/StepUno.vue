@@ -233,8 +233,8 @@ export default {
     ...mapMutations("modal", ["HIDE_MODAL", "SET_STEP"]),
     closeModal() {
       this.HIDE_MODAL(false);
-      this.SET_STEP(1);
       this.RESET_POLIZA();
+      this.SET_STEP(1);
     },
     async update() {
       if (this.$refs.form.validate()) {
