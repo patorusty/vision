@@ -136,7 +136,7 @@ class PolizaController extends Controller
 
         $polizas = Poliza::all();
         foreach ($polizas as $poliza) {
-            if (!$poliza["estado_poliza_id" == 1]) {
+            if ($poliza["estado_poliza_id" != 1]) {
                 switch ($poliza) {
                     case $hoy->isAfter($poliza['vigencia_desde']) && $hoy->isBefore($poliza['vigencia_hasta']->subMonth()) && !$poliza['renueva_numero']:
                         $poliza["estado_poliza_id"] = 2;
@@ -174,7 +174,8 @@ class PolizaController extends Controller
     function checkOnePoliza($poliza)
     {
         $hoy = Carbon::now();
-        if (!$poliza["estado_poliza_id" == 1]) {
+        if ($poliza["estado_poliza_id" != 1]) {
+            dd("entra");
             switch ($poliza) {
                 case $hoy->isAfter($poliza['vigencia_desde']) && $hoy->isBefore($poliza['vigencia_hasta']->subMonth()) && !$poliza['renueva_numero']:
                     $poliza["estado_poliza_id"] = 2;

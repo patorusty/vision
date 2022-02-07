@@ -68,8 +68,10 @@ const mutations = {
     state.poliza = poliza;
   },
   UPDATE_POLIZA(state, poliza) {
-    var item = state.polizas.find(item => item.id === poliza.id);
-    return Object.assign(item, poliza);
+    if (state.polizas.length) {
+      var item = state.polizas.find(item => item.id === poliza.id);
+      return Object.assign(item, poliza); 
+    }
   },
   UPDATE_POLIZA_PENDIENTE(state, poliza) {
     var item = state.polizas_pendientes.find(item => item.id === poliza.id);
@@ -172,8 +174,10 @@ const actions = {
     }
   },
   async updatePoliza({ commit }, poliza) {
+    console.log(poliza);
     const resp = await http.put(API_URL, poliza.id, poliza);
     if (resp.status === 200) {
+      console.log(resp.data);
       commit("UPDATE_POLIZA", resp.data);
       commit(
         "snackbar/SHOW_SNACK",
@@ -392,7 +396,6 @@ const actions = {
   },
   async checkPolizas() {
     const resp = await http.get('/checkpolizas');
-    console.log(resp.data);
   }
 };
 export default {

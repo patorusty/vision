@@ -42,8 +42,8 @@ class EndosoController extends Controller
             $this->validate($request, []);
 
             $endoso = Endoso::create($request->all());
-            $endoso->load(['tipo_endoso', 'poliza.cliente', 'poliza.riesgo_automotor', 'poliza.compania', 'poliza.riesgo_automotor', 'poliza.riesgo_automotor.marca', 'poliza.riesgo_automotor.version', 'poliza.riesgo_automotor.cobertura']);
-            $endoso::with(['tipo_endoso', 'poliza.cliente', 'poliza.riesgo_automotor', 'poliza.compania', 'poliza.riesgo_automotor', 'poliza.riesgo_automotor.marca', 'poliza.riesgo_automotor.version', 'poliza.riesgo_automotor.cobertura']);
+            $endoso->load(['tipo_endoso', 'detalle_endoso']);
+            $endoso::with(['tipo_endoso', 'detalle_endoso']);
             return response($endoso, 201);
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -73,6 +73,8 @@ class EndosoController extends Controller
         try {
             $endoso = Endoso::findOrFail($id);
             $endoso->fill($request->all())->save();
+            $endoso->load(['tipo_endoso', 'detalle_endoso']);
+            $endoso::with(['tipo_endoso', 'detalle_endoso']);
             return response($endoso, 200);
         } catch (\Exception $e) {
             return $e->getMessage();

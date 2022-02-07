@@ -79,7 +79,7 @@ const actions = {
                 { root: true }
             );
         }
-        await dispatch('poliza/checkPolizas');
+        await dispatch('poliza/checkPolizas' ,'', {root:true});
     },
     async updateEndoso({ commit, dispatch }, endoso) {
         const resp = await http.put(
@@ -110,7 +110,7 @@ const actions = {
                 { root: true }
             );
         }
-        await dispatch('poliza/checkPolizas');
+        await dispatch('poliza/checkPolizas' ,'', {root:true});
     },
     async deleteEndoso({ commit, dispatch }, id) {
         const resp = await http.delete(API_URL, id);
@@ -136,7 +136,7 @@ const actions = {
                 { root: true }
             );
         }
-        await dispatch('poliza/checkPolizas');
+        await dispatch('poliza/checkPolizas' ,'', {root:true});
     },
     async getTipoEndosos({ commit }) {
         const resp = await http.get("tipoendosos");
