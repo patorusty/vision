@@ -16,7 +16,7 @@ const state = () => ({
   polizas_a_renovar:[],
   polizas_pendientes:[],
   poliza: {
-    estado_poliza_id: 0,
+    estado_poliza_id: 100,
     tipo_riesgo_id: 1,
     vigencia_desde: setMediodia(moment()),
     tipo_vigencia_id: 6,
@@ -51,7 +51,7 @@ const mutations = {
     state.poliza = Object.assign(
       {},
       {   
-          estado_poliza_id: 0,
+          estado_poliza_id: 100,
           tipo_riesgo_id: 1,
           vigencia_desde: setMediodia(moment()),
           tipo_vigencia_id: 6,
@@ -147,7 +147,6 @@ const actions = {
     // }
   },
   async createPoliza({ commit }, poliza) {
-    console.log(poliza);
     const resp = await http.post(API_URL, poliza);
     if (resp.status === 201) {
       commit("CREATE_POLIZA", resp.data);
@@ -174,10 +173,8 @@ const actions = {
     }
   },
   async updatePoliza({ commit }, poliza) {
-    console.log(poliza);
     const resp = await http.put(API_URL, poliza.id, poliza);
     if (resp.status === 200) {
-      console.log(resp.data);
       commit("UPDATE_POLIZA", resp.data);
       commit(
         "snackbar/SHOW_SNACK",
