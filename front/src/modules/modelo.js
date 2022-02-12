@@ -25,7 +25,7 @@ const mutations = {
         Object.assign(item, modelo);
     },
     CREATE_MODELO(state, modelo) {
-        state.modelos.push(modelo);
+        state.modelos.unshift(modelo);
     },
     DELETE_MODELO(state, id) {
         state.modelos = state.modelos.filter(u => u.id != id);

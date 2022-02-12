@@ -25,7 +25,7 @@ const mutations = {
         );
     },
     CREATE_ENDOSO(state, endoso) {
-        state.endosos.push(endoso);
+        state.endosos.unshift(endoso);
     },
     UPDATE_ENDOSO(state, endoso) {
         var item = state.endosos.find(item => item.id === endoso.id);

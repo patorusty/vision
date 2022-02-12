@@ -34,7 +34,7 @@ const mutations = {
     Object.assign(item, usuario);
   },
   CREATE_USUARIO(state, usuario) {
-    state.usuarios.push(usuario);
+    state.usuarios.unshift(usuario);
   },
   DELETE_USUARIO(state, id) {
     state.usuarios = state.usuarios.filter(u => u.id != id);

@@ -33,7 +33,7 @@ const mutations = {
     Object.assign(item, codigo_organizador);
   },
   CREATE_CODIGO_ORGANIZADOR(state, codigo_organizador) {
-    state.codigo_organizadores.push(codigo_organizador);
+    state.codigo_organizadores.unshift(codigo_organizador);
   },
   DELETE_CODIGO_ORGANIZADOR(state, id) {
     state.codigo_organizadores = state.codigo_organizadores.filter(u => u.id != id);

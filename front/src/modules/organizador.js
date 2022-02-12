@@ -40,7 +40,7 @@ const mutations = {
         Object.assign(item, organizador);
     },
     CREATE_ORGANIZADOR(state, organizador) {
-        state.organizadores.push(organizador);
+        state.organizadores.unshift(organizador);
     },
     DELETE_ORGANIZADOR(state, id) {
         state.organizadores = state.organizadores.filter(u => u.id != id);

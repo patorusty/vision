@@ -25,7 +25,7 @@ const mutations = {
         Object.assign(item, anio);
     },
     CREATE_ANIO(state, anio) {
-        state.anios.push(anio);
+        state.anios.unshift(anio);
     },
     DELETE_ANIO(state, id) {
         state.anios = state.anios.filter(u => u.id != id);

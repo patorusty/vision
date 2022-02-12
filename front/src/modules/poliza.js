@@ -64,7 +64,7 @@ const mutations = {
     );
   },
   CREATE_POLIZA(state, poliza) {
-    state.polizas.push(poliza);
+    state.polizas.unshift(poliza);
     state.poliza = poliza;
   },
   UPDATE_POLIZA(state, poliza) {
@@ -284,6 +284,7 @@ const actions = {
       const respR = await http.post('/riesgo_automotor', newRiesgo)
       respStatus.push(respR.status);
     });
+    const oldPoliza = { ...state.poliza }
     commit("CREATE_POLIZA", respP.data);
     var finalStatus = false
     respStatus.forEach(e => {
@@ -310,7 +311,10 @@ const actions = {
         { root: true }
       );
     }
-    await dispatch('checkPolizas');
+      oldPoliza.renovada = 1;
+      const res = await http.put(API_URL, oldPoliza.id, oldPoliza)
+      commit("UPDATE_POLIZA", res.data);
+    // await dispatch('checkPolizas');
   },
 
   async updatePolizaRenovada({ commit , dispatch }, poliza) {

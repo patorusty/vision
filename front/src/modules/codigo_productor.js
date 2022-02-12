@@ -34,7 +34,7 @@ const mutations = {
     Object.assign(item, codigo_productor);
   },
   CREATE_CODIGO_PRODUCTOR(state, codigo_productor) {
-    state.codigo_productores.push(codigo_productor);
+    state.codigo_productores.unshift(codigo_productor);
   },
   DELETE_CODIGO_PRODUCTOR(state, id) {
     state.codigo_productores = state.codigo_productores.filter(u => u.id != id);

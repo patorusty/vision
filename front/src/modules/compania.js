@@ -32,7 +32,7 @@ const mutations = {
         );
     },
     CREATE_COMPANIA(state, compania) {
-        state.companias.push(compania);
+        state.companias.unshift(compania);
     },
     UPDATE_COMPANIA(state, compania) {
         var item = state.companias.find(item => item.id === compania.id);

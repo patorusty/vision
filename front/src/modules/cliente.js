@@ -39,7 +39,7 @@ const mutations = {
         );
     },
     CREATE_CLIENTE(state, cliente) {
-        state.clientes.push(cliente);
+        state.clientes.unshift(cliente);
     },
     UPDATE_CLIENTE(state, cliente) {
         var item = state.clientes.find(item => item.id === cliente.id);

@@ -32,7 +32,7 @@ const mutations = {
     Object.assign(item, cobertura);
   },
   CREATE_COBERTURA(state, cobertura) {
-    state.coberturas.push(cobertura);
+    state.coberturas.unshift(cobertura);
   },
   DELETE_COBERTURA(state, id) {
     state.coberturas = state.coberturas.filter(u => u.id != id);

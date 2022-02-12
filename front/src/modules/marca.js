@@ -29,7 +29,7 @@ const mutations = {
         Object.assign(item, marca);
     },
     CREATE_MARCA(state, marca) {
-        state.marcas.push(marca);
+        state.marcas.unshift(marca);
     },
     DELETE_MARCA(state, id) {
         state.marcas = state.marcas.filter(u => u.id != id);

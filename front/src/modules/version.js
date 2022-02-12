@@ -26,7 +26,7 @@ const mutations = {
         Object.assign(item, version);
     },
     CREATE_VERSION(state, version) {
-        state.versiones.push(version);
+        state.versiones.unshift(version);
     },
     DELETE_VERSION(state, id) {
         state.versiones = state.versiones.filter(u => u.id != id);

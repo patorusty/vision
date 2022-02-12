@@ -78,8 +78,10 @@ class PolizaController extends Controller
         try {
             $poliza = Poliza::findOrFail($id);
             $poliza->fill($request->all())->save();
-            $this->checkOnePoliza($poliza);
-            return response($poliza, 200);
+            $p = $this->checkOnePoliza($poliza);
+            $p->load(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo']);
+            $p::with(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo']);
+            return response($p, 200);
         } catch (\Exception $e) {
             return $e->getMessage();
         }
@@ -138,23 +140,23 @@ class PolizaController extends Controller
         foreach ($polizas as $poliza) {
             if ($poliza["estado_poliza_id" != 1]) {
                 switch ($poliza) {
-                    case $hoy->isAfter($poliza['vigencia_desde']) && $hoy->isBefore($poliza['vigencia_hasta']->subMonth()) && !$poliza['renueva_numero']:
+                    case $hoy->isAfter($poliza['vigencia_desde']) && $hoy->isBefore($poliza['vigencia_hasta']->subMonth()) && $poliza['renovada'] == 0:
                         $poliza["estado_poliza_id"] = 2;
                         //VIGENTE
                         break;
-                    case $hoy->isAfter($poliza['vigencia_hasta']->subMonth()) && $hoy->isBefore($poliza['vigencia_hasta']) && !$poliza['renueva_numero']:
+                    case $hoy->isAfter($poliza['vigencia_hasta']->subMonth()) && $hoy->isBefore($poliza['vigencia_hasta']) && $poliza['renovada'] == 0:
                         $poliza["estado_poliza_id"] = 3;
                         //VIGENTE A RENOVAR
                         break;
-                    case $hoy->isAfter($poliza['vigencia_desde']) && $hoy->isBefore($poliza['vigencia_hasta']) && $poliza['renueva_numero']:
+                    case $hoy->isAfter($poliza['vigencia_desde']) && $hoy->isBefore($poliza['vigencia_hasta']) && $poliza['renovada'] == 1:
                         $poliza["estado_poliza_id"] = 6;
                         //VIGENTE RENOVADA
                         break;
-                    case $hoy->isAfter($poliza['vigencia_hasta']) && $poliza['renueva_numero']:
+                    case $hoy->isAfter($poliza['vigencia_hasta']) && $poliza['renovada'] == 1:
                         $poliza["estado_poliza_id"] = 4;
                         //CUMPLIDA RENOVADA
                         break;
-                    case $hoy->isAfter($poliza['vigencia_hasta']):
+                    case $hoy->isAfter($poliza['vigencia_hasta']) && $poliza['renovada'] == 0:
                         $poliza["estado_poliza_id"] = 5;
                         //CUMPLIDA
                         break;
@@ -177,27 +179,27 @@ class PolizaController extends Controller
 
         if ($poliza->estado_poliza_id != 1) {
             switch ($poliza) {
-                case $hoy->isAfter($poliza->vigencia_desde) && $hoy->isBefore($poliza->vigencia_hasta->subMonth()) && !$poliza->renueva_numero:
+                case $hoy->isAfter($poliza->vigencia_desde) && $hoy->isBefore($poliza->vigencia_hasta->subMonth()) && $poliza->renovada == 0:
                     $poliza->estado_poliza_id = 2;
                     $poliza->save();
                     //VIGENTE
                     break;
-                case $hoy->isAfter($poliza->vigencia_hasta->subMonth()) && $hoy->isBefore($poliza->vigencia_hasta) && !$poliza->renueva_numero:
+                case $hoy->isAfter($poliza->vigencia_hasta->subMonth()) && $hoy->isBefore($poliza->vigencia_hasta) && $poliza->renovada == 0:
                     $poliza->estado_poliza_id = 3;
                     $poliza->save();
                     //VIGENTE A RENOVAR
                     break;
-                case $hoy->isAfter($poliza->vigencia_desde) && $hoy->isBefore($poliza->vigencia_hasta) && $poliza->renueva_numero:
+                case $hoy->isAfter($poliza->vigencia_desde) && $hoy->isBefore($poliza->vigencia_hasta) && $poliza->renovada == 1:
                     $poliza->estado_poliza_id = 6;
                     $poliza->save();
                     //VIGENTE RENOVADA
                     break;
-                case $hoy->isAfter($poliza->vigencia_hasta) && $poliza->renueva_numero:
+                case $hoy->isAfter($poliza->vigencia_hasta) && $poliza->renovada == 1:
                     $poliza->estado_poliza_id = 4;
                     $poliza->save();
                     //CUMPLIDA RENOVADA
                     break;
-                case $hoy->isAfter($poliza->vigencia_hasta):
+                case $hoy->isAfter($poliza->vigencia_hasta) && $poliza->renovada == 0:
                     $poliza->estado_poliza_id = 5;
                     $poliza->save();
                     //CUMPLIDA
@@ -211,6 +213,7 @@ class PolizaController extends Controller
                     # code...
                     break;
             }
+            return $poliza;
         }
     }
 }

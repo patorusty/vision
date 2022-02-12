@@ -42,7 +42,7 @@ const mutations = {
         );
     },
     CREATE_SINIESTRO(state, siniestro) {
-        state.siniestros.push(siniestro);
+        state.siniestros.unshift(siniestro);
     },
     UPDATE_SINIESTRO(state, siniestro) {
         var item = state.siniestros.find(item => item.id === siniestro.id);

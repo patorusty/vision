@@ -200,7 +200,7 @@ const mutations = {
         state.riesgo_automotor = {...state.riesgo_automotor, ...pair};
     },
     CREATE_RIESGO_AUTOMOTOR(state, riesgo_automotor) {
-        state.riesgo_automotores.push(riesgo_automotor);
+        state.riesgo_automotores.unshift(riesgo_automotor);
     },
     DELETE_RIESGO_AUTOMOTOR(state, id) {
         state.riesgo_automotores = state.riesgo_automotores.filter(u => u.id != id);

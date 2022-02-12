@@ -23,6 +23,7 @@ class Poliza extends Model
         'numero',
         'estado_poliza_id',
         'renueva_numero',
+        'renovada',
         'tipo_vigencia_id',
         'vigencia_dias',
         'vigencia_desde',
