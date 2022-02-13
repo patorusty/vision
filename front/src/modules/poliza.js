@@ -3,13 +3,13 @@ import moment from "moment";
 
 const API_URL = "/polizas";
 
-const setMediodia = fecha => {
-  var m = moment(fecha, "ddd MMM D YYYY HH:mm:ss ZZ");
-  m.set("hour", 12);
-  m.set("minute", 0);
-  m.set("second", 0);
-  return m.toJSON();
-};
+// const setMediodia = fecha => {
+//   var m = moment(fecha, "ddd MMM DD YYYY HH:mm:ss Z+HHmm");
+//   m.set("hour", 12);
+//   m.set("minute", 0);
+//   m.set("second", 0);
+//   return m.toJSON();
+// };
 
 const state = () => ({
   polizas: [],
@@ -18,9 +18,9 @@ const state = () => ({
   poliza: {
     estado_poliza_id: 100,
     tipo_riesgo_id: 1,
-    vigencia_desde: setMediodia(moment()),
+    vigencia_desde: new Date(),
     tipo_vigencia_id: 6,
-    fecha_solicitud: setMediodia(moment()),
+    fecha_solicitud: new Date(),
     endosos: []
   },
   loading: true,
@@ -53,9 +53,9 @@ const mutations = {
       {   
           estado_poliza_id: 100,
           tipo_riesgo_id: 1,
-          vigencia_desde: setMediodia(moment()),
+          vigencia_desde: new Date(),
           tipo_vigencia_id: 6,
-          fecha_solicitud: setMediodia(moment()),
+          fecha_solicitud: new Date(),
           endosos: [],
           cliente:{ nombre: "",
                     apellido: ""
@@ -237,9 +237,9 @@ const actions = {
       codigo_productor_id : state.poliza.codigo_productor_id,
       renueva_numero : state.poliza.numero,
       tipo_vigencia_id : state.poliza.tipo_vigencia_id,
-      vigencia_desde : state.poliza.vigencia_hasta,
+      vigencia_desde : moment(state.poliza.vigencia_hasta),
       numero_solicitud: state.poliza.numero_solicitud,
-      fecha_solicitud : moment(),
+      fecha_solicitud : Date(),
       forma_pago_id: state.poliza.forma_pago_id,
       plan_pago: state.poliza.plan_pago,
       cantidad_cuotas: state.poliza.cantidad_cuotas,

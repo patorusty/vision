@@ -497,9 +497,13 @@ export default {
         mes,
         "M"
       );
-      this.poliza.vigencia_hasta.set("hour", 9);
-      this.poliza.vigencia_hasta.set("minute", 0);
-      this.poliza.vigencia_hasta.set("second", 0);
+      // this.poliza.vigencia_hasta.tz.setDefault(
+      //   "America/Argentina/Buenos_Aires"
+      // );
+      // console.log(this.poliza.vigencia_hasta);
+      // this.poliza.vigencia_hasta.set("hour", 9);
+      // this.poliza.vigencia_hasta.set("minute", 0);
+      // this.poliza.vigencia_hasta.set("second", 0);
       // this.poliza.vigencia_hasta = this.poliza.vigencia_hasta.toJSON();
     },
     volver() {
@@ -513,7 +517,6 @@ export default {
     },
     async create() {
       if (this.$refs.form.validate()) {
-        console.log(this.poliza);
         const createResult = await this.createPoliza(this.poliza);
         if (createResult) {
           this.$router.push({

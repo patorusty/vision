@@ -514,9 +514,9 @@ export default {
         mes,
         "M"
       );
-      this.poliza.vigencia_hasta.set("hour", 12);
-      this.poliza.vigencia_hasta.set("minute", 0);
-      this.poliza.vigencia_hasta.set("second", 0);
+      // this.poliza.vigencia_hasta.set("hour", 12);
+      // this.poliza.vigencia_hasta.set("minute", 0);
+      // this.poliza.vigencia_hasta.set("second", 0);
       this.poliza.vigencia_hasta = this.poliza.vigencia_hasta.toJSON();
     },
     volver() {
@@ -536,14 +536,6 @@ export default {
         }
       }
     }
-    // checkIfHasRiesgo() {
-    //   if (
-    //     this.poliza.riesgo_automotor.length < 1 ||
-    //     this.poliza.otro_riesgo.length < 1
-    //   ) {
-    //     this.SHOW_MODAL(true);
-    //   }
-    // }
   },
   created() {
     this.getPoliza(this.$route.params.numero_solicitud);
@@ -552,7 +544,6 @@ export default {
     this.getTipoRiesgos();
     this.getFormaPagos();
     this.getTipoVigencias();
-    // this.checkIfHasRiesgo();
     this.sumarMes();
   },
   beforeDestroy() {
