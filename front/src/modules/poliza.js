@@ -243,7 +243,12 @@ const actions = {
       forma_pago_id: state.poliza.forma_pago_id,
       plan_pago: state.poliza.plan_pago,
       cantidad_cuotas: state.poliza.cantidad_cuotas,
-      detalle_medio_pago: state.poliza.detalle_medio_pago
+      detalle_medio_pago: state.poliza.detalle_medio_pago,
+      fecha_emision: null,
+      fecha_recepcion: null,
+      fecha_entrega_correo: null,
+      fecha_entrega_original: null,
+      fecha_entrega_mail: null
     }
     const vigencia_hasta = moment(newPoliza.vigencia_desde).add(
       state.poliza.tipo_vigencia_id,
