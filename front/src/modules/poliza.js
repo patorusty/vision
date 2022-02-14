@@ -19,7 +19,7 @@ const state = () => ({
     estado_poliza_id: 100,
     tipo_riesgo_id: 1,
     vigencia_desde: new Date(),
-    tipo_vigencia_id: 6,
+    tipo_vigencia_id: 12,
     fecha_solicitud: new Date(),
     endosos: []
   },
@@ -54,7 +54,7 @@ const mutations = {
           estado_poliza_id: 100,
           tipo_riesgo_id: 1,
           vigencia_desde: new Date(),
-          tipo_vigencia_id: 6,
+          tipo_vigencia_id: 12,
           fecha_solicitud: new Date(),
           endosos: [],
           cliente:{ nombre: "",
@@ -237,42 +237,18 @@ const actions = {
       codigo_productor_id : state.poliza.codigo_productor_id,
       renueva_numero : state.poliza.numero,
       tipo_vigencia_id : state.poliza.tipo_vigencia_id,
-      vigencia_desde : moment(state.poliza.vigencia_hasta),
+      vigencia_desde : state.poliza.vigencia_hasta,
       numero_solicitud: state.poliza.numero_solicitud,
-      fecha_solicitud : Date(),
+      fecha_solicitud : new Date(),
       forma_pago_id: state.poliza.forma_pago_id,
       plan_pago: state.poliza.plan_pago,
       cantidad_cuotas: state.poliza.cantidad_cuotas,
       detalle_medio_pago: state.poliza.detalle_medio_pago
     }
-    var mes = null;
-    switch (state.poliza.tipo_vigencia_id) {
-      case 6:
-        mes = 12;
-        break;
-      case 5:
-        mes = 6;
-        break;
-      case 4:
-        mes = 4;
-        break;
-      case 3:
-        mes = 3;
-        break;
-      case 2:
-        mes = 2;
-        break;
-      case 1:
-        mes = 1;
-        break;
-    }
     const vigencia_hasta = moment(newPoliza.vigencia_desde).add(
-      mes,
+      state.poliza.tipo_vigencia_id,
       "M"
     );
-    vigencia_hasta.set("hour", 12);
-    vigencia_hasta.set("minute", 0);
-    vigencia_hasta.set("second", 0);
     newPoliza.vigencia_hasta = vigencia_hasta;
     const respP = await http.post(API_URL, newPoliza);
     respStatus.push(respP.status);

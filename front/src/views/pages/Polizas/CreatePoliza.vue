@@ -472,39 +472,11 @@ export default {
     ...mapMutations("poliza", ["RESET_POLIZA"]),
     ...mapMutations("cliente", ["RESET_CLIENTE"]),
     ...mapMutations("modal", ["SHOW_MODAL"]),
-    sumarMes(mes) {
-      switch (this.poliza.tipo_vigencia_id) {
-        case 6:
-          mes = 12;
-          break;
-        case 5:
-          mes = 6;
-          break;
-        case 4:
-          mes = 4;
-          break;
-        case 3:
-          mes = 3;
-          break;
-        case 2:
-          mes = 2;
-          break;
-        case 1:
-          mes = 1;
-          break;
-      }
+    sumarMes() {
       this.poliza.vigencia_hasta = moment(this.poliza.vigencia_desde).add(
-        mes,
+        this.poliza.tipo_vigencia_id,
         "M"
       );
-      // this.poliza.vigencia_hasta.tz.setDefault(
-      //   "America/Argentina/Buenos_Aires"
-      // );
-      // console.log(this.poliza.vigencia_hasta);
-      // this.poliza.vigencia_hasta.set("hour", 9);
-      // this.poliza.vigencia_hasta.set("minute", 0);
-      // this.poliza.vigencia_hasta.set("second", 0);
-      // this.poliza.vigencia_hasta = this.poliza.vigencia_hasta.toJSON();
     },
     volver() {
       this.$router.push({
