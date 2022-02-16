@@ -94,7 +94,7 @@
           ></v-autocomplete>
         </v-col>
         <v-col class="d-flex flex-column justify-space-between">
-          <v-row>
+          <v-row v-if="riesgo_automotor.automotor_tipo != 'Motovehiculo'">
             <v-col class="py-0">
               <v-select
                 :items="tipo_patentes"
@@ -121,6 +121,13 @@
               ></v-text-field>
             </v-col>
           </v-row>
+          <v-text-field
+            v-else
+            placeholder="AB123CD"
+            v-model="riesgo_automotor.patente"
+            :rules="[rules.required]"
+            v-uppercase
+          ></v-text-field>
           <v-text-field
             label="Motor"
             v-model="riesgo_automotor.nro_motor"
@@ -166,6 +173,7 @@
             :items="usos"
           ></v-select>
           <v-select
+            v-if="riesgo_automotor.automotor_tipo != 'Motovehiculo'"
             label="Tipo Carroceria"
             v-model="riesgo_automotor.tipo_carroceria"
             :items="tipo_carrocerias"

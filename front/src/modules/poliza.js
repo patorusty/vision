@@ -101,13 +101,6 @@ const mutations = {
   },SET_ESTADOS(state, estados) {
     state.estados = estados;
   },
-  SET_NUMERO_SOLICITUD(state, numero_solicitud) {
-    if (numero_solicitud == 0) {
-      state.poliza.numero_solicitud = 1;
-    } else {
-      state.poliza.numero_solicitud = numero_solicitud + 1;
-    }
-  },
   // SET_ENDOSOS_POR_POLIZA(state, endosos) {
   //   state.poliza.endosos = endosos;  
   // },
@@ -128,8 +121,8 @@ const actions = {
     const resp = await http.get("/polizas/a_renovar");
     commit("SET_POLIZAS_A_RENOVAR", resp.data);
   },
-  async getPoliza({ commit, dispatch, state }, numero_solicitud) {
-    const resp = await http.getOne(API_URL, numero_solicitud);
+  async getPoliza({ commit, dispatch, state }, id) {
+    const resp = await http.getOne(API_URL, id);
     dispatch('endoso/getEndososDePoliza', resp.data.id, {root:true})
     dispatch('siniestro/getSiniestrosDePoliza', resp.data.id, {root:true})
     commit("SET_POLIZA", resp.data);
@@ -224,9 +217,9 @@ const actions = {
       );
     }
   },
-  async renewPoliza({commit, state, dispatch}, numero_solicitud) {
+  async renewPoliza({commit, state, dispatch}, id) {
     const respStatus = [];
-    const resp = await http.getOne(API_URL, numero_solicitud);
+    const resp = await http.getOne(API_URL, id);
     commit("SET_POLIZA", resp.data);
     await dispatch('cargarUltimoNumeroSolicitud')
     commit('riesgo/SET_RIESGO_AUTOMOTORES', state.poliza.riesgo_automotor, {root:true})
@@ -238,7 +231,6 @@ const actions = {
       renueva_numero : state.poliza.numero,
       tipo_vigencia_id : state.poliza.tipo_vigencia_id,
       vigencia_desde : state.poliza.vigencia_hasta,
-      numero_solicitud: state.poliza.numero_solicitud,
       fecha_solicitud : new Date(),
       forma_pago_id: state.poliza.forma_pago_id,
       plan_pago: state.poliza.plan_pago,
@@ -367,14 +359,6 @@ const actions = {
   async getEstados({ commit }) {
     const resp = await http.get("estado_polizas");
     commit("SET_ESTADOS", resp.data);
-  },
-  async cargarUltimoNumeroSolicitud({ commit }) {
-    const resp = await http.get("numerosolicitud");
-    if(resp.data.length > 0){
-      commit("SET_NUMERO_SOLICITUD", resp.data[0].numero_solicitud);
-    } else {
-      commit("SET_NUMERO_SOLICITUD", 0);
-    }
   },
   async checkPolizas() {
     const resp = await http.get('/checkpolizas');

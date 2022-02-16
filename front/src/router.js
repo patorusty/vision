@@ -30,7 +30,7 @@ export default new Router({
         },
         {
           name: "Editar Poliza",
-          path: "polizas/automotor/:numero_solicitud",
+          path: "polizas/automotor/:id",
           component: () => import("@/views/pages/Polizas/EditPoliza.vue")
         },
         {

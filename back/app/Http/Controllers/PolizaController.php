@@ -60,9 +60,9 @@ class PolizaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($numero_solicitud)
+    public function show($id)
     {
-        $poliza = Poliza::where('numero_solicitud', $numero_solicitud)->with(['codigo_productor.productores', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'endosos.tipo_endoso', 'endosos.detalle_endoso', 'siniestros', 'riesgo_automotor.marca', 'riesgo_automotor.modelo', 'riesgo_automotor.version', 'riesgo_automotor.cobertura', 'otro_riesgo'])->get();
+        $poliza = Poliza::findOrFail($id)->with(['codigo_productor.productores', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'endosos.tipo_endoso', 'endosos.detalle_endoso', 'siniestros', 'riesgo_automotor.marca', 'riesgo_automotor.modelo', 'riesgo_automotor.version', 'riesgo_automotor.cobertura', 'otro_riesgo'])->get();
         return $poliza[0];
     }
 

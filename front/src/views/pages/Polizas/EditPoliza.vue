@@ -69,11 +69,11 @@
                   v-model="poliza.numero"
                   label="Poliza Nro"
                 ></v-text-field>
-                <v-text-field
+                <!-- <v-text-field
                   disabled
                   v-model="poliza.numero_solicitud"
                   label="Nro de Solicitud"
-                ></v-text-field>
+                ></v-text-field> -->
                 <v-select
                   v-model="poliza.forma_pago_id"
                   :items="forma_pagos"
@@ -515,7 +515,7 @@ export default {
     }
   },
   created() {
-    this.getPoliza(this.$route.params.numero_solicitud);
+    this.getPoliza(this.$route.params.id);
     this.getClientes();
     this.getCompanias();
     this.getTipoRiesgos();

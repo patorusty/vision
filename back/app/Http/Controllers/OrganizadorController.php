@@ -42,7 +42,7 @@ class OrganizadorController extends Controller
      */
     public function show($id)
     {
-        return Organizador::findOrFail($id);;
+        return Organizador::findOrFail($id);
     }
 
 

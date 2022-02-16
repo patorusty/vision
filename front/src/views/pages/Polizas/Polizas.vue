@@ -142,7 +142,7 @@
       <template v-slot:[`item.actions`]="{ item }">
         <router-link
           class="links"
-          :to="{ name: 'Editar Poliza', params: { numero_solicitud: item.numero_solicitud } }"
+          :to="{ name: 'Editar Poliza', params: { id: item.id } }"
         >
           <v-icon
             small
@@ -152,7 +152,7 @@
         </router-link>
         <v-icon
           small
-          v-on:click.stop="openRenewModal(item.numero_solicitud)"
+          v-on:click.stop="openRenewModal(item.id)"
           color="success"
         >
           mdi-refresh
@@ -300,8 +300,8 @@ export default {
       //   return `<v-icon small class="mr-2" color="success"> mdi-pencil </v-icon>`;
       // }
     },
-    openRenewModal(numero_solicitud) {
-      this.renewPoliza(numero_solicitud);
+    openRenewModal(id) {
+      this.renewPoliza(id);
     },
     itemRowColor(item) {
       switch (item.estado_poliza_id) {

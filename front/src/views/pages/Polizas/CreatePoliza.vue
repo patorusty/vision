@@ -91,11 +91,11 @@
                 v-model="poliza.numero"
                 label="Poliza Nro"
               ></v-text-field>
-              <v-text-field
+              <!-- <v-text-field
                 disabled
                 v-model="poliza.numero_solicitud"
                 label="Nro de Solicitud"
-              ></v-text-field>
+              ></v-text-field> -->
               <v-select
                 v-model="poliza.forma_pago_id"
                 :items="forma_pagos"
@@ -464,8 +464,7 @@ export default {
       "getTipoRiesgos",
       "getFormaPagos",
       "getTipoVigencias",
-      "createPoliza",
-      "cargarUltimoNumeroSolicitud"
+      "createPoliza"
     ]),
     ...mapActions("compania", ["getCompaniasActivas"]),
     ...mapActions("codigo_productor", ["getCodigoProductoresActivos"]),
@@ -493,7 +492,7 @@ export default {
         if (createResult) {
           this.$router.push({
             name: "Editar Poliza",
-            params: { numero_solicitud: this.poliza.numero_solicitud }
+            params: { id: this.poliza.id }
           });
           this.RESET_POLIZA();
         }
@@ -507,7 +506,6 @@ export default {
     this.getFormaPagos();
     this.getTipoVigencias();
     this.sumarMes();
-    this.cargarUltimoNumeroSolicitud();
   },
   beforeDestroy() {
     this.RESET_POLIZA();

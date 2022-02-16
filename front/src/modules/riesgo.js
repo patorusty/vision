@@ -26,6 +26,9 @@ const state = () => ({
           text: "Automotor"
         },
         {
+          value: "Motovehiculo",
+          text: "Motovehiculo"},
+        {
           value: "Camion",
           text: "Camion"
         },
