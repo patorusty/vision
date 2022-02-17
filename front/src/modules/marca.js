@@ -20,8 +20,7 @@ const mutations = {
     RESET_MARCA(state) {
         state.marca = Object.assign(
             {},
-            {
-            }
+            {}
         );
     },
     UPDATE_MARCA(state, marca) {
@@ -81,6 +80,7 @@ const actions = {
         const resp = await http.post(API_URL, marca);
         if (resp.status === 201) {
             commit("CREATE_MARCA", resp.data);
+            commit("SET_MARCA", resp.data);
             commit(
                 "snackbar/SHOW_SNACK",
                 {

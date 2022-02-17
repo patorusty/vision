@@ -4,7 +4,7 @@
       <span
         v-if="!edicion3"
         class="headline"
-      >Crear Modelo</span>
+      >Crear Version</span>
       <span
         v-else
         class="headline"
@@ -37,7 +37,7 @@
                 v-uppercase
                 v-model="version.nombre"
                 label="Nombre"
-                @keyup="buscarModelo"
+                @keyup="buscarVersion"
                 :rules="[
                   rules.required,
                   !nombreUsado || 'Este nombre ya está en uso',
@@ -98,7 +98,7 @@ export default {
     ...mapMutations("version", ["RESET_VERSION"]),
     async update() {
       if (this.$refs.form.validate()) {
-        const updateResult = await this.updateVersion(this.modelo);
+        const updateResult = await this.updateVersion(this.version);
         if (updateResult) {
           this.closeModal();
         }
@@ -106,7 +106,7 @@ export default {
     },
     async create() {
       if (this.$refs.form.validate()) {
-        const createResult = await this.createVersion(this.modelo);
+        const createResult = await this.createVersion(this.version);
         if (createResult) {
           this.closeModal();
         }
@@ -118,7 +118,7 @@ export default {
       this.$refs.form.resetValidation();
       this.nombreUsado = false;
     },
-    buscarModelo: debounce(async function() {
+    buscarVersion: debounce(async function() {
       if (
         this.version.nombre.length >= 2 &&
         this.version.nombre != this.version.nombreOriginal

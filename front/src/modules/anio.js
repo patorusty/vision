@@ -57,7 +57,7 @@ const actions = {
                 "snackbar/SHOW_SNACK",
                 {
                     color: "success",
-                    snackText: "Anio editada con éxito!"
+                    snackText: "Año editado con éxito!"
                 },
                 { root: true }
             );
@@ -76,12 +76,14 @@ const actions = {
     async createAnio({ commit }, anio) {
         const resp = await http.post(API_URL, anio);
         if (resp.status === 201) {
+            console.log(resp.data);
             commit("CREATE_ANIO", resp.data);
+            commit("SET_ANIO", resp.data);
             commit(
                 "snackbar/SHOW_SNACK",
                 {
                     color: "success",
-                    snackText: "Anio creada con éxito!"
+                    snackText: "Año creado con éxito!"
                 },
                 { root: true }
             );
@@ -106,7 +108,7 @@ const actions = {
                 "snackbar/SHOW_SNACK",
                 {
                     color: "success",
-                    snackText: "Anio eliminada con éxito!"
+                    snackText: "Año eliminada con éxito!"
                 },
                 { root: true }
             );
@@ -114,7 +116,7 @@ const actions = {
             commit(
                 "snackbar/SHOW_SNACK", {
                 color: "red",
-                snackText: "Existen modelos relacionados a este anio"
+                snackText: "Existen modelos relacionados a este año"
             },
                 { root: true }
             );

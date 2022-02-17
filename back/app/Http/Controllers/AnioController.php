@@ -10,7 +10,7 @@ class AnioController extends Controller
 {
     public function index()
     {
-        return Anio::all();
+        return Anio::orderBy('id', 'DESC')->get();
     }
 
     public function filtro(Request $request)
@@ -20,5 +20,19 @@ class AnioController extends Controller
         return Anio::with(["versiones" => function ($query) use ($modelo_id) {
             $query->where('automotor_modelo_id', $modelo_id);
         }])->findOrFail($anio_id);
+    }
+
+    public function store(Request $request)
+    {
+        try {
+            $anio = Anio::create($request->all());
+            $a = [
+                'id' => $anio->anio,
+                'anio' => $anio->anio
+            ];
+            return response($a, 201);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 }

@@ -12,30 +12,57 @@
             v-model="riesgo_automotor.automotor_tipo"
           ></v-select>
           <v-autocomplete
+            type="number"
+            hide-spin-buttons
             class="mt-6"
             :items="anios"
             item-text="anio"
             item-value="id"
             label="Año"
+            :search-input="searchAnio"
             v-model="riesgo_automotor.automotor_anio_id"
-            @input="updateAnio"
             :rules="[rules.required]"
-            return_object
             clearable
-          ></v-autocomplete>
+            menu-props="closeOnContentClick"
+            @input="updateAnio"
+            no-data-text="No se encontraron registros"
+          ><template
+              v-if="searchAnio"
+              v-slot:no-data
+            >
+              <p class="grey--text text--darken-1 pa-2 mb-0">
+                "{{ searchAnio }}" no existe, click &nbsp;
+                <a @click="createYear(searchAnio)">AQUI</a>
+                &nbsp;para crearla
+              </p>
+            </template></v-autocomplete>
           <v-autocomplete
+            ref="marcas"
             class="mt-6"
             :items="marcas"
             item-text="nombre"
             item-value="id"
             label="Marca"
+            :search-input.sync="searchMarca"
+            @update:search-input="toUpper('searchMarca')"
             v-model="riesgo_automotor.automotor_marca_id"
-            @input="updateMarca"
             :rules="[rules.required]"
             clearable
+            menu-props="closeOnContentClick"
+            @input="updateMarca"
             no-data-text="No se encontraron registros"
-          ></v-autocomplete>
+          ><template
+              v-if="searchMarca"
+              v-slot:no-data
+            >
+              <p class="grey--text text--darken-1 pa-2 mb-0">
+                "{{ searchMarca | upper }}" no existe, click &nbsp;
+                <a @click="createBrand(searchMarca)">AQUI</a>
+                &nbsp;para crearla
+              </p>
+            </template></v-autocomplete>
           <v-autocomplete
+            ref="modelos"
             class="mt-6"
             :items="modelos"
             item-text="nombre"
@@ -56,10 +83,11 @@
               <p class="grey--text text--darken-1 pa-2 mb-0">
                 "{{ searchModelo | upper }}" no existe, click &nbsp;
                 <a @click="createModel(searchModelo)">AQUI</a>
-                &nbsp;para crearla
+                &nbsp;para crearlo
               </p>
             </template></v-autocomplete>
           <v-autocomplete
+            ref="versiones"
             class="mt-6"
             :items="versiones"
             item-text="nombre"
@@ -123,7 +151,7 @@
           </v-row>
           <v-text-field
             v-else
-            placeholder="AB123CD"
+            placeholder="A123BCD"
             v-model="riesgo_automotor.patente"
             :rules="[rules.required]"
             v-uppercase
@@ -215,6 +243,8 @@ import { helpers } from "../../../../../../../helpers";
 export default {
   mixins: [helpers],
   data: () => ({
+    searchAnio: null,
+    searchMarca: null,
     searchModelo: null,
     searchVersion: null
   }),
@@ -231,7 +261,7 @@ export default {
       "equipos_rastreo"
     ]),
     ...mapState("version", ["version", "versiones", "modelo_id"]),
-    ...mapState("marca", ["marcas"]),
+    ...mapState("marca", ["marcas", "marca"]),
     ...mapState("modelo", ["modelos", "marca_id", "modelo"]),
     ...mapState("anio", ["anio", "anios"]),
     ...mapState("cobertura", ["coberturas"]),
@@ -247,7 +277,9 @@ export default {
   methods: {
     ...mapMutations("riesgo", ["UPDATE_RIESGO_AUTOMOTOR", "UPDATE_KV"]),
     ...mapMutations("anio", ["SET_ANIO"]),
-    ...mapActions("modelo", ["getModelosPorMArca", "createModelo"]),
+    ...mapActions("anio", ["createAnio"]),
+    ...mapActions("marca", ["createMarca"]),
+    ...mapActions("modelo", ["getModelosPorMarca", "createModelo"]),
     ...mapMutations("modelo", ["UPDATE_MARCA_ID"]),
     ...mapActions("version", ["createVersion", "getVersionesPorModeloYanio"]),
     ...mapMutations("version", [
@@ -255,6 +287,27 @@ export default {
       "UPDATE_MODELO_ID",
       "UPDATE_ANIO_ID"
     ]),
+    async createYear(anio) {
+      const a = {
+        anio: anio.trim(),
+        id: anio.trim()
+      };
+      const createResult = await this.createAnio(a);
+      if (createResult) {
+        this.UPDATE_KV({ automotor_anio_id: this.anio.anio });
+      }
+    },
+    async createBrand(nombre) {
+      const marca = {
+        nombre: nombre.trim()
+      };
+      const createResult = await this.createMarca(marca);
+      if (createResult) {
+        this.$refs.modelos.reset();
+        this.UPDATE_KV({ automotor_marca_id: this.marca.id });
+        this.updateMarca();
+      }
+    },
     async createModel(nombre) {
       const model = {
         nombre: nombre.trim(),
@@ -263,6 +316,7 @@ export default {
       const createResult = await this.createModelo(model);
       if (createResult) {
         this.UPDATE_KV({ automotor_modelo_id: this.modelo.id });
+        this.updateModelo();
       }
     },
     async crearVersion(nombre) {
@@ -272,15 +326,12 @@ export default {
         this.UPDATE_KV({ automotor_version_id: this.version.id });
       }
     },
-    change() {
-      this.riesgo_automotor.patente = null;
-    },
     updateAnio(a) {
       this.SET_ANIO({ id: a, anio: a });
     },
     updateMarca() {
       this.UPDATE_MARCA_ID(this.riesgo_automotor.automotor_marca_id);
-      this.getModelosPorMArca();
+      this.getModelosPorMarca();
     },
     updateModelo() {
       this.UPDATE_MODELO_ID(this.riesgo_automotor.automotor_modelo_id);
@@ -292,19 +343,25 @@ export default {
     "riesgo_automotor.automotor_marca_id": function() {
       if (this.riesgo_automotor.automotor_marca_id == null) {
         this.riesgo_automotor.automotor_modelo_id = null;
+        this.$refs.modelos.reset();
         this.riesgo_automotor.automotor_version_id = null;
+        this.$refs.versiones.reset();
       }
     },
     "riesgo_automotor.automotor_modelo_id": function() {
       if (this.riesgo_automotor.automotor_modelo_id == null) {
         this.riesgo_automotor.automotor_version_id = null;
+        this.$refs.versiones.reset();
       }
     },
     "riesgo_automotor.automotor_anio_id": function() {
       if (this.riesgo_automotor.automotor_anio_id == null) {
         this.riesgo_automotor.automotor_modelo_id = null;
+        this.$refs.modelos.reset();
         this.riesgo_automotor.automotor_marca_id = null;
+        this.$refs.marcas.reset();
         this.riesgo_automotor.automotor_version_id = null;
+        this.$refs.versiones.reset();
       }
     }
   }

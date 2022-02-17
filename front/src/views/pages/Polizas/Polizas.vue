@@ -307,13 +307,15 @@ export default {
       switch (item.estado_poliza_id) {
         case 1:
           return "red lighten-1";
+        case 2:
+        case 3:
+          return "blue lighten-1";
         case 4:
         case 5:
-          return "light-green lighten-2";
-        case "SIN RECLAMO (Daño a Tercero)":
+        case 6:
           return "light-green lighten-2";
         case 7:
-          return "grey lighten-2";
+          return "blue-grey lighten-3";
       }
     },
     envio(item) {
