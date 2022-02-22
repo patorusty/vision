@@ -11,7 +11,7 @@ class CoberturaController extends Controller
 {
     public function index()
     {
-        return Cobertura::all();
+        return Cobertura::orderBy('nombre', 'ASC')->get();
     }
 
 

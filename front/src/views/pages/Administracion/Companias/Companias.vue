@@ -11,9 +11,13 @@
         v-uppercase
       ></v-text-field>
       <v-spacer></v-spacer>
-      <v-btn color="primary" @click="SHOW_MODAL(false)" dark>Crear</v-btn>
+      <v-btn
+        color="primary"
+        @click="SHOW_MODAL(false)"
+        dark
+      >Crear</v-btn>
       <v-dialog
-        @click:outside="HIDE_MODAL(false)"
+        @click:outside="closeModal()"
         :value="modal"
         max-width="70%"
       >
@@ -29,7 +33,10 @@
       multi-sort
       :loading="loading"
     >
-      <template slot="item.activo" slot-scope="props">{{
+      <template
+        slot="item.activo"
+        slot-scope="props"
+      >{{
         textoActivo(props.item.activo)
       }}</template>
       <template v-slot:[`item.actions`]="{ item }">
@@ -55,16 +62,27 @@
         </v-icon>
       </template>
     </v-data-table>
-    <v-dialog :retain-focus="false" max-width="30%" v-model="modalDelete">
+    <v-dialog
+      :retain-focus="false"
+      max-width="30%"
+      v-model="modalDelete"
+    >
       <v-card class="pa-4">
         <v-card-text>
           <span>Esta seguro que desea eliminar esta Compania?</span>
         </v-card-text>
         <v-card-actions class="py-0 pt-3 pr-6 d-flex justify-end">
-          <v-btn dark color="red" @click="modalDelete = false">Cancelar</v-btn>
-          <v-btn class="ml-4" dark color="success" @click="deleteCompany"
-            >Confirmar</v-btn
-          >
+          <v-btn
+            dark
+            color="red"
+            @click="modalDelete = false"
+          >Cancelar</v-btn>
+          <v-btn
+            class="ml-4"
+            dark
+            color="success"
+            @click="deleteCompany"
+          >Confirmar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -77,7 +95,7 @@ import { helpers } from "../../../../helpers";
 import ModalCompanias from "./ModalCompanias.vue";
 export default {
   components: {
-    ModalCompanias,
+    ModalCompanias
   },
   mixins: [helpers],
   data: () => ({
@@ -90,18 +108,16 @@ export default {
       { text: "Tel. Auxilio", value: "telefono_aux" },
       { text: "Tel. Siniestro", value: "telefono_siniestros" },
       { text: "Activo", value: "activo" },
-      { text: "Actions", value: "actions", sortable: false, align: "right" },
-    ],
+      { text: "Actions", value: "actions", sortable: false, align: "right" }
+    ]
   }),
   computed: {
     ...mapState("compania", ["companias", "loading"]),
-    ...mapState("modal", ["modal"]),
+    ...mapState("modal", ["modal"])
   },
   methods: {
-    ...mapActions("compania", [
-      "getCompanias",
-      "deleteCompania",
-    ]),
+    ...mapActions("compania", ["getCompanias", "deleteCompania"]),
+    ...mapMutations("compania", ["RESET_COMPANIA"]),
     ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL"]),
     openDeleteModal(id) {
       this.idSelected = id;
@@ -111,10 +127,14 @@ export default {
       this.deleteCompania(this.idSelected);
       this.modalDelete = false;
     },
+    closeModal() {
+      this.HIDE_MODAL(false);
+      this.RESET_COMPANIA();
+    }
   },
   created() {
     this.getCompanias();
-  },
+  }
 };
 </script>
 

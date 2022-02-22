@@ -431,16 +431,6 @@ export default {
     isLoading: false,
     images: [],
     files: [],
-    tipos_persona: [
-      {
-        value: "Persona Fisica",
-        text: "Persona Fisica"
-      },
-      {
-        value: "Persona Juridica",
-        text: "Persona Juridica"
-      }
-    ],
     condiciones: [
       {
         value: "Consumidor Final",
@@ -457,7 +447,7 @@ export default {
     ]
   }),
   computed: {
-    ...mapState("cliente", ["cliente"]),
+    ...mapState("cliente", ["cliente", "tipos_persona"]),
     ...mapState("productor", ["productores"])
   },
   methods: {

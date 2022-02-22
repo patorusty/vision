@@ -36,9 +36,7 @@
     >
       <template v-slot:[`item.nombre`]="{ item }">
         {{
-          item.tipo_persona == 2
-            ? item.razon_social
-            : nombreCompleto(item)
+          nombreCompleto(item)
         }}
       </template>
       <template v-slot:[`item.documento`]="{ item }">
@@ -125,9 +123,16 @@ export default {
       return this.clientes.filter(
         c =>
           // c.email.toUpperCase().includes(this.search.toUpperCase()) ||
-          c.nombre.toUpperCase().includes(this.search.toUpperCase()) ||
-          c.apellido.toUpperCase().includes(this.search.toUpperCase()) ||
+          (c.nombre
+            ? c.nombre.toUpperCase().includes(this.search.toUpperCase())
+            : false) ||
+          (c.apellido
+            ? c.apellido.toUpperCase().includes(this.search.toUpperCase())
+            : false) ||
           (c.nro_dni ? c.nro_dni.toString().includes(this.search) : false) ||
+          (c.razon_social
+            ? c.razon_social.toString().includes(this.search)
+            : false) ||
           (c.cuit ? c.cuit.toString().includes(this.search) : false)
         // ||
         // c.celular.toString().includes(this.search) ||

@@ -23,8 +23,8 @@
       :headers="headers"
       :items-per-page="5"
       :items="codigo_organizadores"
-      :search="search"
-      multi-sort
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
       :loading="loading"
     >
       <template
@@ -92,7 +92,9 @@ export default {
   data: () => ({
     search: "",
     idSelected: "",
-    modalDelete: false
+    modalDelete: false,
+    sortBy: "organizadores.apellido",
+    sortDesc: false
   }),
   computed: {
     ...mapState("compania", ["loading"]),
@@ -102,7 +104,6 @@ export default {
       return [
         { text: "Apellido", value: "organizadores.apellido" },
         { text: "Nombre", value: "organizadores.nombre" },
-        { text: "Matricula", value: "organizadores.matricula" },
         {
           text: "Codigo Organizador",
           value: "codigo_organizador"

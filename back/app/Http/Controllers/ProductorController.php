@@ -15,7 +15,7 @@ class ProductorController extends Controller
      */
     public function index()
     {
-        return Productor::all();
+        return Productor::orderBy('apellido', 'ASC')->get();
     }
 
     public function productoresActivos()

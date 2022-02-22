@@ -25,7 +25,8 @@
       :items-per-page="5"
       :items="codigo_productores"
       :search="search"
-      multi-sort
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
       :loading="loading"
     >
       <template
@@ -93,7 +94,9 @@ export default {
   data: () => ({
     search: "",
     idSelected: "",
-    modalDelete: false
+    modalDelete: false,
+    sortBy: "productores.apellido",
+    sortDesc: false
   }),
   computed: {
     ...mapState("compania", ["loading"]),

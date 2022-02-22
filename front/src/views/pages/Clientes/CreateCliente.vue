@@ -23,12 +23,12 @@
           <v-row>
             <v-col
               class="pt-0 pb-0"
-              v-if="cliente.tipo_persona === 'Persona Juridica'"
+              v-if="cliente.tipo_persona === 2"
             >
               <v-text-field
                 v-model="cliente.razon_social"
                 :rules="
-                  cliente.tipo_persona === 'Persona Juridica'
+                  cliente.tipo_persona === 2
                     ? [rules.required]
                     : null
                 "
@@ -69,12 +69,12 @@
             </v-col>
             <v-col
               class="pt-0 pb-0"
-              v-if="cliente.tipo_persona === 'Persona Juridica'"
+              v-if="cliente.tipo_persona === 2"
             >
               <v-text-field
                 v-model="cliente.cuit"
                 :rules="
-                  cliente.tipo_persona === 'Persona Juridica'
+                  cliente.tipo_persona === 2
                     ? [rules.required, !cuitUsado || 'Este CUIT ya está en uso']
                     : null
                 "
@@ -428,16 +428,6 @@ export default {
     isLoading: false,
     images: [],
     files: [],
-    tipos_persona: [
-      {
-        value: "Persona Fisica",
-        text: "Persona Fisica"
-      },
-      {
-        value: "Persona Juridica",
-        text: "Persona Juridica"
-      }
-    ],
     condiciones: [
       {
         value: "Consumidor Final",
@@ -454,7 +444,7 @@ export default {
     ]
   }),
   computed: {
-    ...mapState("cliente", ["cliente"]),
+    ...mapState("cliente", ["cliente", "tipos_persona"]),
     ...mapState("productor", ["productores"])
   },
   methods: {

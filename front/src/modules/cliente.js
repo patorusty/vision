@@ -5,13 +5,23 @@ const API_URL = '/clientes';
 const state = () => ({
     clientes: [],
     cliente: {
-        tipo_persona: "Persona Fisica",
+        tipo_persona: 1,
         cuit: "",
         nro_dni: "",
         activo: true,
         cuitOriginal: '',
         dniOriginal: ''
     },
+    tipos_persona: [
+        {
+            value: 1,
+            text: "Persona Fisica"
+        },
+        {
+            value: 2,
+            text: "Persona Juridica"
+        }
+        ],
     loading: true
 });
 const mutations = {
@@ -29,7 +39,7 @@ const mutations = {
         state.cliente = Object.assign(
             {},
             {
-                tipo_persona: "Persona Fisica",
+                tipo_persona: 1,
                 cuit: "",
                 nro_dni: "",
                 activo: true,

@@ -15,7 +15,7 @@ class OrganizadorController extends Controller
      */
     public function index()
     {
-        return Organizador::all();
+        return Organizador::orderBy('apellido', 'ASC')->get();
     }
 
     /**

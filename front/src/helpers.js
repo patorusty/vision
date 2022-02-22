@@ -33,7 +33,11 @@ export const helpers = {
       return `${item.productores.apellido} ${item.productores.nombre} Cod. (${item.codigo_productor})`;
     },
     nombreCompleto(item) {
+      if (item.razon_social == null) {
       return `${item.apellido}  ${item.nombre}`;
+      } else {
+        return item.razon_social
+      }
     },
     textCompleto(nro) {
       return nro === 1 || nro === true ? "SI" : "NO";

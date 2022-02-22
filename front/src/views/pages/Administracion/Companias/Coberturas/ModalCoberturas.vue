@@ -31,9 +31,6 @@
                 v-uppercase
                 label="Franquicia"
                 v-model="cobertura.franquicia"
-                :rules="[
-                  rules.required,
-                ]"
               >
               </v-text-field>
             </v-col>
@@ -44,9 +41,6 @@
                 v-uppercase
                 label="Antigüedad"
                 v-model="cobertura.antiguedad"
-                :rules="[
-                  rules.required,
-                ]"
               >
               </v-text-field>
             </v-col>

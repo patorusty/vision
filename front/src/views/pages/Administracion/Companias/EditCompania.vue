@@ -186,6 +186,7 @@ export default {
       this.$router.push({
         name: "Compañías"
       });
+      this.RESET_COMPANIA();
     },
     async update() {
       if (this.$refs.form.validate()) {

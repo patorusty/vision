@@ -20,7 +20,7 @@ class CodigoOrganizador extends Model
 
     public function organizadores()
     {
-        return $this->belongsTo(Organizador::class, 'organizador_id');
+        return $this->belongsTo(Organizador::class, 'organizador_id')->orderBy('apellido');
     }
     public function companias()
     {

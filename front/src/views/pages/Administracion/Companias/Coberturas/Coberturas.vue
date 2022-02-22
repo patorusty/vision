@@ -25,7 +25,8 @@
       :items-per-page="5"
       :items="coberturas"
       :search="search"
-      multi-sort
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
       :loading="loading"
     >
       <template
@@ -99,7 +100,9 @@ export default {
   data: () => ({
     search: "",
     idSelected: "",
-    modalDelete: false
+    modalDelete: false,
+    sortBy: "nombre",
+    sortDesc: false
   }),
   computed: {
     ...mapState("compania", ["loading"]),
@@ -110,11 +113,6 @@ export default {
         { text: "Nombre", value: "nombre" },
         { text: "Antiguedad", value: "antiguedad" },
         { text: "Todo Riesgo", value: "todo_riesgo" },
-        {
-          text: "Franquicia",
-          value: "franquicia"
-        },
-        // { text: "Ajuste", value: "ajuste" },
         { text: "Activa", value: "activo" },
         { text: "Actions", value: "actions", sortable: false, align: "right" }
       ];
