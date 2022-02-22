@@ -14,7 +14,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        return Cliente::with('productores')->get();
+        return Cliente::with('productores')->orderBy('apellido')->get();
     }
 
     /**
