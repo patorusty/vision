@@ -33,6 +33,8 @@
       :items-per-page="10"
       :items="clientesFiltrados"
       :loading="loading"
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
     >
       <template v-slot:[`item.nombre`]="{ item }">
         {{
@@ -104,7 +106,9 @@ export default {
   data: () => ({
     search: "",
     idSelected: null,
-    modalDelete: false
+    modalDelete: false,
+    sortBy: "apellido",
+    sortDesc: false
   }),
   computed: {
     ...mapState("cliente", ["clientes", "loading"]),
