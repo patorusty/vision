@@ -131,6 +131,7 @@
                           clearable
                           label="Desde"
                           v-on="on"
+                          v-model="poliza.vigencia_desde"
                         ></v-text-field>
                       </template>
                       <v-date-picker
@@ -141,7 +142,6 @@
                         no-title
                         scrollable
                         locale="es-la"
-                        @input="calendarioDesde = false"
                       >
                       </v-date-picker>
                     </v-menu>

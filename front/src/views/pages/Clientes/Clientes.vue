@@ -36,7 +36,7 @@
     >
       <template v-slot:[`item.nombre`]="{ item }">
         {{
-          item.razon_social
+          item.tipo_persona == 2
             ? item.razon_social
             : nombreCompleto(item)
         }}
