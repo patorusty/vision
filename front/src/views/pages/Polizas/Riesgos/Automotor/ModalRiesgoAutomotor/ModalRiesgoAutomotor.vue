@@ -13,13 +13,13 @@
             </v-icon>
             Riesgo
           </v-tab>
-          <v-tab v-if="riesgo_automotor.automotor_tipo != 'Motovehiculo'">
+          <v-tab v-if="riesgo_automotor.automotor_tipo != 2">
             <v-icon left>
               mdi-gas-cylinder
             </v-icon>
             GNC
           </v-tab>
-          <v-tab v-if="riesgo_automotor.automotor_tipo != 'Motovehiculo'">
+          <v-tab v-if="riesgo_automotor.automotor_tipo != 2">
             <v-icon left>
               mdi-clipboard-text-outline
             </v-icon>

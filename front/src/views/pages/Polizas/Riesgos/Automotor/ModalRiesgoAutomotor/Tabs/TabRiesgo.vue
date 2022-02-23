@@ -122,7 +122,7 @@
           ></v-autocomplete>
         </v-col>
         <v-col class="d-flex flex-column justify-space-between">
-          <v-row v-if="riesgo_automotor.automotor_tipo != 'Motovehiculo'">
+          <v-row v-if="riesgo_automotor.automotor_tipo != 2">
             <v-col class="py-0">
               <v-select
                 :items="tipo_patentes"
@@ -132,7 +132,7 @@
             </v-col>
             <v-col class="py-0">
               <v-text-field
-                v-if="riesgo_automotor.tipo_patente == 0"
+                v-if="riesgo_automotor.tipo_patente == 1"
                 placeholder="ABC123"
                 v-mask="'AAA###'"
                 v-model="riesgo_automotor.patente"
@@ -201,7 +201,7 @@
             :items="usos"
           ></v-select>
           <v-select
-            v-if="riesgo_automotor.automotor_tipo != 'Motovehiculo'"
+            v-if="riesgo_automotor.automotor_tipo != 2"
             label="Tipo Carroceria"
             v-model="riesgo_automotor.tipo_carroceria"
             :items="tipo_carrocerias"

@@ -109,7 +109,9 @@
           class="links"
           :to=" {name: 'Editar Cliente', params: {id: item.cliente.id}}"
           target="_blank"
-        >{{ item.cliente.nombre }} {{ item.cliente.apellido }}
+        >{{
+          nombreCompleto(item.cliente)
+        }}
         </router-link>
       </template>
       <template v-slot:[`item.dominio`]="{ item }">
@@ -225,10 +227,14 @@ export default {
           (this.filtroEstado.length > 0
             ? this.filtroEstado.includes(item.estado_poliza_id)
             : item.estado_poliza_id != 0) &&
-          (this.cliente != ""
+          (this.cliente != "" && item.cliente.apellido != null
             ? item.cliente.apellido.includes(this.cliente) ||
-              item.cliente.nombre.includes(this.cliente)
+              item.cliente.nombre.includes(this.cliente) ||
+              this.filterRazon(item)
             : item.cliente.apellido) &&
+          // (this.cliente != "" && item.cliente.razon_social != null
+          //   ? item.cliente.razon_social.includes(this.cliente)
+          //   : item.cliente) &&
           (this.patente != "" && item.tipo_riesgo_id == 1
             ? item.riesgo_automotor.find(riesgo =>
                 riesgo.patente.includes(this.patente)
@@ -282,6 +288,11 @@ export default {
       "getEstados"
     ]),
     ...mapActions("compania", ["getCompanias"]),
+    filterRazon(item) {
+      if (this.cliente != "" && item.cliente.razon_social != null) {
+        return item.cliente.razon_social.includes(this.cliente);
+      }
+    },
     openDeleteModal(id) {
       this.idSelected = id;
       this.modalDelete = true;
@@ -307,14 +318,14 @@ export default {
       switch (item.estado_poliza_id) {
         case 1:
           return "red lighten-1";
-        case 2:
         case 3:
-          return "blue lighten-1";
         case 4:
+          return "blue lighten-1";
+        case 7:
         case 5:
         case 6:
           return "light-green lighten-2";
-        case 7:
+        case 2:
           return "blue-grey lighten-3";
       }
     },

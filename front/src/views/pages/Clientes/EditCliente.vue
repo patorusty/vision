@@ -430,24 +430,10 @@ export default {
     calendario2: false,
     isLoading: false,
     images: [],
-    files: [],
-    condiciones: [
-      {
-        value: "Consumidor Final",
-        text: "Consumidor Final"
-      },
-      {
-        value: "Monotributo",
-        text: "Monotributo"
-      },
-      {
-        value: "Resp. Inscripto",
-        text: "Resp. Inscripto"
-      }
-    ]
+    files: []
   }),
   computed: {
-    ...mapState("cliente", ["cliente", "tipos_persona"]),
+    ...mapState("cliente", ["cliente", "tipos_persona", "condiciones"]),
     ...mapState("productor", ["productores"])
   },
   methods: {

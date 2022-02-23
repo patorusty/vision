@@ -116,6 +116,35 @@ export default new Router({
         },
       ]
 
-    }
+    },
+    {
+      path: "/",
+      component: () => import("@/views/pages/Index"),
+      children: [
+        {
+          name: "Login",
+          path: "login",
+          component: () => import("@/views/pages/Login"),
+          meta: { guestOnly: true },
+        },
+        // {
+        //   name: "Registro",
+        //   path: "registro",
+        //   component: () => import("@/views/pages/Registro"),
+        //   meta: { guestOnly: true },
+        // },
+      ],
+    },
+    // {
+    //   path: "*",
+    //   component: () => import("@/views/pages/Index"),
+    //   children: [
+    //     {
+    //       name: "404 Error",
+    //       path: "",
+    //       component: () => import("@/views/pages/Error"),
+    //     },
+    //   ],
+    // },
   ]
 });

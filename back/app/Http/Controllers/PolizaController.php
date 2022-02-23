@@ -141,31 +141,30 @@ class PolizaController extends Controller
             if ($poliza["estado_poliza_id" != 1]) {
                 switch ($poliza) {
                     case $hoy->isAfter($poliza['vigencia_desde']) && $hoy->isBefore($poliza['vigencia_hasta']->subMonth()) && $poliza['renovada'] == 0:
-                        $poliza["estado_poliza_id"] = 2;
+                        $poliza["estado_poliza_id"] = 3;
                         //VIGENTE
                         break;
                     case $hoy->isAfter($poliza['vigencia_hasta']->subMonth()) && $hoy->isBefore($poliza['vigencia_hasta']) && $poliza['renovada'] == 0:
-                        $poliza["estado_poliza_id"] = 3;
+                        $poliza["estado_poliza_id"] = 4;
                         //VIGENTE A RENOVAR
                         break;
                     case $hoy->isAfter($poliza['vigencia_desde']) && $hoy->isBefore($poliza['vigencia_hasta']) && $poliza['renovada'] == 1:
-                        $poliza["estado_poliza_id"] = 6;
+                        $poliza["estado_poliza_id"] = 7;
                         //VIGENTE RENOVADA
                         break;
                     case $hoy->isAfter($poliza['vigencia_hasta']) && $poliza['renovada'] == 1:
-                        $poliza["estado_poliza_id"] = 4;
+                        $poliza["estado_poliza_id"] = 5;
                         //CUMPLIDA RENOVADA
                         break;
                     case $hoy->isAfter($poliza['vigencia_hasta']) && $poliza['renovada'] == 0:
-                        $poliza["estado_poliza_id"] = 5;
+                        $poliza["estado_poliza_id"] = 6;
                         //CUMPLIDA
                         break;
                     case $hoy->isBefore($poliza['vigencia_desde']):
-                        $poliza["estado_poliza_id"] = 7;
+                        $poliza["estado_poliza_id"] = 2;
                         // PENDIENTE
                         break;
                     default:
-                        # code...
                         break;
                 }
             }
@@ -180,37 +179,36 @@ class PolizaController extends Controller
         if ($poliza->estado_poliza_id != 1) {
             switch ($poliza) {
                 case $hoy->isAfter($poliza->vigencia_desde) && $hoy->isBefore($poliza->vigencia_hasta->subMonth()) && $poliza->renovada == 0:
-                    $poliza->estado_poliza_id = 2;
+                    $poliza->estado_poliza_id = 3;
                     $poliza->save();
                     //VIGENTE
                     break;
                 case $hoy->isAfter($poliza->vigencia_hasta->subMonth()) && $hoy->isBefore($poliza->vigencia_hasta) && $poliza->renovada == 0:
-                    $poliza->estado_poliza_id = 3;
+                    $poliza->estado_poliza_id = 4;
                     $poliza->save();
                     //VIGENTE A RENOVAR
                     break;
                 case $hoy->isAfter($poliza->vigencia_desde) && $hoy->isBefore($poliza->vigencia_hasta) && $poliza->renovada == 1:
-                    $poliza->estado_poliza_id = 6;
+                    $poliza->estado_poliza_id = 7;
                     $poliza->save();
                     //VIGENTE RENOVADA
                     break;
                 case $hoy->isAfter($poliza->vigencia_hasta) && $poliza->renovada == 1:
-                    $poliza->estado_poliza_id = 4;
+                    $poliza->estado_poliza_id = 5;
                     $poliza->save();
                     //CUMPLIDA RENOVADA
                     break;
                 case $hoy->isAfter($poliza->vigencia_hasta) && $poliza->renovada == 0:
-                    $poliza->estado_poliza_id = 5;
+                    $poliza->estado_poliza_id = 6;
                     $poliza->save();
                     //CUMPLIDA
                     break;
                 case $hoy->isBefore($poliza->vigencia_desde):
-                    $poliza->estado_poliza_id = 7;
+                    $poliza->estado_poliza_id = 2;
                     $poliza->save();
                     // PENDIENTE
                     break;
                 default:
-                    # code...
                     break;
             }
             return $poliza;

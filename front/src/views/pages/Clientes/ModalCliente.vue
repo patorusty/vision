@@ -438,34 +438,10 @@ export default {
     calendario2: false,
     isLoading: false,
     images: [],
-    files: [],
-    tipos_persona: [
-      {
-        value: "Persona Fisica",
-        text: "Persona Fisica"
-      },
-      {
-        value: "Persona Juridica",
-        text: "Persona Juridica"
-      }
-    ],
-    condiciones: [
-      {
-        value: "Consumidor Final",
-        text: "Consumidor Final"
-      },
-      {
-        value: "Monotributo",
-        text: "Monotributo"
-      },
-      {
-        value: "Resp. Inscripto",
-        text: "Resp. Inscripto"
-      }
-    ]
+    files: []
   }),
   computed: {
-    ...mapState("cliente", ["cliente"]),
+    ...mapState("cliente", ["cliente", "tipos_persona", "condiciones"]),
     ...mapState("productor", ["productores"]),
     ...mapState("modal", ["edicion"])
   },

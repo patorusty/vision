@@ -6,7 +6,7 @@ const API_URL_RA = '/riesgo_automotor';
 const state = () => ({
     riesgo_automotor: {
         tipo_patente: 0,
-        automotor_tipo: "Automotor",
+        automotor_tipo: 1,
         equipo_rastreo: "No",
         uso: "Particular",
         combustible: "Nafta",
@@ -22,28 +22,28 @@ const state = () => ({
     loading: false,
     tipo_vehiculos: [
         {
-          value: "Automotor",
+          value: 1,
           text: "Automotor"
         },
         {
-          value: "Motovehiculo",
+          value: 2,
           text: "Motovehiculo"},
         {
-          value: "Camion",
+          value: 3,
           text: "Camion"
         },
         {
-          value: "Trailer",
+          value: 4,
           text: "Trailer"
         }
     ],
     tipo_patentes: [
         {
-          value: 0,
+          value: 1,
           text: "Nacional"
         },
         {
-          value: 1,
+          value: 2,
           text: "Mercosur"
         }
     ],
