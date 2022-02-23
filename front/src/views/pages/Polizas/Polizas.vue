@@ -227,7 +227,9 @@ export default {
           (this.filtroEstado.length > 0
             ? this.filtroEstado.includes(item.estado_poliza_id)
             : item.estado_poliza_id != 0) &&
-          (this.cliente != "" && item.cliente.apellido != null
+          (this.cliente != "" &&
+          item.cliente.apellido != null &&
+          item.cliente.nombre != null
             ? item.cliente.apellido.includes(this.cliente) ||
               item.cliente.nombre.includes(this.cliente) ||
               this.filterRazon(item)
