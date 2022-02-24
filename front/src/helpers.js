@@ -1,6 +1,5 @@
 import http from "./http-request";
 import moment from "moment";
-import axios from "axios";
 import Cookie from "js-cookie";
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 const currencyMask = createNumberMask({
@@ -83,7 +82,7 @@ export const helpers = {
           resolve(token);
         });
       }
-      return axios.get("http://vision.test/api/sanctum/csrf-cookie", { withCredentials: true });
+      return http.get("/sanctum/csrf-cookie", { withCredentials: true });
     },
   },
   computed: {
