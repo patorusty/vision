@@ -15,7 +15,8 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.2",
-    "debounce": "^1.2.0",
+    "debounce": "^1.2.1",
+    "js-cookie": "^3.0.1",
     "moment": "^2.24.0",
     "text-mask-addons": "^3.8.0",
     "v-mask": "^2.2.4",

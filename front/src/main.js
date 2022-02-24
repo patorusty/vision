@@ -26,6 +26,35 @@ Vue.use(VueMask)
 
 Vue.config.productionTip = false
 
+
+function isloggedIn() {
+  return localStorage.getItem("isLoggedIn");
+}
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.authOnly)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (!isloggedIn()) {
+      next({
+        path: "/login",
+      });
+    } else {
+      next();
+    }
+  } else if (to.matched.some((record) => record.meta.guestOnly)) {
+    if (isloggedIn()) {
+      next({
+        path: "/",
+      });
+    } else {
+      next();
+    }
+  } else {
+    next(); // make sure to always call next()!
+  }
+});
+
 Vue.directive("uppercase", {
   inserted: function (el, _, vnode) {
     el.addEventListener("input", async function (e) {

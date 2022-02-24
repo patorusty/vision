@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Usuario;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 
@@ -15,19 +15,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return Usuario::with(['tipo_usuario'])->get();
+        return User::with(['tipo_usuario'])->get();
 
-        // return UsuariosResource::collection($usuarios);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        // return UsersResource::collection($usuarios);
     }
 
     /**
@@ -39,7 +29,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         try {
-            $usuario = Usuario::create($request->all());
+            $usuario = User::create($request->all());
             return $usuario;
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -54,20 +44,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return Usuario::findOrFail($id);
+        return User::findOrFail($id);
 
-        // return new UsuariosResource($usuario);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        // return new UsersResource($usuario);
     }
 
     /**
@@ -80,7 +59,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $usuario = Usuario::find($id);
+            $usuario = User::find($id);
             $usuario->update([
                 'nombre' => $request->input('nombre'),
                 'apellido' => $request->input('apellido'),
@@ -88,7 +67,7 @@ class UserController extends Controller
                 'tipo_usuario_id' => $request->input('tipo_usuario_id'),
                 'activo' => $request->input('activo'),
                 'email' => $request->input('email'),
-                'password' => $request->input('password'),
+                'password' => bcrypt($request->input('password')),
                 // 'avatar' => $request->input('avatar'),
             ]);
             return $usuario;
@@ -106,7 +85,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         try {
-            $usuario = Usuario::find($id);
+            $usuario = User::find($id);
             $usuario->delete();
             return $usuario;
         } catch (\Exception $e) {
@@ -116,6 +95,6 @@ class UserController extends Controller
     public function searchMail(Request $req)
     {
         $email = $req->input('email');
-        return ['usado' => Usuario::where('email', $email)->exists()];
+        return ['usado' => User::where('email', $email)->exists()];
     }
 }

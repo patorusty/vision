@@ -1,5 +1,7 @@
 import http from "./http-request";
 import moment from "moment";
+import axios from "axios";
+import Cookie from "js-cookie";
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 const currencyMask = createNumberMask({
   prefix: '$',
@@ -73,6 +75,15 @@ export const helpers = {
       return riesgo.valor_vehiculo != null
       ? valor+gnc+ac1+ac2
         : "";
+    },
+    getCookie() {
+      let token = Cookie.get("XSRF-TOKEN");
+      if (token) {
+        return new Promise((resolve) => {
+          resolve(token);
+        });
+      }
+      return axios.get("http://vision.test/api/sanctum/csrf-cookie", { withCredentials: true });
     },
   },
   computed: {

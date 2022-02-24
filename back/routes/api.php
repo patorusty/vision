@@ -17,8 +17,9 @@ use App\Http\Controllers\TipoEndosoController;
 use App\Http\Controllers\DetalleEndosoController;
 use App\Http\Controllers\AutomotorMarcaController;
 use App\Http\Controllers\AnioController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AutomotorModeloController;
-use App\Http\Controllers\AutomotorAnioController;
+// use App\Http\Controllers\AutomotorAnioController;
 use App\Http\Controllers\AutomotorVersionController;
 use App\Http\Controllers\SiniestroAutomotorController;
 use App\Http\Controllers\RiesgoAutomotorController;
@@ -26,7 +27,6 @@ use App\Http\Controllers\ImagenRAController;
 use App\Http\Controllers\EstadoPolizaController;
 use App\Http\Controllers\TipoUsuarioController;
 use App\Http\Controllers\UserController;
-use App\Models\RiesgoAutomotor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,9 +41,11 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+Route::post('logout', [AuthController::class, 'logout']);
+
+// Route::middleware('auth:sanctum')->group(function () {
 
 Route::apiResource('/configuracion/usuarios', UserController::class);
 Route::get('/configuracion/tipousuario', [TipoUsuarioController::class, "index"]);
@@ -109,7 +111,7 @@ Route::apiResource('/administracion/anios', AnioController::class);
 Route::get('/modelos/filtrar/{id}', [AutomotorModeloController::class, 'filtroMarca']);
 Route::post('/versiones/filtrar/', [AutomotorVersionController::class, 'filtro']);
 Route::post('/anios/filtrar/', [AnioController::class, 'filtro']);
-Route::get('/anios/filtrar/{id}', [AutomotorAnioController::class, 'filtroXAnio']);
+// Route::get('/anios/filtrar/{id}', [AutomotorAnioController::class, 'filtroXAnio']);
 Route::post('/marcas/busquedaMarca', [AutomotorMarcaController::class, 'searchMarca']);
 Route::get('/marcas/marcaxanio/{anio}', [AutomotorMarcaController::class, 'filtroXanio']);
 Route::post('/modelos/busquedaModelo', [AutomotorModeloController::class, 'searchModelo']);

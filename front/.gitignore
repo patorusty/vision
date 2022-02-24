@@ -1,37 +1,7 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/laravel,vuejs,vscode,osx
-# Edit at https://www.toptal.com/developers/gitignore?templates=laravel,vuejs,vscode,osx
-
-### Laravel ###
-back/vendor/
-back/node_modules/
-back/npm-debug.log
-back/yarn-error.log
-back/.env
-back
-
-# Laravel 4 specific
-back/bootstrap/compiled.php
-back/app/storage/
-
-# Laravel 5 & Lumen specific
-back/public/storage/
-back/public/hot/
-
-# Laravel 5 & Lumen specific with changed public path
-back/public_html/storage/
-back/public_html/hot/
-
-storage/*.key
-back/.env
-back/Homestead.yaml
-back/Homestead.json
-back/.vagrant
-back/.phpunit.result.cache
 
 # Laravel IDE helper
-back/*.meta.*
-back/_ide_*
+
 
 ### OSX ###
 # General

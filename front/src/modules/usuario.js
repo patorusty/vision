@@ -82,7 +82,7 @@ const actions = {
   },
 
   async createUsuario({ commit }, usuario) {
-    const resp = await http.post(API_URL, usuario);
+    const resp = await http.post('http://vision.test/api/register', usuario);
     if (resp.status === 201) {
       commit("CREATE_USUARIO", resp.data);
       commit(

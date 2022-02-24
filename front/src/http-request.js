@@ -1,8 +1,12 @@
 import axios from "axios";
 
 const http = axios.create({
-  baseURL: process.env.VUE_APP_ROOT_API
+  baseURL: process.env.VUE_APP_ROOT_API,
+  withCredentials: true
 });
+http.defaults.headers = {
+  'Content-Type': 'application/json',
+}
 
 export default {
   get(url) {

@@ -55,6 +55,22 @@
                 :rules="[rules.required]"
               ></v-text-field>
             </v-col>
+            <v-col cols="6">
+              <v-text-field
+                label="Password"
+                type="password"
+                v-model="usuario.password"
+                :rules="[rules.required]"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="6">
+              <v-text-field
+                label="Confirmar password"
+                :rules="[rules.required]"
+                type="password"
+                v-model="usuario.password_confirmation"
+              ></v-text-field>
+            </v-col>
             <v-col
               cols="12"
               sm="4"
@@ -155,7 +171,8 @@ export default {
     },
     create() {
       if (this.$refs.form.validate()) {
-        this.usuario.password = "123";
+        this.usuario.avatar = null;
+        console.log(this.usuario);
         this.createUsuario(this.usuario);
         this.closeModal();
       }
