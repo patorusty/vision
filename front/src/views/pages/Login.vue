@@ -130,6 +130,7 @@ export default {
               remember: this.remember
             })
             .then(r => {
+              localStorage.setItem("token", r.data.token);
               localStorage.setItem("isLoggedIn", "true");
               this.$router.push({ name: "Polizas" });
             })

@@ -228,8 +228,10 @@ export default {
       setDrawer: "SET_DRAWER"
     }),
     logout() {
-      http.post("/logout").then(() => {
+      http.post("/logout").then(r => {
+        console.log(r);
         localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("token");
         this.$router.push({ name: "Login" });
       });
     }

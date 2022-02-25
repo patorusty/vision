@@ -4,8 +4,10 @@ const http = axios.create({
   baseURL: process.env.VUE_APP_ROOT_API,
   withCredentials: true
 });
+console.log(localStorage.getItem('token'));
 http.defaults.headers = {
   'Content-Type': 'application/json',
+  'Authorization': `Bearer ${localStorage.getItem('token')}`
 }
 
 export default {

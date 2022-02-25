@@ -61,19 +61,24 @@ class AuthController extends Controller
                 'message' => 'Bad credentials'
             ], 401);
         }
-        // $token = $user->createToken('visiontoken')->plainTextToken;
+        $token = $user->createToken('visionToken')->plainTextToken;
 
-        return response($user, 201);
+        $response = [
+            'user' => $user,
+            'token' => $token
+        ];
+
+        return response($response, 201);
     }
 
     public function logout(Request $request)
     {
-        Auth::guard()->logout();
+        Auth::guard('web')->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return response()->json([], 204);
+        return response()->json(null, 204);
     }
 }
