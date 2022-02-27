@@ -1,21 +1,21 @@
 import http from "./http-request";
+import axios from "axios";
 import moment from "moment";
 import Cookie from "js-cookie";
-import createNumberMask from 'text-mask-addons/dist/createNumberMask';
+import createNumberMask from "text-mask-addons/dist/createNumberMask";
 const currencyMask = createNumberMask({
-  prefix: '$',
+  prefix: "$",
   allowDecimal: false,
   includeThousandsSeparator: true,
-  allowNegative: false,
+  allowNegative: false
 });
-
 
 export const helpers = {
   data: () => ({
     currencyMask,
     rules: {
-      required: (value) => !!value || "Este campo obligatorio",
-    },
+      required: value => !!value || "Este campo obligatorio"
+    }
   }),
   methods: {
     localidadesText(item) {
@@ -35,9 +35,9 @@ export const helpers = {
     },
     nombreCompleto(item) {
       if (item.razon_social == null) {
-      return `${item.apellido}  ${item.nombre}`;
+        return `${item.apellido}  ${item.nombre}`;
       } else {
-        return item.razon_social
+        return item.razon_social;
       }
     },
     textCompleto(nro) {
@@ -49,7 +49,9 @@ export const helpers = {
     },
     formatDate(date) {
       if (date) {
-        return moment(date).utc().format("DD/MM/YYYY");
+        return moment(date)
+          .utc()
+          .format("DD/MM/YYYY");
       } else {
         return "";
       }
@@ -66,33 +68,47 @@ export const helpers = {
         this[`${nombre}`] = this[`${nombre}`].toUpperCase();
     },
     suma(riesgo) {
-
-      var valor = riesgo.valor_vehiculo === undefined || riesgo.valor_vehiculo === null ? 0 : parseInt(riesgo.valor_vehiculo)
-      var gnc = riesgo.valor_gnc === undefined || riesgo.valor_gnc === null ? 0 : parseInt(riesgo.valor_gnc)
-      var ac1 = riesgo.valor_accesorio_01 === undefined || riesgo.valor_accesorio_01 === null ? 0 : parseInt(riesgo.valor_accesorio_01)
-      var ac2 = riesgo.valor_accesorio_02 === undefined || riesgo.valor_accesorio_02 === null ? 0 : parseInt(riesgo.valor_accesorio_02)
-      return riesgo.valor_vehiculo != null
-      ? valor+gnc+ac1+ac2
-        : "";
+      var valor =
+        riesgo.valor_vehiculo === undefined || riesgo.valor_vehiculo === null
+          ? 0
+          : parseInt(riesgo.valor_vehiculo);
+      var gnc =
+        riesgo.valor_gnc === undefined || riesgo.valor_gnc === null
+          ? 0
+          : parseInt(riesgo.valor_gnc);
+      var ac1 =
+        riesgo.valor_accesorio_01 === undefined ||
+        riesgo.valor_accesorio_01 === null
+          ? 0
+          : parseInt(riesgo.valor_accesorio_01);
+      var ac2 =
+        riesgo.valor_accesorio_02 === undefined ||
+        riesgo.valor_accesorio_02 === null
+          ? 0
+          : parseInt(riesgo.valor_accesorio_02);
+      return riesgo.valor_vehiculo != null ? valor + gnc + ac1 + ac2 : "";
     },
     getCookie() {
+      axios.defaults.baseURL = process.env.VUE_APP_ROOT_API;
       let token = Cookie.get("XSRF-TOKEN");
       if (token) {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
           resolve(token);
         });
       }
-      return http.get("/sanctum/csrf-cookie", { withCredentials: true });
-    },
+      return axios.get("sanctum/csrf-cookie", {
+        withCredentials: true
+      });
+    }
   },
   computed: {
     fechaFormateada: {
-      set: function () {
+      set: function() {
         return this.formatDate(this.cliente.nacimiento);
       },
-      get: function () {
+      get: function() {
         return this.formatDate(this.cliente.nacimiento);
-      },
+      }
     },
     modelosFiltrados() {
       return this.modelos.filter(item =>
@@ -113,5 +129,5 @@ export const helpers = {
         ? this.detalle_endosos.filter(e => e.tipo_endoso_id == 1)
         : this.detalle_endosos.filter(e => e.tipo_endoso_id == 2);
     }
-  },
+  }
 };

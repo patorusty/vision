@@ -158,10 +158,8 @@
 import { VHover, VListItem } from "vuetify/lib";
 
 // Utilities
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 import http from "../../../../http-request";
-
-// axios.defaults.baseURL = process.env.VUE_APP_ROOT_API;
 
 export default {
   name: "DashboardCoreAppBar",
@@ -220,21 +218,25 @@ export default {
   }),
 
   computed: {
-    ...mapState(["drawer"])
+    ...mapState(["drawer"]),
+    ...mapState("usuario", ["validated_user"])
   },
 
   methods: {
     ...mapMutations({
       setDrawer: "SET_DRAWER"
     }),
+    ...mapActions("usuario", ["getValidatedUser"]),
     logout() {
-      http.post("/logout").then(r => {
-        console.log(r);
+      http.post("/logout", this.validated_user).then(r => {
         localStorage.removeItem("isLoggedIn");
-        localStorage.removeItem("token");
+        localStorage.removeItem("visionToken");
         this.$router.push({ name: "Login" });
       });
     }
+  },
+  created() {
+    this.getValidatedUser();
   }
 };
 </script>

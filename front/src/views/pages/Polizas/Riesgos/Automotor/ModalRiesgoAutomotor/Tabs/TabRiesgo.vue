@@ -9,7 +9,9 @@
           <v-select
             :items="tipo_vehiculos"
             label="Tipo de Vehiculo"
-            v-model="riesgo_automotor.automotor_tipo"
+            item-text="nombre"
+            item-value="id"
+            v-model="riesgo_automotor.tipo_automotor_id"
           ></v-select>
           <v-autocomplete
             type="number"
@@ -122,7 +124,7 @@
           ></v-autocomplete>
         </v-col>
         <v-col class="d-flex flex-column justify-space-between">
-          <v-row v-if="riesgo_automotor.automotor_tipo != 2">
+          <v-row v-if="riesgo_automotor.tipo_automotor_id != 2">
             <v-col class="py-0">
               <v-select
                 :items="tipo_patentes"
@@ -201,9 +203,11 @@
             :items="usos"
           ></v-select>
           <v-select
-            v-if="riesgo_automotor.automotor_tipo != 2"
+            v-if="riesgo_automotor.tipo_automotor_id != 2"
             label="Tipo Carroceria"
-            v-model="riesgo_automotor.tipo_carroceria"
+            item-text="nombre"
+            item-value="id"
+            v-model="riesgo_automotor.tipo_carroceria_id"
             :items="tipo_carrocerias"
             :rules="[rules.required]"
           ></v-select>

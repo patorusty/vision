@@ -110,10 +110,11 @@ export default {
     headers() {
       return [
         { text: "Póliza Nro.", value: "poliza.numero" },
-        { text: "Tipo", value: "tipo" },
-        { text: "Asegurado", value: "asegurado" },
         { text: "Compañia", value: "compania" },
+        { text: "Asegurado", value: "asegurado" },
         { text: "F. Solicitud", value: "fecha_solicitud" },
+        { text: "Tipo", value: "tipo" },
+        { text: "Detalle", value: "detalle_endoso.nombre" },
         { text: "Actions", value: "actions", sortable: false, align: "right" }
       ];
     },

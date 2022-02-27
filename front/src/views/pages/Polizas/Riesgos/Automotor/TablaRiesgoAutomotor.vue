@@ -112,7 +112,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions("riesgo", ["getRiesgoAutomotor", "deleteRiesgoAutomotor"]),
+    ...mapActions("riesgo", [
+      "getRiesgoAutomotor",
+      "deleteRiesgoAutomotor",
+      "getTipoVehiculos",
+      "getTipoCarrocerias"
+    ]),
     ...mapActions("anio", ["getAnios"]),
     ...mapActions("marca", ["getMarcas"]),
     ...mapActions("modelo", ["getModelos"]),
@@ -146,6 +151,8 @@ export default {
     this.getMarcas();
     this.getModelos();
     this.getVersiones();
+    this.getTipoVehiculos();
+    this.getTipoCarrocerias();
   }
 };
 </script>

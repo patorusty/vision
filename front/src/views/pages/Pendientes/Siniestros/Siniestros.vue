@@ -111,12 +111,12 @@ export default {
     idSelected: "",
     modalDelete: false,
     headers: [
+      { text: "F. Siniestro", value: "fechaSiniestro" },
+      { text: "Compañia", value: "poliza.compania.nombre" },
       { text: "Póliza Nro.", value: "poliza.numero" },
       { text: "Numero", value: "numero_siniestro" },
-      { text: "Tipo de Reclamo", value: "tipo_reclamo" },
       { text: "Asegurado", value: "asegurado" },
-      { text: "Compañia", value: "poliza.compania.nombre" },
-      { text: "F. Siniestro", value: "fechaSiniestro" },
+      { text: "Tipo de Reclamo", value: "tipo_reclamo" },
       { text: "Actions", value: "actions", sortable: false, align: "right" }
     ]
   }),

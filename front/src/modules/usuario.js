@@ -1,6 +1,6 @@
 import http from "../http-request";
 
-const API_URL = '/configuracion/usuarios';
+const API_URL = "/configuracion/usuarios";
 
 const state = () => ({
   usuarios: [],
@@ -8,7 +8,8 @@ const state = () => ({
   usuario: {
     compania: "Vision",
     activo: true
-  }
+  },
+  validated_user: {}
 });
 const mutations = {
   SET_USUARIOS(state, usuarios) {
@@ -19,6 +20,9 @@ const mutations = {
   },
   SET_USUARIO(state, usuario) {
     state.usuario = usuario;
+  },
+  SET_VALIDATED_USER(state, user) {
+    state.validated_user = user;
   },
   RESET_USUARIO(state) {
     state.usuario = Object.assign(
@@ -46,7 +50,7 @@ const actions = {
     commit("SET_USUARIOS", resp.data);
   },
   async getTipoUsuarios({ commit }) {
-    const resp = await http.get('/configuracion/tipousuario');
+    const resp = await http.get("/configuracion/tipousuario");
     commit("SET_TIPO_USUARIOS", resp.data);
   },
   async getUsuario({ commit }, id) {
@@ -55,11 +59,7 @@ const actions = {
   },
 
   async updateUsuario({ commit }, usuario) {
-    const resp = await http.put(
-      API_URL,
-      usuario.id,
-      usuario
-    );
+    const resp = await http.put(API_URL, usuario.id, usuario);
     if (resp.status === 200) {
       commit("UPDATE_USUARIO", resp.data);
       commit(
@@ -82,7 +82,7 @@ const actions = {
   },
 
   async createUsuario({ commit }, usuario) {
-    const resp = await http.post('http://vision.test/api/register', usuario);
+    const resp = await http.post("http://vision.test/api/register", usuario);
     if (resp.status === 201) {
       commit("CREATE_USUARIO", resp.data);
       commit(
@@ -104,7 +104,7 @@ const actions = {
       );
     }
   },
-  
+
   async deleteUsuario({ commit }, id) {
     const resp = await http.delete(API_URL, id);
     if (resp.status === 200) {
@@ -126,6 +126,10 @@ const actions = {
         { root: true }
       );
     }
+  },
+  async getValidatedUser({ commit }) {
+    const resp = await http.get("/user");
+    commit("SET_VALIDATED_USER", resp.data);
   }
 };
 export default {

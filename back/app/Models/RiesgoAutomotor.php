@@ -9,13 +9,14 @@ use App\Models\AutomotorVersion;
 use App\Models\Cobertura;
 use App\Models\ImagenRA;
 use App\Models\Poliza;
+use App\Models\TipoAutomotor;
 use Illuminate\Database\Eloquent\Model;
 
 class RiesgoAutomotor extends Model
 {
     protected $fillable = [
         'poliza_id',
-        'automotor_tipo',
+        'tipo_automotor_id',
         'automotor_anio_id',
         'automotor_marca_id',
         'automotor_modelo_id',
@@ -89,6 +90,11 @@ class RiesgoAutomotor extends Model
     public function cobertura()
     {
         return $this->belongsTo(Cobertura::class, 'cobertura_id');
+    }
+
+    public function tipo_automotores()
+    {
+        return $this->belongsTo(TipoAutomotor::class, 'tipo_automotor_id');
     }
 
     public function imagenes()

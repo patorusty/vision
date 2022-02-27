@@ -13,13 +13,13 @@
             </v-icon>
             Riesgo
           </v-tab>
-          <v-tab v-if="riesgo_automotor.automotor_tipo != 2">
+          <v-tab v-if="riesgo_automotor.tipo_automotor_id != 2">
             <v-icon left>
               mdi-gas-cylinder
             </v-icon>
             GNC
           </v-tab>
-          <v-tab v-if="riesgo_automotor.automotor_tipo != 2">
+          <v-tab v-if="riesgo_automotor.tipo_automotor_id != 2">
             <v-icon left>
               mdi-clipboard-text-outline
             </v-icon>
@@ -117,7 +117,7 @@ export default {
     ...mapMutations("riesgo", ["RESET_RIESGO_AUTOMOTOR"]),
     async create() {
       if (this.$refs.form.validate()) {
-        if (this.riesgo_automotor.tipo_carroceria == "Trailer") {
+        if (this.riesgo_automotor.tipo_carroceria_id == 17) {
           this.riesgo_automotor.patente = "101" + this.riesgo_automotor.patente;
         }
         this.riesgo_automotor.poliza_id = this.poliza.id;

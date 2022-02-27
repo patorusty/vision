@@ -79,16 +79,17 @@
                 v-model="remember"
                 label="Recordarme"
               ></v-checkbox>
+              <pages-btn
+                large
+                color=""
+                type="text"
+                depressed
+                @click.prevent=login
+                class="v-btn--text success--text"
+              >
+                Let's Go
+              </pages-btn>
             </v-form>
-            <pages-btn
-              large
-              color=""
-              depressed
-              @click=login
-              class="v-btn--text success--text"
-            >
-              Let's Go
-            </pages-btn>
           </v-card-text>
         </base-material-card>
       </v-slide-y-transition>
@@ -102,7 +103,7 @@ import { debounce } from "debounce";
 import { helpers } from "../../helpers";
 import http from "../../http-request";
 
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 // axios.defaults.baseURL = process.env.VUE_APP_ROOT_API;
 
 export default {
@@ -123,14 +124,18 @@ export default {
     login() {
       if (this.$refs.form.validate()) {
         this.getCookie().then(() => {
-          http
-            .post("/login", {
-              email: this.email,
-              password: this.password,
-              remember: this.remember
-            })
+          axios
+            .post(
+              "/login",
+              {
+                email: this.email,
+                password: this.password,
+                remember: this.remember
+              },
+              { withCredentials: true }
+            )
             .then(r => {
-              localStorage.setItem("token", r.data.token);
+              localStorage.setItem("visionToken", r.data.token);
               localStorage.setItem("isLoggedIn", "true");
               this.$router.push({ name: "Polizas" });
             })

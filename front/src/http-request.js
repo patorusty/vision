@@ -1,14 +1,26 @@
 import axios from "axios";
 
+const getToken = async () => {
+  return `Bearer ${localStorage.getItem("visionToken")}`;
+};
+
 const http = axios.create({
   baseURL: process.env.VUE_APP_ROOT_API,
   withCredentials: true
 });
-console.log(localStorage.getItem('token'));
 http.defaults.headers = {
-  'Content-Type': 'application/json',
-  'Authorization': `Bearer ${localStorage.getItem('token')}`
-}
+  Accept: "application/json"
+};
+http.interceptors.request.use(
+  async config => {
+    const token = await getToken();
+    if (token) config.headers.Authorization = `Bearer ${token}`;
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
 
 export default {
   get(url) {
@@ -31,6 +43,5 @@ export default {
   },
   delete(url, id) {
     return http.delete(`${url}/${id}`);
-  },
+  }
 };
-
