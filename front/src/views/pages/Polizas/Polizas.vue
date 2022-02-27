@@ -35,14 +35,23 @@
       </v-row>
       <v-row>
         <v-col cols="4">
-          <v-text-field
+          <!-- <v-text-field
             v-model="cliente"
             label="Cliente"
             single-line
             hide-details
             class="mr-3 ml-3"
             v-uppercase
-          ></v-text-field>
+          ></v-text-field> -->
+          <v-autocomplete
+            v-model="cliente_id"
+            :items="clientes"
+            item-value="id"
+            :item-text="nombreCompleto"
+            label="Cliente"
+            clearable
+            @click:clear="$nextTick(() => (cliente_id = 0))"
+          ></v-autocomplete>
         </v-col>
         <v-col>
           <v-text-field
@@ -208,6 +217,7 @@ export default {
     patente: "",
     compania_id: 0,
     cliente: "",
+    cliente_id: 0,
     idSelected: null,
     modalDelete: false,
     filtroEstado: []
@@ -215,37 +225,75 @@ export default {
   computed: {
     ...mapState("poliza", ["polizas", "loading", "tipo_riesgos", "estados"]),
     ...mapState("compania", ["companias"]),
+    ...mapState("cliente", ["clientes"]),
     tableData() {
-      return this.polizas.filter(
+      let tempPolizas = this.polizas.filter(
         item =>
-          (this.tipo_riesgo_id != 0
-            ? item.tipo_riesgo_id === this.tipo_riesgo_id
-            : item.tipo_riesgo_id != 0) &&
           (this.compania_id != 0
-            ? item.compania_id === this.compania_id
+            ? item.compania_id == this.compania_id
             : item.compania_id != 0) &&
+          (this.cliente_id != 0
+            ? item.cliente_id == this.cliente_id
+            : item.cliente_id != 0) &&
+          (this.patente == "" && item.tipo_riesgo_id == 1
+            ? item.riesgo_automotor
+            : item.riesgo_automotor.find(riesgo =>
+                riesgo.patente.includes(this.patente)
+              )) &&
           (this.filtroEstado.length > 0
             ? this.filtroEstado.includes(item.estado_poliza_id)
             : item.estado_poliza_id != 0) &&
-          (this.cliente != "" &&
-          item.cliente.apellido != null &&
-          item.cliente.nombre != null
-            ? item.cliente.apellido.includes(this.cliente) ||
-              item.cliente.nombre.includes(this.cliente) ||
-              this.filterRazon(item)
-            : item.cliente.apellido) &&
-          // (this.cliente != "" && item.cliente.razon_social != null
-          //   ? item.cliente.razon_social.includes(this.cliente)
-          //   : item.cliente) &&
-          (this.patente != "" && item.tipo_riesgo_id == 1
-            ? item.riesgo_automotor.find(riesgo =>
-                riesgo.patente.includes(this.patente)
-              )
-            : item.riesgo_automotor) &&
-          (this.compania_id != 0 && item.compania_id != null
-            ? item.compania_id === this.compania_id
-            : item.tipo_riesgo_id != 0)
+          (this.poliza != "" && item.numero != null
+            ? item.numero.includes(this.poliza)
+            : item.numero != "")
       );
+
+      return this.cliente_id == 0 &&
+        this.compania_id == 0 &&
+        this.patente == "" &&
+        this.poliza == "" &&
+        this.filtroEstado.length == 0
+        ? []
+        : tempPolizas;
+      // return this.polizas.filter(
+      //   item =>
+      //     (this.compania_id != 0
+      //       ? this.filtroCompanias(item)
+      //       : item.compania_id == 0) &&
+      // (this.tipo_riesgo_id != 0
+      //   ? item.tipo_riesgo_id === this.tipo_riesgo_id
+      //   : item.tipo_riesgo_id != 0) &&
+      // (this.compania_id == 0
+      //   ? item.compania_id == 0
+      //   : item.compania_id === this.compania_id) ||
+      // (this.filtroEstado.length > 0
+      //   ? this.filtroEstado.includes(item.estado_poliza_id)
+      //   : item.estado_poliza_id != 0)
+      // &&
+      // (this.cliente != "" &&
+      // item.cliente.apellido != null &&
+      // item.cliente.nombre != null
+      //   ? item.cliente.apellido.includes(this.cliente) ||
+      //     item.cliente.nombre.includes(this.cliente) ||
+      //     this.filterRazon(item)
+      //   : item.cliente.apellido) &&
+      // (this.cliente_id != 0
+      //   ? this.filtroClientes(item)
+      //   : item.cliente_id == 0)
+      // &&
+      // (this.cliente != "" && item.cliente.razon_social != null
+      //   ? item.cliente.razon_social.includes(this.cliente)
+      //   : item.cliente) &&
+      // (this.patente == "" && item.tipo_riesgo_id == 1
+      //   ? item.riesgo_automotor
+      //   : item.riesgo_automotor.find(riesgo =>
+      //       riesgo.patente.includes(this.patente)
+      //     ))
+      //   &&
+      // (this.compania_id != 0 && item.compania_id != null
+      //   ? item.compania_id === this.compania_id
+      //   : item.tipo_riesgo_id != 0)
+      // );
     },
     riesgos() {
       var r = [...this.tipo_riesgos, { id: 0, nombre: "TODOS" }];
@@ -290,10 +338,18 @@ export default {
       "getEstados"
     ]),
     ...mapActions("compania", ["getCompanias"]),
+    ...mapActions("cliente", ["getClientes"]),
     filterRazon(item) {
       if (this.cliente != "" && item.cliente.razon_social != null) {
         return item.cliente.razon_social.includes(this.cliente);
       }
+    },
+    filtroTipoRiesgo(item) {
+      if (this.tipo_riesgo_id != 0)
+        return (item.tipo_riesgo_id = this.tipo_riesgo_id);
+    },
+    filtroClientes(item) {
+      if (this.cliente_id != 0) return (item.cliente_id = this.cliente_id);
     },
     openDeleteModal(id) {
       this.idSelected = id;
@@ -404,6 +460,7 @@ export default {
   },
   created() {
     this.getPolizas();
+    this.getClientes();
     this.getCompanias();
     this.getTipoRiesgos();
     this.getEstados();
