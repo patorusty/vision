@@ -313,10 +313,6 @@ export default {
     ...mapState("modal", ["modal", "modal_ra", "modal_or"])
   },
   methods: {
-    updateVigencia(value) {
-      this.poliza.vigencia_desde = moment(value, "DD/MM/YYYY").utc();
-      this.sumarMes();
-    },
     ...mapActions("cliente", ["getClientes"]),
     ...mapActions("poliza", [
       "getPoliza",
@@ -329,12 +325,6 @@ export default {
     ...mapActions("codigo_productor", ["getCodigoProductores"]),
     ...mapMutations("poliza", ["RESET_POLIZA"]),
     ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL"]),
-    sumarMes() {
-      this.poliza.vigencia_hasta = moment(this.poliza.vigencia_desde).add(
-        this.poliza.tipo_vigencia_id,
-        "M"
-      );
-    },
     volver() {
       this.$router.push({
         name: "Polizas"

@@ -331,12 +331,6 @@ export default {
     ...mapMutations("poliza", ["RESET_POLIZA"]),
     ...mapMutations("cliente", ["RESET_CLIENTE"]),
     ...mapMutations("modal", ["SHOW_MODAL"]),
-    sumarMes() {
-      this.poliza.vigencia_hasta = moment(this.poliza.vigencia_desde).add(
-        this.poliza.tipo_vigencia_id,
-        "M"
-      );
-    },
     volver() {
       this.$router.push({
         name: "Polizas"

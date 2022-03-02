@@ -78,6 +78,16 @@ export const helpers = {
         return "NO";
       }
     },
+    sumarMes() {
+      this.poliza.vigencia_hasta = moment(this.poliza.vigencia_desde).add(
+        this.poliza.tipo_vigencia_id,
+        "M"
+      );
+    },
+    updateVigencia(value) {
+      this.poliza.vigencia_desde = moment(value, "DD/MM/YYYY").utc();
+      this.sumarMes();
+    },
     toUpper(nombre, e) {
       if (this[`${nombre}`] != null)
         this[`${nombre}`] = this[`${nombre}`].toUpperCase();
