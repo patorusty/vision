@@ -335,7 +335,7 @@
                         @click:clear="
                           $nextTick(() => (cliente.vencimiento_registro = null))
                         "
-                        :value="formatDate(cliente.vencimiento_registro)"
+                        :value="dateToString(cliente.vencimiento_registro)"
                         label="Fecha de Vencimiento"
                         v-on="on"
                       ></v-text-field>

@@ -56,8 +56,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('configuracion/usuarios', UserController::class);
     Route::get('configuracion/tipousuario', [TipoUsuarioController::class, "index"]);
 
-    Route::get('companias_activas', [CompaniaController::class, 'companiasActivas']);
     Route::apiResource('administracion/companias', CompaniaController::class);
+    Route::get('administracion/companias_activas', [CompaniaController::class, 'companiasActivas']);
     Route::post('companias/busquedaCuit', [CompaniaController::class, 'search']);
 
     Route::apiResource('configuracion/organizadores', OrganizadorController::class);

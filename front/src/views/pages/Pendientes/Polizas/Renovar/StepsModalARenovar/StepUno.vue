@@ -23,7 +23,7 @@
             </v-col>
             <v-col class="d-flex align-center">
               <div class="text-subtitle-1">
-                {{'Vigencia: ' + formatDate(poliza.vigencia_desde) + " al " +formatDate(poliza.vigencia_hasta)}}
+                {{'Vigencia: ' + dateToString(poliza.vigencia_desde) + " al " +dateToString(poliza.vigencia_hasta)}}
               </div>
             </v-col>
           </v-row>
@@ -38,7 +38,7 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
-                    :value="formatDate(poliza.fecha_emision)"
+                    :value="dateToString(poliza.fecha_emision)"
                     @click:clear="
                           $nextTick(() => (poliza.fecha_emision = null))
                         "
@@ -69,7 +69,7 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
-                    :value="formatDate(poliza.fecha_entrega_email)"
+                    :value="dateToString(poliza.fecha_entrega_email)"
                     @click:clear="
                           $nextTick(() => (poliza.fecha_entrega_email = null))
                         "
@@ -100,7 +100,7 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
-                    :value="formatDate(poliza.fecha_entrega_original)"
+                    :value="dateToString(poliza.fecha_entrega_original)"
                     @click:clear="
                           $nextTick(() => (poliza.fecha_entrega_original = null))
                         "

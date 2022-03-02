@@ -35,7 +35,7 @@
       </template>
       <template v-slot:[`item.fechaSiniestro`]="{ item }">
         {{
-          formatDate(item.fecha_siniestro)
+          dateToString(item.fecha_siniestro)
         }}
       </template>
       <template v-slot:[`item.fecha_completo`]="{ item }">

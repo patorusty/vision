@@ -24,7 +24,7 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
-                    :value="formatDate(siniestro.fecha_denuncia)"
+                    :value="dateToString(siniestro.fecha_denuncia)"
                     @click:clear="
                           $nextTick(() => (siniestro.fecha_denuncia = null))
                         "
@@ -71,7 +71,7 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
-                    :value="formatDate(siniestro.fecha_siniestro)"
+                    :value="dateToString(siniestro.fecha_siniestro)"
                     @click:clear="
                           $nextTick(() => (siniestro.fecha_siniestro = null))
                         "
@@ -102,7 +102,7 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
-                    :value="formatDate(siniestro.fecha_completo)"
+                    :value="dateToString(siniestro.fecha_completo)"
                     @click:clear="
                           $nextTick(() => (siniestro.fecha_completo = null))
                         "

@@ -40,8 +40,8 @@
         <v-icon v-else-if="item.tipo_riesgo_id == 8"> mdi-sail-boat </v-icon>
 
       </template>
-      <template v-slot:[`item.desde`]="{ item }">{{ formatDate(item.vigencia_desde) }} <br />
-        {{ formatDate(item.vigencia_hasta) }}</template>
+      <template v-slot:[`item.desde`]="{ item }">{{ dateToString(item.vigencia_desde) }} <br />
+        {{ dateToString(item.vigencia_hasta) }}</template>
       <template v-slot:[`item.envio`]="{ item }">{{ envio(item) }}</template>
       <template v-slot:[`item.pago`]="{ item }">{{ formaDePago(item) }}</template>
       <template v-slot:[`item.actions`]="{ item }">

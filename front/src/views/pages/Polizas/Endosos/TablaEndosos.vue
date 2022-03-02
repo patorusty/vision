@@ -28,7 +28,7 @@
     >
       <template v-slot:[`item.fecha`]="{ item }">
         {{
-          formatDate(item.fecha_solicitud)
+          dateToString(item.fecha_solicitud)
         }}
       </template>
       <template v-slot:[`item.tipo`]="{ item }">

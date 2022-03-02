@@ -36,12 +36,12 @@
     >
       <template v-slot:[`item.fechaDenuncia`]="{ item }">
         {{
-          formatDate(item.fecha_denuncia)
+          dateToString(item.fecha_denuncia)
         }}
       </template>
       <template v-slot:[`item.fechaSiniestro`]="{ item }">
         {{
-          formatDate(item.fecha_siniestro)
+          dateToString(item.fecha_siniestro)
         }}
       </template>
       <template v-slot:[`item.fechaCompleto`]="{ item }">

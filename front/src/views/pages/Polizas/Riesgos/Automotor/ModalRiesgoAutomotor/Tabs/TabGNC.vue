@@ -68,7 +68,7 @@
             <template v-slot:activator="{ on }">
               <v-text-field
                 :disabled="riesgo_automotor.gnc == false"
-                :value="formatDate(riesgo_automotor.gnc_vencimiento_oblea)"
+                :value="dateToString(riesgo_automotor.gnc_vencimiento_oblea)"
                 @click:clear="
                           $nextTick(() => (riesgo_automotor.gnc_vencimiento_oblea = null))
                         "

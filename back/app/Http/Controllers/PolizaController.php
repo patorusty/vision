@@ -78,10 +78,10 @@ class PolizaController extends Controller
         try {
             $poliza = Poliza::findOrFail($id);
             $poliza->fill($request->all())->save();
-            $p = $this->checkOnePoliza($poliza);
-            $p->load(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo']);
-            $p::with(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo']);
-            return response($p, 200);
+            $this->checkOnePoliza($poliza);
+            $poliza->load(['codigo_productor.productores', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'endosos.tipo_endoso', 'endosos.detalle_endoso', 'siniestros', 'riesgo_automotor.marca', 'riesgo_automotor.modelo', 'riesgo_automotor.version', 'riesgo_automotor.cobertura', 'otro_riesgo']);
+            $poliza::with(['codigo_productor.productores', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'endosos.tipo_endoso', 'endosos.detalle_endoso', 'siniestros', 'riesgo_automotor.marca', 'riesgo_automotor.modelo', 'riesgo_automotor.version', 'riesgo_automotor.cobertura', 'otro_riesgo']);
+            return response($poliza, 200);
         } catch (\Exception $e) {
             return $e->getMessage();
         }

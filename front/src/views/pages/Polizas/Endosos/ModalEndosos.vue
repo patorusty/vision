@@ -20,7 +20,7 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
-                    :value="formatDate(endoso.fecha_solicitud)"
+                    :value="dateToString(endoso.fecha_solicitud)"
                     @click:clear="
                           $nextTick(() => (endoso.fecha_solicitud = null))
                         "
@@ -78,7 +78,7 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
-                    :value="formatDate(endoso.fecha_emision)"
+                    :value="dateToString(endoso.fecha_emision)"
                     @click:clear="
                           $nextTick(() => (endoso.fecha_emision = null))
                         "
@@ -170,7 +170,6 @@ export default {
         const createResult = await this.createEndoso(this.endoso);
         if (this.endoso.tipo_endoso_id == 1) {
           this.poliza.estado_poliza_id = 1;
-          console.log(this.poliza);
           await this.updatePoliza(this.poliza);
         }
         if (createResult) {

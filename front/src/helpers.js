@@ -1,6 +1,8 @@
 import http from "./http-request";
 import axios from "axios";
 import moment from "moment";
+import "moment/locale/es"; // without this line it didn't work
+moment.locale("es");
 import Cookie from "js-cookie";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 const currencyMask = createNumberMask({
@@ -47,15 +49,28 @@ export const helpers = {
       const resp = await http.get("/localidades");
       this.localidades = resp.data;
     },
-    formatDate(date) {
+    dateToString(date) {
       if (date) {
         return moment(date)
           .utc()
-          .format("DD/MM/YYYY");
+          .format("DD/MM/YYYY")
+          .toString();
       } else {
         return "";
       }
     },
+    stringToDate(date) {
+      if (date) {
+        return moment(date, "DD/MM/YYYY").utc();
+      } else {
+        return "";
+      }
+    },
+    // formatDateIn(value) {
+    //   return moment(value)
+    //     .utc()
+    //     .format("YYYY-MM-DD");
+    // },
     dateOrNo(date) {
       if (date) {
         return moment(date).format("DD/MM/YYYY");
@@ -104,10 +119,10 @@ export const helpers = {
   computed: {
     fechaFormateada: {
       set: function() {
-        return this.formatDate(this.cliente.nacimiento);
+        return this.dateToString(this.cliente.nacimiento);
       },
       get: function() {
-        return this.formatDate(this.cliente.nacimiento);
+        return this.dateToString(this.cliente.nacimiento);
       }
     },
     modelosFiltrados() {
