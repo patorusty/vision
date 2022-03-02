@@ -21,15 +21,15 @@ import "./plugins/vee-validate";
 import "./plugins/vue-world-map";
 import vuetify from "./plugins/vuetify";
 import i18n from "./i18n";
-import VueMask from "v-mask";
-import VCalendar from "v-calendar";
+// import VueMask from "v-mask";
+// import VCalendar from "v-calendar";
 import VueTheMask from "vue-the-mask";
 
 Vue.use(VueTheMask);
 // Vue.use(VueMask);
-Vue.use(VCalendar, {
-  componentPrefix: "vc"
-});
+// Vue.use(VCalendar, {
+//   componentPrefix: "vc"
+// });
 
 Vue.config.productionTip = false;
 
