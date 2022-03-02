@@ -17,6 +17,7 @@ class PolizaController extends Controller
      */
     public function index()
     {
+        $this->checkPolizas();
         return Poliza::with(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo'])->orderBy('vigencia_hasta', 'DESC')->get();
     }
 
@@ -139,7 +140,7 @@ class PolizaController extends Controller
         $polizas = Poliza::all();
         // dd($polizas);
         foreach ($polizas as $poliza) {
-            if ($poliza->estado_poliza_id != 1) {
+            if ($poliza->estado_poliza_id != 1 && $poliza->estado_poliza_id != 5) {
                 switch ($poliza) {
                     case $hoy->isAfter($poliza->vigencia_desde) && $hoy->isBefore($poliza->vigencia_hasta->subMonth()) && $poliza->renovada == 0:
                         $poliza->estado_poliza_id = 3;
@@ -183,7 +184,7 @@ class PolizaController extends Controller
     {
         $hoy = Carbon::now();
 
-        if ($poliza->estado_poliza_id != 1) {
+        if ($poliza->estado_poliza_id != 1 && $poliza->estado_poliza_id != 5) {
             switch ($poliza) {
                 case $hoy->isAfter($poliza->vigencia_desde) && $hoy->isBefore($poliza->vigencia_hasta->subMonth()) && $poliza->renovada == 0:
                     $poliza->estado_poliza_id = 3;

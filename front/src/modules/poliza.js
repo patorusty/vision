@@ -363,7 +363,7 @@ const actions = {
     commit("SET_ESTADOS", resp.data);
   },
   async checkPolizas() {
-    const resp = await http.get("/checkpolizas");
+    const resp = await http.get("checkpolizas");
   }
 };
 export default {
