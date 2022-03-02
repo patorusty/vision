@@ -24,7 +24,6 @@ import i18n from "./i18n";
 // import VueMask from "v-mask";
 // import VCalendar from "v-calendar";
 import VueTheMask from "vue-the-mask";
-
 Vue.use(VueTheMask);
 // Vue.use(VueMask);
 // Vue.use(VCalendar, {

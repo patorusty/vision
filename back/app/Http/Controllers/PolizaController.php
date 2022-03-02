@@ -142,26 +142,32 @@ class PolizaController extends Controller
                 switch ($poliza) {
                     case $hoy->isAfter($poliza['vigencia_desde']) && $hoy->isBefore($poliza['vigencia_hasta']->subMonth()) && $poliza['renovada'] == 0:
                         $poliza["estado_poliza_id"] = 3;
+                        $poliza->save();
                         //VIGENTE
                         break;
                     case $hoy->isAfter($poliza['vigencia_hasta']->subMonth()) && $hoy->isBefore($poliza['vigencia_hasta']) && $poliza['renovada'] == 0:
                         $poliza["estado_poliza_id"] = 4;
+                        $poliza->save();
                         //VIGENTE A RENOVAR
                         break;
                     case $hoy->isAfter($poliza['vigencia_desde']) && $hoy->isBefore($poliza['vigencia_hasta']) && $poliza['renovada'] == 1:
                         $poliza["estado_poliza_id"] = 7;
+                        $poliza->save();
                         //VIGENTE RENOVADA
                         break;
                     case $hoy->isAfter($poliza['vigencia_hasta']) && $poliza['renovada'] == 1:
                         $poliza["estado_poliza_id"] = 5;
+                        $poliza->save();
                         //CUMPLIDA RENOVADA
                         break;
                     case $hoy->isAfter($poliza['vigencia_hasta']) && $poliza['renovada'] == 0:
                         $poliza["estado_poliza_id"] = 6;
+                        $poliza->save();
                         //CUMPLIDA
                         break;
                     case $hoy->isBefore($poliza['vigencia_desde']):
                         $poliza["estado_poliza_id"] = 2;
+                        $poliza->save();
                         // PENDIENTE
                         break;
                     default:

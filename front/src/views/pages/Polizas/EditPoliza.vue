@@ -178,6 +178,7 @@
                       @click:clear="$nextTick(() => (poliza.fecha_entrega_correo = null))"
                       clearable
                     />
+
                     <!-- <v-menu
                       v-model="calendarioEntrgaCorreo"
                       :close-on-content-click="false"
@@ -271,14 +272,14 @@ export default {
     TablaRiesgoAutomotor
   },
   data: () => ({
-    calendarioDesde: false,
-    calendarioHasta: false,
-    calendarioSolicitud: false,
-    calendarioEmision: false,
-    calendarioEntregaOriginal: false,
-    calendarioEnviadoMail: false,
-    calendarioEntrgaCorreo: false,
-    calendarioRecepcion: false,
+    // calendarioDesde: false,
+    // calendarioHasta: false,
+    // calendarioSolicitud: false,
+    // calendarioEmision: false,
+    // calendarioEntregaOriginal: false,
+    // calendarioEnviadoMail: false,
+    // calendarioEntrgaCorreo: false,
+    // calendarioRecepcion: false,
     plan_pagos: [
       {
         value: "MENSUAL"

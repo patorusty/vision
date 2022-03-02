@@ -99,43 +99,14 @@
             </v-col>
 
             <v-col class="pt-0 pb-0">
-              <v-menu
-                v-model="calendario"
-                :close-on-content-click="false"
-                transition="scale-transition"
-                offset-y
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    :rules="[rules.required]"
-                    clearable
-                    @click:clear="$nextTick(() => (cliente.nacimiento = null))"
-                    v-model="fechaFormateada"
-                    label="Nacimiento"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker
-                  clearable
-                  v-model="cliente.nacimiento"
-                  color="primary lighten-1"
-                  no-title
-                  scrollable
-                  locale="es-la"
-                  @input="calendario = false"
-                >
-                  <v-btn
-                    text
-                    color="primary"
-                    @click="menu = false"
-                  >Cancel</v-btn>
-                  <v-btn
-                    text
-                    color="primary"
-                  >OK</v-btn>
-                </v-date-picker>
-              </v-menu>
+              <v-text-field
+                label="Fecha de Nacimiento"
+                :value="dateToString(cliente.nacimiento)"
+                v-mask="'##/##/####'"
+                @change="cliente.nacimiento = stringToDate($event)"
+                @click:clear="$nextTick(() => (cliente.nacimiento = null))"
+                clearable
+              />
             </v-col>
             <v-col class="pt-0 pb-0">
               <v-radio-group
@@ -322,39 +293,14 @@
                   </v-text-field>
                 </v-col>
                 <v-col class="pt-0 pb-0">
-                  <v-menu
-                    v-model="calendario2"
-                    :close-on-content-click="false"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="290px"
-                  >
-                    <template v-slot:activator="{ on }">
-                      <v-text-field
-                        clearable
-                        @click:clear="
-                          $nextTick(() => (cliente.vencimiento_registro = null))
-                        "
-                        :value="dateToString(cliente.vencimiento_registro)"
-                        label="Fecha de Vencimiento"
-                        v-on="on"
-                      ></v-text-field>
-                    </template>
-                    <v-date-picker
-                      clearable
-                      v-model="cliente.vencimiento_registro"
-                      color="primary lighten-1"
-                      no-title
-                      scrollable
-                      locale="es-la"
-                      @input="calendario2 = false"
-                    >
-                      <!-- <v-btn text color="primary" @click="menu = false"
-                        >Cancel</v-btn
-                      >
-                      <v-btn text color="primary">OK</v-btn> -->
-                    </v-date-picker>
-                  </v-menu>
+                  <v-text-field
+                    label="Vencimiento Registro"
+                    :value="dateToString(cliente.vencimiento_registro)"
+                    v-mask="'##/##/####'"
+                    @change="cliente.vencimiento_registro = stringToDate($event)"
+                    @click:clear="$nextTick(() => (cliente.vencimiento_registro = null))"
+                    clearable
+                  />
                 </v-col>
                 <!-- <v-col>
                   <v-file-input
