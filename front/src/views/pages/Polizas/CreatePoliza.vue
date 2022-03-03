@@ -197,14 +197,6 @@
                     @click:clear="$nextTick(() => (poliza.fecha_entrega_email = null))"
                     clearable
                   />
-                  <v-text-field
-                    label="Entrega x Correo"
-                    :value="dateToString(poliza.fecha_entrega_correo)"
-                    v-mask="'##/##/####'"
-                    @change="poliza.fecha_entrega_correo = stringToDate($event)"
-                    @click:clear="$nextTick(() => (poliza.fecha_entrega_correo = null))"
-                    clearable
-                  />
 
                   <!-- <v-menu
                       v-model="calendarioEntrgaCorreo"

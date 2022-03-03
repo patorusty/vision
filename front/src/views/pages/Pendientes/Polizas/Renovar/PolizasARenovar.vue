@@ -184,67 +184,6 @@ export default {
       //   return `<v-icon small class="mr-2" color="success"> mdi-pencil </v-icon>`;
       // }
     },
-    envio(item) {
-      if (
-        item.fecha_recepcion !== null &&
-        item.fecha_entrega_original === null &&
-        item.fecha_entrega_correo === null &&
-        item.fecha_entrega_email === null
-      ) {
-        return "Recibida";
-      } else if (
-        item.fecha_recepcion !== null &&
-        item.fecha_entrega_original === null &&
-        item.fecha_entrega_correo !== null &&
-        item.fecha_entrega_email === null
-      ) {
-        return "Enviada por correo";
-      } else if (
-        item.fecha_recepcion !== null &&
-        item.fecha_entrega_original === null &&
-        item.fecha_entrega_correo === null &&
-        item.fecha_entrega_email !== null
-      ) {
-        return "Email";
-      } else if (
-        item.fecha_recepcion !== null &&
-        item.fecha_entrega_original !== null &&
-        item.fecha_entrega_correo === null &&
-        item.fecha_entrega_email === null
-      ) {
-        return "Entregada";
-      } else if (
-        item.fecha_recepcion !== null &&
-        item.fecha_entrega_original !== null &&
-        item.fecha_entrega_correo === null &&
-        item.fecha_entrega_email !== null
-      ) {
-        return "Entregada / Email";
-      } else if (
-        item.fecha_recepcion !== null &&
-        item.fecha_entrega_original !== null &&
-        item.fecha_entrega_correo !== null &&
-        item.fecha_entrega_email !== null
-      ) {
-        return "Entregada / Enviada por Correo / Email";
-      } else if (
-        item.fecha_recepcion !== null &&
-        item.fecha_entrega_original !== null &&
-        item.fecha_entrega_correo !== null &&
-        item.fecha_entrega_email === null
-      ) {
-        return "Entregada / Enviada por Correo";
-      } else if (
-        item.fecha_recepcion !== null &&
-        item.fecha_entrega_original === null &&
-        item.fecha_entrega_correo !== null &&
-        item.fecha_entrega_email !== null
-      ) {
-        return "Enviada por Correo / Email";
-      } else {
-        return "No Recibida";
-      }
-    },
     formaDePago(item) {
       if (item.forma_pago_id == 1) {
         return "TC";

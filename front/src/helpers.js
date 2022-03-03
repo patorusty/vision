@@ -124,6 +124,56 @@ export const helpers = {
       return axios.get("sanctum/csrf-cookie", {
         withCredentials: true
       });
+    },
+    envio(item) {
+      if (
+        item.fecha_recepcion !== null &&
+        item.fecha_entrega_original === null &&
+        item.fecha_entrega_email === null
+      ) {
+        return "Recibida";
+      } else if (
+        item.fecha_recepcion !== null &&
+        item.fecha_entrega_original === null &&
+        item.fecha_entrega_email !== null
+      ) {
+        return "Email";
+      } else if (
+        item.fecha_recepcion !== null &&
+        item.fecha_entrega_original !== null &&
+        item.fecha_entrega_email === null
+      ) {
+        return "Entregada";
+      } else if (
+        item.fecha_recepcion !== null &&
+        item.fecha_entrega_original !== null &&
+        item.fecha_entrega_email !== null
+      ) {
+        return "Entregada / Email";
+      } else if (
+        item.fecha_recepcion !== null &&
+        item.fecha_entrega_original !== null &&
+        item.fecha_entrega_correo !== null &&
+        item.fecha_entrega_email !== null
+      ) {
+        return "Entregada / Email";
+      } else if (
+        item.fecha_recepcion !== null &&
+        item.fecha_entrega_original !== null &&
+        item.fecha_entrega_correo !== null &&
+        item.fecha_entrega_email === null
+      ) {
+        return "Entregada";
+      } else if (
+        item.fecha_recepcion !== null &&
+        item.fecha_entrega_original === null &&
+        item.fecha_entrega_correo !== null &&
+        item.fecha_entrega_email !== null
+      ) {
+        return "Enviada por Email";
+      } else {
+        return "No Recibida";
+      }
     }
   },
   computed: {

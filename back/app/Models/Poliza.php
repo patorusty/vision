@@ -31,7 +31,6 @@ class Poliza extends Model
         'fecha_solicitud',
         'fecha_emision',
         'fecha_recepcion',
-        'fecha_entrega_correo',
         'fecha_entrega_original',
         'fecha_entrega_email',
         'premio',
@@ -53,7 +52,6 @@ class Poliza extends Model
         'fecha_solicitud',
         'fecha_emision',
         'fecha_recepcion',
-        'fecha_entrega_correo',
         'fecha_entrega_original',
         'fecha_entrega_email',
     ];

@@ -8,6 +8,6 @@ class EstadoPolizaController extends Controller
 {
     public function index()
     {
-        return EstadoPoliza::all();
+        return EstadoPoliza::orderBy('nombre', 'DESC')->get();
     }
 }
