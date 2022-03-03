@@ -84,19 +84,19 @@ const state = () => ({
   tipo_carrocerias: [],
   ajustes: [
     {
-      value: "0%",
+      value: "0",
       text: "0%"
     },
     {
-      value: "10%",
+      value: "10",
       text: "10%"
     },
     {
-      value: "20%",
+      value: "20",
       text: "20%"
     },
     {
-      value: "30%",
+      value: "30",
       text: "30%"
     }
   ],
