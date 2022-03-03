@@ -379,8 +379,8 @@ export default {
         case 4:
           return "yellow darken-1";
         case 3:
-          return "blue lighten-1";
         case 7:
+          return "blue lighten-1";
         case 5:
         case 6:
           return "light-green lighten-2";
