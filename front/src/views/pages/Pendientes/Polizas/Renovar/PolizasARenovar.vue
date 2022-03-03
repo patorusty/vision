@@ -137,7 +137,6 @@ export default {
         { text: "Dominio", value: "dominio" },
         { text: "Vigencia", value: "tipo_vigencias.vigencia" },
         { text: "Desde / Hasta", value: "desde" },
-        { text: "Estado", value: "estado.nombre" },
         { text: "Envío", value: "envio" },
         { text: "Pago", value: "pago" },
         { text: "Actions", value: "actions", sortable: false, align: "right" }
