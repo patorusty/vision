@@ -376,8 +376,9 @@ export default {
       switch (item.estado_poliza_id) {
         case 1:
           return "red lighten-1";
-        case 3:
         case 4:
+          return "yellow darken-1";
+        case 3:
           return "blue lighten-1";
         case 7:
         case 5:

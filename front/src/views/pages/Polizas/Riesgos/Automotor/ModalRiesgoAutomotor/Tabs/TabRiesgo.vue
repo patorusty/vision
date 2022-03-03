@@ -283,6 +283,7 @@ export default {
             c =>
               c.id == 2 ||
               c.id == 3 ||
+              c.id == 4 ||
               c.id == 6 ||
               c.id == 8 ||
               c.id == 12 ||
