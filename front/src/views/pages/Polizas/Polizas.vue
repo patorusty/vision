@@ -148,7 +148,66 @@
           dark
         >{{item.estado.nombre}}</v-chip>
       </template>
-      <template v-slot:[`item.envio`]="{ item }">{{ envio(item) }}</template>
+      <!-- <template v-slot:[`item.envio`]="{ item }">{{ envio(item) }}</template> -->
+      <template v-slot:[`item.envio`]="{ item }">
+        <div v-if="
+        item.fecha_recepcion !== null &&
+        item.fecha_entrega_original === null &&
+        item.fecha_entrega_email === null
+        ">
+          <v-tooltip top>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon
+                v-bind="attrs"
+                v-on="on"
+              >mdi-file-cancel-outline</v-icon>
+            </template>
+            <span>No Recibida</span>
+          </v-tooltip>
+        </div>
+        <div v-else-if="
+        item.fecha_recepcion !== null &&
+        item.fecha_entrega_original === null &&
+        item.fecha_entrega_email !== null
+      ">
+          <v-tooltip top>
+            <template v-slot:activator="{ on }">
+              <v-icon v-on="on">mdi-email-fast-outline</v-icon>
+            </template>
+            <span>Email</span>
+          </v-tooltip>
+        </div>
+        <div v-else-if="
+        item.fecha_recepcion !== null &&
+        item.fecha_entrega_original !== null &&
+        item.fecha_entrega_email === null
+      ">
+          <v-tooltip top>
+            <template v-slot:activator="{ on }">
+              <v-icon v-on="on">mdi-hand-extended-outline</v-icon>
+            </template>
+            <span>Entregada</span>
+          </v-tooltip>
+        </div>
+        <div v-else-if="
+          item.fecha_recepcion !== null &&
+          item.fecha_entrega_original !== null &&
+          item.fecha_entrega_email !== null
+          ">
+          <v-tooltip top>
+            <template v-slot:activator="{ on }">
+              <v-icon v-on="on">mdi-hand-extended-outline</v-icon>
+            </template>
+            <span>Entregada</span>
+          </v-tooltip><span> / </span>
+          <v-tooltip top>
+            <template v-slot:activator="{ on }">
+              <v-icon v-on="on">mdi-email-fast-outline</v-icon>
+            </template>
+            <span>Email</span>
+          </v-tooltip>
+        </div>
+      </template>
       <template v-slot:[`item.pago`]="{ item }">{{ formaDePago(item) }}</template>
       <template v-slot:[`item.actions`]="{ item }">
         <router-link

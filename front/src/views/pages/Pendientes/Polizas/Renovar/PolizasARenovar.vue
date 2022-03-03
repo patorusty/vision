@@ -42,7 +42,6 @@
       </template>
       <template v-slot:[`item.desde`]="{ item }">{{ dateToString(item.vigencia_desde) }} <br />
         {{ dateToString(item.vigencia_hasta) }}</template>
-      <template v-slot:[`item.envio`]="{ item }">{{ envio(item) }}</template>
       <template v-slot:[`item.pago`]="{ item }">{{ formaDePago(item) }}</template>
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon
@@ -137,7 +136,6 @@ export default {
         { text: "Dominio", value: "dominio" },
         { text: "Vigencia", value: "tipo_vigencias.vigencia" },
         { text: "Desde / Hasta", value: "desde" },
-        { text: "Envío", value: "envio" },
         { text: "Pago", value: "pago" },
         { text: "Actions", value: "actions", sortable: false, align: "right" }
       ];

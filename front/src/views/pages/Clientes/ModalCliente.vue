@@ -450,6 +450,9 @@ export default {
     this.getClientes();
     this.cargarLocalidades();
     this.getProductoresActivos();
+  },
+  mounted() {
+    bus.$on("closeModalCliente", () => this.closeModal());
   }
 };
 </script>

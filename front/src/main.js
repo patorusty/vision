@@ -32,6 +32,8 @@ Vue.use(VueTheMask);
 
 Vue.config.productionTip = false;
 
+export const bus = new Vue();
+
 function isloggedIn() {
   return localStorage.getItem("isLoggedIn");
 }

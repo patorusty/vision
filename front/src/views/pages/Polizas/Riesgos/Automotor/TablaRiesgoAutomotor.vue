@@ -14,6 +14,7 @@
         hide-overlay
         transition="dialog-bottom-transition"
         @click:outside="HIDE_MODAL_RA(false)"
+        @keydown.esc="closeModal"
         :value="modal_ra"
         max-width="80%"
       >
@@ -81,6 +82,7 @@
 import { mapState, mapActions, mapMutations } from "vuex";
 import ModalRiesgoAutomotor from "./ModalRiesgoAutomotor/ModalRiesgoAutomotor";
 import { helpers } from "../../../../../helpers";
+import { bus } from "../../../../../main";
 
 export default {
   components: {
@@ -144,6 +146,9 @@ export default {
       this.deleteRiesgoAutomotor(this.idSelected);
       this.modalDelete = false;
       this.idSelected = "";
+    },
+    closeModal() {
+      bus.$emit("closeModalRA", true);
     }
   },
   created() {
