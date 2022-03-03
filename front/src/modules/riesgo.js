@@ -23,11 +23,11 @@ const state = () => ({
   tipo_vehiculos: [],
   tipo_patentes: [
     {
-      value: 1,
+      value: 0,
       text: "Nacional"
     },
     {
-      value: 2,
+      value: 1,
       text: "Mercosur"
     }
   ],

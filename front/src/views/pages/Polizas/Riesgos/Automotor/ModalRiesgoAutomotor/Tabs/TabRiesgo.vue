@@ -134,7 +134,7 @@
             </v-col>
             <v-col class="py-0">
               <v-text-field
-                v-if="riesgo_automotor.tipo_patente == 1"
+                v-if="riesgo_automotor.tipo_patente == 0"
                 placeholder="ABC123"
                 v-mask="'AAA###'"
                 v-model="riesgo_automotor.patente"
@@ -203,12 +203,11 @@
             :items="usos"
           ></v-select>
           <v-select
-            v-if="riesgo_automotor.tipo_automotor_id != 2"
             label="Tipo Carroceria"
             item-text="nombre"
             item-value="id"
             v-model="riesgo_automotor.tipo_carroceria_id"
-            :items="tipo_carrocerias"
+            :items="carroceriasFiltradas"
             :rules="[rules.required]"
           ></v-select>
           <v-select
@@ -275,6 +274,33 @@ export default {
       },
       set: function() {
         return this.suma(this.riesgo_automotor);
+      }
+    },
+    carroceriasFiltradas() {
+      switch (this.riesgo_automotor.tipo_automotor_id) {
+        case 1:
+          return this.tipo_carrocerias.filter(
+            c =>
+              c.id == 2 ||
+              c.id == 3 ||
+              c.id == 6 ||
+              c.id == 8 ||
+              c.id == 12 ||
+              c.id == 13 ||
+              c.id == 14 ||
+              c.id == 23 ||
+              c.id == 24
+          );
+        case 2:
+          return this.tipo_carrocerias.filter(c => c.id == 9);
+        case 3:
+          return this.tipo_carrocerias.filter(c => c.id == 18);
+        case 4:
+          return this.tipo_carrocerias.filter(c => c.id == 17);
+        case 5:
+          return this.tipo_carrocerias.filter(c => c.id == 25);
+        default:
+          break;
       }
     }
   },
