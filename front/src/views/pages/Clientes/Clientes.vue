@@ -21,7 +21,7 @@
         hide-overlay
         transition="dialog-bottom-transition"
         @click:outside="HIDE_MODAL(false)"
-        @keydown.esc="closeModal"
+        @keydown.esc="close"
         :value="modal"
         max-width="80%"
       >
@@ -101,6 +101,7 @@
 import { mapState, mapActions, mapMutations } from "vuex";
 import ModalCliente from "./ModalCliente.vue";
 import { helpers } from "../../../helpers";
+import { bus } from "../../../main";
 export default {
   mixins: [helpers],
   components: { ModalCliente },
@@ -177,8 +178,8 @@ export default {
       this.deleteCliente(this.idSelected);
       this.modalDelete = false;
     },
-    closeModal() {
-      bus.$emit("closeModalCliente", true);
+    close() {
+      bus.$emit("closeModalClientes", true);
     }
     // customFilter(items, search, filter) {
     //   search = search.toString().toLowerCase();

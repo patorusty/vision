@@ -14,7 +14,7 @@
         hide-overlay
         transition="dialog-bottom-transition"
         @click:outside="HIDE_MODAL_RA(false)"
-        @keydown.esc="closeModal"
+        @keydown.esc="close"
         :value="modal_ra"
         max-width="80%"
       >
@@ -147,7 +147,7 @@ export default {
       this.modalDelete = false;
       this.idSelected = "";
     },
-    closeModal() {
+    close() {
       bus.$emit("closeModalRA", true);
     }
   },

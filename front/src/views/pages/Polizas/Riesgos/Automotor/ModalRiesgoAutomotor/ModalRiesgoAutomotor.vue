@@ -5,7 +5,7 @@
       <span v-else>Crear Riesgo Automotor</span>
     </v-card-title> -->
     <v-card-text>
-      <v-form ref="form">
+      <v-form ref="formC">
         <v-tabs vertical>
           <v-tab>
             <v-icon left>
@@ -117,7 +117,7 @@ export default {
     ...mapMutations("modal", ["HIDE_MODAL_RA"]),
     ...mapMutations("riesgo", ["RESET_RIESGO_AUTOMOTOR"]),
     async create() {
-      if (this.$refs.form.validate()) {
+      if (this.$refs.formC.validate()) {
         if (this.riesgo_automotor.tipo_carroceria_id == 17) {
           this.riesgo_automotor.patente = "101" + this.riesgo_automotor.patente;
         }
@@ -131,7 +131,7 @@ export default {
       }
     },
     async update() {
-      if (this.$refs.form.validate()) {
+      if (this.$refs.formC.validate()) {
         const createResult = await this.updateRiesgoAutomotor(
           this.riesgo_automotor
         );
@@ -143,10 +143,10 @@ export default {
     closeModal() {
       this.HIDE_MODAL_RA(false);
       this.RESET_RIESGO_AUTOMOTOR();
-      this.$refs.form.resetValidation();
+      this.$refs.formC.resetValidation();
     }
   },
-  mounted() {
+  created() {
     bus.$on("closeModalRA", () => this.closeModal());
   }
 };
