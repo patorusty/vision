@@ -8,7 +8,7 @@
         <v-col>
           <base-material-card
             v-if="c.polizas_vigentes.length > 0"
-            width="210"
+            width="240"
             inline
             :color="c.color"
           >
