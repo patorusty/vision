@@ -31,7 +31,7 @@ class CompaniaController extends Controller
 
     public function polizasVigentes()
     {
-        return  Compania::with('polizas_vigentes')->get();
+        return  Compania::with('polizas_vigentes')->orderBy('nombre')->get();
     }
 
     /**

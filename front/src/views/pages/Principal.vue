@@ -6,7 +6,7 @@
         :key="c.id"
       >
         <v-card
-          max-width="200"
+          width="210"
           dark
           :color="c.color"
         >
