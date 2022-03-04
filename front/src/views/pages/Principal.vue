@@ -1,20 +1,22 @@
 <template>
   <v-card class="mt-0 mx-4 pa-3">
     <v-row>
-      <v-col
+      <v-div
         v-for="c in companias"
         :key="c.id"
       >
-        <v-card
-          v-if="c.polizas_vigentes.length > 0"
-          width="210"
-          dark
-          :color="c.color"
-        >
-          <v-card-title class="text-h6 font-weight-light">{{c.nombre}}</v-card-title>
-          <v-card-text class="text-h5 font-weight-bold white--text"> Polizas Vigentes: {{c.polizas_vigentes.length}}</v-card-text>
-        </v-card>
-      </v-col>
+        <v-col>
+          <v-card
+            v-if="c.polizas_vigentes.length > 0"
+            width="210"
+            dark
+            :color="c.color"
+          >
+            <v-card-title class="text-h6 font-weight-light">{{c.nombre}}</v-card-title>
+            <v-card-text class="text-h5 font-weight-bold white--text"> Polizas Vigentes: {{c.polizas_vigentes.length}}</v-card-text>
+          </v-card>
+        </v-col>
+      </v-div>
     </v-row>
 
   </v-card>
