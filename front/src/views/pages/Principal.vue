@@ -6,15 +6,19 @@
         :key="c.id"
       >
         <v-col>
-          <v-card
+          <base-material-card
             v-if="c.polizas_vigentes.length > 0"
             width="210"
-            dark
+            inline
             :color="c.color"
           >
-            <v-card-title class="text-h6 font-weight-light">{{c.nombre}}</v-card-title>
-            <v-card-text class="text-h5 font-weight-bold white--text"> Polizas Vigentes: {{c.polizas_vigentes.length}}</v-card-text>
-          </v-card>
+            <template v-slot:heading>
+              <div class="display-2 font-weight-light">
+                {{c.nombre}}
+              </div>
+            </template>
+            <v-card-text class="subtitle-1 font-weight-light"> Polizas Vigentes: {{c.polizas_vigentes.length}}</v-card-text>
+          </base-material-card>
         </v-col>
       </div>
     </v-row>
