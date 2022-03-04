@@ -91,7 +91,6 @@ import { helpers } from "../../../../../../helpers";
 import TabRiesgo from "./Tabs/TabRiesgo";
 import TabGNC from "./Tabs/TabGNC";
 import TabAcreedorPrendario from "./Tabs/TabAcreedorPrendario";
-import { bus } from "../../../../../../main";
 export default {
   components: {
     "tab-gnc": TabGNC,
@@ -146,11 +145,14 @@ export default {
       this.$refs.form.resetValidation();
     }
   },
-  created() {
-    bus.$on("closeModalRA", () => this.closeModal());
+  watch: {
+    modal_ra() {
+      if (!this.modal_ra) {
+        this.closeModal();
+      }
+    }
   }
 };
 </script>
-
 <style scoped>
 </style>

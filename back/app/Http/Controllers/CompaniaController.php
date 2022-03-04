@@ -29,6 +29,11 @@ class CompaniaController extends Controller
         return Compania::where("activo", 1)->get();
     }
 
+    public function polizasVigentes()
+    {
+        return  Compania::with('polizas_vigentes')->get();
+    }
+
     /**
      * Store a newly created resource in storage.
      *

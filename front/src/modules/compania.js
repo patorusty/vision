@@ -166,6 +166,10 @@ const actions = {
         { root: true }
       );
     }
+  },
+  async getPolizasVigentes({ commit }) {
+    const resp = await http.get("/polizas/vigentes");
+    commit("SET_COMPANIAS", resp.data);
   }
 };
 export default {

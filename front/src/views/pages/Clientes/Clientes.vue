@@ -101,7 +101,6 @@
 import { mapState, mapActions, mapMutations } from "vuex";
 import ModalCliente from "./ModalCliente.vue";
 import { helpers } from "../../../helpers";
-import { bus } from "../../../main";
 export default {
   mixins: [helpers],
   components: { ModalCliente },
@@ -140,14 +139,6 @@ export default {
             ? c.razon_social.toString().includes(this.search)
             : false) ||
           (c.cuit ? c.cuit.toString().includes(this.search) : false)
-        // ||
-        // c.celular.toString().includes(this.search) ||
-        // c.productores.nombre
-        //   .toUpperCase()
-        //   .includes(this.search.toUpperCase()) ||
-        // c.productores.apellido
-        //   .toUpperCase()
-        //   .includes(this.search.toUpperCase())
       );
     }
   },
@@ -177,9 +168,6 @@ export default {
     deleteClient() {
       this.deleteCliente(this.idSelected);
       this.modalDelete = false;
-    },
-    close() {
-      bus.$emit("closeModalClientes", true);
     }
     // customFilter(items, search, filter) {
     //   search = search.toString().toLowerCase();

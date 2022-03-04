@@ -19,6 +19,7 @@
       >Crear</v-btn>
       <v-dialog
         @click:outside="HIDE_MODAL3(false)"
+        @keydown.esc="HIDE_MODAL3(false)"
         :value="modal3"
         max-width="60%"
       >

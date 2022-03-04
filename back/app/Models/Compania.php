@@ -52,4 +52,9 @@ class Compania extends Model
     {
         return $this->hasMany(Poliza::class, 'compania_id', 'id');
     }
+
+    public function polizas_vigentes()
+    {
+        return $this->hasMany(Poliza::class, 'compania_id', 'id')->where('estado_poliza_id', 3)->orWhere('estado_poliza_id', 4)->orWhere('estado_poliza_id', 7);
+    }
 }

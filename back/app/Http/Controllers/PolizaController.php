@@ -31,11 +31,6 @@ class PolizaController extends Controller
         return Poliza::with(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo', 'riesgo_automotor.anio', "riesgo_automotor.marca", "riesgo_automotor.modelo", "riesgo_automotor.version"])->whereNull("numero")->whereNotNull("renueva_numero")->orderBy('vigencia_hasta', 'DESC')->get();
     }
 
-    public function chequeoRenovada($poliza_actual)
-    {
-        $poliza = Poliza::where('renueva_numero', $poliza_actual)->get();
-    }
-
     /**
      * Store a newly created resource in storage.
      *

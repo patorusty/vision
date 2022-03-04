@@ -363,7 +363,6 @@
 import { mapState, mapActions, mapMutations } from "vuex";
 import http from "../../../http-request";
 import { helpers } from "../../../helpers";
-import { bus } from "../../../main";
 import { debounce } from "debounce";
 export default {
   mixins: [helpers],
@@ -451,8 +450,13 @@ export default {
     this.getClientes();
     this.cargarLocalidades();
     this.getProductoresActivos();
-
-    bus.$on("closeModalClientes", () => this.closeModal());
+  },
+  watch: {
+    modal() {
+      if (!this.modal) {
+        this.closeModal();
+      }
+    }
   }
 };
 </script>
