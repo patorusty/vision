@@ -1,7 +1,7 @@
 <template>
   <v-card class="mt-0 mx-4 pa-3">
     <v-row>
-      <v-div
+      <div
         v-for="c in companias"
         :key="c.id"
       >
@@ -16,7 +16,7 @@
             <v-card-text class="text-h5 font-weight-bold white--text"> Polizas Vigentes: {{c.polizas_vigentes.length}}</v-card-text>
           </v-card>
         </v-col>
-      </v-div>
+      </div>
     </v-row>
 
   </v-card>
