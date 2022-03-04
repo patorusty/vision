@@ -1,5 +1,8 @@
 <template>
-  <v-card class="mt-0 mx-4 pa-3">
+  <v-card
+    class="mt-0 mx-4 pa-3"
+    v-if="!loading"
+  >
     <v-row>
       <div
         v-for="c in companias"
@@ -21,6 +24,20 @@
           </base-material-card>
         </v-col>
       </div>
+      <v-col>
+        <base-material-card
+          width="240"
+          inline
+          color="primary"
+        >
+          <template v-slot:heading>
+            <div class="display-2 font-weight-light">
+              TOTAL
+            </div>
+          </template>
+          <v-card-text class="subtitle-1 font-weight-light"> Total Polizas Vigentes: {{totalPolizas}}</v-card-text>
+        </base-material-card>
+      </v-col>
     </v-row>
 
   </v-card>
@@ -31,9 +48,13 @@ import { mapState, mapActions } from "vuex";
 export default {
   data: () => ({}),
   computed: {
-    ...mapState("compania", ["companias"]),
-    allianz() {
-      return this.companias.filter(p => p.compania_id == 4);
+    ...mapState("compania", ["companias", "loading"]),
+    totalPolizas() {
+      var total = 0;
+      this.companias.forEach(c => {
+        total = total + c.polizas_vigentes.length;
+      });
+      return total;
     }
   },
   methods: {

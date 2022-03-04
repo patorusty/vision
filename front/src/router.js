@@ -20,9 +20,9 @@ export default new Router({
       children: [
         // Dashboard
         {
-          name: "Principal",
-          path: "principal",
-          component: () => import("@/views/pages/Principal.vue"),
+          name: "Home",
+          path: "home",
+          component: () => import("@/views/pages/Home.vue"),
           meta: { authOnly: true }
         },
         {
@@ -79,12 +79,6 @@ export default new Router({
           name: "Clientes",
           path: "clientes",
           component: () => import("@/views/pages/Clientes/Clientes.vue"),
-          meta: { authOnly: true }
-        },
-        {
-          name: "Crear Cliente",
-          path: "clientes/create",
-          component: () => import("@/views/pages/Clientes/CreateCliente.vue"),
           meta: { authOnly: true }
         },
         {

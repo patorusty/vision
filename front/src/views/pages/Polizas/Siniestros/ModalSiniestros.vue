@@ -14,6 +14,20 @@
                 :rules="[rules.required]"
               ></v-text-field>
             </v-col>
+            <v-col
+              cols="4"
+              class=" mt-0 py-0"
+            >
+              <v-select
+                label="Tipo de Reclamo"
+                v-model="siniestro.tipo_reclamo"
+                :items="tipo_reclamos"
+                item-text="value"
+                item-value="value"
+                :rules="[rules.required]"
+              >
+              </v-select>
+            </v-col>
             <v-col class=" mt-0 py-0">
               <v-menu
                 v-model="fechaDenuncia"
@@ -45,22 +59,7 @@
                 </v-date-picker>
               </v-menu>
             </v-col>
-            <v-col
-              cols="6"
-              class=" mt-0 py-0"
-            >
-              <v-select
-                label="Estado de Siniestro"
-                v-model="siniestro.estado_siniestro"
-                :items="estados"
-                item-text="value"
-                item-value="value"
-                :rules="[rules.required]"
-              >
-              </v-select>
-            </v-col>
-          </v-row>
-          <v-row>
+
             <v-col class=" mt-0 py-0">
               <v-menu
                 v-model="fechaSinistestro"
@@ -92,6 +91,9 @@
                 </v-date-picker>
               </v-menu>
             </v-col>
+          </v-row>
+          <v-row>
+
             <v-col class=" mt-0 py-0">
               <v-menu
                 v-model="fechaCompleto"
@@ -128,15 +130,22 @@
               class=" mt-0 py-0"
             >
               <v-select
-                label="Tipo de Reclamo"
-                v-model="siniestro.tipo_reclamo"
-                :items="tipo_reclamos"
+                label="Estado de Siniestro"
+                v-model="siniestro.estado_siniestro"
+                :items="estados"
                 item-text="value"
                 item-value="value"
                 :rules="[rules.required]"
               >
               </v-select>
             </v-col>
+            <v-col class=" mt-0 py-0">
+              <v-text-field
+                label="Compania del Tercero"
+                v-model="siniestro.compania_tercero"
+              ></v-text-field>
+            </v-col>
+
           </v-row>
           <v-row>
             <v-col class=" mt-0 py-0">

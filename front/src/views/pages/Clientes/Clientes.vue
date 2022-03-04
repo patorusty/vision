@@ -21,7 +21,7 @@
         hide-overlay
         transition="dialog-bottom-transition"
         @click:outside="HIDE_MODAL(false)"
-        @keydown.esc="close"
+        @keydown.esc="HIDE_MODAL(false)"
         :value="modal"
         max-width="80%"
       >
@@ -169,10 +169,6 @@ export default {
       this.deleteCliente(this.idSelected);
       this.modalDelete = false;
     }
-    // customFilter(items, search, filter) {
-    //   search = search.toString().toLowerCase();
-    //   return items.filter(i => Object.keys(i).some(j => filter(i[j], search)));
-    // }
   },
   created() {
     this.getClientes();

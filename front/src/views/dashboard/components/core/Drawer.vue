@@ -89,7 +89,7 @@ export default {
       {
         icon: "mdi-view-dashboard",
         title: "Home",
-        to: "/principal"
+        to: "/home"
       },
       {
         icon: "mdi-car",

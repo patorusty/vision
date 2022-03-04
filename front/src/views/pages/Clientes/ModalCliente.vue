@@ -23,12 +23,12 @@
           <v-row>
             <v-col
               class="pt-0 pb-0"
-              v-if="cliente.tipo_persona === 'Persona Juridica'"
+              v-if="cliente.tipo_persona === 2"
             >
               <v-text-field
                 v-model="cliente.razon_social"
                 :rules="
-                  cliente.tipo_persona === 'Persona Juridica'
+                  cliente.tipo_persona === 2
                     ? [rules.required]
                     : null
                 "
@@ -69,12 +69,12 @@
             </v-col>
             <v-col
               class="pt-0 pb-0"
-              v-if="cliente.tipo_persona === 'Persona Juridica'"
+              v-if="cliente.tipo_persona === 2"
             >
               <v-text-field
                 v-model="cliente.cuit"
                 :rules="
-                  cliente.tipo_persona === 'Persona Juridica'
+                  cliente.tipo_persona === 2
                     ? [rules.required, !cuitUsado || 'Este CUIT ya está en uso']
                     : null
                 "
@@ -386,7 +386,7 @@ export default {
   computed: {
     ...mapState("cliente", ["cliente", "tipos_persona", "condiciones"]),
     ...mapState("productor", ["productores"]),
-    ...mapState("modal", ["edicion"])
+    ...mapState("modal", ["modal", "edicion"])
   },
   methods: {
     ...mapActions("cliente", ["createCliente", "getClientes", "updateCliente"]),
@@ -454,6 +454,7 @@ export default {
   watch: {
     modal() {
       if (!this.modal) {
+        console.log("holis");
         this.closeModal();
       }
     }

@@ -13,13 +13,13 @@ const state = () => ({
 });
 const mutations = {
   SET_COMPANIAS(state, companias) {
-    state.loading = false;
     state.companias = companias;
+    state.loading = false;
   },
   SET_COMPANIA(state, compania) {
     state.compania = compania;
-    state.loading = false;
     state.compania.cuitOriginal = compania.cuit;
+    state.loading = false;
   },
   RESET_COMPANIA(state) {
     state.compania = Object.assign(
