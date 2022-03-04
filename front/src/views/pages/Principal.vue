@@ -6,6 +6,7 @@
         :key="c.id"
       >
         <v-card
+          v-if="c.polizas_vigentes.length > 0"
           width="210"
           dark
           :color="c.color"
