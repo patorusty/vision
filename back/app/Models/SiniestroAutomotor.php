@@ -27,7 +27,7 @@ class SiniestroAutomotor extends Model
         return $this->belongsTo(Poliza::class, 'poliza_id');
     }
 
-    public function notas_siniestro()
+    public function notas()
     {
         return $this->hasMany(NotaSiniestroAut::class, 'siniestro_automotor_id', 'id');
     }

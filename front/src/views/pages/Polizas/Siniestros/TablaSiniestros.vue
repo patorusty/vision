@@ -3,14 +3,6 @@
     <v-card-title>
       Siniestros
       <v-spacer></v-spacer>
-      <!-- <v-text-field
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="Search"
-        single-line
-        hide-details
-        v-uppercase
-      ></v-text-field> -->
       <v-spacer></v-spacer>
       <v-btn
         color="primary"
@@ -21,7 +13,7 @@
         @click:outside="HIDE_MODAL3(false)"
         @keydown.esc="HIDE_MODAL3(false)"
         :value="modal3"
-        max-width="60%"
+        max-width="80%"
       >
         <modal-siniestros />
       </v-dialog>
@@ -98,7 +90,7 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-import ModalSiniestros from "./ModalSiniestros";
+import ModalSiniestros from "../../Pendientes/Siniestros/ModalSiniestros.vue";
 import { helpers } from "../../../../helpers";
 
 export default {
@@ -136,7 +128,7 @@ export default {
       this.modalDelete = true;
     },
     deleteSin() {
-      this.deleteEndoso(this.idSelected);
+      this.deleteSiniestro(this.idSelected);
       this.modalDelete = false;
       this.idSelected = "";
     }

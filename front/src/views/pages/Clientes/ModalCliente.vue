@@ -161,6 +161,7 @@
                 label="Calle"
                 v-model="cliente.direccion"
                 :rules="[rules.required]"
+                v-uppercase
               >
               </v-text-field>
             </v-col>

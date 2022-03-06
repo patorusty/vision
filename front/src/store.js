@@ -8,16 +8,17 @@ import cliente from "./modules/cliente";
 import poliza from "./modules/poliza";
 import organizador from "./modules/organizador";
 import productor from "./modules/productor";
-import codigo_organizador  from "./modules/codigo_organizador";
-import codigo_productor  from "./modules/codigo_productor";
-import cobertura  from "./modules/cobertura";
-import endoso  from "./modules/endoso";
-import siniestro  from "./modules/siniestro";
-import riesgo  from "./modules/riesgo";
-import marca  from "./modules/marca";
-import modelo  from "./modules/modelo";
-import version  from "./modules/version";
-import anio  from "./modules/anio";
+import codigo_organizador from "./modules/codigo_organizador";
+import codigo_productor from "./modules/codigo_productor";
+import cobertura from "./modules/cobertura";
+import endoso from "./modules/endoso";
+import siniestro from "./modules/siniestro";
+import riesgo from "./modules/riesgo";
+import marca from "./modules/marca";
+import modelo from "./modules/modelo";
+import version from "./modules/version";
+import anio from "./modules/anio";
+import nota_siniestro from "./modules/nota_siniestro";
 
 Vue.use(Vuex);
 
@@ -54,5 +55,6 @@ export default new Vuex.Store({
     modelo,
     version,
     anio,
+    nota_siniestro
   }
 });

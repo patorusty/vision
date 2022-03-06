@@ -4,20 +4,11 @@
     elevation=0
   >
     <v-card-title>
-      <!-- Siniestrosssss
-      <v-spacer></v-spacer> -->
-      <!-- <v-text-field
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="Search"
-        single-line
-        hide-details
-        v-uppercase
-      ></v-text-field> -->
       <v-dialog
         @click:outside="HIDE_MODAL3(false)"
+        @keydown.esc="HIDE_MODAL3(false)"
         :value="modal3"
-        max-width="60%"
+        max-width="80%"
       >
         <modal-siniestros />
       </v-dialog>

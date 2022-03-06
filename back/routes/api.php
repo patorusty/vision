@@ -19,7 +19,7 @@ use App\Http\Controllers\AutomotorMarcaController;
 use App\Http\Controllers\AnioController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AutomotorModeloController;
-// use App\Http\Controllers\AutomotorAnioController;
+use App\Http\Controllers\NotaSiniestroAutController;
 use App\Http\Controllers\AutomotorVersionController;
 use App\Http\Controllers\SiniestroAutomotorController;
 use App\Http\Controllers\RiesgoAutomotorController;
@@ -109,6 +109,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('siniestros', SiniestroAutomotorController::class);
     Route::get('siniestros/indexFiltrado/{poliza_id}', [SiniestroAutomotorController::class, 'indexFiltrado']);
+    Route::apiResource('siniestros/notas', NotaSiniestroAutController::class);
 
     Route::apiResource('administracion/marcas', AutomotorMarcaController::class);
     Route::apiResource('administracion/modelos', AutomotorModeloController::class);

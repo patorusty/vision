@@ -58,18 +58,6 @@ export default new Router({
           meta: { authOnly: true }
         },
         {
-          name: "Siniestros",
-          path: "siniestros",
-          component: () => import("@/views/pages/Siniestros/Siniestros.vue"),
-          meta: { authOnly: true }
-        },
-        {
-          name: "Endosos",
-          path: "endosos",
-          component: () => import("@/views/pages/Endosos/Endosos.vue"),
-          meta: { authOnly: true }
-        },
-        {
           name: "Pendientes",
           path: "pendientes",
           component: () => import("@/views/pages/Pendientes/Pendientes.vue"),

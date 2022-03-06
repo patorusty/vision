@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\NotaSiniestroAut;
+use App\Models\NotaSiniestroAut;
 use Illuminate\Http\Request;
-use App\Http\Resources\NotaSiniestroAut as NotaSiniestroAutsResource;
 
 
 class NotaSiniestroAutController extends Controller
@@ -16,23 +15,6 @@ class NotaSiniestroAutController extends Controller
      */
     public function index()
     {
-        
-    }
-    public function indexFiltrado($siniestro_automotor_id)
-    {
-        $nota = NotaSiniestroAut::where('siniestro_automotor_id', $siniestro_automotor_id)->orderBy('id', 'DESC')->get();
-
-        return NotaSiniestroAutsResource::collection($nota);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -43,17 +25,12 @@ class NotaSiniestroAutController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->validate($request, [
-     
-        // ]);
-
-        $nota = NotaSiniestroAut::create([
-            'siniestro_automotor_id' => $request->input('siniestro_automotor_id'),
-            'user_id' => $request->input('user_id'),
-            'nota' => $request->input('nota'),
-        ]);
-
-        return (['message' => 'guardado']);
+        try {
+            $nota = NotaSiniestroAut::create($request->all());
+            return response($nota, 201);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -64,20 +41,7 @@ class NotaSiniestroAutController extends Controller
      */
     public function show($id)
     {
-        $nota = NotaSiniestroAut::findOrFail($id);
-
-        return new NotaSiniestroAutsResource($nota);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return NotaSiniestroAut::findOrFail($id);
     }
 
     /**
@@ -89,15 +53,16 @@ class NotaSiniestroAutController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $nota = NotaSiniestroAut::find($id);
-        $nota->update([
-            'siniestro_automotor_id' => $request->input('siniestro_automotor_id'),
-            'user_id' => $request->input('user_id'),
-            'nota' => $request->input('nota'),            
-        ]);
+        try {
+            $nota = NotaSiniestroAut::findOrFail($id);
+            $nota->fill($request->all())->save();
+            return response($nota, 200);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
-   
+
 
     /**
      * Remove the specified resource from storage.
@@ -107,10 +72,12 @@ class NotaSiniestroAutController extends Controller
      */
     public function destroy($id)
     {
-        $nota = NotaSiniestroAut::find($id);
-        
-        $nota->delete();
-
-        return ['message'=> 'Eliminado'];
+        try {
+            $nota = NotaSiniestroAut::find($id);
+            $nota->delete();
+            return response('', 200);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 }
