@@ -19,7 +19,7 @@ const mutations = {
     state.nota_siniestro = nota;
   },
   RESET_NOTA(state) {
-    state.nota_siniestro = Object.assign({}, {});
+    state.nota_siniestro = Object.assign({}, { fecha: new Date() });
   },
   UPDATE_NOTA(state, nota) {
     const item = state.notas_siniestro.find(item => item.id === nota.id);
