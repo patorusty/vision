@@ -29,6 +29,6 @@ class SiniestroAutomotor extends Model
 
     public function notas()
     {
-        return $this->hasMany(NotaSiniestroAut::class, 'siniestro_automotor_id', 'id');
+        return $this->hasMany(NotaSiniestroAut::class, 'siniestro_automotor_id', 'id')->orderBy('id', 'DESC');
     }
 }

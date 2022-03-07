@@ -103,7 +103,6 @@
               <v-text-field
                 v-model="endoso.numero_endoso"
                 label="Número de Endoso"
-                :rules="[rules.required]"
               ></v-text-field>
             </v-col>
           </v-row>

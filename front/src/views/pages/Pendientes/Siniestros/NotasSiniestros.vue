@@ -105,7 +105,7 @@ export default {
     ...mapActions("nota_siniestro", ["getNota", "deleteNota"]),
     editNota(id) {
       this.getNota(id);
-      this.SHOW_MODAL(true);
+      this.SHOW_MODAL4(true);
     },
     openDeleteModal(id) {
       this.idSelected = id;
