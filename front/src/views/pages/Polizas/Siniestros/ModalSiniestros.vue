@@ -11,7 +11,6 @@
               <v-text-field
                 v-model="siniestro.numero_siniestro"
                 label="Número de Siniestro"
-                :rules="[rules.required]"
               ></v-text-field>
             </v-col>
             <v-col
@@ -204,12 +203,13 @@ export default {
   methods: {
     ...mapActions("siniestro", ["createSiniestro", "updateSiniestro"]),
     ...mapMutations("siniestro", ["RESET_SINIESTRO"]),
+    ...mapMutations("nota_siniestro", ["RESET_LISTA"]),
     ...mapMutations("modal", ["HIDE_MODAL3"]),
     closeModal() {
       this.HIDE_MODAL3(false);
       this.RESET_SINIESTRO();
+      this.RESET_LISTA();
       this.$refs.form.resetValidation();
-      this.cpUsado = false;
     },
     async create() {
       if (this.$refs.form.validate()) {

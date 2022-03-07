@@ -21,6 +21,9 @@ const mutations = {
   RESET_NOTA(state) {
     state.nota_siniestro = Object.assign({}, { fecha: new Date() });
   },
+  RESET_LISTA(state) {
+    state.notas_siniestro = [];
+  },
   UPDATE_NOTA(state, nota) {
     const item = state.notas_siniestro.find(item => item.id === nota.id);
     Object.assign(item, nota);
