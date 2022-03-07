@@ -38,7 +38,8 @@ const mutations = {
   RESET_SINIESTRO(state) {
     state.siniestro = Object.assign({}, {});
   },
-  CREATE_SINIESTRO(state, siniestro) {
+  CREATE_SINIESTRO_AND_SET(state, siniestro) {
+    state.siniestro = siniestro;
     state.siniestros.unshift(siniestro);
   },
   UPDATE_SINIESTRO(state, siniestro) {
@@ -68,7 +69,7 @@ const actions = {
   async createSiniestro({ commit }, siniestro) {
     const resp = await http.post(API_URL, siniestro);
     if (resp.status === 201) {
-      commit("CREATE_SINIESTRO", resp.data);
+      commit("CREATE_SINIESTRO_AND_SET", resp.data);
       commit(
         "snackbar/SHOW_SNACK",
         {
