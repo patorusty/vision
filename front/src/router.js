@@ -16,7 +16,7 @@ export default new Router({
       path: "/",
       component: () => import("@/views/dashboard/Index"),
       meta: { authOnly: true },
-      redirect: "principal",
+      redirect: "home",
       children: [
         // Dashboard
         {
