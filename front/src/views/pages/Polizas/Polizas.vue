@@ -148,7 +148,6 @@
           dark
         >{{item.estado.nombre}}</v-chip>
       </template>
-      <!-- <template v-slot:[`item.envio`]="{ item }">{{ envio(item) }}</template> -->
       <template v-slot:[`item.envio`]="{ item }">
         <div v-if="
         item.fecha_recepcion !== null &&
@@ -160,9 +159,9 @@
               <v-icon
                 v-bind="attrs"
                 v-on="on"
-              >mdi-file-cancel-outline</v-icon>
+              >mdi-hand-extended-outline</v-icon>
             </template>
-            <span>No Recibida</span>
+            <span>Recibida</span>
           </v-tooltip>
         </div>
         <div v-else-if="
@@ -205,6 +204,14 @@
               <v-icon v-on="on">mdi-email-fast-outline</v-icon>
             </template>
             <span>Email</span>
+          </v-tooltip>
+        </div>
+        <div v-else>
+          <v-tooltip top>
+            <template v-slot:activator="{ on }">
+              <v-icon v-on="on">mdi-file-cancel-outline</v-icon>
+            </template>
+            <span>No Recibida</span>
           </v-tooltip>
         </div>
       </template>
