@@ -88,6 +88,7 @@
                 :rules="[rules.required]"
               ></v-select>
               <v-text-field
+                class="input-numero"
                 v-model="poliza.numero"
                 label="Poliza Nro"
               ></v-text-field>
@@ -357,4 +358,8 @@ export default {
 </script>
 
 <style>
+.input-numero .v-text-field__slot input {
+  font-weight: bold !important;
+  color: #e91e63 !important;
+}
 </style>
