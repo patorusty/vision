@@ -62,6 +62,7 @@
     </v-data-table>
     <v-dialog
       @click:outside="closeModalPend"
+      @keydown.esc="closeModalPend"
       :value="modal"
       max-width="40%"
     >

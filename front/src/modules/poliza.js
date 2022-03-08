@@ -68,16 +68,16 @@ const mutations = {
   UPDATE_POLIZA(state, poliza) {
     if (state.polizas.length) {
       var item = state.polizas.find(item => item.id === poliza.id);
-      return Object.assign(item, poliza);
+      Object.assign(item, poliza);
     }
   },
   UPDATE_POLIZA_PENDIENTE(state, poliza) {
     var item = state.polizas_pendientes.find(item => item.id === poliza.id);
-    return Object.assign(item, poliza);
+    Object.assign(item, poliza);
   },
   UPDATE_POLIZA_RENOVADA(state, poliza) {
     var item = state.polizas_a_renovar.find(item => item.id === poliza.id);
-    return Object.assign(item, poliza);
+    Object.assign(item, poliza);
   },
   DELETE_POLIZA(state, id) {
     state.polizas = state.polizas.filter(c => c.id != id);

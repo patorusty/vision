@@ -24,7 +24,20 @@ export default {
   },
   mixins: [helpers],
   methods: {
-    ...mapMutations("poliza", ["RESET_POLIZA"])
+    ...mapMutations("poliza", ["RESET_POLIZA"]),
+    ...mapMutations("modal", ["HIDE_MODAL", "SET_STEP"]),
+    closeModal() {
+      this.HIDE_MODAL(false);
+      this.RESET_POLIZA();
+      this.SET_STEP(1);
+    }
+  },
+  watch: {
+    modal() {
+      if (!this.modal) {
+        this.closeModal();
+      }
+    }
   }
 };
 </script>
