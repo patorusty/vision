@@ -264,14 +264,6 @@ export default {
     TablaRiesgoAutomotor
   },
   data: () => ({
-    // calendarioDesde: false,
-    // calendarioHasta: false,
-    // calendarioSolicitud: false,
-    // calendarioEmision: false,
-    // calendarioEntregaOriginal: false,
-    // calendarioEnviadoMail: false,
-    // calendarioEntrgaCorreo: false,
-    // calendarioRecepcion: false,
     plan_pagos: [
       {
         value: "MENSUAL"
@@ -337,7 +329,10 @@ export default {
     }
   },
   created() {
-    this.getPoliza(this.$route.params.id);
+    console.log(this.poliza.id);
+    if (!this.poliza.id) {
+      this.getPoliza(this.$route.params.id);
+    }
     this.getClientes();
     this.getCompanias();
     this.getTipoRiesgos();

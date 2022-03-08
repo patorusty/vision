@@ -19,7 +19,6 @@
     "js-cookie": "^3.0.1",
     "moment": "^2.24.0",
     "text-mask-addons": "^3.8.0",
-    "v-calendar": "^2.4.1",
     "v-mask": "^2.2.4",
     "vue": "2.6.11",
     "vue-i18n": "^8.15.3",

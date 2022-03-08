@@ -1,8 +1,8 @@
 import http from "./http-request";
 import axios from "axios";
 import moment from "moment";
-import "moment/locale/es"; // without this line it didn't work
-moment.locale("es");
+// import "moment/locale/es"; // without this line it didn't work
+// moment.locale("es");
 import Cookie from "js-cookie";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 const currencyMask = createNumberMask({
@@ -11,7 +11,6 @@ const currencyMask = createNumberMask({
   includeThousandsSeparator: true,
   allowNegative: false
 });
-
 export const helpers = {
   data: () => ({
     currencyMask,
@@ -53,6 +52,7 @@ export const helpers = {
       if (date) {
         return moment(date)
           .utc()
+          .local()
           .format("DD/MM/YYYY")
           .toString();
       } else {
@@ -61,16 +61,13 @@ export const helpers = {
     },
     stringToDate(date) {
       if (date) {
-        return moment(date, "DD/MM/YYYY").utc();
+        return moment(date, "DD/MM/YYYY")
+          .utc()
+          .local();
       } else {
         return "";
       }
     },
-    // formatDateIn(value) {
-    //   return moment(value)
-    //     .utc()
-    //     .format("YYYY-MM-DD");
-    // },
     dateOrNo(date) {
       if (date) {
         return moment(date).format("DD/MM/YYYY");
@@ -85,7 +82,9 @@ export const helpers = {
       );
     },
     updateVigencia(value) {
-      this.poliza.vigencia_desde = moment(value, "DD/MM/YYYY").utc();
+      this.poliza.vigencia_desde = moment(value, "DD/MM/YYYY")
+        .utc()
+        .local();
       this.sumarMes();
     },
     toUpper(nombre, e) {

@@ -341,7 +341,6 @@ export default {
             name: "Editar Poliza",
             params: { id: this.poliza.id }
           });
-          this.RESET_POLIZA();
         }
       }
     }
@@ -353,9 +352,6 @@ export default {
     this.getFormaPagos();
     this.getTipoVigencias();
     this.sumarMes();
-  },
-  beforeDestroy() {
-    this.RESET_POLIZA();
   }
 };
 </script>
