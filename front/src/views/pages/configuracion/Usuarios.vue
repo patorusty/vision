@@ -17,6 +17,7 @@
           dark
         >Crear</v-btn>
         <v-dialog
+          :retain-focus="false"
           v-model="modal"
           persistent
           max-width="600px"

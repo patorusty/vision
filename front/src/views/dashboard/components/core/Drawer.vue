@@ -59,6 +59,7 @@
           v-else
           :key="`item-${i}`"
           :item="item"
+          @click="i"
         />
         <!-- </router-link> -->
       </template>
@@ -73,6 +74,7 @@
 <script>
 // Utilities
 import { mapState } from "vuex";
+import { bus } from "../../../../main";
 
 export default {
   name: "DashboardCoreDrawer",
@@ -89,12 +91,14 @@ export default {
       {
         icon: "mdi-view-dashboard",
         title: "Home",
-        to: "/home"
+        to: "home",
+        event: () => {}
       },
       {
         icon: "mdi-car",
         title: "Polizas",
-        to: "/polizas"
+        to: "polizas",
+        event: () => bus.$emit("cleanSearch", true)
       },
       // {
       //   icon: "mdi-alert",
@@ -109,12 +113,14 @@ export default {
       {
         icon: "mdi-clipboard-clock",
         title: "Pendientes",
-        to: "/pendientes"
+        to: "pendientes",
+        event: () => {}
       },
       {
         icon: "mdi-account",
         title: "Clientes",
-        to: "/clientes"
+        to: "clientes",
+        event: () => {}
       },
       {
         group: "/administracion",
@@ -123,23 +129,28 @@ export default {
         children: [
           {
             title: "Compañias",
-            to: "companias"
+            to: "companias",
+            event: () => {}
           },
           {
             title: "Organizadores",
-            to: "organizadores"
+            to: "organizadores",
+            event: () => {}
           },
           {
             title: "Productores",
-            to: "productores"
+            to: "productores",
+            event: () => {}
           },
           {
             title: "Marca / Modelo / Version",
-            to: "mmv"
+            to: "mmv",
+            event: () => {}
           },
           {
             title: "Estadisticas",
-            to: "estadisticas"
+            to: "estadisticas",
+            event: () => {}
           }
         ]
       },
@@ -150,7 +161,8 @@ export default {
         children: [
           {
             title: "Usuarios",
-            to: "usuarios"
+            to: "usuarios",
+            event: () => {}
           }
         ]
       }

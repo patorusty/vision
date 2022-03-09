@@ -11,8 +11,18 @@
         v-uppercase
       ></v-text-field>
       <v-spacer></v-spacer>
-      <v-btn color="primary" @click="SHOW_MODAL(false)" dark>Crear</v-btn>
-      <v-dialog @click:outside="HIDE_MODAL(false)" :value="modal" max-width="70%">
+      <v-btn
+        color="primary"
+        @click="SHOW_MODAL(false)"
+        dark
+      >Crear</v-btn>
+      <v-dialog
+        :retain-focus="false"
+        @keydown.esc="HIDE_MODAL(false)"
+        @click:outside="HIDE_MODAL(false)"
+        :value="modal"
+        max-width="70%"
+      >
         <modal-organizadores></modal-organizadores>
       </v-dialog>
     </v-card-title>
@@ -25,7 +35,10 @@
       multi-sort
       :loading="loading"
     >
-    <template slot="item.activo" slot-scope="props">{{
+      <template
+        slot="item.activo"
+        slot-scope="props"
+      >{{
         textoActivo(props.item.activo)
       }}</template>
       <template v-slot:[`item.actions`]="{ item }">
@@ -47,16 +60,27 @@
         </v-icon>
       </template>
     </v-data-table>
-    <v-dialog :retain-focus="false" max-width="30%" v-model="modalDelete">
+    <v-dialog
+      :retain-focus="false"
+      max-width="30%"
+      v-model="modalDelete"
+    >
       <v-card class="pa-4">
         <v-card-text>
           <span>Esta seguro que desea eliminar este Organizador?</span>
         </v-card-text>
         <v-card-actions class="py-0 pt-3 pr-6 d-flex justify-end">
-          <v-btn dark color="red" @click="modalDelete = false">Cancelar</v-btn>
-          <v-btn class="ml-4" dark color="success" @click="deleteOrg"
-            >Confirmar</v-btn
-          >
+          <v-btn
+            dark
+            color="red"
+            @click="modalDelete = false"
+          >Cancelar</v-btn>
+          <v-btn
+            class="ml-4"
+            dark
+            color="success"
+            @click="deleteOrg"
+          >Confirmar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -64,14 +88,14 @@
 </template>
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-import { helpers } from '../../../../helpers';
+import { helpers } from "../../../../helpers";
 import ModalOrganizadores from "./ModalOrganizadores";
 
 export default {
   components: {
-    ModalOrganizadores,
+    ModalOrganizadores
   },
-  mixins:[helpers],
+  mixins: [helpers],
   data() {
     return {
       search: "",
@@ -84,19 +108,19 @@ export default {
         { text: "E-mail", value: "email" },
         { text: "Celular", value: "telefono_2" },
         { text: "Activo", value: "activo" },
-        { text: "Acciones", value: "actions", sortable: false, align: "right" },
-      ],
+        { text: "Acciones", value: "actions", sortable: false, align: "right" }
+      ]
     };
   },
   computed: {
     ...mapState("organizador", ["organizadores", "loading"]),
-    ...mapState("modal", ["modal"]),
+    ...mapState("modal", ["modal"])
   },
   methods: {
     ...mapActions("organizador", [
       "getOrganizadores",
       "getOrganizador",
-      "deleteOrganizador",
+      "deleteOrganizador"
     ]),
     ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL"]),
     editOrganizador(nombre) {
@@ -114,10 +138,10 @@ export default {
     },
     textoActivo(nro) {
       return nro === 1 ? "Activo" : "Inactivo";
-    },
+    }
   },
   created() {
     this.getOrganizadores();
-  },
+  }
 };
 </script>

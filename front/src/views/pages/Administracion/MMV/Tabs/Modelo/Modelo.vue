@@ -29,6 +29,7 @@
         dark
       >Crear</v-btn>
       <v-dialog
+        :retain-focus="false"
         @click:outside="HIDE_MODAL2(false)"
         :value="modal2"
         max-width="30%"

@@ -21,7 +21,7 @@
             item-text="anio"
             item-value="id"
             label="Año"
-            :search-input="searchAnio"
+            :search-input.sync="searchAnio"
             v-model="riesgo_automotor.automotor_anio_id"
             :rules="[rules.required]"
             clearable
@@ -35,9 +35,10 @@
               <p class="grey--text text--darken-1 pa-2 mb-0">
                 "{{ searchAnio }}" no existe, click &nbsp;
                 <a @click="createYear(searchAnio)">AQUI</a>
-                &nbsp;para crearla
+                &nbsp;para crearlo
               </p>
-            </template></v-autocomplete>
+            </template>
+          </v-autocomplete>
           <v-autocomplete
             ref="marcas"
             class="mt-6"
@@ -51,7 +52,7 @@
             :rules="[rules.required]"
             clearable
             menu-props="closeOnContentClick"
-            @input="updateMarca"
+            @change="updateMarca"
             no-data-text="No se encontraron registros"
           ><template
               v-if="searchMarca"
@@ -76,7 +77,7 @@
             :rules="[rules.required]"
             clearable
             menu-props="closeOnContentClick"
-            @input="updateModelo"
+            @change="updateModelo"
             no-data-text="No se encontraron registros"
           ><template
               v-if="searchModelo"
@@ -312,7 +313,7 @@ export default {
     ...mapActions("marca", ["createMarca"]),
     ...mapActions("modelo", ["getModelosPorMarca", "createModelo"]),
     ...mapMutations("modelo", ["UPDATE_MARCA_ID"]),
-    ...mapActions("version", ["createVersion", "getVersionesPorModeloYanio"]),
+    ...mapActions("version", ["createVersion", "getVersionesPorModelo"]),
     ...mapMutations("version", [
       "RESET_VERSION",
       "UPDATE_MODELO_ID",
@@ -363,11 +364,14 @@ export default {
     updateMarca() {
       this.UPDATE_MARCA_ID(this.riesgo_automotor.automotor_marca_id);
       this.getModelosPorMarca();
+      this.riesgo_automotor.automotor_modelo_id = null;
+      this.$refs.modelos.reset();
     },
     updateModelo() {
       this.UPDATE_MODELO_ID(this.riesgo_automotor.automotor_modelo_id);
-      this.UPDATE_ANIO_ID(this.riesgo_automotor.automotor_anio_id);
-      this.getVersionesPorModeloYanio();
+      this.riesgo_automotor.automotor_version_id = null;
+      this.$refs.versiones.reset();
+      this.getVersionesPorModelo(this.riesgo_automotor.automotor_modelo_id);
     }
   },
   watch: {

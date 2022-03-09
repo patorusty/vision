@@ -15,13 +15,9 @@ class AutomotorVersionController extends Controller
     {
         return AutomotorVersion::findOrFail($id);
     }
-    public function filtro(Request $request)
+    public function filtro($id)
     {
-        $modelo_id = $request->input('modelo_id');
-        $anio_id = $request->input('anio_id');
-        return AutomotorVersion::where('automotor_modelo_id', $modelo_id)->with(["anios" => function ($query) use ($anio_id) {
-            $query->where('anio', $anio_id);
-        }])->get();
+        return AutomotorVersion::where('automotor_modelo_id', $id)->get();
     }
 
     public function store(Request $request)

@@ -14,6 +14,7 @@
         @keydown.esc="HIDE_MODAL3(false)"
         :value="modal3"
         max-width="80%"
+        :retain-focus="false"
       >
         <modal-siniestros />
       </v-dialog>

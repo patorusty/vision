@@ -28,7 +28,16 @@ const state = () => ({
   riesgo: {},
   forma_pagos: [],
   tipo_vigencias: [],
-  estados: []
+  estados: [],
+  search: {
+    tipo_riesgo_id: 1,
+    poliza: "",
+    patente: "",
+    compania_id: 0,
+    cliente: "",
+    cliente_id: 0,
+    filtroEstado: []
+  }
 });
 const mutations = {
   SET_POLIZAS(state, polizas) {
@@ -105,12 +114,32 @@ const mutations = {
   // },
   SET_RIESGO(state, riesgo) {
     state.riesgo = riesgo;
+  },
+  SET_SEARCH(state, search) {
+    state.search = search;
+  },
+  CLEAN_SEARCH(state) {
+    state.search = Object.assign(
+      {},
+      {
+        tipo_riesgo_id: 1,
+        poliza: "",
+        patente: "",
+        compania_id: 0,
+        cliente: "",
+        cliente_id: 0,
+        filtroEstado: []
+      }
+    );
   }
 };
 const actions = {
-  async getPolizas({ commit }) {
-    const resp = await http.get(API_URL);
-    commit("SET_POLIZAS", resp.data);
+  async getPolizas({ commit, state }) {
+    if (state.polizas.length === 0) {
+      console.log("pide polizas");
+      const resp = await http.get(API_URL);
+      commit("SET_POLIZAS", resp.data);
+    }
   },
   async getPolizasPendientes({ commit }) {
     const resp = await http.get("/polizas/pendientes");
@@ -221,7 +250,6 @@ const actions = {
     const respStatus = [];
     const resp = await http.getOne(API_URL, id);
     commit("SET_POLIZA", resp.data);
-    await dispatch("cargarUltimoNumeroSolicitud");
     commit("riesgo/SET_RIESGO_AUTOMOTORES", state.poliza.riesgo_automotor, {
       root: true
     });

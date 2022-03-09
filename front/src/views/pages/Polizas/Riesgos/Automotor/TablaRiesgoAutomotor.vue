@@ -17,6 +17,7 @@
         @keydown.esc="HIDE_MODAL_RA(false)"
         :value="modal_ra"
         max-width="80%"
+        :retain-focus="false"
       >
         <modal-riesgo-automotor />
       </v-dialog>

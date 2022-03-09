@@ -6,6 +6,7 @@
     <v-card-title>
       <v-spacer></v-spacer>
       <v-dialog
+        :retain-focus="false"
         @click:outside="HIDE_MODAL2(false)"
         :value="modal2"
         max-width="40%"

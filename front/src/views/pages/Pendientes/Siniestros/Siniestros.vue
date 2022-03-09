@@ -5,6 +5,7 @@
   >
     <v-card-title>
       <v-dialog
+        :retain-focus="false"
         @click:outside="HIDE_MODAL3(false)"
         @keydown.esc="HIDE_MODAL3(false)"
         :value="modal3"

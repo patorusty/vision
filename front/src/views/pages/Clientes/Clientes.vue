@@ -19,6 +19,7 @@
       <v-dialog
         fullscreen
         hide-overlay
+        :retain-focus="false"
         transition="dialog-bottom-transition"
         @click:outside="HIDE_MODAL(false)"
         @keydown.esc="HIDE_MODAL(false)"

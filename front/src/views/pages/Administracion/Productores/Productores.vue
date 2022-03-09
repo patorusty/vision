@@ -17,6 +17,7 @@
         dark
       >Crear</v-btn>
       <v-dialog
+        :retain-focus="false"
         @click:outside="HIDE_MODAL(false)"
         @keydown.esc="HIDE_MODAL(false)"
         :value="modal"
@@ -88,7 +89,6 @@
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
 import { helpers } from "../../../../helpers";
-import { bus } from "../../../../main";
 import ModalProductores from "./ModalProductores";
 
 export default {
@@ -138,9 +138,6 @@ export default {
     },
     textoActivo(nro) {
       return nro === 1 ? "Activo" : "Inactivo";
-    },
-    close() {
-      bus.$emit("closeModalProd", true);
     }
   },
   created() {

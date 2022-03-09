@@ -16,6 +16,7 @@
       <v-dialog
         max-width='500'
         v-model="modal4"
+        :retain-focus="false"
         @click:outside="HIDE_MODAL4(false)"
         @keydown.esc="HIDE_MODAL4(false)"
       >

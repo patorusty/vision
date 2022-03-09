@@ -61,6 +61,7 @@
       </template>
     </v-data-table>
     <v-dialog
+      :retain-focus="false"
       @click:outside="closeModalPend"
       @keydown.esc="closeModalPend"
       :value="modal"

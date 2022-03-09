@@ -7,7 +7,7 @@
           class="pb-0"
         >
           <v-select
-            v-model="tipo_riesgo_id"
+            v-model="search.tipo_riesgo_id"
             :items="riesgos"
             item-value="id"
             item-text="nombre"
@@ -44,18 +44,18 @@
             v-uppercase
           ></v-text-field> -->
           <v-autocomplete
-            v-model="cliente_id"
+            v-model="search.cliente_id"
             :items="clientes"
             item-value="id"
             :item-text="nombreCompleto"
             label="Cliente"
             clearable
-            @click:clear="$nextTick(() => (cliente_id = 0))"
+            @click:clear="$nextTick(() => (search.cliente_id = 0))"
           ></v-autocomplete>
         </v-col>
         <v-col>
           <v-text-field
-            v-model="poliza"
+            v-model="search.poliza"
             label="Nro de Poliza"
             single-line
             hide-details
@@ -64,7 +64,7 @@
         </v-col>
         <v-col>
           <v-text-field
-            v-model="patente"
+            v-model="search.patente"
             label="Patente"
             single-line
             hide-details
@@ -74,27 +74,27 @@
         </v-col>
         <v-col>
           <v-select
-            v-model="compania_id"
+            v-model="search.compania_id"
             :items="companias"
             item-value="id"
             item-text="nombre"
             label="Compania"
             class="mr-5"
-            :clearable="compania_id != 0"
+            :clearable="search.compania_id != 0"
             @click:clear="$nextTick(() => (compania_id = 0))"
           ></v-select>
         </v-col>
         <v-col>
           <v-autocomplete
             no-data-text="Sin Datos"
-            v-model="filtroEstado"
+            v-model="search.filtroEstado"
             :items="estados"
             multiple
             item-text="nombre"
             item-value="id"
             label="Estado"
-            :clearable="filtroEstado != 0"
-            @click:clear="$nextTick(() => (filtroEstado = []))"
+            :clearable="search.filtroEstado != 0"
+            @click:clear="$nextTick(() => (search.filtroEstado = []))"
           >
             <template v-slot:selection="{ item, index }">
               <span v-if="index === 0">{{ item.nombre }}</span>
@@ -132,13 +132,9 @@
           <v-icon> mdi-alpha-c </v-icon>
         </span>
         <v-icon v-else-if="item.tipo_riesgo_id == 5"> mdi-storefront </v-icon>
-
         <v-icon v-else-if="item.tipo_riesgo_id == 6"> mdi-medical-bag </v-icon>
-
         <v-icon v-else-if="item.tipo_riesgo_id == 7"> mdi-bicycle </v-icon>
-
         <v-icon v-else-if="item.tipo_riesgo_id == 8"> mdi-sail-boat </v-icon>
-
       </template>
       <template v-slot:[`item.desde`]="{ item }">{{ dateToString(item.vigencia_desde) }} <br />
         {{ dateToString(item.vigencia_hasta) }}</template>
@@ -272,53 +268,54 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 import { helpers } from "../../../helpers";
+import { bus } from "../.././../main";
+
 export default {
   components: {},
   mixins: [helpers],
   data: () => ({
-    tipo_riesgo_id: 1,
-    poliza: "",
-    patente: "",
-    compania_id: 0,
-    cliente: "",
-    cliente_id: 0,
     idSelected: null,
-    modalDelete: false,
-    filtroEstado: []
+    modalDelete: false
   }),
   computed: {
-    ...mapState("poliza", ["polizas", "loading", "tipo_riesgos", "estados"]),
+    ...mapState("poliza", [
+      "polizas",
+      "loading",
+      "tipo_riesgos",
+      "estados",
+      "search"
+    ]),
     ...mapState("compania", ["companias"]),
     ...mapState("cliente", ["clientes"]),
     tableData() {
       let tempPolizas = this.polizas.filter(
         item =>
-          (this.compania_id != 0
-            ? item.compania_id == this.compania_id
+          (this.search.compania_id != 0
+            ? item.compania_id == this.search.compania_id
             : item.compania_id != 0) &&
-          (this.cliente_id != 0
-            ? item.cliente_id == this.cliente_id
+          (this.search.cliente_id != 0
+            ? item.cliente_id == this.search.cliente_id
             : item.cliente_id != 0) &&
-          (this.patente == "" && item.tipo_riesgo_id == 1
+          (this.search.patente == "" && item.tipo_riesgo_id == 1
             ? item.riesgo_automotor
             : item.riesgo_automotor.find(riesgo =>
-                riesgo.patente.includes(this.patente)
+                riesgo.patente.includes(this.search.patente)
               )) &&
-          (this.filtroEstado.length > 0
-            ? this.filtroEstado.includes(item.estado_poliza_id)
+          (this.search.filtroEstado.length > 0
+            ? this.search.filtroEstado.includes(item.estado_poliza_id)
             : item.estado_poliza_id != 0) &&
-          (this.poliza != "" && item.numero != null
-            ? item.numero.includes(this.poliza)
+          (this.search.poliza != "" && item.numero != null
+            ? item.numero.includes(this.search.poliza)
             : item.numero != "")
       );
 
-      return this.cliente_id == 0 &&
-        this.compania_id == 0 &&
-        this.patente == "" &&
-        this.poliza == "" &&
-        this.filtroEstado.length == 0
+      return this.search.cliente_id == 0 &&
+        this.search.compania_id == 0 &&
+        this.search.patente == "" &&
+        this.search.poliza == "" &&
+        this.search.filtroEstado.length == 0
         ? []
         : tempPolizas;
       // return this.polizas.filter(
@@ -403,6 +400,7 @@ export default {
       "getTipoRiesgos",
       "getEstados"
     ]),
+    ...mapMutations("poliza", ["CLEAN_SEARCH"]),
     ...mapActions("compania", ["getCompanias"]),
     ...mapActions("cliente", ["getClientes"]),
     filterRazon(item) {
@@ -464,12 +462,15 @@ export default {
       }
     }
   },
-  created() {
+  mounted() {
     this.getPolizas();
     this.getClientes();
     this.getCompanias();
     this.getTipoRiesgos();
     this.getEstados();
+  },
+  created() {
+    bus.$on("cleanSearch", () => this.CLEAN_SEARCH());
   }
 };
 </script>

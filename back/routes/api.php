@@ -116,7 +116,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('administracion/versiones', AutomotorVersionController::class);
     Route::apiResource('administracion/anios', AnioController::class);
     Route::get('modelos/filtrar/{id}', [AutomotorModeloController::class, 'filtroMarca']);
-    Route::post('versiones/filtrar/', [AutomotorVersionController::class, 'filtro']);
+    Route::get('versiones/filtrar/{id}', [AutomotorVersionController::class, 'filtro']);
     Route::post('anios/filtrar/', [AnioController::class, 'filtro']);
     // Route::get('anios/filtrar/{id}', [AutomotorAnioController::class, 'filtroXAnio']);
     Route::post('marcas/busquedaMarca', [AutomotorMarcaController::class, 'searchMarca']);

@@ -330,7 +330,6 @@ export default {
     }
   },
   created() {
-    console.log(this.poliza.id);
     if (!this.poliza.id) {
       this.getPoliza(this.$route.params.id);
     }

@@ -28,6 +28,7 @@
                         @click:outside="HIDE_MODAL(false)"
                         :value="modal"
                         max-width="80%"
+                        :retain-focus="false"
                       >
                         <modal-cliente />
                       </v-dialog>
