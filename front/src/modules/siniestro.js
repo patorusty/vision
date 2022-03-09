@@ -51,9 +51,11 @@ const mutations = {
   }
 };
 const actions = {
-  async getSiniestros({ commit }) {
-    const resp = await http.get(API_URL);
-    commit("SET_SINIESTROS", resp.data);
+  async getSiniestros({ commit, state }) {
+    if (state.siniestros.length === 0) {
+      const resp = await http.get(API_URL);
+      commit("SET_SINIESTROS", resp.data);
+    }
   },
   async getSiniestro({ commit, state }, id) {
     const resp = await http.getOne(API_URL, id);

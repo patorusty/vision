@@ -45,9 +45,11 @@ const mutations = {
   }
 };
 const actions = {
-  async getUsuarios({ commit }) {
-    const resp = await http.get(API_URL);
-    commit("SET_USUARIOS", resp.data);
+  async getUsuarios({ commit, state }) {
+    if (state.usuarios.length === 0) {
+      const resp = await http.get(API_URL);
+      commit("SET_USUARIOS", resp.data);
+    }
   },
   async getTipoUsuarios({ commit }) {
     const resp = await http.get("/configuracion/tipousuario");

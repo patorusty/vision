@@ -44,20 +44,6 @@ export default new Router({
           meta: { authOnly: true }
         },
         {
-          name: "Compañías",
-          path: "administracion/companias",
-          component: () =>
-            import("@/views/pages/Administracion/Companias/Companias.vue"),
-          meta: { authOnly: true }
-        },
-        {
-          name: "Editar Compañía",
-          path: "administracion/companias/:nombre",
-          component: () =>
-            import("@/views/pages/Administracion/Companias/EditCompania.vue"),
-          meta: { authOnly: true }
-        },
-        {
           name: "Pendientes",
           path: "pendientes",
           component: () => import("@/views/pages/Pendientes/Pendientes.vue"),
@@ -76,32 +62,66 @@ export default new Router({
           meta: { authOnly: true }
         },
         {
-          name: "Organizadores",
-          path: "administracion/organizadores",
-          component: () =>
-            import(
-              "@/views/pages/Administracion/Organizadores/Organizadores.vue"
-            ),
-          meta: { authOnly: true }
+          path: "/administracion",
+          component: { render: h => h("router-view") },
+          meta: { authOnly: true },
+          children: [
+            {
+              name: "Compañías",
+              path: "companias",
+              component: () =>
+                import("@/views/pages/Administracion/Companias/Companias.vue"),
+              meta: { authOnly: true }
+            },
+            {
+              name: "Editar Compañía",
+              path: "companias/:nombre",
+              component: () =>
+                import(
+                  "@/views/pages/Administracion/Companias/EditCompania.vue"
+                ),
+              meta: { authOnly: true }
+            },
+            {
+              name: "Organizadores",
+              path: "organizadores",
+              component: () =>
+                import(
+                  "@/views/pages/Administracion/Organizadores/Organizadores.vue"
+                ),
+              meta: { authOnly: true }
+            },
+            {
+              name: "Productores",
+              path: "productores",
+              component: () =>
+                import(
+                  "@/views/pages/Administracion/Productores/Productores.vue"
+                ),
+              meta: { authOnly: true }
+            },
+            {
+              name: "Marca/Modelo/Version",
+              path: "mmv",
+              component: () =>
+                import("@/views/pages/Administracion/MMV/MMV.vue"),
+              meta: { authOnly: true }
+            }
+          ]
         },
         {
-          name: "Productores",
-          path: "administracion/productores",
-          component: () =>
-            import("@/views/pages/Administracion/Productores/Productores.vue"),
-          meta: { authOnly: true }
-        },
-        {
-          name: "Marca/Modelo/Version",
-          path: "administracion/mmv",
-          component: () => import("@/views/pages/Administracion/MMV/MMV.vue"),
-          meta: { authOnly: true }
-        },
-        {
-          name: "Usuarios",
-          path: "configuracion/usuarios",
-          component: () => import("@/views/pages/Configuracion/Usuarios.vue"),
-          meta: { authOnly: true }
+          path: "/configuracion",
+          component: { render: h => h("router-view") },
+          meta: { authOnly: true },
+          children: [
+            {
+              name: "Usuarios",
+              path: "usuarios",
+              component: () =>
+                import("@/views/pages/Configuracion/Usuarios.vue"),
+              meta: { authOnly: true }
+            }
+          ]
         }
       ]
     },

@@ -373,21 +373,29 @@ const actions = {
     }
     await dispatch("checkPolizas");
   },
-  async getTipoRiesgos({ commit }) {
-    const resp = await http.get("tiporiesgos");
-    commit("SET_TIPO_RIESGOS", resp.data);
+  async getTipoRiesgos({ commit, state }) {
+    if (state.tipo_riesgos.length === 0) {
+      const resp = await http.get("tiporiesgos");
+      commit("SET_TIPO_RIESGOS", resp.data);
+    }
   },
-  async getFormaPagos({ commit }) {
-    const resp = await http.get("formapagos");
-    commit("SET_FORMA_PAGOS", resp.data);
+  async getFormaPagos({ commit, state }) {
+    if (state.forma_pagos.length === 0) {
+      const resp = await http.get("formapagos");
+      commit("SET_FORMA_PAGOS", resp.data);
+    }
   },
-  async getTipoVigencias({ commit }) {
-    const resp = await http.get("tipovigencias");
-    commit("SET_TIPO_VIGENCIAS", resp.data);
+  async getTipoVigencias({ commit, state }) {
+    if (state.tipo_vigencias.length === 0) {
+      const resp = await http.get("tipovigencias");
+      commit("SET_TIPO_VIGENCIAS", resp.data);
+    }
   },
-  async getEstados({ commit }) {
-    const resp = await http.get("estado_polizas");
-    commit("SET_ESTADOS", resp.data);
+  async getEstados({ commit, state }) {
+    if (state.estados.length === 0) {
+      const resp = await http.get("estado_polizas");
+      commit("SET_ESTADOS", resp.data);
+    }
   },
   async checkPolizas() {
     const resp = await http.get("checkpolizas");

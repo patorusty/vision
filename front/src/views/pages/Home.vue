@@ -5,7 +5,7 @@
   >
     <v-row>
       <div
-        v-for="c in companias"
+        v-for="c in comapnias_activas"
         :key="c.id"
       >
         <v-col>
@@ -48,10 +48,10 @@ import { mapState, mapActions } from "vuex";
 export default {
   data: () => ({}),
   computed: {
-    ...mapState("compania", ["companias", "loading"]),
+    ...mapState("compania", ["comapnias_activas", "loading"]),
     totalPolizas() {
       var total = 0;
-      this.companias.forEach(c => {
+      this.comapnias_activas.forEach(c => {
         total = total + c.polizas_vigentes.length;
       });
       return total;

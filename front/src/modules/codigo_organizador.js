@@ -6,7 +6,7 @@ const state = () => ({
   codigo_organizadores: [],
   codigo_organizador: {
     codigo_organizador: "",
-    coOriginal: '',
+    coOriginal: "",
     activo: 1
   },
   loading: false
@@ -17,14 +17,17 @@ const mutations = {
   },
   SET_CODIGO_ORGANIZADOR(state, codigo_organizador) {
     state.codigo_organizador = codigo_organizador;
-    state.codigo_organizador.coOriginal = codigo_organizador.codigo_organizador
+    state.codigo_organizador.coOriginal = codigo_organizador.codigo_organizador;
   },
   RESET_CODIGO_ORGANIZADOR(state) {
-    state.codigo_organizador = Object.assign({}, {
-      codigo_organizador: "",
-      coOriginal: "",
-      activo: 1
-    });
+    state.codigo_organizador = Object.assign(
+      {},
+      {
+        codigo_organizador: "",
+        coOriginal: "",
+        activo: 1
+      }
+    );
   },
   UPDATE_CODIGO_ORGANIZADOR(state, codigo_organizador) {
     const item = state.codigo_organizadores.find(
@@ -36,13 +39,20 @@ const mutations = {
     state.codigo_organizadores.unshift(codigo_organizador);
   },
   DELETE_CODIGO_ORGANIZADOR(state, id) {
-    state.codigo_organizadores = state.codigo_organizadores.filter(u => u.id != id);
+    state.codigo_organizadores = state.codigo_organizadores.filter(
+      u => u.id != id
+    );
   }
 };
 const actions = {
-  async getCodigoOrganizadores({ commit }, compania_id) {
-    const resp = await http.getOne('/codigo_organizador/compania', compania_id);
-    commit("SET_CODIGO_ORGANIZADORES", resp.data);
+  async getCodigoOrganizadores({ commit, state }, compania_id) {
+    if (state.codigo_organizadores.length === 0) {
+      const resp = await http.getOne(
+        "/codigo_organizador/compania",
+        compania_id
+      );
+      commit("SET_CODIGO_ORGANIZADORES", resp.data);
+    }
   },
 
   async getCodigoOrganizador({ commit }, id) {
@@ -116,21 +126,23 @@ const actions = {
         },
         { root: true }
       );
-    }
-    else if (resp.status === 202) {
+    } else if (resp.status === 202) {
       commit(
-        "snackbar/SHOW_SNACK", {
-        color: "red",
-        snackText: "Existen Códigos Productores relacionados a este Código Organizador"
-      },
+        "snackbar/SHOW_SNACK",
+        {
+          color: "red",
+          snackText:
+            "Existen Códigos Productores relacionados a este Código Organizador"
+        },
         { root: true }
       );
     } else {
       commit(
-        "snackbar/SHOW_SNACK", {
-        color: "success",
-        snackText: "Algo salió mal..."
-      },
+        "snackbar/SHOW_SNACK",
+        {
+          color: "success",
+          snackText: "Algo salió mal..."
+        },
         { root: true }
       );
     }

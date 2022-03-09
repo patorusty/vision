@@ -110,6 +110,7 @@
       :items="tableData"
       multi-sort
       :loading="loading"
+      :no-data-text='polizas.length === 0 ? "Polizas no cargadas" : "Aplique un filtro de busqueda"'
     >
       <template v-slot:[`item.compania`]="{ item }">{{ item.compania.nombre }} <br />
         Cod.({{ item.codigo_productor.codigo_productor }})</template>

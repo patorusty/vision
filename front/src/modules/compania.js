@@ -4,6 +4,7 @@ const API_URL = "/administracion/companias";
 
 const state = () => ({
   companias: [],
+  comapnias_activas: [],
   compania: {
     cuit: "",
     activo: true,
@@ -14,6 +15,10 @@ const state = () => ({
 const mutations = {
   SET_COMPANIAS(state, companias) {
     state.companias = companias;
+    state.loading = false;
+  },
+  SET_COMPANIAS_ACTIVAS(state, companias) {
+    state.comapnias_activas = companias;
     state.loading = false;
   },
   SET_COMPANIA(state, compania) {
@@ -43,9 +48,11 @@ const mutations = {
   }
 };
 const actions = {
-  async getCompanias({ commit }) {
-    const resp = await http.get(API_URL);
-    commit("SET_COMPANIAS", resp.data);
+  async getCompanias({ commit, state }) {
+    if (state.companias.length === 0) {
+      const resp = await http.get(API_URL);
+      commit("SET_COMPANIAS", resp.data);
+    }
   },
   async getCompaniasActivas({ commit }) {
     const resp = await http.get("administracion/companias_activas");
@@ -169,7 +176,7 @@ const actions = {
   },
   async getPolizasVigentes({ commit }) {
     const resp = await http.get("/polizas/vigentes");
-    commit("SET_COMPANIAS", resp.data);
+    commit("SET_COMPANIAS_ACTIVAS", resp.data);
   }
 };
 export default {

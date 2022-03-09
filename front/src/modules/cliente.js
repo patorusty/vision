@@ -74,9 +74,11 @@ const mutations = {
   }
 };
 const actions = {
-  async getClientes({ commit }) {
-    const resp = await http.get(API_URL);
-    commit("SET_CLIENTES", resp.data);
+  async getClientes({ commit, state }) {
+    if (state.clientes.length === 0) {
+      const resp = await http.get(API_URL);
+      commit("SET_CLIENTES", resp.data);
+    }
   },
   async getCliente({ commit, dispatch }, id) {
     const resp = await http.getOne(API_URL, id);

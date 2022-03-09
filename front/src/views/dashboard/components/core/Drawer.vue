@@ -91,14 +91,12 @@ export default {
       {
         icon: "mdi-view-dashboard",
         title: "Home",
-        to: "home",
-        event: () => {}
+        to: "/home"
       },
       {
         icon: "mdi-car",
         title: "Polizas",
-        to: "polizas",
-        event: () => bus.$emit("cleanSearch", true)
+        to: "/polizas"
       },
       // {
       //   icon: "mdi-alert",
@@ -113,14 +111,12 @@ export default {
       {
         icon: "mdi-clipboard-clock",
         title: "Pendientes",
-        to: "pendientes",
-        event: () => {}
+        to: "/pendientes"
       },
       {
         icon: "mdi-account",
         title: "Clientes",
-        to: "clientes",
-        event: () => {}
+        to: "/clientes"
       },
       {
         group: "/administracion",
@@ -129,29 +125,25 @@ export default {
         children: [
           {
             title: "Compañias",
-            to: "companias",
-            event: () => {}
+            to: "companias"
           },
           {
             title: "Organizadores",
-            to: "organizadores",
-            event: () => {}
+            to: "organizadores"
           },
           {
             title: "Productores",
-            to: "productores",
-            event: () => {}
+            to: "productores"
           },
           {
             title: "Marca / Modelo / Version",
-            to: "mmv",
-            event: () => {}
-          },
-          {
-            title: "Estadisticas",
-            to: "estadisticas",
-            event: () => {}
+            to: "mmv"
           }
+          // {
+          //   title: "Estadisticas",
+          //   to: "estadisticas",
+          //
+          // }
         ]
       },
       {
@@ -161,8 +153,7 @@ export default {
         children: [
           {
             title: "Usuarios",
-            to: "usuarios",
-            event: () => {}
+            to: "usuarios"
           }
         ]
       }

@@ -6,7 +6,7 @@ const state = () => ({
   codigo_productores: [],
   codigo_productor: {
     codigo_productor: "",
-    cpOriginal: '',
+    cpOriginal: "",
     activo: 1
   },
   loading: false
@@ -17,15 +17,17 @@ const mutations = {
   },
   SET_CODIGO_PRODUCTOR(state, codigo_productor) {
     state.codigo_productor = codigo_productor;
-    state.codigo_productor.cpOriginal = codigo_productor.codigo_productor
-
+    state.codigo_productor.cpOriginal = codigo_productor.codigo_productor;
   },
   RESET_CODIGO_PRODUCTOR(state) {
-    state.codigo_productor = Object.assign({}, {
-      codigo_productor: "",
-      cpOriginal: '',
-      activo: 1
-    });
+    state.codigo_productor = Object.assign(
+      {},
+      {
+        codigo_productor: "",
+        cpOriginal: "",
+        activo: 1
+      }
+    );
   },
   UPDATE_CODIGO_PRODUCTOR(state, codigo_productor) {
     const item = state.codigo_productores.find(
@@ -41,12 +43,17 @@ const mutations = {
   }
 };
 const actions = {
-  async getCodigoProductores({ commit }, compania_id) {
-    const resp = await http.getOne('/codigo_productor/compania', compania_id);
-    commit("SET_CODIGO_PRODUCTORES", resp.data);
+  async getCodigoProductores({ commit, state }, compania_id) {
+    if (state.codigo_productores.length === 0) {
+      const resp = await http.getOne("/codigo_productor/compania", compania_id);
+      commit("SET_CODIGO_PRODUCTORES", resp.data);
+    }
   },
   async getCodigoProductoresActivos({ commit }, compania_id) {
-    const resp = await http.getOne('/codigo_productor_activo/compania', compania_id);
+    const resp = await http.getOne(
+      "/codigo_productor_activo/compania",
+      compania_id
+    );
     commit("SET_CODIGO_PRODUCTORES", resp.data);
   },
   async getCodigoProductor({ commit }, id) {
@@ -55,11 +62,7 @@ const actions = {
   },
 
   async updateCodigoProductor({ commit }, codigo_productor) {
-    const resp = await http.put(
-      API_URL,
-      codigo_productor.id,
-      codigo_productor
-    );
+    const resp = await http.put(API_URL, codigo_productor.id, codigo_productor);
     if (resp.status === 200) {
       commit("UPDATE_CODIGO_PRODUCTOR", resp.data);
       commit(
@@ -119,15 +122,16 @@ const actions = {
         },
         { root: true }
       );
-    }else if (resp.status === 202) {
+    } else if (resp.status === 202) {
       commit(
-          "snackbar/SHOW_SNACK", {
+        "snackbar/SHOW_SNACK",
+        {
           color: "red",
           snackText: "Existen Pólizas relacionadas a este Código Productor"
-      },
-          { root: true }
+        },
+        { root: true }
       );
-  } else {
+    } else {
       commit(
         "snackbar/SHOW_SNACK"({
           color: "success",

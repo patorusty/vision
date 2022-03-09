@@ -42,9 +42,11 @@ const mutations = {
   }
 };
 const actions = {
-  async getVersiones({ commit }) {
-    const resp = await http.get(API_URL);
-    commit("SET_VERSIONES", resp.data);
+  async getVersiones({ commit, state }) {
+    if (state.versiones.length === 0) {
+      const resp = await http.get(API_URL);
+      commit("SET_VERSIONES", resp.data);
+    }
   },
 
   async getVersionesPorModelo({ commit }, modelo_id) {
