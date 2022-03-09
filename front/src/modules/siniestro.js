@@ -38,6 +38,9 @@ const mutations = {
   RESET_SINIESTRO(state) {
     state.siniestro = Object.assign({}, {});
   },
+  RESET_SINIESTROS(state) {
+    state.siniestros = [];
+  },
   CREATE_SINIESTRO_AND_SET(state, siniestro) {
     state.siniestro = siniestro;
     state.siniestros.unshift(siniestro);

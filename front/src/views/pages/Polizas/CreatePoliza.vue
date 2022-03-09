@@ -325,6 +325,9 @@ export default {
     ...mapActions("codigo_productor", ["getCodigoProductoresActivos"]),
     ...mapMutations("poliza", ["RESET_POLIZA"]),
     ...mapMutations("cliente", ["RESET_CLIENTE"]),
+    ...mapMutations("endoso", ["RESET_ENDOSOS"]),
+    ...mapMutations("siniestro", ["RESET_SINIESTROS"]),
+    ...mapMutations("riesgo", ["RESET_RIESGOS_AUTOMOTOR"]),
     ...mapMutations("modal", ["SHOW_MODAL"]),
     volver() {
       this.$router.push({
@@ -339,6 +342,10 @@ export default {
       if (this.$refs.form.validate()) {
         const createResult = await this.createPoliza(this.poliza);
         if (createResult) {
+          this.RESET_CLIENTE();
+          this.RESET_ENDOSOS();
+          this.RESET_RIESGOS_AUTOMOTOR();
+          this.RESET_SINIESTROS();
           this.$router.push({
             name: "Editar Poliza",
             params: { id: this.poliza.id }

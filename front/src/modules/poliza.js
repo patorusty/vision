@@ -150,9 +150,9 @@ const actions = {
   },
   async getPoliza({ commit, dispatch, state }, id) {
     const resp = await http.getOne(API_URL, id);
-    dispatch("endoso/getEndososDePoliza", resp.data.id, { root: true });
-    dispatch("siniestro/getSiniestrosDePoliza", resp.data.id, { root: true });
     commit("SET_POLIZA", resp.data);
+    commit("endoso/SET_ENDOSOS", state.poliza.endosos, { root: true });
+    commit("siniestro/SET_SINIESTROS", state.poliza.siniestros, { root: true });
     commit("riesgo/SET_RIESGO_AUTOMOTORES", state.poliza.riesgo_automotor, {
       root: true
     });

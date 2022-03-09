@@ -21,6 +21,9 @@ const mutations = {
   RESET_ENDOSO(state) {
     state.endoso = Object.assign({}, {});
   },
+  RESET_ENDOSOS(state) {
+    state.endosos = [];
+  },
   CREATE_ENDOSO(state, endoso) {
     state.endosos.unshift(endoso);
   },
