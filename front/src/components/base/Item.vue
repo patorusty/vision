@@ -5,6 +5,7 @@
     :target="href && href !== '#' ? '_blank' : undefined"
     :to="item.to"
     :active-class="`primary ${!isDark ? 'black' : 'white'}--text`"
+    @click="item.event"
   >
     <v-list-item-icon
       v-if="text"
@@ -40,7 +41,8 @@ export default {
         icon: undefined,
         subtitle: undefined,
         title: undefined,
-        to: undefined
+        to: undefined,
+        event: () => {}
       })
     },
     // event: {
