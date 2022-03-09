@@ -50,14 +50,14 @@
           color="success"
           v-on:click.stop="openModalPendiente(item)"
         > mdi-pencil </v-icon>
-        <v-icon
+        <!-- <v-icon
           class="ml-2"
           small
           v-on:click.stop="openDeleteModal(item.id)"
           color="error"
         >
           mdi-close
-        </v-icon>
+        </v-icon> -->
       </template>
     </v-data-table>
     <v-dialog
