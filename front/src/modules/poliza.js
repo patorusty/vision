@@ -136,7 +136,6 @@ const mutations = {
 const actions = {
   async getPolizas({ commit, state }) {
     if (state.polizas.length === 0) {
-      console.log("pide polizas");
       const resp = await http.get(API_URL);
       commit("SET_POLIZAS", resp.data);
     }
