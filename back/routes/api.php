@@ -86,9 +86,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('coberturas_activas/compania/{id}', [CoberturaController::class, 'indexFiltradoActivo']);
     Route::post('coberturas/busquedaCob', [CoberturaController::class, 'busquedaCob']);
 
-    Route::apiResource('clientes', ClienteController::class);
+    Route::get('clientes/cumples', [ClienteController::class, 'cumples']);
     Route::post('clientes/busquedaCuit', [ClienteController::class, 'searchCuit']);
     Route::post('clientes/busquedaDNI', [ClienteController::class, 'searchDNI']);
+    Route::apiResource('clientes', ClienteController::class);
 
     Route::get('polizas/pendientes', [PolizaController::class, 'polizasPendientes']);
     Route::get('polizas/a_renovar', [PolizaController::class, 'polizasARenovar']);

@@ -19,6 +19,7 @@ class Endoso extends Model
         "detalle",
         "numero_endoso",
         "completo",
+        'observaciones',
         "created_at",
         "updated_at"
     ];

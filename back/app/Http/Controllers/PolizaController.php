@@ -18,7 +18,27 @@ class PolizaController extends Controller
     public function index()
     {
         $this->checkPolizas();
-        return Poliza::with(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo'])->orderBy('vigencia_hasta', 'DESC')->get();
+        return Poliza::with(['codigo_productor:id,codigo_productor', 'estado:id,nombre', 'cliente:id,nombre,apellido,razon_social', 'compania:id,nombre', 'tipo_vigencias:id,vigencia', 'riesgo_automotor', 'otro_riesgo'])->orderBy('vigencia_hasta', 'DESC')->get(
+            [
+                'numero',
+                'tipo_riesgo_id',
+                'codigo_productor_id',
+                'estado_poliza_id',
+                'cliente_id',
+                'compania_id',
+                'tipo_vigencia_id',
+                'estado_poliza_id',
+                "vigencia_desde",
+                "vigencia_hasta",
+                'fecha_solicitud',
+                'fecha_emision',
+                'fecha_recepcion',
+                'fecha_entrega_original',
+                'fecha_entrega_email',
+                'forma_pago_id',
+                'id'
+            ]
+        );
     }
 
     public function polizasPendientes()

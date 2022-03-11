@@ -13,7 +13,7 @@
         @click:outside="HIDE_MODAL3(false)"
         @keydown.esc="HIDE_MODAL3(false)"
         :value="modal3"
-        max-width="80%"
+        :max-width='edicion3 ?"75%" :"45%"'
         :retain-focus="false"
       >
         <modal-siniestros />

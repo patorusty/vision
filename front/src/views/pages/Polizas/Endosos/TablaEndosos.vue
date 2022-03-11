@@ -91,7 +91,7 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-import ModalEndosos from "./ModalEndosos";
+import ModalEndosos from "../../Pendientes/Endosos/ModalEndosos.vue";
 import { helpers } from "../../../../helpers";
 
 export default {

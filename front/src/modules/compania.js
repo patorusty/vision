@@ -4,7 +4,7 @@ const API_URL = "/administracion/companias";
 
 const state = () => ({
   companias: [],
-  comapnias_activas: [],
+  companias_activas: [],
   compania: {
     cuit: "",
     activo: true,
@@ -18,7 +18,7 @@ const mutations = {
     state.loading = false;
   },
   SET_COMPANIAS_ACTIVAS(state, companias) {
-    state.comapnias_activas = companias;
+    state.companias_activas = companias;
     state.loading = false;
   },
   SET_COMPANIA(state, compania) {

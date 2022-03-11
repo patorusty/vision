@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class ClienteController extends Controller
 {
@@ -90,5 +91,10 @@ class ClienteController extends Controller
         $cliente->delete();
 
         return ['message' => 'Eliminado'];
+    }
+
+    public function cumples()
+    {
+        return Cliente::whereMonth('nacimiento', Carbon::now()->month)->get(['nombre', 'apellido', 'nacimiento']);
     }
 }

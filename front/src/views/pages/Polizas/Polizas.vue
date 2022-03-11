@@ -319,46 +319,9 @@ export default {
         this.search.poliza == "" &&
         this.search.filtroEstado.length == 0
         ? []
-        : tempPolizas;
-      // return this.polizas.filter(
-      //   item =>
-      //     (this.compania_id != 0
-      //       ? this.filtroCompanias(item)
-      //       : item.compania_id == 0) &&
-      // (this.tipo_riesgo_id != 0
-      //   ? item.tipo_riesgo_id === this.tipo_riesgo_id
-      //   : item.tipo_riesgo_id != 0) &&
-      // (this.compania_id == 0
-      //   ? item.compania_id == 0
-      //   : item.compania_id === this.compania_id) ||
-      // (this.filtroEstado.length > 0
-      //   ? this.filtroEstado.includes(item.estado_poliza_id)
-      //   : item.estado_poliza_id != 0)
-      // &&
-      // (this.cliente != "" &&
-      // item.cliente.apellido != null &&
-      // item.cliente.nombre != null
-      //   ? item.cliente.apellido.includes(this.cliente) ||
-      //     item.cliente.nombre.includes(this.cliente) ||
-      //     this.filterRazon(item)
-      //   : item.cliente.apellido) &&
-      // (this.cliente_id != 0
-      //   ? this.filtroClientes(item)
-      //   : item.cliente_id == 0)
-      // &&
-      // (this.cliente != "" && item.cliente.razon_social != null
-      //   ? item.cliente.razon_social.includes(this.cliente)
-      //   : item.cliente) &&
-      // (this.patente == "" && item.tipo_riesgo_id == 1
-      //   ? item.riesgo_automotor
-      //   : item.riesgo_automotor.find(riesgo =>
-      //       riesgo.patente.includes(this.patente)
-      //     ))
-      //   &&
-      // (this.compania_id != 0 && item.compania_id != null
-      //   ? item.compania_id === this.compania_id
-      //   : item.tipo_riesgo_id != 0)
-      // );
+        : tempPolizas.filter(
+            item => item.tipo_riesgo_id === this.search.tipo_riesgo_id
+          );
     },
     riesgos() {
       var r = [...this.tipo_riesgos, { id: 0, nombre: "TODOS" }];

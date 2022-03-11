@@ -114,6 +114,13 @@
               ></v-checkbox>
             </v-col>
           </v-row>
+          <v-row>
+            <v-textarea
+              label="Observaciones"
+              rows="3"
+              v-model="endoso.observaciones"
+            ></v-textarea>
+          </v-row>
         </v-form>
       </v-container>
     </v-card-text>
