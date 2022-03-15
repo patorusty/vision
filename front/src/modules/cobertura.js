@@ -44,7 +44,6 @@ const actions = {
     commit("SET_COBERTURAS", resp.data);
   },
   async getCoberturasActivas({ commit }, compania_id) {
-    console.log(compania_id);
     const resp = await http.getOne("/coberturas_activas/compania", compania_id);
     commit("SET_COBERTURAS", resp.data);
   },
