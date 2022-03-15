@@ -247,7 +247,7 @@ const actions = {
       );
     }
   },
-  async renewPoliza({ commit, state, dispatch }, id) {
+  async renewPoliza({ commit, state }, id) {
     const respStatus = [];
     const resp = await http.getOne(API_URL, id);
     commit("SET_POLIZA", resp.data);
@@ -267,6 +267,7 @@ const actions = {
       plan_pago: state.poliza.plan_pago,
       cantidad_cuotas: state.poliza.cantidad_cuotas,
       detalle_medio_pago: state.poliza.detalle_medio_pago,
+      estado_poliza_id: 0,
       fecha_emision: null,
       fecha_recepcion: null,
       fecha_entrega_correo: null,
@@ -289,7 +290,8 @@ const actions = {
       respStatus.push(respR.status);
     });
     const oldPoliza = { ...state.poliza };
-    commit("CREATE_POLIZA", respP.data);
+    const RespNewPolizayRiesgo = await http.getOne(API_URL, respP.data.id);
+    commit("CREATE_POLIZA", RespNewPolizayRiesgo.data);
     var finalStatus = false;
     respStatus.forEach(e => {
       e === 201 ? (finalStatus = true) : (finalStatus = false);
@@ -309,7 +311,7 @@ const actions = {
       commit(
         "snackbar/SHOW_SNACK",
         {
-          color: "success",
+          color: "red",
           snackText: "Algo salió mal..."
         },
         { root: true }

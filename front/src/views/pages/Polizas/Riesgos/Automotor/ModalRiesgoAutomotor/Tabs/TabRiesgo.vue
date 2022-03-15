@@ -14,7 +14,7 @@
             v-model="riesgo_automotor.tipo_automotor_id"
           ></v-select>
           <v-autocomplete
-            type="number"
+            type="text"
             hide-spin-buttons
             class="mt-6"
             :items="anios"

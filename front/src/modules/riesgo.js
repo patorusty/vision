@@ -214,6 +214,11 @@ const actions = {
     const resp = await http.post(API_URL_RA, riesgo_automotor);
     if (resp.status === 201) {
       commit("CREATE_RIESGO_AUTOMOTOR", resp.data);
+      const respUpdatePoliza = await http.getOne(
+        "/polizas",
+        resp.data.poliza_id
+      );
+      commit("poliza/UPDATE_POLIZA", respUpdatePoliza.data, { root: true });
       commit(
         "snackbar/SHOW_SNACK",
         {
