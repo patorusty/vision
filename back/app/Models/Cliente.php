@@ -40,6 +40,10 @@ class Cliente extends Model
         'vencimiento_registro',
     ];
 
+    protected $dates = [
+        'nacimiento'
+    ];
+
     public function productores()
     {
         return $this->belongsTo(Productor::class, 'productor_id');

@@ -61,7 +61,7 @@ export const helpers = {
     },
     stringToDate(date) {
       if (date) {
-        return moment(date, "DD/MM/YYYY")
+        return moment(date, "YYYY-MM-DD")
           .utc()
           .local();
       } else {

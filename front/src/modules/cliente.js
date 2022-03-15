@@ -85,6 +85,7 @@ const actions = {
     commit("SET_CLIENTE", resp.data);
   },
   async createCliente({ commit }, cliente) {
+    console.log(cliente.nacimiento);
     const resp = await http.post(API_URL, cliente);
     if (resp.status === 201) {
       commit("CREATE_CLIENTE", resp.data);
