@@ -149,8 +149,10 @@ const actions = {
     commit("SET_POLIZAS_A_RENOVAR", resp.data);
   },
   async getPoliza({ commit, dispatch, state }, id) {
-    const resp = await http.getOne(API_URL, id);
-    commit("SET_POLIZA", resp.data);
+    if (!state.poliza.id) {
+      const resp = await http.getOne(API_URL, id);
+      commit("SET_POLIZA", resp.data);
+    }
     commit("endoso/SET_ENDOSOS", state.poliza.endosos, { root: true });
     commit("siniestro/SET_SINIESTROS", state.poliza.siniestros, { root: true });
     commit("riesgo/SET_RIESGO_AUTOMOTORES", state.poliza.riesgo_automotor, {
@@ -163,7 +165,7 @@ const actions = {
     );
     dispatch("endoso/getTipoEndosos", null, { root: true });
     dispatch("endoso/getDetalleEndosos", null, { root: true });
-    dispatch("cobertura/getCoberturasActivas", resp.data.compania_id, {
+    dispatch("cobertura/getCoberturasActivas", state.poliza.compania_id, {
       root: true
     });
   },

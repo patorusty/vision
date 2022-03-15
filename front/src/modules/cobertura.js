@@ -5,7 +5,7 @@ const API_URL = "/administracion/coberturas";
 const state = () => ({
   coberturas: [],
   cobertura: {
-    cobOriginal: '',
+    cobOriginal: "",
     activo: 1
   },
   loading: false
@@ -16,19 +16,19 @@ const mutations = {
   },
   SET_COBERTURA(state, cobertura) {
     state.cobertura = cobertura;
-    state.cobertura.cobOriginal = cobertura.cobertura
-
+    state.cobertura.cobOriginal = cobertura.cobertura;
   },
   RESET_COBERTURA(state) {
-    state.cobertura = Object.assign({}, {
-      cobOriginal: '',
-      activo: 1
-    });
+    state.cobertura = Object.assign(
+      {},
+      {
+        cobOriginal: "",
+        activo: 1
+      }
+    );
   },
   UPDATE_COBERTURA(state, cobertura) {
-    const item = state.coberturas.find(
-      item => item.id === cobertura.id
-    );
+    const item = state.coberturas.find(item => item.id === cobertura.id);
     Object.assign(item, cobertura);
   },
   CREATE_COBERTURA(state, cobertura) {
@@ -40,11 +40,12 @@ const mutations = {
 };
 const actions = {
   async getCoberturas({ commit }, compania_id) {
-    const resp = await http.getOne('/coberturas/compania', compania_id);
+    const resp = await http.getOne("/coberturas/compania", compania_id);
     commit("SET_COBERTURAS", resp.data);
   },
   async getCoberturasActivas({ commit }, compania_id) {
-    const resp = await http.getOne('/coberturas_activas/compania', compania_id);
+    console.log(compania_id);
+    const resp = await http.getOne("/coberturas_activas/compania", compania_id);
     commit("SET_COBERTURAS", resp.data);
   },
 
@@ -54,11 +55,7 @@ const actions = {
   },
 
   async updateCobertura({ commit }, cobertura) {
-    const resp = await http.put(
-      API_URL,
-      cobertura.id,
-      cobertura
-    );
+    const resp = await http.put(API_URL, cobertura.id, cobertura);
     if (resp.status === 200) {
       commit("UPDATE_COBERTURA", resp.data);
       commit(

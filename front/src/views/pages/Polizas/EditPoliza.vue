@@ -247,7 +247,6 @@
 
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
-import moment from "moment";
 import { helpers } from "../../../helpers";
 import TablaEndosos from "./Endosos/TablaEndosos";
 import TablaSiniestros from "./Siniestros/TablaSiniestros";
@@ -330,9 +329,7 @@ export default {
     }
   },
   created() {
-    if (!this.poliza.id) {
-      this.getPoliza(this.$route.params.id);
-    }
+    this.getPoliza(this.$route.params.id);
     this.getClientes();
     this.getCompanias();
     this.getTipoRiesgos();
