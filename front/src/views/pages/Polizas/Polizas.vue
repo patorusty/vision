@@ -81,7 +81,7 @@
             label="Compania"
             class="mr-5"
             :clearable="search.compania_id != 0"
-            @click:clear="$nextTick(() => (compania_id = 0))"
+            @click:clear="$nextTick(() => (search.compania_id = 0))"
           ></v-select>
         </v-col>
         <v-col>
