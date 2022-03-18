@@ -267,6 +267,8 @@ const actions = {
       plan_pago: state.poliza.plan_pago,
       cantidad_cuotas: state.poliza.cantidad_cuotas,
       detalle_medio_pago: state.poliza.detalle_medio_pago,
+      comision: state.poliza.comision,
+      descuento: state.poliza.descuento,
       estado_poliza_id: 0,
       fecha_emision: null,
       fecha_recepcion: null,

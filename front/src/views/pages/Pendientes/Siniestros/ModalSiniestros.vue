@@ -11,6 +11,7 @@
               <v-row>
                 <v-col class=" mt-0 py-0">
                   <v-text-field
+                    class="input-numero"
                     v-model="siniestro.numero_siniestro"
                     label="Número de Siniestro"
                   ></v-text-field>
@@ -264,5 +265,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.input-numero .v-text-field__slot input {
+  font-weight: bold !important;
+  color: #e91e63 !important;
+}
 </style>

@@ -50,20 +50,14 @@ export const helpers = {
     },
     dateToString(date) {
       if (date) {
-        return moment(date)
-          .utc()
-          .local()
-          .format("DD/MM/YYYY")
-          .toString();
+        return moment(date, "YYYY-MM-DD").format("DD/MM/YYYY");
       } else {
         return "";
       }
     },
     stringToDate(date) {
       if (date) {
-        return moment(date, "YYYY-MM-DD")
-          .utc()
-          .local();
+        return moment(date, "DD/MM/YYYY").format("YYYY-MM-DD");
       } else {
         return "";
       }

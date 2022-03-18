@@ -101,6 +101,7 @@
             </v-col>
             <v-col class=" mt-0 py-0">
               <v-text-field
+                class="input-numero"
                 v-model="endoso.numero_endoso"
                 label="Número de Endoso"
               ></v-text-field>
@@ -202,3 +203,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+.input-numero .v-text-field__slot input {
+  font-weight: bold !important;
+  color: #e91e63 !important;
+}
+</style>
