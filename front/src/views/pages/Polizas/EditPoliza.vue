@@ -309,6 +309,8 @@ export default {
     ...mapActions("compania", ["getCompanias"]),
     ...mapActions("codigo_productor", ["getCodigoProductores"]),
     ...mapMutations("poliza", ["RESET_POLIZA"]),
+    ...mapMutations("endoso", ["RESET_ENDOSOS"]),
+    ...mapMutations("siniestro", ["RESET_SINIESTROS"]),
     ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL"]),
     volver() {
       this.$router.push({
@@ -339,6 +341,8 @@ export default {
   },
   beforeDestroy() {
     this.RESET_POLIZA();
+    this.RESET_SINIESTROS();
+    this.RESET_ENDOSOS();
   }
 };
 </script>

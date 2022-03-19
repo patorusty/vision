@@ -108,6 +108,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('tipoendosos', TipoEndosoController::class);
     Route::apiResource('detalleendosos', DetalleEndosoController::class);
 
+    Route::get('siniestros/activos', [SiniestroAutomotorController::class, 'indexActivos']);
     Route::apiResource('siniestros', SiniestroAutomotorController::class);
     Route::get('siniestros/indexFiltrado/{poliza_id}', [SiniestroAutomotorController::class, 'indexFiltrado']);
     Route::apiResource('siniestros/notas', NotaSiniestroAutController::class);

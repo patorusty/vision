@@ -100,11 +100,12 @@ export default {
         to: "/polizas",
         event: () => bus.$emit("cleanSearch", true)
       },
-      // {
-      //   icon: "mdi-alert",
-      //   title: "Siniestros",
-      //   to: "/siniestros"
-      // },
+      {
+        icon: "mdi-alert",
+        title: "Siniestros",
+        to: "/siniestros",
+        event: () => bus.$emit("cleanSearch", true)
+      },
       // {
       //   icon: "mdi-note",
       //   title: "Endosos",

@@ -34,6 +34,9 @@ export const helpers = {
     codigoProdText(item) {
       return `${item.productores.apellido} ${item.productores.nombre} Cod. (${item.codigo_productor})`;
     },
+    patenteYcobertura(item) {
+      return `${item.patente} - ${item.cobertura.nombre}`;
+    },
     nombreCompleto(item) {
       if (item.razon_social == null) {
         return `${item.apellido}  ${item.nombre}`;

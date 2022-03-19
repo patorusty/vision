@@ -17,8 +17,15 @@ class SiniestroAutomotorController extends Controller
     public function index()
     {
 
-        return SiniestroAutomotor::with(['poliza.cliente', 'poliza.compania'])->where('fecha_completo', "=", null)->orderBy('id', 'DESC')->get();
+        return SiniestroAutomotor::with(['poliza.cliente', 'poliza.compania', 'poliza.riesgo_automotor.cobertura'])->orderBy('fecha_siniestro', 'DESC')->get();
     }
+
+    public function indexActivos()
+    {
+
+        return SiniestroAutomotor::with(['poliza.cliente', 'poliza.compania', 'poliza.riesgo_automotor.cobertura'])->where('fecha_completo', "=", null)->orderBy('fecha_siniestro', 'DESC')->get();
+    }
+
     public function indexFiltrado($poliza_id)
     {
         return SiniestroAutomotor::with('notas')->where('poliza_id', $poliza_id)->orderBy('id', 'DESC')->get();

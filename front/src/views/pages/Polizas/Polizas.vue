@@ -117,6 +117,7 @@
         Cod.({{ item.codigo_productor.codigo_productor }})</template>
       <template v-slot:[`item.asegurado`]="{ item }">
         <router-link
+          v-if="item.cliente"
           class="links"
           :to=" {name: 'Editar Cliente', params: {id: item.cliente.id}}"
           target="_blank"

@@ -79,6 +79,7 @@
                         clearable
                         label="Fecha de Siniestro"
                         v-on="on"
+                        :rules="[rules.required]"
                       ></v-text-field>
                     </template>
                     <v-date-picker
@@ -141,13 +142,24 @@
                   >
                   </v-select>
                 </v-col>
+              </v-row>
+              <v-row>
+                <v-col class=" mt-0 py-0">
+                  <v-select
+                    v-if="siniestro.poliza.riesgo_automotor.length"
+                    label="Riesgo"
+                    v-model="siniestro.riesgo_id"
+                    :items='siniestro.poliza.riesgo_automotor'
+                    :item-text="patenteYcobertura"
+                    item-value="id"
+                  ></v-select>
+                </v-col>
                 <v-col class=" mt-0 py-0">
                   <v-text-field
                     label="Compania del Tercero"
                     v-model="siniestro.compania_tercero"
                   ></v-text-field>
                 </v-col>
-
               </v-row>
               <v-row>
                 <v-col class=" mt-0 py-0">

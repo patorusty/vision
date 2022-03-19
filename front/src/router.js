@@ -50,6 +50,12 @@ export default new Router({
           meta: { authOnly: true }
         },
         {
+          name: "Siniestros",
+          path: "siniestros",
+          component: () => import("@/views/pages/Siniestros/Siniestros.vue"),
+          meta: { authOnly: true }
+        },
+        {
           name: "Clientes",
           path: "clientes",
           component: () => import("@/views/pages/Clientes/Clientes.vue"),

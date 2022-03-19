@@ -4,7 +4,12 @@ const API_URL = "/siniestros";
 
 const state = () => ({
   siniestros: [],
-  siniestro: {},
+  siniestros_activos: [],
+  siniestro: {
+    poliza: {
+      riesgo_automotor: []
+    }
+  },
   tipo_reclamos: [
     { value: "DAÑO A ASEGURADO (Reclamo a Tercero)" }, // Naranja
     { value: "DAÑO A ASEGURADO (Cleas)" }, // Violeta
@@ -31,12 +36,23 @@ const mutations = {
     state.siniestros = siniestros;
     state.loading = false;
   },
+  SET_SINIESTROS_ACTIVOS(state, siniestros) {
+    state.siniestros_activos = siniestros;
+    state.loading = false;
+  },
   SET_SINIESTRO(state, siniestro) {
     state.siniestro = siniestro;
     state.loading = false;
   },
   RESET_SINIESTRO(state) {
-    state.siniestro = Object.assign({}, {});
+    state.siniestro = Object.assign(
+      {},
+      {
+        poliza: {
+          riesgo_automotor: []
+        }
+      }
+    );
   },
   RESET_SINIESTROS(state) {
     state.siniestros = [];
@@ -58,6 +74,12 @@ const actions = {
     if (state.siniestros.length === 0) {
       const resp = await http.get(API_URL);
       commit("SET_SINIESTROS", resp.data);
+    }
+  },
+  async getSiniestrosActivos({ commit, state }) {
+    if (state.siniestros.length === 0) {
+      const resp = await http.get("siniestros/activos");
+      commit("SET_SINIESTROS_ACTIVOS", resp.data);
     }
   },
   async getSiniestro({ commit, state }, id) {

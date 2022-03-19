@@ -17,6 +17,7 @@ class SiniestroAutomotor extends Model
         "tipo_reclamo",
         "estado_siniestro",
         "compania_tercero",
+        "riesgo_id",
         "detalle",
         "created_at",
         "updated_at",

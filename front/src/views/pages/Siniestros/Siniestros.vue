@@ -1,8 +1,5 @@
 <template>
-  <v-card
-    class="mt-0 mx-4 pa-3"
-    elevation=0
-  >
+  <v-card class="mt-0 mx-4 pa-3">
     <v-card-title>
       <v-dialog
         :retain-focus="false"
@@ -13,16 +10,74 @@
       >
         <modal-siniestros />
       </v-dialog>
+      <v-row>
+        <v-col>
+          <v-autocomplete
+            v-model="search.cliente_id"
+            :items="clientes"
+            item-value="id"
+            :item-text="nombreCompleto"
+            label="Cliente"
+            clearable
+            @click:clear="$nextTick(() => (search.cliente_id = 0))"
+          ></v-autocomplete>
+        </v-col>
+        <v-col cols="2">
+          <v-select
+            label="Año"
+            :items=activeYears
+            v-model="search.anio"
+            clearable
+            @click:clear="$nextTick(() => (search.anio = null))"
+          >
+          </v-select>
+        </v-col>
+        <v-col>
+          <v-text-field
+            v-model="search.siniestro"
+            label="Nro de Siniestro"
+            single-line
+            hide-details
+            class="mr-3 ml-3"
+          ></v-text-field>
+        </v-col>
+        <v-col>
+          <v-text-field
+            v-model="search.poliza"
+            label="Nro de Poliza"
+            single-line
+            hide-details
+            class="mr-3 ml-3"
+          ></v-text-field>
+        </v-col>
+        <v-col>
+          <v-autocomplete
+            no-data-text="Sin Datos"
+            v-model="search.filtroEstado"
+            :items="tipo_reclamos"
+            multiple
+            item-text="value"
+            item-value="value"
+            label="Estado"
+            :clearable="search.filtroEstado != 0"
+            @click:clear="$nextTick(() => (search.filtroEstado = []))"
+          >
+            <template v-slot:selection="{ item, index }">
+              <span v-if="index === 0">{{ item.value }}</span>
+            </template>
+          </v-autocomplete>
+        </v-col>
+      </v-row>
     </v-card-title>
     <v-data-table
       class="pa-2"
       :headers="headers"
       :items-per-page="5"
-      :items="siniestros_activos"
-      :search="search"
-      multi-sort
+      :items="tableData"
       :loading="loading"
       :item-class="itemRowBackground"
+      :no-data-text='siniestros.length === 0 ? "Siniestros no cargados" : "Aplique un filtro de busqueda"'
+      loading-text='Cargando...'
     >
       <template v-slot:[`item.tipo_reclamo`]="{ item }">
         <v-chip
@@ -90,8 +145,10 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-import ModalSiniestros from "./ModalSiniestros.vue";
-import { helpers } from "../../../../helpers";
+import ModalSiniestros from "../Pendientes/Siniestros/ModalSiniestros.vue";
+import { helpers } from "../../../helpers";
+import { bus } from "../../../main";
+import moment from "moment";
 
 export default {
   components: {
@@ -99,7 +156,6 @@ export default {
   },
   mixins: [helpers],
   data: () => ({
-    search: "",
     idSelected: "",
     modalDelete: false,
     headers: [
@@ -114,16 +170,55 @@ export default {
   }),
   computed: {
     ...mapState("modal", ["modal3", "edicion3"]),
-    ...mapState("siniestro", ["siniestros_activos", "loading"])
+    ...mapState("poliza", ["search"]),
+    ...mapState("cliente", ["clientes"]),
+    ...mapState("siniestro", ["siniestros", "loading", "tipo_reclamos"]),
+    tableData() {
+      let tempSiniestros = this.siniestros.filter(
+        item =>
+          (this.search.cliente_id != 0
+            ? item.poliza.cliente_id == this.search.cliente_id
+            : item.poliza.cliente_id != 0) &&
+          this.filtroXAnio(item) &&
+          (this.search.siniestro != "" && item.numero_siniestro != null
+            ? item.numero_siniestro.includes(this.search.siniestro)
+            : item.numero_siniestro != null) &&
+          (this.search.filtroEstado.length > 0
+            ? this.search.filtroEstado.find(e => e.includes(item.tipo_reclamo))
+            : item.tipo_reclamo != null) &&
+          (this.search.poliza != "" && item.poliza.numero != null
+            ? item.poliza.numero.includes(this.search.poliza)
+            : item.poliza.numero != null)
+      );
+      return this.search.cliente_id == 0 &&
+        this.search.siniestro == "" &&
+        this.search.poliza == "" &&
+        this.search.anio == null &&
+        this.search.filtroEstado.length == 0
+        ? []
+        : tempSiniestros;
+    },
+    activeYears() {
+      var a = this.siniestros.map(s => {
+        if (s.fecha_siniestro != null) return moment(s.fecha_siniestro).year();
+      });
+      return a.sort(function(a, b) {
+        return b - a;
+      });
+    }
   },
   methods: {
     ...mapActions("siniestro", [
-      "getSiniestrosActivos",
+      "getSiniestros",
       "getSiniestro",
       "deleteSiniestro"
     ]),
+    ...mapActions("cliente", ["getClientes"]),
     ...mapMutations("modal", ["SHOW_MODAL3", "HIDE_MODAL3"]),
-    ...mapMutations("siniestro", ["RESET_SINIESTROS"]),
+    ...mapMutations("poliza", ["CLEAN_SEARCH"]),
+    filtroXAnio(item) {
+      if (moment(item.fecha_siniestro).year() == this.search.anio) return item;
+    },
     editSiniestro(id) {
       this.getSiniestro(id);
       this.SHOW_MODAL3(true);
@@ -159,7 +254,9 @@ export default {
     }
   },
   created() {
-    this.getSiniestrosActivos();
+    this.getClientes();
+    this.getSiniestros();
+    bus.$on("cleanSearch", () => this.CLEAN_SEARCH());
   }
 };
 </script>

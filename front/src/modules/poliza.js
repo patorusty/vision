@@ -36,6 +36,8 @@ const state = () => ({
     compania_id: 0,
     cliente: "",
     cliente_id: 0,
+    siniestro: "",
+    anio: null,
     filtroEstado: []
   }
 });
@@ -128,6 +130,8 @@ const mutations = {
         compania_id: 0,
         cliente: "",
         cliente_id: 0,
+        siniestro: "",
+        anio: null,
         filtroEstado: []
       }
     );
