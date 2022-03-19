@@ -179,7 +179,9 @@ export default {
           (this.search.cliente_id != 0
             ? item.poliza.cliente_id == this.search.cliente_id
             : item.poliza.cliente_id != 0) &&
-          this.filtroXAnio(item) &&
+          (this.search.anio != null
+            ? this.filtroXAnio(item)
+            : item.fecha_siniestro != null) &&
           (this.search.siniestro != "" && item.numero_siniestro != null
             ? item.numero_siniestro.includes(this.search.siniestro)
             : item.numero_siniestro != null) &&
@@ -188,7 +190,8 @@ export default {
             : item.tipo_reclamo != null) &&
           (this.search.poliza != "" && item.poliza.numero != null
             ? item.poliza.numero.includes(this.search.poliza)
-            : item.poliza.numero != null)
+            : item.poliza.numero != null) &&
+          this.filtroXAnio(item)
       );
       return this.search.cliente_id == 0 &&
         this.search.siniestro == "" &&
