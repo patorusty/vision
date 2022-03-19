@@ -136,26 +136,6 @@ export default {
       this.deleteSiniestro(this.idSelected);
       this.modalDelete = false;
       this.idSelected = "";
-    },
-    itemRowBackground(item) {
-      switch (item.tipo_reclamo) {
-        case "DAÑO A ASEGURADO (Reclamo a Tercero)":
-        case "CHOQUE EN CADENA":
-          return "orange lighten-2";
-        case "DAÑO A ASEGURADO (Cleas)":
-        case "DAÑO A ASEGURADO (Cia. vs Cia.)":
-        case "DAÑO PARCIAL (Todo Riesgo)":
-          return "deep-purple lighten-2";
-        case "SIN RECLAMO (Daño a Tercero)":
-          return "light-green lighten-2";
-        case "CRISTALES LATERALES":
-        case "PARABRISAS":
-        case "LUNETA":
-        case "ROBO PARCIAL":
-          return "yellow lighten-2";
-        case "ROBO TOTAL":
-          return "red lighten-1";
-      }
     }
   },
   created() {
