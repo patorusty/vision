@@ -113,6 +113,9 @@
       :no-data-text='polizas.length === 0 ? "Polizas no cargadas" : "Aplique un filtro de busqueda"'
       loading-text='Cargando...'
     >
+      <template v-slot:[`item.poliza`]="{ item }">
+        <div v-if="item.numero">{{ item.numero }}</div>
+      </template>
       <template v-slot:[`item.compania`]="{ item }">{{ item.compania.nombre }} <br />
         Cod.({{ item.codigo_productor.codigo_productor }})</template>
       <template v-slot:[`item.asegurado`]="{ item }">
@@ -309,7 +312,7 @@ export default {
           (this.search.filtroEstado.length > 0
             ? this.search.filtroEstado.includes(item.estado_poliza_id)
             : item.estado_poliza_id != 0) &&
-          (this.search.poliza != "" && item.numero != null
+          (this.search.poliza != ""
             ? item.numero.includes(this.search.poliza)
             : item.numero != null)
       );
