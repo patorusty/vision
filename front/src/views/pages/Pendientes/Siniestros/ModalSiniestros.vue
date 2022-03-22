@@ -146,10 +146,10 @@
               <v-row>
                 <v-col class=" mt-0 py-0">
                   <v-select
-                    v-if="siniestro.poliza.riesgo_automotor.length"
+                    v-if="poliza.riesgo_automotor.length"
                     label="Riesgo"
                     v-model="siniestro.riesgo_id"
-                    :items='siniestro.poliza.riesgo_automotor'
+                    :items='poliza.riesgo_automotor'
                     :item-text="patenteYcobertura"
                     item-value="id"
                   ></v-select>
