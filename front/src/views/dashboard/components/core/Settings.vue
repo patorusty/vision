@@ -99,27 +99,27 @@
 
           <v-divider class="my-4 secondary" />
 
-          <v-row
-            align="center"
-            no-gutters
-          >
-            <v-col cols="auto">
-              Sidebar Mini
-            </v-col>
+          <!-- <v-row
+              align="center"
+              no-gutters
+            >
+              <v-col cols="auto">
+                Sidebar Mini
+              </v-col>
 
-            <v-spacer />
+              <v-spacer />
 
-            <v-col cols="auto">
-              <v-switch
-                v-model="internalValue"
-                class="ma-0 pa-0"
-                color="secondary"
-                hide-details
-              />
-            </v-col>
-          </v-row>
+              <v-col cols="auto">
+                <v-switch
+                  v-model="internalValue"
+                  class="ma-0 pa-0"
+                  color="secondary"
+                  hide-details
+                />
+              </v-col>
+            </v-row> -->
 
-          <v-divider class="my-4 secondary" />
+          <!-- <v-divider class="my-4 secondary" />
 
           <v-row
             align="center"
@@ -139,9 +139,9 @@
                 hide-details
               />
             </v-col>
-          </v-row>
+          </v-row> -->
 
-          <v-divider class="my-4 secondary" />
+          <!-- <v-divider class="my-4 secondary" />
 
           <strong class="mb-3 d-inline-block">IMAGES</strong>
 
@@ -233,7 +233,7 @@
           >
             <v-icon>mdi-facebook</v-icon>
             - 50
-          </v-btn>
+          </v-btn> -->
         </v-card-text>
       </v-card>
     </v-menu>

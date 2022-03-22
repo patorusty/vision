@@ -7,7 +7,7 @@
 
     <dashboard-core-view />
 
-    <!-- <dashboard-core-settings v-model="expandOnHover" /> -->
+    <dashboard-core-settings v-model="expandOnHover" />
   </v-app>
 </template>
 
