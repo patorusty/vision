@@ -58,7 +58,7 @@
             multiple
             item-text="value"
             item-value="value"
-            label="Estado"
+            label="Tipo de Reclamo"
             :clearable="search.filtroEstado != 0"
             @click:clear="$nextTick(() => (search.filtroEstado = []))"
           >
@@ -66,6 +66,18 @@
               <span v-if="index === 0">{{ item.value }}</span>
             </template>
           </v-autocomplete>
+        </v-col>
+        <v-col>
+          <v-select
+            v-model="search.estado"
+            item-text="value"
+            item-value="value"
+            :items="estados"
+            label="Estado"
+            :clearable="search.estado != ''"
+            @click:clear="$nextTick(() => (search.estado = ''))"
+          >
+          </v-select>
         </v-col>
       </v-row>
     </v-card-title>
@@ -165,6 +177,7 @@ export default {
       { text: "Numero", value: "numero_siniestro" },
       { text: "Asegurado", value: "asegurado" },
       { text: "Tipo de Reclamo", value: "tipo_reclamo" },
+      { text: "Estado", value: "estado_siniestro" },
       { text: "Actions", value: "actions", sortable: false, align: "right" }
     ]
   }),
@@ -172,7 +185,12 @@ export default {
     ...mapState("modal", ["modal3", "edicion3"]),
     ...mapState("poliza", ["search"]),
     ...mapState("cliente", ["clientes"]),
-    ...mapState("siniestro", ["siniestros", "loading", "tipo_reclamos"]),
+    ...mapState("siniestro", [
+      "siniestros",
+      "loading",
+      "tipo_reclamos",
+      "estados"
+    ]),
     tableData() {
       let tempSiniestros = this.siniestros.filter(
         item =>
@@ -190,10 +208,14 @@ export default {
             : item.tipo_reclamo != null) &&
           (this.search.poliza != "" && item.poliza.numero != null
             ? item.poliza.numero.includes(this.search.poliza)
-            : item.poliza.numero != null)
+            : item.poliza.numero != null) &&
+          (this.search.estado != ""
+            ? item.estado_siniestro == this.search.estado
+            : item.estado_siniestro != 0)
       );
       return this.search.cliente_id == 0 &&
         this.search.siniestro == "" &&
+        this.search.estado == "" &&
         this.search.poliza == "" &&
         this.search.anio == null &&
         this.search.filtroEstado.length == 0

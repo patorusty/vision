@@ -26,7 +26,7 @@ class RiesgoAutomotor extends Model
         'nro_motor',
         'nro_chasis',
         'uso',
-        'tipo_carroceria',
+        'tipo_carroceria_id',
         'combustible',
         'okm',
         'estado_general',

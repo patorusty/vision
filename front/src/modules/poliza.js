@@ -38,7 +38,8 @@ const state = () => ({
     cliente_id: 0,
     siniestro: "",
     anio: null,
-    filtroEstado: []
+    filtroEstado: [],
+    estado: ""
   }
 });
 const mutations = {
@@ -132,7 +133,8 @@ const mutations = {
         cliente_id: 0,
         siniestro: "",
         anio: null,
-        filtroEstado: []
+        filtroEstado: [],
+        estado: ""
       }
     );
   }

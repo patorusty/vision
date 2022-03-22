@@ -314,7 +314,7 @@ export default {
             : item.estado_poliza_id != 0) &&
           (this.search.poliza != ""
             ? item.numero.includes(this.search.poliza)
-            : item.numero != null)
+            : item.numero != null || item.numero != "")
       );
 
       return this.search.cliente_id == 0 &&

@@ -170,10 +170,15 @@ export default {
     ...mapMutations("modal", ["HIDE_MODAL2"]),
     ...mapMutations("endoso", ["RESET_ENDOSO"]),
     ...mapActions("endoso", ["createEndoso", "updateEndoso"]),
+    ...mapActions("poliza", ["updatePoliza"]),
     async create() {
       if (this.$refs.form.validate()) {
         this.endoso.poliza_id = this.poliza.id;
         const createResult = await this.createEndoso(this.endoso);
+        if (this.endoso.tipo_endoso_id == 1) {
+          this.poliza.estado_poliza_id = 1;
+          await this.updatePoliza(this.poliza);
+        }
         if (createResult) {
           this.closeModal();
         }

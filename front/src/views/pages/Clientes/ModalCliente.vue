@@ -455,7 +455,6 @@ export default {
   watch: {
     modal() {
       if (!this.modal) {
-        console.log("holis");
         this.closeModal();
       }
     }

@@ -101,6 +101,12 @@ export default {
         event: () => bus.$emit("cleanSearch", true)
       },
       {
+        icon: "mdi-clipboard-clock",
+        title: "Pendientes",
+        to: "/pendientes",
+        event: () => {}
+      },
+      {
         icon: "mdi-alert",
         title: "Siniestros",
         to: "/siniestros",
@@ -111,12 +117,6 @@ export default {
       //   title: "Endosos",
       //   to: "/endosos"
       // },
-      {
-        icon: "mdi-clipboard-clock",
-        title: "Pendientes",
-        to: "/pendientes",
-        event: () => {}
-      },
       {
         icon: "mdi-account",
         title: "Clientes",

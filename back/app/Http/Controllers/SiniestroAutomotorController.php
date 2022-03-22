@@ -41,6 +41,8 @@ class SiniestroAutomotorController extends Controller
     {
         try {
             $siniestro = SiniestroAutomotor::create($request->all());
+            $siniestro->load(['poliza.riesgo_automotor.cobertura']);
+            $siniestro->with(['poliza.riesgo_automotor.cobertura']);
             return response($siniestro, 201);
         } catch (\Exception $e) {
             return $e->getMessage();
