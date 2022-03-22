@@ -179,18 +179,14 @@ export default {
       { text: "Tipo de Reclamo", value: "tipo_reclamo" },
       { text: "Estado", value: "estado_siniestro" },
       { text: "Actions", value: "actions", sortable: false, align: "right" }
-    ]
+    ],
+    estados: [{ value: "Abierto" }, { value: "Cerrado" }]
   }),
   computed: {
     ...mapState("modal", ["modal3", "edicion3"]),
     ...mapState("poliza", ["search"]),
     ...mapState("cliente", ["clientes"]),
-    ...mapState("siniestro", [
-      "siniestros",
-      "loading",
-      "tipo_reclamos",
-      "estados"
-    ]),
+    ...mapState("siniestro", ["siniestros", "loading", "tipo_reclamos"]),
     tableData() {
       let tempSiniestros = this.siniestros.filter(
         item =>
@@ -210,7 +206,7 @@ export default {
             ? item.poliza.numero.includes(this.search.poliza)
             : item.poliza.numero != null) &&
           (this.search.estado != ""
-            ? item.estado_siniestro == this.search.estado
+            ? item.estado_siniestro.includes(this.search.estado)
             : item.estado_siniestro != 0)
       );
       return this.search.cliente_id == 0 &&
