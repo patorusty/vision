@@ -63,8 +63,8 @@ class PolizaController extends Controller
             $poliza = Poliza::create($request->all());
             $this->checkOnePoliza($poliza);
             $poliza = $poliza->refresh();
-            $poliza->load(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo']);
-            $poliza::with(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo']);
+            $poliza->load(['codigo_productor.productores', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo']);
+            $poliza::with(['codigo_productor.productores', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo']);
             return response($poliza, 201);
         } catch (\Exception $e) {
             return $e->getMessage();

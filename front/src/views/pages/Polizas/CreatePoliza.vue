@@ -355,6 +355,7 @@ export default {
     }
   },
   created() {
+    this.RESET_POLIZA();
     this.getClientes();
     this.getCompaniasActivas();
     this.getTipoRiesgos();
