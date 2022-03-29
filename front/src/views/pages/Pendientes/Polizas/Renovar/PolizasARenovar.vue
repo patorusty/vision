@@ -20,7 +20,7 @@
           class="links"
           :to=" {name: 'Editar Cliente', params: {id: item.cliente.id}}"
           target="_blank"
-        >{{ item.cliente.nombre }} {{ item.cliente.apellido }}
+        >{{ nombreCompleto(item.cliente) }}
         </router-link>
       </template>
       <template v-slot:[`item.dominio`]="{ item }">
