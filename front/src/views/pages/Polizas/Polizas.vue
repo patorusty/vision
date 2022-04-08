@@ -159,7 +159,7 @@
           <v-tooltip top>
             <template v-slot:activator="{ on, attrs }">
               <v-icon
-                color="success"
+                color="blue"
                 v-bind="attrs"
                 v-on="on"
               >mdi-hand-extended-outline</v-icon>
