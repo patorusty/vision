@@ -21,7 +21,7 @@
                   {{c.nombre}}
                 </div>
               </template>
-              <v-card-text class="subtitle-1 font-weight-light"> Polizas Vigentes: {{c.polizas_vigentes.length}}</v-card-text>
+              <v-card-text class="subtitle-1 font-weight-light"> Polizas Vigentes: {{getCount(c.polizas_vigentes)}}</v-card-text>
             </base-material-card>
           </v-col>
         </div>
@@ -47,19 +47,27 @@
 <script>
 import { mapState, mapActions } from "vuex";
 export default {
-  data: () => ({}),
   computed: {
     ...mapState("compania", ["companias_activas", "loading"]),
     totalPolizas() {
       var total = 0;
       this.companias_activas.forEach(c => {
-        total = total + c.polizas_vigentes.length;
+        if (c.polizas_vigentes.length > 0)
+          total = total + this.getCount(c.polizas_vigentes);
       });
       return total;
     }
   },
   methods: {
-    ...mapActions("compania", ["getPolizasVigentes"])
+    ...mapActions("compania", ["getPolizasVigentes"]),
+    getCount(polizas) {
+      var total = 0;
+      polizas.forEach(p => {
+        if (p.riesgo_automotor.length > 0)
+          total = total + p.riesgo_automotor.length;
+      });
+      return total;
+    }
   },
   created() {
     this.getPolizasVigentes();

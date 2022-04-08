@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const getToken = async () => {
-  return `Bearer ${localStorage.getItem("visionToken")}`;
+  return `${localStorage.getItem("visionToken")}`;
 };
 
 const http = axios.create({

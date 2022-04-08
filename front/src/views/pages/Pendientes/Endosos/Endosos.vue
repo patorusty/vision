@@ -120,10 +120,11 @@ export default {
       ];
     },
     tableData() {
-      return this.endosos.filter(item =>
-        this.tipo_endoso_id != 0
-          ? item.tipo_endoso_id === this.tipo_endoso_id
-          : item.tipo_endoso_id != 0
+      return this.endosos.filter(
+        item =>
+          (this.tipo_endoso_id != 0
+            ? item.tipo_endoso_id === this.tipo_endoso_id
+            : item.tipo_endoso_id != 0) && item.completo != 1
       );
     },
     tipoEndosos() {

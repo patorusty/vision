@@ -23,103 +23,53 @@
             </v-col>
             <v-col class="d-flex align-center">
               <div class="text-subtitle-1">
-                {{'Vigencia: ' + dateToString(poliza.vigencia_desde) + " al " +dateToString(poliza.vigencia_hasta)}}
+                {{'Vigencia: ' + dateToString(poliza.vigencia_desde) + " al " + dateToString(poliza.vigencia_hasta)}}
               </div>
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
-              <v-menu
-                v-model="calendarioEmision"
-                :close-on-content-click="false"
-                transition="scale-transition"
-                offset-y
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    :value="dateToString(poliza.fecha_emision)"
-                    @click:clear="
-                          $nextTick(() => (poliza.fecha_emision = null))
-                        "
-                    clearable
-                    label="Emision"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker
-                  v-model="poliza.fecha_emision"
-                  clearable
-                  color="primary lighten-1"
-                  no-title
-                  scrollable
-                  locale="es-la"
-                  @input="calendarioEmision = false"
-                >
-                </v-date-picker>
-              </v-menu>
+            <v-col class="py-0">
+              <v-text-field
+                label="Fecha Emision"
+                :value="dateToString(poliza.fecha_emision)"
+                v-mask="'##/##/####'"
+                @change="poliza.fecha_emision = stringToDate($event)"
+                @click:clear="$nextTick(() => (poliza.fecha_emision = null))"
+                clearable
+              />
             </v-col>
-            <v-col>
-              <v-menu
-                v-model="calendarioEnviadoMail"
-                :close-on-content-click="false"
-                transition="scale-transition"
-                offset-y
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    :value="dateToString(poliza.fecha_entrega_email)"
-                    @click:clear="
-                          $nextTick(() => (poliza.fecha_entrega_email = null))
-                        "
-                    clearable
-                    label="Enviado x Mail"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker
-                  v-model="poliza.fecha_entrega_email"
-                  clearable
-                  color="primary lighten-1"
-                  no-title
-                  scrollable
-                  locale="es-la"
-                  @input="calendarioEnviadoMail = false"
-                >
-                </v-date-picker>
-              </v-menu>
+            <v-col class="py-0">
+              <v-text-field
+                label="Enviado x Mail"
+                :value="dateToString(poliza.fecha_entrega_email)"
+                v-mask="'##/##/####'"
+                @change="poliza.fecha_entrega_email = stringToDate($event)"
+                @click:clear="$nextTick(() => (poliza.fecha_entrega_email = null))"
+                clearable
+              />
             </v-col>
-            <v-col>
-              <v-menu
-                v-model="calendarioEntregaOriginal"
-                :close-on-content-click="false"
-                transition="scale-transition"
-                offset-y
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    :value="dateToString(poliza.fecha_entrega_original)"
-                    @click:clear="
-                          $nextTick(() => (poliza.fecha_entrega_original = null))
-                        "
-                    clearable
-                    label="Entrega Original"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker
-                  v-model="poliza.fecha_entrega_original"
-                  clearable
-                  color="primary lighten-1"
-                  no-title
-                  scrollable
-                  locale="es-la"
-                  @input="calendarioEntregaOriginal = false"
-                >
-                </v-date-picker>
-              </v-menu>
+          </v-row>
+          <v-row>
+            <v-col class="py-0">
+              <v-text-field
+                label="Fecha Recepcion"
+                :value="dateToString(poliza.fecha_recepcion)"
+                v-mask="'##/##/####'"
+                @change="poliza.fecha_recepcion = stringToDate($event)"
+                @click:clear="$nextTick(() => (poliza.fecha_recepcion = null))"
+                clearable
+              />
+
+            </v-col>
+            <v-col class="py-0">
+              <v-text-field
+                label="Entrega Original"
+                :value="dateToString(poliza.fecha_entrega_original)"
+                v-mask="'##/##/####'"
+                @change="poliza.fecha_entrega_original = stringToDate($event)"
+                @click:clear="$nextTick(() => (poliza.fecha_entrega_original = null))"
+                clearable
+              />
             </v-col>
           </v-row>
           <v-row>

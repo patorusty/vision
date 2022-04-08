@@ -20,7 +20,7 @@
           class="links"
           :to=" {name: 'Editar Cliente', params: {id: item.cliente.id}}"
           target="_blank"
-        >{{ item.cliente.nombre }} {{ item.cliente.apellido }}
+        >{{ nombreCompleto(item.cliente) }}
         </router-link>
       </template>
       <template v-slot:[`item.dominio`]="{ item }">
@@ -179,7 +179,7 @@ export default {
     dominio(item) {
       if (item.tipo_riesgo_id == 1 && item.riesgo_automotor.length > 0) {
         return item.riesgo_automotor.length > 1
-          ? "Autos"
+          ? "Flota"
           : item.riesgo_automotor[0].patente;
       }
       // else if (item.tipo_riesgo_id == 2 && item.otro_riesgo.length > 0) {

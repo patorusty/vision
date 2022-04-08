@@ -177,7 +177,7 @@ export default {
     dominio(item) {
       if (item.tipo_riesgo_id == 1 && item.riesgo_automotor.length > 0) {
         return item.riesgo_automotor.length > 1
-          ? "Autos"
+          ? "Flota"
           : item.riesgo_automotor[0].patente;
       }
       // else if (item.tipo_riesgo_id == 2 && item.otro_riesgo.length > 0) {

@@ -8,6 +8,8 @@ use App\Models\CodigoOrganizador;
 use App\Models\Compania;
 use App\Models\Poliza;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class CompaniaController extends Controller
 {
@@ -31,7 +33,7 @@ class CompaniaController extends Controller
 
     public function polizasVigentes()
     {
-        return  Compania::with('polizas_vigentes')->orderBy('nombre')->get();
+        return  Compania::with('polizas_vigentes.riesgo_automotor')->orderBy('nombre')->get();
     }
 
     /**

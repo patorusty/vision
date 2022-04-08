@@ -159,6 +159,7 @@
           <v-tooltip top>
             <template v-slot:activator="{ on, attrs }">
               <v-icon
+                color="success"
                 v-bind="attrs"
                 v-on="on"
               >mdi-hand-extended-outline</v-icon>
@@ -173,7 +174,10 @@
       ">
           <v-tooltip top>
             <template v-slot:activator="{ on }">
-              <v-icon v-on="on">mdi-email-fast-outline</v-icon>
+              <v-icon
+                color="success"
+                v-on="on"
+              >mdi-email-fast-outline</v-icon>
             </template>
             <span>Email</span>
           </v-tooltip>
@@ -185,7 +189,10 @@
       ">
           <v-tooltip top>
             <template v-slot:activator="{ on }">
-              <v-icon v-on="on">mdi-hand-extended-outline</v-icon>
+              <v-icon
+                color="success"
+                v-on="on"
+              >mdi-hand-extended-outline</v-icon>
             </template>
             <span>Entregada</span>
           </v-tooltip>
@@ -197,13 +204,19 @@
           ">
           <v-tooltip top>
             <template v-slot:activator="{ on }">
-              <v-icon v-on="on">mdi-hand-extended-outline</v-icon>
+              <v-icon
+                color="success"
+                v-on="on"
+              >mdi-hand-extended-outline</v-icon>
             </template>
             <span>Entregada</span>
           </v-tooltip><span> / </span>
           <v-tooltip top>
             <template v-slot:activator="{ on }">
-              <v-icon v-on="on">mdi-email-fast-outline</v-icon>
+              <v-icon
+                color="success"
+                v-on="on"
+              >mdi-email-fast-outline</v-icon>
             </template>
             <span>Email</span>
           </v-tooltip>
@@ -211,7 +224,10 @@
         <div v-else>
           <v-tooltip top>
             <template v-slot:activator="{ on }">
-              <v-icon v-on="on">mdi-file-cancel-outline</v-icon>
+              <v-icon
+                color="red"
+                v-on="on"
+              >mdi-file-cancel-outline</v-icon>
             </template>
             <span>No Recibida</span>
           </v-tooltip>
@@ -395,7 +411,7 @@ export default {
     dominio(item) {
       if (item.tipo_riesgo_id == 1 && item.riesgo_automotor.length > 0) {
         return item.riesgo_automotor.length > 1
-          ? "Autos"
+          ? "Flota"
           : item.riesgo_automotor[0].patente;
       }
       // else if (item.tipo_riesgo_id == 2 && item.otro_riesgo.length > 0) {
