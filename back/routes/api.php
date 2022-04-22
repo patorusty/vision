@@ -75,7 +75,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('codigo_organizador/compania/{id}', [CodigoOrganizadorController::class, 'indexFiltrado']);
     Route::post('codigo_organizador/busquedaCO', [CodigoOrganizadorController::class, 'busquedaCO']);
 
-
     Route::apiResource('administracion/codigo_productores', CodigoProductorController::class);
     Route::get('codigo_productor/compania/{id}', [CodigoProductorController::class, 'indexFiltrado']);
     Route::get('codigo_productor_activo/compania/{id}', [CodigoProductorController::class, 'indexFiltradoActivo']);

@@ -328,9 +328,9 @@ export default {
           (this.search.filtroEstado.length > 0
             ? this.search.filtroEstado.includes(item.estado_poliza_id)
             : item.estado_poliza_id != 0) &&
-          (this.search.poliza != ""
+          (this.search.poliza != "" && item.numero !== null
             ? item.numero.includes(this.search.poliza)
-            : item.numero != null || item.numero != "")
+            : item.numero != null)
       );
 
       return this.search.cliente_id == 0 &&
