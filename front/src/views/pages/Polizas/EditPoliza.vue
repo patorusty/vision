@@ -330,14 +330,15 @@ export default {
       }
     }
   },
-  created() {
-    this.getPoliza(this.$route.params.id);
-    this.getClientes();
-    this.getCompanias();
-    this.getTipoRiesgos();
-    this.getFormaPagos();
-    this.getTipoVigencias();
-    this.sumarMes();
+  async created() {
+    await this.getPoliza(this.$route.params.id);
+    await this.getClientes();
+    await this.getCompanias();
+    await this.getTipoRiesgos();
+    await this.getFormaPagos();
+    await this.getTipoVigencias();
+    await this.sumarMes();
+    await this.getCodigoProductores(this.poliza.compania_id);
   },
   beforeDestroy() {
     this.RESET_POLIZA();
