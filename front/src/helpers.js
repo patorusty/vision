@@ -175,20 +175,20 @@ export const helpers = {
       switch (item.tipo_reclamo) {
         case "DAÑO A ASEGURADO (Reclamo a Tercero)":
         case "CHOQUE EN CADENA":
-          return "orange lighten-2";
+          return "orange lighten-4";
         case "DAÑO A ASEGURADO (Cleas)":
         case "DAÑO A ASEGURADO (Cia. vs Cia.)":
         case "DAÑO PARCIAL (Todo Riesgo)":
-          return "deep-purple lighten-2";
+          return "deep-purple lighten-4";
         case "SIN RECLAMO (Daño a Tercero)":
-          return "light-green lighten-2";
+          return "light-green lighten-4";
         case "CRISTALES LATERALES":
         case "PARABRISAS":
         case "LUNETA":
         case "ROBO PARCIAL":
-          return "yellow lighten-2";
+          return "yellow lighten-4";
         case "ROBO TOTAL":
-          return "red lighten-1";
+          return "red lighten-4";
       }
     }
   },

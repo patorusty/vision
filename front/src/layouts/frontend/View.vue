@@ -1,5 +1,5 @@
 <template>
-  <v-content
+  <v-main
     id="pages"
     :class="$vuetify.theme.dark ? undefined : 'grey lighten-3'"
   >
@@ -14,7 +14,7 @@
     >
       <router-view />
     </v-img>
-  </v-content>
+  </v-main>
 </template>
 
 <script>
@@ -40,7 +40,7 @@ export default {
 
 <style lang="sass">
   // #pages
-  //   > .v-content__wrap > .v-image
+  //   > .v-main__wrap > .v-image
   //     padding-top: 64px
   //     padding-bottom: 88px
 

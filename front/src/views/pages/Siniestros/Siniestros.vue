@@ -92,12 +92,7 @@
       loading-text='Cargando...'
     >
       <template v-slot:[`item.tipo_reclamo`]="{ item }">
-        <v-chip
-          :color="itemRowBackground(item)"
-          dark
-        >
-          {{ item.tipo_reclamo }}
-        </v-chip>
+        {{ item.tipo_reclamo }}
       </template>
       <template v-slot:[`item.asegurado`]="{ item }">
         {{

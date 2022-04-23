@@ -24,7 +24,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    barColor: "rgba(0, 0, 0, .8), rgba(0, 0, 0, .8)",
+    barColor: "rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)",
     drawer: null
   },
   mutations: {

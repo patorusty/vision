@@ -112,6 +112,7 @@
       :loading="loading"
       :no-data-text='polizas.length === 0 ? "Polizas no cargadas" : "Aplique un filtro de busqueda"'
       loading-text='Cargando...'
+      :item-class="itemRowColor"
     >
       <template v-slot:[`item.poliza`]="{ item }">
         <div v-if="item.numero">{{ item.numero }}</div>
@@ -145,10 +146,7 @@
       <template v-slot:[`item.desde`]="{ item }">{{ dateToString(item.vigencia_desde) }} <br />
         {{ dateToString(item.vigencia_hasta) }}</template>
       <template v-slot:[`item.estado`]="{ item }">
-        <v-chip
-          :color="itemRowColor(item)"
-          dark
-        >{{item.estado.nombre}}</v-chip>
+        {{item.estado.nombre}}
       </template>
       <template v-slot:[`item.envio`]="{ item }">
         <div v-if="
@@ -355,11 +353,11 @@ export default {
           filterable: true,
           filter: value => {
             if (!this.poliza) return true;
-
             return (value + "")
               .toLowerCase()
               .includes(this.poliza.toLowerCase());
-          }
+          },
+          align: "start"
         },
         {
           text: "Compania",
@@ -424,17 +422,17 @@ export default {
     itemRowColor(item) {
       switch (item.estado_poliza_id) {
         case 1:
-          return "red lighten-1";
+          return "red lighten-4";
         case 4:
-          return "yellow darken-1";
+          return "yellow lighten-4";
         case 3:
         case 7:
-          return "blue lighten-1";
+          return "blue lighten-4";
         case 5:
         case 6:
-          return "light-green lighten-2";
+          return "light-green lighten-4";
         case 2:
-          return "blue-grey lighten-3";
+          return "blue-grey lighten-4";
       }
     },
     formaDePago(item) {

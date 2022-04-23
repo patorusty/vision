@@ -1,5 +1,5 @@
 <template>
-  <v-content
+  <v-main
     id="pages"
     :class="$vuetify.theme.dark ? undefined : 'grey lighten-3'"
   >
@@ -20,7 +20,7 @@
         <router-view />
       </v-responsive>
     </v-img>
-  </v-content>
+  </v-main>
 </template>
 
 <script>
