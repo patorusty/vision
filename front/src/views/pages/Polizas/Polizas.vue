@@ -146,7 +146,12 @@
       <template v-slot:[`item.desde`]="{ item }">{{ dateToString(item.vigencia_desde) }} <br />
         {{ dateToString(item.vigencia_hasta) }}</template>
       <template v-slot:[`item.estado`]="{ item }">
-        {{item.estado.nombre}}
+        <v-chip
+          dark
+          color="deep-orange lighten-1"
+          v-if="item.estado_poliza_id == 4"
+        >{{item.estado.nombre}}</v-chip>
+        <span v-else>{{item.estado.nombre}}</span>
       </template>
       <template v-slot:[`item.envio`]="{ item }">
         <div v-if="
@@ -424,10 +429,10 @@ export default {
         case 1:
           return "red lighten-4";
         case 4:
-          return "yellow lighten-4";
+          return "white";
         case 3:
         case 7:
-          return "blue lighten-4";
+          return "white";
         case 5:
         case 6:
           return "light-green lighten-4";
