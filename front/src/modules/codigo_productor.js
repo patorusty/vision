@@ -29,6 +29,9 @@ const mutations = {
       }
     );
   },
+  RESET_CODIGO_PRODUCTORES(state) {
+    state.codigo_productores = [];
+  },
   UPDATE_CODIGO_PRODUCTOR(state, codigo_productor) {
     const item = state.codigo_productores.find(
       item => item.id === codigo_productor.id

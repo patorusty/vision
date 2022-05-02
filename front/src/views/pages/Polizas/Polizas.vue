@@ -1,5 +1,8 @@
 <template>
-  <v-card class="mt-0 mx-4 pa-3">
+  <v-card
+    style="max-width: 1840px;"
+    class="mt-0 mx-4 pa-3"
+  >
     <v-card-title>
       <v-row>
         <v-col
@@ -331,9 +334,9 @@ export default {
           (this.search.filtroEstado.length > 0
             ? this.search.filtroEstado.includes(item.estado_poliza_id)
             : item.estado_poliza_id != 0) &&
-          (this.search.poliza != "" && item.numero !== null
-            ? item.numero.includes(this.search.poliza)
-            : item.numero != null)
+          (this.search.poliza != ""
+            ? item.numero && item.numero.includes(this.search.poliza)
+            : item.numero != "")
       );
 
       return this.search.cliente_id == 0 &&
