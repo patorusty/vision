@@ -21,44 +21,44 @@
   </v-snackbar>
 </template>
 <script>
-  // Components
-  import { VSnackbar } from 'vuetify/lib'
+// Components
+import { VSnackbar } from "vuetify/lib";
 
-  export default {
-    name: 'BaseMaterialSnackbar',
+export default {
+  name: "BaseMaterialSnackbar",
 
-    extends: VSnackbar,
+  extends: VSnackbar,
 
-    props: {
-      dismissible: {
-        type: Boolean,
-        default: true,
-      },
-      type: {
-        type: String,
-        default: '',
-      },
+  props: {
+    dismissible: {
+      type: Boolean,
+      default: true
     },
+    type: {
+      type: String,
+      default: ""
+    }
+  },
 
-    computed: {
-      classes () {
-        return {
-          ...VSnackbar.options.computed.classes.call(this),
-          'v-snackbar--material': true,
-        }
-      },
-    },
+  computed: {
+    classes() {
+      return {
+        ...VSnackbar.options.computed.classes.call(this),
+        "v-snackbar--material": true
+      };
+    }
   }
+};
 </script>
 
 <style lang="sass">
-  .v-snackbar--material
-    margin-top: 32px
-    margin-bottom: 32px
+.v-snackbar--material
+  margin-top: 32px
+  margin-bottom: 32px
 
-    .v-alert--material,
-    .v-snack__wrapper
-      border-radius: 4px
+  .v-alert--material,
+  .v-snack__wrapper
+    border-radius: 4px
 
     .v-snack__content
       overflow: visible

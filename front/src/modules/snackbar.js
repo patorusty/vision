@@ -2,7 +2,7 @@ const state = () => ({
   snackbar: false,
   color: "",
   snackText: ""
-})
+});
 const mutations = {
   SHOW_SNACK(state, payload) {
     state.snackbar = true;
@@ -10,12 +10,18 @@ const mutations = {
     state.snackText = payload.snackText;
     setTimeout(() => {
       state.snackbar = false;
+      console.log("se fue");
     }, 3000);
   },
-}
+  CLOSE_SNACK(state) {
+    state.snackbar = false;
+    state.color = "";
+    state.snackText = "";
+  }
+};
 export default {
   namespaced: true,
   state,
   mutations,
-  getters: {},
+  getters: {}
 };

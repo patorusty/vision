@@ -391,6 +391,7 @@ export default {
     ...mapMutations("poliza", ["CLEAN_SEARCH"]),
     ...mapActions("compania", ["getCompanias"]),
     ...mapActions("cliente", ["getClientes"]),
+
     filterRazon(item) {
       if (this.cliente != "" && item.cliente.razon_social != null) {
         return item.cliente.razon_social.includes(this.cliente);
