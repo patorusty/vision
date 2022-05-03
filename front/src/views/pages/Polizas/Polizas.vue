@@ -1,9 +1,6 @@
 <template>
-  <v-card
-    style="max-width: 1840px;"
-    class="mt-0 mx-4 pa-3"
-  >
-    <v-card-title>
+  <v-card class="mt-0 mx-4 pa-3">
+    <v-card-title style="max-width: 1840px;">
       <v-row>
         <v-col
           cols="3"

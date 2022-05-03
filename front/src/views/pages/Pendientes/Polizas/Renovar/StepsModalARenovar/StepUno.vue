@@ -180,11 +180,13 @@ export default {
   methods: {
     ...mapActions("poliza", ["updatePolizaRenovada"]),
     ...mapMutations("poliza", ["RESET_POLIZA", "DELETE_POLIZA_A_RENOVAR"]),
+    ...mapMutations("riesgo", ["RESET_RIESGOS_AUTOMOTORES"]),
     ...mapMutations("modal", ["HIDE_MODAL", "SET_STEP"]),
     closeModal() {
       this.HIDE_MODAL(false);
       this.SET_STEP(1);
       this.RESET_POLIZA();
+      this.RESET_RIESGOS_AUTOMOTORES();
     },
     async update() {
       if (this.$refs.form.validate()) {

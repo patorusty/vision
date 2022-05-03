@@ -124,16 +124,21 @@ export default {
   methods: {
     ...mapActions("riesgo", ["updateRiesgoAutomotor"]),
     ...mapMutations("poliza", ["RESET_POLIZA"]),
+    ...mapMutations("riesgo", ["RESET_RIESGOS_AUTOMOTORES"]),
     ...mapMutations("modal", ["HIDE_MODAL", "SET_STEP"]),
     closeModal() {
       this.HIDE_MODAL(false);
       this.SET_STEP(1);
       this.RESET_POLIZA();
+      this.RESET_RIESGOS_AUTOMOTORES();
     },
     async update(riesgo) {
       // if (this.$refs.form.validate()) {
-      const createResult = await this.updateRiesgoAutomotor(riesgo);
+      const updateResult = await this.updateRiesgoAutomotor(riesgo);
       // }
+      if (updateResult) {
+        this.closeModal();
+      }
     },
     atras() {
       this.SET_STEP(1);

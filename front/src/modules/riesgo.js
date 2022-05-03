@@ -146,7 +146,7 @@ const mutations = {
       }
     );
   },
-  RESET_RIESGOS_AUTOMOTOR(state) {
+  RESET_RIESGOS_AUTOMOTORES(state) {
     state.riesgo_automotores = [];
   },
   UPDATE_RIESGO_AUTOMOTOR(state, riesgo_automotor) {
