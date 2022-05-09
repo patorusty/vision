@@ -10,7 +10,6 @@ const mutations = {
     state.snackText = payload.snackText;
     setTimeout(() => {
       state.snackbar = false;
-      console.log("se fue");
     }, 3000);
   },
   CLOSE_SNACK(state) {
