@@ -117,9 +117,6 @@ export default {
     ...mapMutations("riesgo", ["RESET_RIESGO_AUTOMOTOR"]),
     async create() {
       if (this.$refs.form.validate()) {
-        if (this.riesgo_automotor.tipo_carroceria_id == 17) {
-          this.riesgo_automotor.patente = "101" + this.riesgo_automotor.patente;
-        }
         this.riesgo_automotor.poliza_id = this.poliza.id;
         const createResult = await this.createRiesgoAutomotor(
           this.riesgo_automotor

@@ -77,7 +77,7 @@ const actions = {
     }
   },
   async getSiniestrosActivos({ commit, state }) {
-    if (state.siniestros.length === 0) {
+    if (state.siniestros_activos.length === 0) {
       const resp = await http.get("siniestros/activos");
       commit("SET_SINIESTROS_ACTIVOS", resp.data);
     }

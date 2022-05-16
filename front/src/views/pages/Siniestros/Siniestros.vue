@@ -84,7 +84,7 @@
     <v-data-table
       class="pa-2"
       :headers="headers"
-      :items-per-page="5"
+      :items-per-page="10"
       :items="tableData"
       :loading="loading"
       :item-class="itemRowBackground"
@@ -175,7 +175,7 @@ export default {
       { text: "Estado", value: "estado_siniestro" },
       { text: "Actions", value: "actions", sortable: false, align: "right" }
     ],
-    estados: [{ value: "Abierto" }, { value: "Cerrado" }]
+    estados: [{ value: "Abierto" }, { value: "Cerrado" }, { value: "Todos" }]
   }),
   computed: {
     ...mapState("modal", ["modal3", "edicion3"]),
@@ -183,6 +183,13 @@ export default {
     ...mapState("cliente", ["clientes"]),
     ...mapState("siniestro", ["siniestros", "loading", "tipo_reclamos"]),
     tableData() {
+      var filtroEstados = item => {
+        if (this.search.estado != "Todos") {
+          return item.estado_siniestro.includes(this.search.estado);
+        } else if (this.search.estado == "Todos") {
+          return true;
+        }
+      };
       let tempSiniestros = this.siniestros.filter(
         item =>
           (this.search.cliente_id != 0
@@ -201,7 +208,7 @@ export default {
             ? item.poliza.numero.includes(this.search.poliza)
             : item.poliza.numero != null) &&
           (this.search.estado != ""
-            ? item.estado_siniestro.includes(this.search.estado)
+            ? filtroEstados(item)
             : item.estado_siniestro != 0)
       );
       return this.search.cliente_id == 0 &&
