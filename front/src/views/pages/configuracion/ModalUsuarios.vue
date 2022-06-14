@@ -172,7 +172,6 @@ export default {
     create() {
       if (this.$refs.form.validate()) {
         this.usuario.avatar = null;
-        console.log(this.usuario);
         this.createUsuario(this.usuario);
         this.closeModal();
       }

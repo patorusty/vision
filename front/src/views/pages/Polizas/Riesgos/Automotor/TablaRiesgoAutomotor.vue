@@ -131,7 +131,7 @@ export default {
       "RESET_RIESGO_AUTOMOTOR"
     ]),
     editRiesgoAutomotor(item) {
-      this.SET_RIESGO_AUTOMOTOR(item);
+      this.getRiesgoAutomotor(item.id);
       this.SHOW_MODAL_RA(true);
     },
     create() {

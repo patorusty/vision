@@ -165,7 +165,7 @@
                 color="blue"
                 v-bind="attrs"
                 v-on="on"
-              >mdi-hand-extended-outline</v-icon>
+              >mdi-file-check-outline</v-icon>
             </template>
             <span>Recibida</span>
           </v-tooltip>

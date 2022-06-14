@@ -74,8 +74,8 @@
             item-value="value"
             :items="estados"
             label="Estado"
-            :clearable="search.estado != ''"
-            @click:clear="$nextTick(() => (search.estado = ''))"
+            :clearable="search.estado != 'Todos'"
+            @click:clear="$nextTick(() => (search.estado = 'Todos'))"
           >
           </v-select>
         </v-col>
@@ -200,7 +200,7 @@ export default {
             : item.fecha_siniestro != null) &&
           (this.search.siniestro != "" && item.numero_siniestro != null
             ? item.numero_siniestro.includes(this.search.siniestro)
-            : item.numero_siniestro != null) &&
+            : item.numero_siniestro != "") &&
           (this.search.filtroEstado.length > 0
             ? this.search.filtroEstado.find(e => e.includes(item.tipo_reclamo))
             : item.tipo_reclamo != null) &&

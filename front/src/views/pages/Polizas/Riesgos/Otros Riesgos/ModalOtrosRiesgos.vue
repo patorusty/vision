@@ -247,13 +247,11 @@ export default {
     },
     scrollToEnd() {
       const modal = this.$refs.modal;
-      console.log(modal.scrollHeight);
       modal.$el.scrollIntoView({
         alignToTop: false,
         block: "end",
         behavior: "smooth"
       });
-      console.log(modal.$el);
     }
   },
   watch: {

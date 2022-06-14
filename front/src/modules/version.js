@@ -58,7 +58,6 @@ const actions = {
     if (state.modelo_id && state.anio_id) {
       const obj = { modelo_id: state.modelo_id, anio_id: state.anio_id };
       const resp = await http.post("/anios/filtrar", obj);
-      console.log(resp.data.versiones);
       commit("SET_VERSIONES", resp.data.versiones);
     }
   },

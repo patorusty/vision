@@ -177,9 +177,15 @@ const actions = {
     commit("SET_RIESGO_AUTOMOTORES", resp.data);
   },
 
-  async getRiesgoAutomotor({ commit }) {
-    // const resp = await http.getOne(API_URL_RA, id);
-    // commit("SET_RIESGO_AUTOMOTOR", resp.data);
+  async getRiesgoAutomotor({ commit, dispatch }, id) {
+    const resp = await http.getOne(API_URL_RA, id);
+    commit("SET_RIESGO_AUTOMOTOR", resp.data);
+    dispatch("modelo/getModelosPorMarca", resp.data.automotor_marca_id, {
+      root: true
+    });
+    dispatch("version/getVersionesPorModelo", resp.data.automotor_modelo_id, {
+      root: true
+    });
   },
 
   async updateRiesgoAutomotor({ commit }, riesgo_automotor) {

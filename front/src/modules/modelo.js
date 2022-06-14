@@ -132,11 +132,9 @@ const actions = {
     }
   },
 
-  async getModelosPorMarca({ commit, state }) {
-    if (state.marca_id) {
-      const resp = await http.getOne("/modelos/filtrar", state.marca_id);
-      commit("SET_MODELOS", resp.data);
-    }
+  async getModelosPorMarca({ commit }, id) {
+    const resp = await http.getOne("/modelos/filtrar", id);
+    commit("SET_MODELOS", resp.data);
   },
 
   updateMarcaId({ commit, rootState }, marca_id) {

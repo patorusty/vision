@@ -47,7 +47,7 @@ class RiesgoAutomotorController extends Controller
      */
     public function show($id)
     {
-        return RiesgoAutomotor::with('imagenes')->findOrFail($id);
+        return RiesgoAutomotor::with('marca', 'modelo', 'version', 'anio', 'cobertura')->findOrFail($id);
         // $riesgo_automotor = $riesgo_automotor->imagenes->toArray();
     }
 

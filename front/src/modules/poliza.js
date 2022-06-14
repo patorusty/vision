@@ -39,7 +39,7 @@ const state = () => ({
     siniestro: "",
     anio: null,
     filtroEstado: [],
-    estado: ""
+    estado: "Abierto"
   }
 });
 const mutations = {

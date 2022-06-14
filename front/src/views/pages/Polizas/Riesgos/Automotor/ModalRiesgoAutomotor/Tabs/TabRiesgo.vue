@@ -363,7 +363,7 @@ export default {
     },
     updateMarca() {
       this.UPDATE_MARCA_ID(this.riesgo_automotor.automotor_marca_id);
-      this.getModelosPorMarca();
+      this.getModelosPorMarca(this.riesgo_automotor.automotor_marca_id);
       this.riesgo_automotor.automotor_modelo_id = null;
       this.$refs.modelos.reset();
     },
