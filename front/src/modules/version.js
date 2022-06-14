@@ -92,7 +92,7 @@ const actions = {
   },
 
   async createVersion({ state, commit }, version) {
-    version.automotor_modelo_id = state.modelo_id;
+    // version.automotor_modelo_id = state.modelo_id;
     const resp = await http.post(API_URL, version);
     if (resp.status === 201) {
       commit("CREATE_VERSION", resp.data);

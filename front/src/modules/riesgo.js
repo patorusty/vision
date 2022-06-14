@@ -183,7 +183,13 @@ const actions = {
     dispatch("modelo/getModelosPorMarca", resp.data.automotor_marca_id, {
       root: true
     });
+    commit("marca/SET_MARCA", resp.data.marca, {
+      root: true
+    });
     dispatch("version/getVersionesPorModelo", resp.data.automotor_modelo_id, {
+      root: true
+    });
+    commit("modelo/SET_MODELO", resp.data.modelo, {
       root: true
     });
   },

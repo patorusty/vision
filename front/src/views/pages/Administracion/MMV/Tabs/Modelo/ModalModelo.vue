@@ -96,7 +96,8 @@ export default {
     },
     async create() {
       if (this.$refs.form.validate()) {
-        const createResult = await this.createModelo(this.modelo);
+        var modelo = { ...this.modelo, automotor_marca_id: this.marca_id };
+        const createResult = await this.createModelo(modelo);
         if (createResult) {
           this.closeModal();
         }

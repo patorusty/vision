@@ -106,7 +106,8 @@ export default {
     },
     async create() {
       if (this.$refs.form.validate()) {
-        const createResult = await this.createVersion(this.version);
+        var version = { ...this.version, automotor_modelo_id: this.modelo_id };
+        const createResult = await this.createVersion(version);
         if (createResult) {
           this.closeModal();
         }

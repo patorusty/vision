@@ -343,7 +343,7 @@ export default {
     async createModel(nombre) {
       const model = {
         nombre: nombre.trim(),
-        automotor_marca_id: this.marca_id
+        automotor_marca_id: this.riesgo_automotor.automotor_marca_id
       };
       const createResult = await this.createModelo(model);
       if (createResult) {
@@ -352,7 +352,10 @@ export default {
       }
     },
     async crearVersion(nombre) {
-      const vers = { nombre: nombre, automotor_modelo_id: this.modelo.id };
+      const vers = {
+        nombre: nombre,
+        automotor_modelo_id: this.riesgo_automotor.automotor_modelo_id
+      };
       const createResult = await this.createVersion(vers);
       if (createResult) {
         this.UPDATE_KV({ automotor_version_id: this.version.id });

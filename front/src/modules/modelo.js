@@ -72,7 +72,7 @@ const actions = {
   },
 
   async createModelo({ state, commit }, modelo) {
-    modelo.automotor_marca_id = state.marca_id;
+    // modelo.automotor_marca_id = state.marca_id;
     const resp = await http.post(API_URL, modelo);
     if (resp.status === 201) {
       commit("CREATE_MODELO", resp.data);
