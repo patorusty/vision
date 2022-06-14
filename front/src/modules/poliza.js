@@ -39,6 +39,7 @@ const state = () => ({
     siniestro: "",
     anio: null,
     filtroEstado: [],
+    filtroFormaPago: [],
     estado: "Abierto"
   }
 });

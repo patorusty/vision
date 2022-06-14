@@ -101,6 +101,23 @@
             </template>
           </v-autocomplete>
         </v-col>
+        <v-col>
+          <v-autocomplete
+            no-data-text="Sin Datos"
+            v-model="search.filtroFormaPago"
+            :items="forma_pagos"
+            multiple
+            item-text="nombre"
+            item-value="id"
+            label="Forma de Pago"
+            :clearable="search.filtroFormaPago != 0"
+            @click:clear="$nextTick(() => (search.filtroFormaPago = []))"
+          >
+            <template v-slot:selection="{ item, index }">
+              <span v-if="index === 0">{{ item.nombre }}</span>
+            </template>
+          </v-autocomplete>
+        </v-col>
       </v-row>
     </v-card-title>
     <v-data-table
@@ -310,6 +327,7 @@ export default {
       "loading",
       "tipo_riesgos",
       "estados",
+      "forma_pagos",
       "search"
     ]),
     ...mapState("compania", ["companias"]),
@@ -331,6 +349,9 @@ export default {
           (this.search.filtroEstado.length > 0
             ? this.search.filtroEstado.includes(item.estado_poliza_id)
             : item.estado_poliza_id != 0) &&
+          (this.search.filtroFormaPago.length > 0
+            ? this.search.filtroFormaPago.includes(item.forma_pago_id)
+            : item.estado_poliza_id != 0) &&
           (this.search.poliza != ""
             ? item.numero && item.numero.includes(this.search.poliza)
             : item.numero != "")
@@ -340,7 +361,8 @@ export default {
         this.search.compania_id == 0 &&
         this.search.patente == "" &&
         this.search.poliza == "" &&
-        this.search.filtroEstado.length == 0
+        this.search.filtroEstado.length == 0 &&
+        this.search.filtroFormaPago.length == 0
         ? []
         : tempPolizas.filter(
             item => item.tipo_riesgo_id === this.search.tipo_riesgo_id
@@ -386,7 +408,8 @@ export default {
       "renewPoliza",
       "deletePoliza",
       "getTipoRiesgos",
-      "getEstados"
+      "getEstados",
+      "getFormaPagos"
     ]),
     ...mapMutations("poliza", ["CLEAN_SEARCH"]),
     ...mapActions("compania", ["getCompanias"]),
@@ -457,6 +480,7 @@ export default {
     this.getCompanias();
     this.getTipoRiesgos();
     this.getEstados();
+    this.getFormaPagos();
   },
   created() {
     bus.$on("cleanSearch", () => this.CLEAN_SEARCH());
