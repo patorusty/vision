@@ -135,6 +135,7 @@ const mutations = {
         siniestro: "",
         anio: null,
         filtroEstado: [],
+        filtroFormaPago: [],
         estado: ""
       }
     );
