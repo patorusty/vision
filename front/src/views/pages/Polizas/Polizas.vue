@@ -137,15 +137,15 @@
       <template v-slot:[`item.compania`]="{ item }">{{ item.compania.nombre }} <br />
         Cod.({{ item.codigo_productor.codigo_productor }})</template>
       <template v-slot:[`item.asegurado`]="{ item }">
-        <router-link
+        <a
           v-if="item.cliente"
           class="links"
-          :to=" {name: 'Editar Cliente', params: {id: item.cliente.id}}"
+          v-on:click.stop="editCliente(item.cliente.id)"
           target="_blank"
         >{{
           nombreCompleto(item.cliente)
         }}
-        </router-link>
+        </a>
       </template>
       <template v-slot:[`item.dominio`]="{ item }">
         <span v-if="item.tipo_riesgo_id == 1">{{dominio(item)}}</span>
@@ -283,6 +283,18 @@
       </template>
     </v-data-table>
     <v-dialog
+      fullscreen
+      hide-overlay
+      :retain-focus="false"
+      transition="dialog-bottom-transition"
+      @click:outside="HIDE_MODAL(false)"
+      @keydown.esc="HIDE_MODAL(false)"
+      :value="modal"
+      max-width="80%"
+    >
+      <modal-cliente />
+    </v-dialog>
+    <v-dialog
       :retain-focus="false"
       max-width="30%"
       v-model="modalDelete"
@@ -311,11 +323,12 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
+import ModalCliente from "../Clientes/ModalCliente.vue";
 import { helpers } from "../../../helpers";
 import { bus } from "../.././../main";
 
 export default {
-  components: {},
+  components: { ModalCliente },
   mixins: [helpers],
   data: () => ({
     idSelected: null,
@@ -332,6 +345,7 @@ export default {
     ]),
     ...mapState("compania", ["companias"]),
     ...mapState("cliente", ["clientes"]),
+    ...mapState("modal", ["modal"]),
     tableData() {
       let tempPolizas = this.polizas.filter(
         item =>
@@ -411,9 +425,10 @@ export default {
       "getEstados",
       "getFormaPagos"
     ]),
-    ...mapMutations("poliza", ["CLEAN_SEARCH"]),
     ...mapActions("compania", ["getCompanias"]),
-    ...mapActions("cliente", ["getClientes"]),
+    ...mapActions("cliente", ["getClientes", "getCliente"]),
+    ...mapMutations("poliza", ["CLEAN_SEARCH"]),
+    ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL"]),
 
     filterRazon(item) {
       if (this.cliente != "" && item.cliente.razon_social != null) {
@@ -426,6 +441,10 @@ export default {
     },
     filtroClientes(item) {
       if (this.cliente_id != 0) return (item.cliente_id = this.cliente_id);
+    },
+    editCliente(id) {
+      this.getCliente(id);
+      this.SHOW_MODAL(true);
     },
     openDeleteModal(id) {
       this.idSelected = id;

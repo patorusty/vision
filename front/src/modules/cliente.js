@@ -80,7 +80,7 @@ const actions = {
       commit("SET_CLIENTES", resp.data);
     }
   },
-  async getCliente({ commit, dispatch }, id) {
+  async getCliente({ commit }, id) {
     const resp = await http.getOne(API_URL, id);
     commit("SET_CLIENTE", resp.data);
   },
