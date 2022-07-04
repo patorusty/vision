@@ -269,7 +269,6 @@
               <v-text-field
                 label="Teléfono"
                 v-model="cliente.telefono_1"
-                :rules="[rules.required]"
               >
               </v-text-field>
             </v-col>
@@ -277,7 +276,6 @@
               <v-text-field
                 label="Teléfono Alternativo"
                 v-model="cliente.telefono_2"
-                :rules="[rules.required]"
               >
               </v-text-field>
             </v-col>
@@ -320,7 +318,6 @@
                   <v-text-field
                     label="Registro"
                     v-model="cliente.registro"
-                    :rules="[rules.required]"
                   >
                   </v-text-field>
                 </v-col>

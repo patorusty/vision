@@ -136,7 +136,7 @@ const mutations = {
         anio: null,
         filtroEstado: [],
         filtroFormaPago: [],
-        estado: ""
+        estado: "Abierto"
       }
     );
   }
@@ -162,7 +162,9 @@ const actions = {
       commit("SET_POLIZA", resp.data);
     }
     commit("endoso/SET_ENDOSOS", state.poliza.endosos, { root: true });
-    commit("siniestro/SET_SINIESTROS", state.poliza.siniestros, { root: true });
+    commit("siniestro/SET_SINIESTROS_POLIZA", state.poliza.siniestros, {
+      root: true
+    });
     commit("riesgo/SET_RIESGO_AUTOMOTORES", state.poliza.riesgo_automotor, {
       root: true
     });

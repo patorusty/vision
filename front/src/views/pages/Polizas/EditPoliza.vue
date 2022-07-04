@@ -343,7 +343,6 @@ export default {
   },
   beforeDestroy() {
     this.RESET_POLIZA();
-    this.RESET_SINIESTROS();
     this.RESET_ENDOSOS();
     this.RESET_CODIGO_PRODUCTORES();
   }

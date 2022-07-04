@@ -5,6 +5,7 @@ const API_URL = "/siniestros";
 const state = () => ({
   siniestros: [],
   siniestros_activos: [],
+  siniestros_poliza: [],
   siniestro: {
     poliza: {
       riesgo_automotor: []
@@ -15,7 +16,7 @@ const state = () => ({
     { value: "DAÑO A ASEGURADO (Cleas)" }, // Violeta
     { value: "DAÑO A ASEGURADO (Cia. vs Cia.)" }, // Violeta
     { value: "DAÑO PARCIAL (Todo Riesgo)" }, // Violeta
-    { value: "SIN RECLAMO (Daño a Tercero)" }, // Verde
+    { value: "DAÑO A TERCERO (Sin Reclamo)" }, // Verde
     { value: "CRISTALES LATERALES" }, // Amarillo
     { value: "PARABRISAS" }, // Amarillo
     { value: "LUNETA" }, // Amarillo
@@ -34,6 +35,10 @@ const state = () => ({
 const mutations = {
   SET_SINIESTROS(state, siniestros) {
     state.siniestros = siniestros;
+    state.loading = false;
+  },
+  SET_SINIESTROS_POLIZA(state, siniestros) {
+    state.siniestros_poliza = siniestros;
     state.loading = false;
   },
   SET_SINIESTROS_ACTIVOS(state, siniestros) {
@@ -91,7 +96,7 @@ const actions = {
   },
   async getSiniestrosDePoliza({ commit }, id) {
     const resp = await http.getOne("/siniestros/indexFiltrado", id);
-    commit("SET_SINIESTROS", resp.data);
+    commit("SET_SINIESTROS_POLIZA", resp.data);
   },
   async createSiniestro({ commit }, siniestro) {
     const resp = await http.post(API_URL, siniestro);

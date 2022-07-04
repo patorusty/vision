@@ -23,7 +23,7 @@
       class="pa-2"
       :headers="headers"
       :items-per-page="5"
-      :items="siniestros"
+      :items="siniestros_poliza"
       :search="search"
       multi-sort
       :loading="loading"
@@ -106,7 +106,7 @@ export default {
   }),
   computed: {
     ...mapState("modal", ["modal3", "edicion3"]),
-    ...mapState("siniestro", ["siniestros", "loading"]),
+    ...mapState("siniestro", ["siniestros_poliza", "loading"]),
     headers() {
       return [
         { text: "F. Denuncia", value: "fechaDenuncia" },
