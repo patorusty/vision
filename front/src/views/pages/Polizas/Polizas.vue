@@ -129,6 +129,7 @@
       :loading="loading"
       :no-data-text='polizas.length === 0 ? "Polizas no cargadas" : "Aplique un filtro de busqueda"'
       loading-text='Cargando...'
+      item-key="id"
       :item-class="itemRowColor"
     >
       <template v-slot:[`item.poliza`]="{ item }">
@@ -261,17 +262,26 @@
         >
           <v-icon
             small
+            :key="item.id"
             class="mr-2"
             color="success"
           > mdi-pencil </v-icon>
         </router-link>
         <v-icon
+          v-if="!item.isLoading"
           small
-          v-on:click.stop="openRenewModal(item.id)"
+          v-on:click="openRenewModal(item.id)"
           color="success"
-        >
-          mdi-refresh
+        >mdi-refresh
         </v-icon>
+        <v-icon
+          v-else
+          class="custom-loader"
+          small
+          dark
+          color="success"
+        >mdi-cached</v-icon>
+
         <v-icon
           class="ml-2"
           small
@@ -332,7 +342,8 @@ export default {
   mixins: [helpers],
   data: () => ({
     idSelected: null,
-    modalDelete: false
+    modalDelete: false,
+    isLoading: false
   }),
   computed: {
     ...mapState("poliza", [
@@ -346,41 +357,46 @@ export default {
     ...mapState("compania", ["companias"]),
     ...mapState("cliente", ["clientes"]),
     ...mapState("modal", ["modal"]),
-    tableData() {
-      let tempPolizas = this.polizas.filter(
-        item =>
-          (this.search.compania_id != 0
-            ? item.compania_id == this.search.compania_id
-            : item.compania_id != 0) &&
-          (this.search.cliente_id != 0
-            ? item.cliente_id == this.search.cliente_id
-            : item.cliente_id != 0) &&
-          (this.search.patente == "" && item.tipo_riesgo_id == 1
-            ? item.riesgo_automotor
-            : item.riesgo_automotor.find(riesgo =>
-                riesgo.patente.includes(this.search.patente)
-              )) &&
-          (this.search.filtroEstado.length > 0
-            ? this.search.filtroEstado.includes(item.estado_poliza_id)
-            : item.estado_poliza_id != 0) &&
-          (this.search.filtroFormaPago.length > 0
-            ? this.search.filtroFormaPago.includes(item.forma_pago_id)
-            : item.estado_poliza_id != 0) &&
-          (this.search.poliza != ""
-            ? item.numero && item.numero.includes(this.search.poliza)
-            : item.numero != "")
-      );
+    tableData: {
+      get: function() {
+        let tempPolizas = this.polizas.filter(
+          item =>
+            (this.search.compania_id != 0
+              ? item.compania_id == this.search.compania_id
+              : item.compania_id != 0) &&
+            (this.search.cliente_id != 0
+              ? item.cliente_id == this.search.cliente_id
+              : item.cliente_id != 0) &&
+            (this.search.patente == "" && item.tipo_riesgo_id == 1
+              ? item.riesgo_automotor
+              : item.riesgo_automotor.find(riesgo =>
+                  riesgo.patente.includes(this.search.patente)
+                )) &&
+            (this.search.filtroEstado.length > 0
+              ? this.search.filtroEstado.includes(item.estado_poliza_id)
+              : item.estado_poliza_id != 0) &&
+            (this.search.filtroFormaPago.length > 0
+              ? this.search.filtroFormaPago.includes(item.forma_pago_id)
+              : item.estado_poliza_id != 0) &&
+            (this.search.poliza != ""
+              ? item.numero && item.numero.includes(this.search.poliza)
+              : item.numero != "")
+        );
 
-      return this.search.cliente_id == 0 &&
-        this.search.compania_id == 0 &&
-        this.search.patente == "" &&
-        this.search.poliza == "" &&
-        this.search.filtroEstado.length == 0 &&
-        this.search.filtroFormaPago.length == 0
-        ? []
-        : tempPolizas.filter(
-            item => item.tipo_riesgo_id === this.search.tipo_riesgo_id
-          );
+        return this.search.cliente_id == 0 &&
+          this.search.compania_id == 0 &&
+          this.search.patente == "" &&
+          this.search.poliza == "" &&
+          this.search.filtroEstado.length == 0 &&
+          this.search.filtroFormaPago.length == 0
+          ? []
+          : tempPolizas.filter(
+              item => item.tipo_riesgo_id === this.search.tipo_riesgo_id
+            );
+      },
+      set: function(id) {
+        this.UPDATE_STATUS(id);
+      }
     },
     riesgos() {
       var r = [...this.tipo_riesgos, { id: 0, nombre: "TODOS" }];
@@ -412,7 +428,13 @@ export default {
         { text: "Estado", value: "estado" },
         { text: "Envío", value: "envio" },
         { text: "Pago", value: "pago" },
-        { text: "Actions", value: "actions", sortable: false, align: "right" }
+        {
+          text: "Actions",
+          value: "actions",
+          sortable: false,
+          align: "right",
+          width: 96
+        }
       ];
     }
   },
@@ -427,7 +449,7 @@ export default {
     ]),
     ...mapActions("compania", ["getCompanias"]),
     ...mapActions("cliente", ["getClientes", "getCliente"]),
-    ...mapMutations("poliza", ["CLEAN_SEARCH"]),
+    ...mapMutations("poliza", ["CLEAN_SEARCH", "UPDATE_STATUS"]),
     ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL"]),
 
     filterRazon(item) {
@@ -464,8 +486,9 @@ export default {
       //   return `<v-icon small class="mr-2" color="success"> mdi-pencil </v-icon>`;
       // }
     },
-    openRenewModal(id) {
-      this.renewPoliza(id);
+    async openRenewModal(id) {
+      this.UPDATE_STATUS({ status: true, id: id });
+      const resp = await this.renewPoliza(id);
     },
     itemRowColor(item) {
       switch (item.estado_poliza_id) {
@@ -514,5 +537,40 @@ export default {
 .titulo-polizas {
   display: flex;
   justify-content: space-evenly;
+}
+.custom-loader {
+  animation: loader 1s infinite;
+}
+@-moz-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>

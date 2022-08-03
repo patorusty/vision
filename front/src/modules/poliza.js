@@ -46,6 +46,7 @@ const state = () => ({
 const mutations = {
   SET_POLIZAS(state, polizas) {
     state.loading = false;
+    polizas = polizas.map(p => ({ ...p, isLoading: false }));
     state.polizas = polizas;
   },
   SET_POLIZAS_PENDIENTES(state, polizas) {
@@ -83,6 +84,10 @@ const mutations = {
       var item = state.polizas.find(item => item.id === poliza.id);
       Object.assign(item, poliza);
     }
+  },
+  UPDATE_STATUS(state, payload) {
+    var item = state.polizas.find(item => item.id === payload.id);
+    Object.assign(item, { isLoading: payload.status });
   },
   UPDATE_POLIZA_PENDIENTE(state, poliza) {
     var item = state.polizas_pendientes.find(item => item.id === poliza.id);
@@ -261,6 +266,7 @@ const actions = {
     const respStatus = [];
     const resp = await http.getOne(API_URL, id);
     commit("SET_POLIZA", resp.data);
+    var item = state.polizas.find(item => item.id === id);
     commit("riesgo/SET_RIESGO_AUTOMOTORES", state.poliza.riesgo_automotor, {
       root: true
     });
@@ -328,6 +334,7 @@ const actions = {
         },
         { root: true }
       );
+      commit("UPDATE_STATUS", { status: false, id: state.poliza.id });
     }
     oldPoliza.renovada = 1;
     const res = await http.put(API_URL, oldPoliza.id, oldPoliza);

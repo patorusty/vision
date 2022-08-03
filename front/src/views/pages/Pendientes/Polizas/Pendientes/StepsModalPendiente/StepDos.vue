@@ -130,8 +130,12 @@ export default {
     },
     async update(riesgo) {
       // if (this.$refs.form.validate()) {
-      const createResult = await this.updateRiesgoAutomotor(riesgo);
+      const updateResult = await this.updateRiesgoAutomotor(riesgo);
+      console.log(updateResult);
       // }
+      if (updateResult) {
+        this.closeModal();
+      }
     },
     atras() {
       this.SET_STEP(1);

@@ -64,7 +64,7 @@ const mutations = {
   },
   CREATE_SINIESTRO_AND_SET(state, siniestro) {
     state.siniestro = siniestro;
-    state.siniestros.unshift(siniestro);
+    state.siniestros_poliza.unshift(siniestro);
   },
   UPDATE_SINIESTRO(state, siniestro) {
     var item = state.siniestros.find(item => item.id === siniestro.id);

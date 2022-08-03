@@ -125,7 +125,41 @@
           ></v-autocomplete>
         </v-col>
         <v-col class="d-flex flex-column justify-space-between">
-          <v-row v-if="riesgo_automotor.tipo_automotor_id != 2">
+          <v-text-field
+            v-if="riesgo_automotor.tipo_automotor_id == 2"
+            placeholder="A123BCD"
+            v-model="riesgo_automotor.patente"
+            :rules="[rules.required]"
+            v-uppercase
+          ></v-text-field>
+          <v-row v-if="riesgo_automotor.tipo_automotor_id == 4 ">
+            <v-col class="py-0">
+              <v-select
+                :items="tipo_patentes"
+                label="Tipo Patente"
+                v-model="riesgo_automotor.tipo_patente"
+              ></v-select>
+            </v-col>
+            <v-col class="py-0">
+              <v-text-field
+                v-if="riesgo_automotor.tipo_patente == 0"
+                placeholder="101ABC123"
+                v-mask="'###AAA###'"
+                v-model="riesgo_automotor.patente"
+                :rules="[rules.required]"
+                v-uppercase
+              ></v-text-field>
+              <v-text-field
+                v-else
+                placeholder="101AB123CD"
+                v-mask="'###AA###AA'"
+                v-model="riesgo_automotor.patente"
+                :rules="[rules.required]"
+                v-uppercase
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row v-else>
             <v-col class="py-0">
               <v-select
                 :items="tipo_patentes"
@@ -137,7 +171,7 @@
               <v-text-field
                 v-if="riesgo_automotor.tipo_patente == 0"
                 placeholder="ABC123"
-                v-mask="'AAA###'"
+                :v-mask="riesgo_automotor.tipo_automotor_id == 4 ? '###AAA###' : 'AAA###'"
                 v-model="riesgo_automotor.patente"
                 :rules="[rules.required]"
                 v-uppercase
@@ -145,20 +179,14 @@
               <v-text-field
                 v-else
                 placeholder="AB123CD"
-                v-mask="'AA###AA'"
+                :v-mask="riesgo_automotor.tipo_automotor_id == 4 ? '###AA###AA' : 'AA###AA'"
                 v-model="riesgo_automotor.patente"
                 :rules="[rules.required]"
                 v-uppercase
               ></v-text-field>
             </v-col>
           </v-row>
-          <v-text-field
-            v-else
-            placeholder="A123BCD"
-            v-model="riesgo_automotor.patente"
-            :rules="[rules.required]"
-            v-uppercase
-          ></v-text-field>
+
           <v-text-field
             label="Motor"
             v-model="riesgo_automotor.nro_motor"

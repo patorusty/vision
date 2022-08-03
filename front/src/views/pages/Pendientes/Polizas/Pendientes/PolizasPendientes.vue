@@ -13,7 +13,7 @@
       multi-sort
       :loading="loading"
     >
-      <template v-slot:[`item.compania`]="{ item }">{{ item.compania.nombre }} <br />
+      <template v-slot:[`item.compania`]="{ item }">{{ item.compania.nombre }}
         Cod.({{ item.codigo_productor.codigo_productor }})</template>
       <template v-slot:[`item.asegurado`]="{ item }">
         <router-link
