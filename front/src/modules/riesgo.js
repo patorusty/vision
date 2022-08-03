@@ -5,7 +5,6 @@ const API_URL_RA = "/riesgo_automotor";
 
 const state = () => ({
   riesgo_automotor: {
-    tipo_patente: 0,
     tipo_automotor_id: 1,
     equipo_rastreo: "No",
     uso: "Particular",
@@ -132,7 +131,6 @@ const mutations = {
     state.riesgo_automotor = Object.assign(
       {},
       {
-        tipo_patente: 0,
         tipo_automotor_id: 1,
         equipo_rastreo: "No",
         uso: "Particular",
