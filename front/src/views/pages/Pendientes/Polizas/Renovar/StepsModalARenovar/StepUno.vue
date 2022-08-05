@@ -8,8 +8,17 @@
         <v-form ref="form">
           <v-row>
             <v-col>
-              <div class="text-subtitle-1">
+              <div
+                v-if="!poliza.cliente.razon_social"
+                class="text-subtitle-1"
+              >
                 {{"Cliente: " + poliza.cliente.nombre + " " +poliza.cliente.apellido}}
+              </div>
+              <div
+                v-else
+                class="text-subtitle-1"
+              >
+                {{"Cliente: " + poliza.cliente.razon_social}}
               </div>
             </v-col>
           </v-row>

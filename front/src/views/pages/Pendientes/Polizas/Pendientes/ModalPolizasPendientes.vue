@@ -4,7 +4,7 @@
       <step-uno />
     </v-stepper-content>
     <v-stepper-content step="2">
-      <step-dos />
+      <step-dos v-if="poliza.riesgo_aotomotor" />
     </v-stepper-content>
   </v-stepper>
 </template>
