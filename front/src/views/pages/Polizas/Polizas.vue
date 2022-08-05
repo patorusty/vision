@@ -281,7 +281,7 @@
         <v-icon
           v-if="!item.isLoading"
           small
-          v-on:click="openRenewModal(item.id)"
+          v-on:click="openRenewModal(item)"
           color="success"
         >mdi-refresh
         </v-icon>
@@ -453,6 +453,7 @@ export default {
       "getPolizas",
       "renewPoliza",
       "deletePoliza",
+      "renewPolizaOtroRiesgo",
       "getTipoRiesgos",
       "getEstados",
       "getFormaPagos"
@@ -496,9 +497,13 @@ export default {
       //   return `<v-icon small class="mr-2" color="success"> mdi-pencil </v-icon>`;
       // }
     },
-    async openRenewModal(id) {
-      this.UPDATE_STATUS({ status: true, id: id });
-      const resp = await this.renewPoliza(id);
+    async openRenewModal(item) {
+      this.UPDATE_STATUS({ status: true, id: item.id });
+      const resp =
+        item.tipo_riesgo_id == 1
+          ? await this.renewPoliza(item.id)
+          : await this.renewPolizaOtroRiesgo(item.id);
+      this.UPDATE_STATUS({ status: false, id: item.id });
     },
     itemRowColor(item) {
       switch (item.estado_poliza_id) {

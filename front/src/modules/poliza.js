@@ -274,10 +274,10 @@ const actions = {
     const respStatus = [];
     const resp = await http.getOne(API_URL, id);
     commit("SET_POLIZA", resp.data);
-    var item = state.polizas.find(item => item.id === id);
-    commit("riesgo/SET_RIESGO_AUTOMOTORES", state.poliza.riesgo_automotor, {
-      root: true
-    });
+    // var item = state.polizas.find(item => item.id === id);
+    // commit("riesgo/SET_RIESGO_AUTOMOTORES", state.poliza.riesgo_automotor, {
+    //   root: true
+    // });
     const newPoliza = {
       cliente_id: state.poliza.cliente_id,
       tipo_riesgo_id: state.poliza.tipo_riesgo_id,
@@ -342,12 +342,90 @@ const actions = {
         },
         { root: true }
       );
-      commit("UPDATE_STATUS", { status: false, id: state.poliza.id });
+      commit("UPDATE_STATUS", { status: false, id: oldPoliza.id });
     }
     oldPoliza.renovada = 1;
     const res = await http.put(API_URL, oldPoliza.id, oldPoliza);
     commit("UPDATE_POLIZA", res.data);
-    // await dispatch('checkPolizas');
+  },
+
+  async renewPolizaOtroRiesgo({ commit, state }, id) {
+    const respStatus = [];
+    const resp = await http.getOne(API_URL, id);
+    commit("SET_POLIZA", resp.data);
+    // var item = state.polizas.find(item => item.id === id);
+    // commit("riesgo/SET_RIESGO_AUTOMOTORES", state.poliza.riesgo_automotor, {
+    //   root: true
+    // });
+    const newPoliza = {
+      cliente_id: state.poliza.cliente_id,
+      tipo_riesgo_id: state.poliza.tipo_riesgo_id,
+      compania_id: state.poliza.compania_id,
+      codigo_productor_id: state.poliza.codigo_productor_id,
+      renueva_numero: state.poliza.numero,
+      tipo_vigencia_id: state.poliza.tipo_vigencia_id,
+      vigencia_desde: state.poliza.vigencia_hasta,
+      fecha_solicitud: new Date(),
+      forma_pago_id: state.poliza.forma_pago_id,
+      plan_pago: state.poliza.plan_pago,
+      cantidad_cuotas: state.poliza.cantidad_cuotas,
+      detalle_medio_pago: state.poliza.detalle_medio_pago,
+      comision: state.poliza.comision,
+      descuento: state.poliza.descuento,
+      estado_poliza_id: 0,
+      fecha_emision: null,
+      fecha_recepcion: null,
+      fecha_entrega_correo: null,
+      fecha_entrega_original: null,
+      fecha_entrega_mail: null
+    };
+    const vigencia_hasta = moment(newPoliza.vigencia_desde).add(
+      state.poliza.tipo_vigencia_id,
+      "M"
+    );
+    newPoliza.vigencia_hasta = vigencia_hasta;
+    const respP = await http.post(API_URL, newPoliza);
+    respStatus.push(respP.status);
+    const riesgo = state.poliza.otro_riesgo;
+    const newRiesgo = { ...riesgo };
+    delete newRiesgo.id;
+    delete newRiesgo.detalle;
+    newRiesgo.poliza_id = respP.data.id;
+    const respR = await http.post("/otro_riesgo", newRiesgo);
+    respStatus.push(respR.status);
+
+    const oldPoliza = { ...state.poliza };
+    const RespNewPolizayRiesgo = await http.getOne(API_URL, respP.data.id);
+    commit("CREATE_POLIZA", RespNewPolizayRiesgo.data);
+    var finalStatus = false;
+    respStatus.forEach(e => {
+      e === 201 ? (finalStatus = true) : (finalStatus = false);
+    });
+    if (finalStatus) {
+      commit(
+        "snackbar/SHOW_SNACK",
+        {
+          snackbar: true,
+          color: "success",
+          snackText: "Poliza renovada con éxito!"
+        },
+        { root: true }
+      );
+      commit("modal/HIDE_MODAL", false, { root: true });
+    } else {
+      commit(
+        "snackbar/SHOW_SNACK",
+        {
+          color: "red",
+          snackText: "Algo salió mal..."
+        },
+        { root: true }
+      );
+      commit("UPDATE_STATUS", { status: false, id: oldPoliza.id });
+    }
+    oldPoliza.renovada = 1;
+    const res = await http.put(API_URL, oldPoliza.id, oldPoliza);
+    commit("UPDATE_POLIZA", res.data);
   },
 
   async updatePolizaRenovada({ commit, dispatch }, poliza) {
