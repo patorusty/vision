@@ -18,7 +18,7 @@
           </v-text-field>
         </v-col>
       </v-row>
-      <div v-if="poliza.tipo_riesgo_id == 4 || poliza.tipo_riesgo_id == 5 || poliza.tipo_riesgo_id == 2">
+      <div v-if="poliza.tipo_riesgo_id == 4 || poliza.tipo_riesgo_id == 5 || poliza.tipo_riesgo_id == 2 || poliza.tipo_riesgo_id == 3">
         <v-row>
           <v-col class="pt-0 pb-0">
             <v-text-field
