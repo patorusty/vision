@@ -107,7 +107,10 @@ const mutations = {
     state.polizas_a_renovar = state.polizas_a_renovar.filter(c => c.id != id);
   },
   SET_TIPO_RIESGOS(state, tipo_riesgos) {
-    state.tipo_riesgos = tipo_riesgos;
+    const riesgos = tipo_riesgos.sort((a, b) =>
+      a.nombre.toLowerCase() > b.nombre.toLowerCase() ? 1 : -1
+    );
+    state.tipo_riesgos = riesgos;
   },
   SET_FORMA_PAGOS(state, forma_pagos) {
     state.forma_pagos = forma_pagos;
@@ -173,6 +176,11 @@ const actions = {
     commit("riesgo/SET_RIESGO_AUTOMOTORES", state.poliza.riesgo_automotor, {
       root: true
     });
+    state.poliza.otro_riesgo != null
+      ? commit("riesgo/SET_OTRO_RIESGO", state.poliza.otro_riesgo, {
+          root: true
+        })
+      : null;
     dispatch(
       "codigo_productor/getCodigoProductores",
       state.poliza.compania_id,

@@ -327,7 +327,10 @@ export default {
     ...mapMutations("cliente", ["RESET_CLIENTE"]),
     ...mapMutations("endoso", ["RESET_ENDOSOS"]),
     ...mapMutations("siniestro", ["RESET_SINIESTROS"]),
-    ...mapMutations("riesgo", ["RESET_RIESGOS_AUTOMOTORES"]),
+    ...mapMutations("riesgo", [
+      "RESET_RIESGOS_AUTOMOTORES",
+      "RESET_OTRO_RIESGO"
+    ]),
     ...mapMutations("modal", ["SHOW_MODAL"]),
     volver() {
       this.$router.push({
@@ -345,6 +348,7 @@ export default {
           this.RESET_CLIENTE();
           this.RESET_ENDOSOS();
           this.RESET_RIESGOS_AUTOMOTORES();
+          this.RESET_OTRO_RIESGO();
           this.RESET_SINIESTROS();
           this.$router.push({
             name: "Editar Poliza",

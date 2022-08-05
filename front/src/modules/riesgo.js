@@ -1,7 +1,7 @@
 import http from "../http-request";
 
-const API_URL = "/riesgo_automotor";
 const API_URL_RA = "/riesgo_automotor";
+const API_URL_OR = "/otro_riesgo";
 
 const state = () => ({
   riesgo_automotor: {
@@ -16,8 +16,8 @@ const state = () => ({
     valor_accesorio_01: null,
     valor_accesorio_02: null
   },
-  riesgo_automotores: [],
   otro_riesgo: {},
+  riesgo_automotores: [],
   loading: false,
   tipo_vehiculos: [],
   tipo_patentes: [
@@ -116,6 +116,20 @@ const state = () => ({
       value: "Otro",
       text: "Otro"
     }
+  ],
+  tipos_or: [
+    {
+      value: "Bicicleta",
+      text: "Bicicleta"
+    },
+    {
+      value: "Monopatin Electrico",
+      text: "Monopatin Electrico"
+    },
+    {
+      value: "Bicicleta Electrica",
+      text: "Bicicleta Electrica"
+    }
   ]
 });
 
@@ -126,6 +140,9 @@ const mutations = {
   },
   SET_RIESGO_AUTOMOTOR(state, riesgo_automotor) {
     state.riesgo_automotor = riesgo_automotor;
+  },
+  SET_OTRO_RIESGO(state, otro_riesgo) {
+    state.otro_riesgo = otro_riesgo;
   },
   RESET_RIESGO_AUTOMOTOR(state) {
     state.riesgo_automotor = Object.assign(
@@ -158,6 +175,15 @@ const mutations = {
   },
   CREATE_RIESGO_AUTOMOTOR(state, riesgo_automotor) {
     state.riesgo_automotores.unshift(riesgo_automotor);
+  },
+  CREATE_OTRO_RIESGO(state, otro_riesgo) {
+    state.otro_riesgo = otro_riesgo;
+  },
+  UPDATE_OTRO_RIESGO(state, otro_riesgo) {
+    state.otro_riesgo = otro_riesgo;
+  },
+  RESET_OTRO_RIESGO(state) {
+    state.otro_riesgo = {};
   },
   DELETE_RIESGO_AUTOMOTOR(state, id) {
     state.riesgo_automotores = state.riesgo_automotores.filter(u => u.id != id);
@@ -229,6 +255,63 @@ const actions = {
         resp.data.poliza_id
       );
       commit("poliza/UPDATE_POLIZA", respUpdatePoliza.data, { root: true });
+      commit(
+        "snackbar/SHOW_SNACK",
+        {
+          color: "success",
+          snackText: "Riesgo creado con éxito!"
+        },
+        { root: true }
+      );
+      return true;
+    } else {
+      commit(
+        "snackbar/SHOW_SNACK",
+        {
+          color: "red",
+          snackText: "Algo salió mal, intente nuevamente..."
+        },
+        { root: true }
+      );
+    }
+  },
+
+  async createOtroRiesgo({ commit }, otro_riesgo) {
+    const resp = await http.post(API_URL_OR, otro_riesgo);
+    if (resp.status === 201) {
+      commit("CREATE_OTRO_RIESGO", resp.data);
+      console.log(resp.data);
+      const respUpdatedPoliza = await http.getOne(
+        "/polizas",
+        resp.data.poliza_id
+      );
+      commit("poliza/UPDATE_POLIZA", respUpdatedPoliza.data, { root: true });
+      commit(
+        "snackbar/SHOW_SNACK",
+        {
+          color: "success",
+          snackText: "Riesgo creado con éxito!"
+        },
+        { root: true }
+      );
+      return true;
+    } else {
+      commit(
+        "snackbar/SHOW_SNACK",
+        {
+          color: "red",
+          snackText: "Algo salió mal, intente nuevamente..."
+        },
+        { root: true }
+      );
+    }
+  },
+
+  async updateOtroRiesgo({ commit }, otro_riesgo) {
+    const resp = await http.put(API_URL_OR, otro_riesgo.id, otro_riesgo);
+    if (resp.status === 200) {
+      commit("UPDATE_OTRO_RIESGO", resp.data);
+      console.log(resp.data);
       commit(
         "snackbar/SHOW_SNACK",
         {

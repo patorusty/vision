@@ -16,6 +16,7 @@
                 ></v-select>
                 <v-select
                   v-model="poliza.tipo_riesgo_id"
+                  disabled
                   :items="tipo_riesgos"
                   item-value="id"
                   item-text="nombre"
@@ -234,6 +235,7 @@
       </v-form>
     </v-card>
     <tabla-riesgo-automotor v-if="poliza.tipo_riesgo_id == 1" />
+    <card-otro-riesgo v-else></card-otro-riesgo>
     <v-row>
       <v-col>
         <tabla-endosos />
@@ -250,18 +252,16 @@ import { mapActions, mapState, mapMutations } from "vuex";
 import { helpers } from "../../../helpers";
 import TablaEndosos from "./Endosos/TablaEndosos";
 import TablaSiniestros from "./Siniestros/TablaSiniestros";
-import ModalCrearRiesgo from "./Riesgos/ModalCrearRiesgo";
 import TablaRiesgoAutomotor from "./Riesgos/Automotor/TablaRiesgoAutomotor";
-import ModalOtrosRiesgos from "./Riesgos/Otros Riesgos/ModalOtrosRiesgos";
+import CardOtroRiesgo from "./Riesgos/Otros Riesgos/CardOtroRiesgo.vue";
 
 export default {
   mixins: [helpers],
   components: {
     TablaEndosos,
     TablaSiniestros,
-    ModalCrearRiesgo,
-    ModalOtrosRiesgos,
-    TablaRiesgoAutomotor
+    TablaRiesgoAutomotor,
+    CardOtroRiesgo
   },
   data: () => ({
     plan_pagos: [

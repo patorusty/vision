@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mt-0 mx-4 pa-3">
+  <v-card class="mt-0 mr-2 ml-4 pa-3">
     <v-card-title>
       Endosos
       <v-spacer></v-spacer>

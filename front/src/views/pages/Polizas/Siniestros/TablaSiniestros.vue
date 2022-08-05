@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mt-0 mx-4 pa-3">
+  <v-card class="mt-0 ml-2 mr-4 pa-3">
     <v-card-title>
       Siniestros
       <v-spacer></v-spacer>

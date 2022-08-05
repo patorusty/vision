@@ -63,8 +63,8 @@ class PolizaController extends Controller
             $poliza = Poliza::create($request->all());
             $this->checkOnePoliza($poliza);
             $poliza = $poliza->refresh();
-            $poliza->load(['codigo_productor.productores', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo']);
-            $poliza::with(['codigo_productor.productores', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo']);
+            $poliza->load(['codigo_productor.productores', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo',]);
+            $poliza::with(['codigo_productor.productores', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo',]);
             return response($poliza, 201);
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -79,7 +79,7 @@ class PolizaController extends Controller
      */
     public function show($id)
     {
-        $poliza = Poliza::with(['codigo_productor.productores', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'endosos.tipo_endoso', 'endosos.detalle_endoso', 'siniestros', 'riesgo_automotor.marca', 'riesgo_automotor.modelo', 'riesgo_automotor.version', 'riesgo_automotor.cobertura', 'otro_riesgo'])->findOrFail($id);
+        $poliza = Poliza::with(['codigo_productor.productores', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'endosos.tipo_endoso', 'endosos.detalle_endoso', 'siniestros', 'riesgo_automotor.marca', 'riesgo_automotor.modelo', 'riesgo_automotor.version', 'riesgo_automotor.cobertura', 'otro_riesgo', 'tipo_de_riesgo'])->findOrFail($id);
         return $poliza;
     }
 
@@ -96,8 +96,8 @@ class PolizaController extends Controller
             $poliza = Poliza::findOrFail($id);
             $poliza->fill($request->all())->save();
             $this->checkOnePoliza($poliza);
-            $poliza->load(['codigo_productor.productores', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'endosos.tipo_endoso', 'endosos.detalle_endoso', 'siniestros', 'riesgo_automotor.marca', 'riesgo_automotor.modelo', 'riesgo_automotor.version', 'riesgo_automotor.cobertura', 'otro_riesgo']);
-            $poliza::with(['codigo_productor.productores', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'endosos.tipo_endoso', 'endosos.detalle_endoso', 'siniestros', 'riesgo_automotor.marca', 'riesgo_automotor.modelo', 'riesgo_automotor.version', 'riesgo_automotor.cobertura', 'otro_riesgo']);
+            $poliza->load(['codigo_productor.productores', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'endosos.tipo_endoso', 'endosos.detalle_endoso', 'siniestros', 'riesgo_automotor.marca', 'riesgo_automotor.modelo', 'riesgo_automotor.version', 'riesgo_automotor.cobertura', 'otro_riesgo', 'tipo_de_riesgo']);
+            $poliza::with(['codigo_productor.productores', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'endosos.tipo_endoso', 'endosos.detalle_endoso', 'siniestros', 'riesgo_automotor.marca', 'riesgo_automotor.modelo', 'riesgo_automotor.version', 'riesgo_automotor.cobertura', 'otro_riesgo', 'tipo_de_riesgo']);
             return response($poliza, 200);
         } catch (\Exception $e) {
             return $e->getMessage();

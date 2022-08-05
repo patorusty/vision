@@ -23,13 +23,12 @@
         </v-col>
         <v-col
           cols="2"
-          class="pb-0"
+          class="pb-0 d-flex justify-end"
         >
           <v-btn
             color="primary"
             to="/polizas/automotor/create"
             dark
-            class="ml-5"
           >Crear</v-btn>
         </v-col>
       </v-row>
@@ -62,7 +61,7 @@
             class="mr-3 ml-3"
           ></v-text-field>
         </v-col>
-        <v-col>
+        <v-col v-if="search.tipo_riesgo_id ==1">
           <v-text-field
             v-model="search.patente"
             label="Patente"
@@ -156,9 +155,21 @@
           <v-icon>mdi-alpha-r </v-icon>
           <v-icon> mdi-alpha-c </v-icon>
         </span>
+        <span v-else-if="item.tipo_riesgo_id == 9">
+          <v-icon>mdi-alpha-s </v-icon>
+          <v-icon> mdi-alpha-t </v-icon>
+        </span>
+        <span v-else-if="item.tipo_riesgo_id == 10">
+          <v-icon>mdi-alpha-c </v-icon>
+          <v-icon> mdi-alpha-a </v-icon>
+          <v-icon> mdi-alpha-u </v-icon>
+        </span>
         <v-icon v-else-if="item.tipo_riesgo_id == 5"> mdi-storefront </v-icon>
         <v-icon v-else-if="item.tipo_riesgo_id == 6"> mdi-medical-bag </v-icon>
-        <v-icon v-else-if="item.tipo_riesgo_id == 7"> mdi-bicycle </v-icon>
+        <span v-else-if="item.tipo_riesgo_id == 7">
+          <v-icon v-if="item.otro_riesgo.tipo == 'Monopatin Electrico'"> mdi-scooter </v-icon>
+          <v-icon v-else> mdi-bicycle </v-icon>
+        </span>
         <v-icon v-else-if="item.tipo_riesgo_id == 8"> mdi-sail-boat </v-icon>
       </template>
       <template v-slot:[`item.desde`]="{ item }">{{ dateToString(item.vigencia_desde) }} <br />
@@ -357,49 +368,48 @@ export default {
     ...mapState("compania", ["companias"]),
     ...mapState("cliente", ["clientes"]),
     ...mapState("modal", ["modal"]),
-    tableData: {
-      get: function() {
-        let tempPolizas = this.polizas.filter(
-          item =>
-            (this.search.compania_id != 0
-              ? item.compania_id == this.search.compania_id
-              : item.compania_id != 0) &&
-            (this.search.cliente_id != 0
-              ? item.cliente_id == this.search.cliente_id
-              : item.cliente_id != 0) &&
-            (this.search.patente == "" && item.tipo_riesgo_id == 1
+    tableData() {
+      let tempPolizas = this.polizas.filter(
+        item =>
+          (this.search.compania_id != 0
+            ? item.compania_id == this.search.compania_id
+            : item.compania_id != 0) &&
+          (this.search.cliente_id != 0
+            ? item.cliente_id == this.search.cliente_id
+            : item.cliente_id != 0) &&
+          (item.tipo_riesgo_id == 1
+            ? this.search.patente == "" && item.tipo_riesgo_id == 1
               ? item.riesgo_automotor
               : item.riesgo_automotor.find(riesgo =>
                   riesgo.patente.includes(this.search.patente)
-                )) &&
-            (this.search.filtroEstado.length > 0
-              ? this.search.filtroEstado.includes(item.estado_poliza_id)
-              : item.estado_poliza_id != 0) &&
-            (this.search.filtroFormaPago.length > 0
-              ? this.search.filtroFormaPago.includes(item.forma_pago_id)
-              : item.estado_poliza_id != 0) &&
-            (this.search.poliza != ""
-              ? item.numero && item.numero.includes(this.search.poliza)
-              : item.numero != "")
-        );
+                )
+            : item.otro_riesgo) &&
+          (this.search.filtroEstado.length > 0
+            ? this.search.filtroEstado.includes(item.estado_poliza_id)
+            : item.estado_poliza_id != 0) &&
+          (this.search.filtroFormaPago.length > 0
+            ? this.search.filtroFormaPago.includes(item.forma_pago_id)
+            : item.estado_poliza_id != 0) &&
+          (this.search.poliza != ""
+            ? item.numero && item.numero.includes(this.search.poliza)
+            : item.numero != "")
+      );
 
-        return this.search.cliente_id == 0 &&
-          this.search.compania_id == 0 &&
-          this.search.patente == "" &&
-          this.search.poliza == "" &&
-          this.search.filtroEstado.length == 0 &&
-          this.search.filtroFormaPago.length == 0
-          ? []
-          : tempPolizas.filter(
-              item => item.tipo_riesgo_id === this.search.tipo_riesgo_id
-            );
-      },
-      set: function(id) {
-        this.UPDATE_STATUS(id);
-      }
+      return this.search.cliente_id == 0 &&
+        this.search.compania_id == 0 &&
+        this.search.patente == "" &&
+        this.search.poliza == "" &&
+        this.search.filtroEstado.length == 0 &&
+        this.search.filtroFormaPago.length == 0
+        ? []
+        : tempPolizas.filter(item =>
+            this.search.tipo_riesgo_id > 0
+              ? item.tipo_riesgo_id === this.search.tipo_riesgo_id
+              : item.tipo_riesgo_id >= 0
+          );
     },
     riesgos() {
-      var r = [...this.tipo_riesgos, { id: 0, nombre: "TODOS" }];
+      var r = [...this.tipo_riesgos, { id: 0, nombre: "Todos" }];
       return r;
     },
     headers() {

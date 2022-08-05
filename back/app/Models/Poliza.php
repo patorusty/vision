@@ -98,7 +98,7 @@ class Poliza extends Model
 
     public function otro_riesgo()
     {
-        return $this->hasMany(OtroRiesgo::class, 'poliza_id', 'id');
+        return $this->hasOne(OtroRiesgo::class, 'poliza_id', 'id');
     }
 
     public function endosos()

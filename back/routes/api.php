@@ -23,6 +23,7 @@ use App\Http\Controllers\NotaSiniestroAutController;
 use App\Http\Controllers\AutomotorVersionController;
 use App\Http\Controllers\SiniestroAutomotorController;
 use App\Http\Controllers\RiesgoAutomotorController;
+use App\Http\Controllers\OtrosRiesgosController;
 use App\Http\Controllers\ImagenRAController;
 use App\Http\Controllers\EstadoPolizaController;
 use App\Http\Controllers\TipoCarroceriaController;
@@ -101,6 +102,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('imagenes_r_a/{id}', [ImagenRAController::class, 'destroy']);
     Route::get('riesgo_automotores/{id}', [RiesgoAutomotorController::class, 'indexFiltrado']);
     Route::get('polizas/busquedaPolizaId/{id}', [RiesgoAutomotorController::class, 'searchPoliza']);
+
+    Route::apiResource('otro_riesgo', OtrosRiesgosController::class);
+
 
     Route::apiResource('endosos', EndosoController::class);
     Route::get('endosos/indexFiltrado/{poliza_id}', [EndosoController::class, 'indexFiltrado']);
