@@ -7,7 +7,7 @@
       Otro Riesgo
     </v-card-title>
     <v-card-text>
-      <v-row v-if="poliza.tipo_riesgo_id == 3 || poliza.tipo_riesgo_id == 4 || poliza.tipo_riesgo_id == 5 || poliza.tipo_riesgo_id == 10 || poliza.tipo_riesgo_id == 9 || poliza.tipo_riesgo_id == 6">
+      <v-row v-if="poliza.tipo_riesgo_id == 3 || poliza.tipo_riesgo_id == 4 || poliza.tipo_riesgo_id == 5 || poliza.tipo_riesgo_id == 10 || poliza.tipo_riesgo_id == 9 || poliza.tipo_riesgo_id == 6 || poliza.tipo_riesgo_id == 11">
         <v-col cols="4">
           <v-text-field
             label="Actividad"
