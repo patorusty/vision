@@ -51,6 +51,18 @@ class PolizaController extends Controller
         return Poliza::with(['codigo_productor', 'estado', 'cliente', 'compania', 'tipo_vigencias', 'riesgo_automotor', 'tipo_de_riesgo', 'otro_riesgo', 'riesgo_automotor.anio', "riesgo_automotor.marca", "riesgo_automotor.modelo", "riesgo_automotor.version"])->whereNull("numero")->whereNotNull("renueva_numero")->orderBy('vigencia_hasta', 'DESC')->get();
     }
 
+    public function polizasVigentes()
+    {
+        return Poliza::with(['compania:id,nombre', 'otro_riesgo:id,poliza_id', 'riesgo_automotor:id,poliza_id', 'tipo_de_riesgo:id,nombre'])->where('estado_poliza_id', 3)->orWhere('estado_poliza_id', 4)->orWhere('estado_poliza_id', 7)->get(
+            [
+                'tipo_riesgo_id',
+                'estado_poliza_id',
+                'compania_id',
+                'id'
+            ]
+        );
+    }
+
     /**
      * Store a newly created resource in storage.
      *

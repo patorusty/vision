@@ -7,8 +7,9 @@ use App\Models\Cobertura;
 use App\Models\CodigoOrganizador;
 use App\Models\Compania;
 use App\Models\Poliza;
+use App\Models\TipoRiesgo;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 
 class CompaniaController extends Controller
@@ -33,8 +34,66 @@ class CompaniaController extends Controller
 
     public function polizasVigentes()
     {
-        return  Compania::with('polizas_vigentes.riesgo_automotor')->orderBy('nombre')->get();
+        $companias =  Compania::orderBy('nombre')->get();
+        $companiasConRaCount = [];
+        for ($i = 0; $i < count($companias); $i++) {
+            $companiasConRaCount[$i] = [
+                'nombre' =>  $companias[$i]['nombre'],
+                'cantidad' => DB::select('select COUNT(ra.id) as raCount
+                                        from riesgo_automotors AS ra
+                                        WHERE ra.poliza_id in
+                                        (SELECT polizas.id
+                                        from polizas
+                                        WHERE (compania_id = ?)
+                                        AND (tipo_riesgo_id = 1)
+                                        AND (estado_poliza_id = 3
+                                        OR estado_poliza_id = 4 
+                                        OR estado_poliza_id = 7))', [$companias[$i]['id']])[0]->{'raCount'},
+                'color' => $companias[$i]['color']
+            ];
+        }
+        return $companiasConRaCount;
     }
+    // return  Compania::with('polizas_vigentes.riesgo_automotor')->orderBy('nombre')->get();
+
+    private function countPorRiesgoYCompania($tipo_id, $companias)
+    {
+        $count = [];
+        for ($i = 0; $i < count($companias); $i++) {
+            $cant = Poliza::where([['tipo_riesgo_id', $tipo_id], ['compania_id', $companias[$i]['id']]], function ($q) {
+                $q->Where('estado_poliza_id', 3)
+                    ->orWhere('estado_poliza_id', 4)
+                    ->orWhere('estado_poliza_id', 7);
+            })->count();
+            if ($cant > 0) {
+                $count[$i] = [
+                    'nombre' => $companias[$i]['nombre'],
+                    'cantidad' => $cant,
+                ];
+            }
+        }
+        return array_values($count);
+    }
+
+
+    public function polizasVigentesOR()
+    {
+        $tipos = TipoRiesgo::orderBy('nombre')->get();
+        $companias =  Compania::orderBy('nombre')->get();
+        $otros_riesgos = [];
+        for ($i = 1; $i < count($tipos); $i++) {
+            $companiaDelRiesgo = $this->countPorRiesgoYCompania($tipos[$i]['id'], $companias);
+            if (count($companiaDelRiesgo) > 0) {
+                $otros_riesgos[$i] = [
+                    'nombre' => $tipos[$i]['nombre'],
+                    'companias' => $companiaDelRiesgo,
+                    'tipo' => $tipos[$i]['id']
+                ];
+            }
+        }
+        return array_values($otros_riesgos);
+    }
+
 
     /**
      * Store a newly created resource in storage.

@@ -110,4 +110,9 @@ class Poliza extends Model
     {
         return $this->hasMany(SiniestroAutomotor::class, 'poliza_id', 'id');
     }
+
+    public function otros_riesgos_vigentes()
+    {
+        return $this->hasOne(OtroRiesgo::class, 'poliza_id', 'id');
+    }
 }

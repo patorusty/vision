@@ -94,6 +94,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('polizas/pendientes', [PolizaController::class, 'polizasPendientes']);
     Route::get('polizas/a_renovar', [PolizaController::class, 'polizasARenovar']);
     Route::get('polizas/vigentes', [CompaniaController::class, 'polizasVigentes']);
+    Route::get('polizas/vigentes_or', [CompaniaController::class, 'polizasVigentesOR']);
     Route::apiResource('polizas', PolizaController::class);
     Route::get('checkpolizas', [PolizaController::class, 'checkPolizas']);
 

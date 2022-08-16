@@ -10,7 +10,8 @@ const state = () => ({
     activo: true,
     cuitOriginal: ""
   },
-  loading: true
+  loading: true,
+  loadingHome: true
 });
 const mutations = {
   SET_COMPANIAS(state, companias) {
@@ -20,6 +21,10 @@ const mutations = {
   SET_COMPANIAS_ACTIVAS(state, companias) {
     state.companias_activas = companias;
     state.loading = false;
+  },
+  SET_COMPANIAS_ACTIVAS_OR(state, companias) {
+    state.companias_activas_or = companias;
+    state.loadingHome = false;
   },
   SET_COMPANIA(state, compania) {
     state.compania = compania;
@@ -177,6 +182,10 @@ const actions = {
   async getPolizasVigentes({ commit }) {
     const resp = await http.get("/polizas/vigentes");
     commit("SET_COMPANIAS_ACTIVAS", resp.data);
+  },
+  async getPolizasORVigentes({ commit }) {
+    const resp = await http.get("/polizas/vigentes_or");
+    commit("SET_COMPANIAS_ACTIVAS_OR", resp.data);
   }
 };
 export default {

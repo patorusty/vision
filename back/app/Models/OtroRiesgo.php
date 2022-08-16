@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\TipoRiesgo;
+use App\Models\Poliza;
 
 class OtroRiesgo extends Model
 {
