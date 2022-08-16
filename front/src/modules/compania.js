@@ -185,6 +185,7 @@ const actions = {
   },
   async getPolizasORVigentes({ commit }) {
     const resp = await http.get("/polizas/vigentes_or");
+    console.log(resp.data);
     commit("SET_COMPANIAS_ACTIVAS_OR", resp.data);
   }
 };
