@@ -129,7 +129,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("compania", ["getPolizasVigentes", "getPolizasORVigentes"]),
+    ...mapActions("compania", ["getPolizasVigentes"]),
     sumaTotal(companias) {
       var total = 0;
       companias.forEach(c => {
@@ -168,7 +168,6 @@ export default {
   },
   created() {
     this.getPolizasVigentes();
-    this.getPolizasORVigentes();
   }
 };
 </script>

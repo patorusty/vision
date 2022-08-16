@@ -180,13 +180,10 @@ const actions = {
     }
   },
   async getPolizasVigentes({ commit }) {
-    const resp = await http.get("/polizas/vigentes");
-    commit("SET_COMPANIAS_ACTIVAS", resp.data);
-  },
-  async getPolizasORVigentes({ commit }) {
-    const resp = await http.get("/polizas/vigentes_or");
-    console.log(resp.data);
-    commit("SET_COMPANIAS_ACTIVAS_OR", resp.data);
+    const respAut = await http.get("/polizas/vigentes");
+    const respOtros = await http.get("/polizas/vigentes_or");
+    commit("SET_COMPANIAS_ACTIVAS_OR", respOtros.data);
+    commit("SET_COMPANIAS_ACTIVAS", respAut.data);
   }
 };
 export default {
