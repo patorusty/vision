@@ -159,6 +159,8 @@ export default {
           return "#FFAE90";
         case 11:
           return "#EAE45F";
+        case 12:
+          return "#FF3747";
         default:
           break;
       }
