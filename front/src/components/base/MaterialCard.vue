@@ -22,7 +22,7 @@
         :color="color"
         :max-height="icon ? 90 : undefined"
         :width="inline || icon ? 'auto' : '100%'"
-        elevation="6"
+        elevation="0"
         class="text-start v-card--material__heading mb-n6"
         dark
       >
