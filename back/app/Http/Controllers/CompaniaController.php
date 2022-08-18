@@ -37,22 +37,31 @@ class CompaniaController extends Controller
         $companias =  Compania::orderBy('nombre')->get();
         $companiasConRaCount = [];
         for ($i = 0; $i < count($companias); $i++) {
-            $companiasConRaCount[$i] = [
-                'nombre' =>  $companias[$i]['nombre'],
-                'cantidad' => DB::select('select COUNT(ra.id) as raCount
-                                        from riesgo_automotors AS ra
-                                        WHERE ra.poliza_id in
-                                        (SELECT polizas.id
-                                        from polizas
-                                        WHERE (compania_id = ?)
-                                        AND (tipo_riesgo_id = 1)
-                                        AND (estado_poliza_id = 3
-                                        OR estado_poliza_id = 4 
-                                        OR estado_poliza_id = 7))', [$companias[$i]['id']])[0]->{'raCount'},
-                'color' => $companias[$i]['color']
-            ];
+            $polizasPorCompania = DB::select('select COUNT(ra.id) as raCount
+                                                FROM riesgo_automotors AS ra
+                                                WHERE ra.poliza_id in
+                                                (SELECT polizas.id
+                                                from polizas
+                                                WHERE (compania_id = ?)
+                                                AND (tipo_riesgo_id = 1)
+                                                AND (estado_poliza_id = 3
+                                                OR estado_poliza_id = 4 
+                                                OR estado_poliza_id = 7))', [$companias[$i]['id']]);
+            $polizasVigentesRenovar = DB::select('select COUNT(id) as renovarCount
+                                                FROM polizas
+                                                WHERE (compania_id = ?)
+                                                AND (tipo_riesgo_id = 1)
+                                                AND (estado_poliza_id = 4)', [$companias[$i]['id']]);
+            if ($polizasPorCompania[0]->{'raCount'} > 0) {
+                $companiasConRaCount[$i] = [
+                    'nombre' =>  $companias[$i]['nombre'],
+                    'cantidad' => $polizasPorCompania[0]->{'raCount'},
+                    'renovar' => $polizasVigentesRenovar[0]->{'renovarCount'},
+                    'color' => $companias[$i]['color']
+                ];
+            }
         }
-        return $companiasConRaCount;
+        return array_values($companiasConRaCount);
     }
     // return  Compania::with('polizas_vigentes.riesgo_automotor')->orderBy('nombre')->get();
 

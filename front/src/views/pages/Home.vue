@@ -14,42 +14,27 @@
           v-for="c in companias_activas"
           :key="c.id"
         >
-          <base-material-card
+          <base-material-stats-card-compania
             class="mx-3"
-            v-if="c.cantidad > 0"
-            width="190"
-            inline
+            :compania="capitalizeFirstLetter(c.nombre)"
+            :smallValue="c.cantidad"
+            title="Vigentes"
             :color="c.color"
-          >
-            <template v-slot:heading>
-              <div class="display-2 font-weight-light">
-                {{c.nombre}}
-              </div>
-            </template>
-            <v-card-text class="subtitle-1 font-weight-light"> Polizas Vigentes: {{c.cantidad}}</v-card-text>
-          </base-material-card>
+            :subText="'A renovar: ' + c.renovar"
+            :subIcon="c.renovar > 0 ? 'mdi-alert' : ''"
+            :subIconColor="c.renovar >0 ? 'red' :''"
+          ></base-material-stats-card-compania>
         </div>
-        <base-material-card
-          class="mx-3"
-          width="230"
-          inline
+        <base-material-stats-card-compania
+          compania="Total"
+          :smallValue="sumaTotal(companias_activas)"
+          title="Vigentes"
           color="primary"
-        >
-          <template v-slot:heading>
-            <div class="display-2 font-weight-light">
-              TOTAL
-            </div>
-          </template>
-          <v-card-text class="subtitle-1 font-weight-light"> Total Polizas Vigentes: {{totalPolizas}}</v-card-text>
-        </base-material-card>
+          :subText="'A renovar: ' + sumaTotalARenovar(companias_activas)"
+          :subIcon="sumaTotalARenovar(companias_activas) > 0 ? 'mdi-alert' : ''"
+          :subIconColor="sumaTotalARenovar(companias_activas) >0 ? 'red' :''"
+        ></base-material-stats-card-compania>
       </v-row>
-      <!-- </v-card>
-    <v-card
-      color="transparent"
-      elevation="0"
-      v-if="!loadingHome"
-      class="mt-0 mx-4 pa-3"
-    > -->
       <v-card-subtitle>
         Polizas Otros Riesgos
       </v-card-subtitle>
@@ -63,30 +48,8 @@
             width="190"
             inline
             :color="colors(r)"
+            :icon="cardIcon(r)"
           >
-            <template v-slot:heading>
-              <v-icon v-if="r.tipo == 2">mdi-home</v-icon>
-              <v-icon v-else-if="r.tipo == 3"> mdi-fire </v-icon>
-              <span v-else-if="r.tipo == 4">
-                <v-icon>mdi-alpha-r </v-icon>
-                <v-icon> mdi-alpha-c </v-icon>
-              </span>
-              <span v-else-if="r.tipo == 9">
-                <v-icon>mdi-alpha-s </v-icon>
-                <v-icon> mdi-alpha-t </v-icon>
-              </span>
-              <span v-else-if="r.tipo == 10">
-                <v-icon>mdi-alpha-c</v-icon>
-                <v-icon> mdi-alpha-a </v-icon>
-                <v-icon> mdi-alpha-u </v-icon>
-              </span>
-              <v-icon v-else-if="r.tipo == 5"> mdi-storefront </v-icon>
-              <v-icon v-else-if="r.tipo == 6"> mdi-medical-bag </v-icon>
-              <v-icon v-else-if="r.tipo == 11"> mdi-truck </v-icon>
-              <v-icon v-else-if="r.tipo == 12"> mdi-account-group </v-icon>
-              <v-icon v-else-if="r.tipo == 7">mdi-scooter</v-icon>
-              <v-icon v-else-if="r.tipo == 8"> mdi-sail-boat </v-icon>
-            </template>
             <p
               class="
                         text-sm
@@ -96,7 +59,8 @@
                       "
               v-for="c in r.companias"
               :key="c.nombre"
-            > {{c.nombre}}: {{c.cantidad}}</p>
+            > {{capitalizeFirstLetter(c.nombre)}}: {{c.cantidad}}</p>
+            <v-divider />
             <p class="
                         text-sm
                         mb-0
@@ -119,14 +83,14 @@ export default {
       "loading",
       "companias_activas_or",
       "loadingHome"
-    ]),
-    totalPolizas() {
-      var total = 0;
-      this.companias_activas.forEach(c => {
-        if (c.cantidad > 0) total = total + c.cantidad;
-      });
-      return total;
-    }
+    ])
+    // totalPolizas() {
+    //   var total = 0;
+    //   this.companias_activas.forEach(c => {
+    //     if (c.cantidad > 0) total = total + c.cantidad;
+    //   });
+    //   return total;
+    // }
   },
   methods: {
     ...mapActions("compania", ["getPolizasVigentes"]),
@@ -134,6 +98,13 @@ export default {
       var total = 0;
       companias.forEach(c => {
         if (c.cantidad > 0) total = total + c.cantidad;
+      });
+      return total;
+    },
+    sumaTotalARenovar(companias) {
+      var total = 0;
+      companias.forEach(c => {
+        if (c.renovar > 0) total = total + c.renovar;
       });
       return total;
     },
@@ -164,6 +135,42 @@ export default {
         default:
           break;
       }
+    },
+    cardIcon(item) {
+      switch (item.tipo) {
+        case 2:
+          return "mdi-home";
+        case 3:
+          return "mdi-fire";
+        case 4:
+          return "mdi-alpha-r";
+        case 9:
+          return "mdi-alpha-s";
+        case 10:
+          return "mdi-alpha-c";
+        case 5:
+          return " mdi-storefront";
+        case 6:
+          return " mdi-medical-bag";
+        case 11:
+          return " mdi-truck";
+        case 12:
+          return " mdi-account-group";
+        case 7:
+          return "mdi-scooter";
+        case 8:
+          return " mdi-sail-boat";
+      }
+    },
+    capitalizeFirstLetter(string) {
+      string = string.toLowerCase();
+
+      return string.replace(/(^\w{1})|(\s+\w{1})/g, letter =>
+        letter.toUpperCase()
+      );
+
+      // string = string.toLowerCase();
+      // return string[0].toUpperCase() + string.slice(1);
     }
   },
   created() {

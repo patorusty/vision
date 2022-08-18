@@ -1,7 +1,8 @@
-
 <template>
   <base-material-card
-    :icon="icon"
+    :color="color"
+    :inline="true"
+    :title="compania"
     class="v-card--material-stats"
     v-bind="$attrs"
     v-on="$listeners"
@@ -37,8 +38,7 @@
     <span
       :class="subTextColor"
       class="caption grey--text font-weight-light"
-      v-text="subText"
-    />
+    >{{subText}}</span>
   </base-material-card>
 </template>
 
@@ -46,13 +46,13 @@
 import Card from "./Card";
 
 export default {
-  name: "MaterialStatsCard",
+  name: "MaterialStatsCardCompania",
 
   inheritAttrs: false,
 
   props: {
     ...Card.props,
-    icon: {
+    compania: {
       type: String,
       required: true
     },
@@ -66,10 +66,9 @@ export default {
     },
     subTextColor: {
       type: String,
-      default: undefined
+      default: "red--text"
     },
     subText: {
-      type: String,
       default: undefined
     },
     title: {
@@ -81,6 +80,9 @@ export default {
       default: undefined
     },
     smallValue: {
+      default: undefined
+    },
+    color: {
       type: String,
       default: undefined
     }
