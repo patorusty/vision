@@ -78,6 +78,7 @@ class CompaniaController extends Controller
                 $count[$i] = [
                     'nombre' => $companias[$i]['nombre'],
                     'cantidad' => $cant,
+                    'renovar' => Poliza::where([['tipo_riesgo_id', $tipo_id], ['compania_id', $companias[$i]['id']], ['estado_poliza_id', 4]])->count()
                 ];
             }
         }

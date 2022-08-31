@@ -50,16 +50,27 @@
             :color="colors(r)"
             :icon="cardIcon(r)"
           >
-            <p
-              class="
+            <div
+              :key="c.nombre"
+              v-for="c in r.companias"
+            >
+              <span class="
                         text-sm
                         mb-0
                         text-capitalize text-body
                         font-weight-light
-                      "
-              v-for="c in r.companias"
-              :key="c.nombre"
-            > {{capitalizeFirstLetter(c.nombre)}}: {{c.cantidad}}</p>
+                      "> {{capitalizeFirstLetter(c.nombre)}}: {{c.cantidad}}
+              </span>
+              <span v-if="c.renovar > 0">
+                <v-icon
+                  class="mb-1"
+                  size="14"
+                  color="red"
+                >mdi-alert</v-icon><span class="caption grey--text font-weight-light"> A renovar: {{c.renovar}}</span>
+
+              </span>
+            </div>
+
             <v-divider />
             <p class="
                         text-sm
