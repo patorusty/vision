@@ -77,16 +77,16 @@
             >Atras</v-btn>
             <v-btn
               class="mb-2"
-              @click="update(riesgo)"
-              text
-              color="green"
-            >Guardar</v-btn>
-            <v-btn
-              class="mb-2"
               color="red"
               text
               @click="closeModal"
             >Cerrar</v-btn>
+            <v-btn
+              class="mb-2"
+              @click="update(riesgo)"
+              text
+              color="green"
+            >Guardar</v-btn>
           </v-card-actions>
         </v-tab-item>
       </v-tabs-items>
