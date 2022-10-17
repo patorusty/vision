@@ -4,13 +4,13 @@
       <step-uno />
     </v-stepper-content>
     <v-stepper-content step="2">
-      <step-dos v-if="poliza.riesgo_aotomotor" />
+      <step-dos v-if="poliza.riesgo_automotor" />
     </v-stepper-content>
   </v-stepper>
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import StepUno from "./StepsModalPendiente/StepUno.vue";
 import StepDos from "./StepsModalPendiente/StepDos.vue";
 import { helpers } from "../../../../../helpers";

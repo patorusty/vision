@@ -253,6 +253,7 @@ const actions = {
     const resp = await http.put(API_URL, poliza.id, poliza);
     if (resp.status === 200) {
       commit("UPDATE_POLIZA_PENDIENTE", resp.data);
+      commit("UPDATE_POLIZA", resp.data);
       commit(
         "snackbar/SHOW_SNACK",
         {
@@ -437,6 +438,7 @@ const actions = {
     const resp = await http.put(API_URL, poliza.id, poliza);
     if (resp.status === 200) {
       commit("UPDATE_POLIZA_RENOVADA", resp.data);
+      commit("UPDATE_POLIZA", resp.data);
       commit(
         "snackbar/SHOW_SNACK",
         {
