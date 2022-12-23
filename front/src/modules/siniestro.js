@@ -70,6 +70,10 @@ const mutations = {
     var item = state.siniestros.find(item => item.id === siniestro.id);
     Object.assign(item, siniestro);
   },
+  UPDATE_SINIESTRO_POLIZA(state, siniestro) {
+    var item = state.siniestros_poliza.find(item => item.id === siniestro.id);
+    Object.assign(item, siniestro);
+  },
   DELETE_SINIESTRO(state, id) {
     state.siniestros = state.siniestros.filter(c => c.id != id);
   }
@@ -128,6 +132,32 @@ const actions = {
     const resp = await http.put(API_URL, siniestro.id, siniestro);
     if (resp.status === 200) {
       commit("UPDATE_SINIESTRO", resp.data);
+      commit(
+        "snackbar/SHOW_SNACK",
+        {
+          snackbar: true,
+          color: "success",
+          snackText: "Siniestro editado con éxito!"
+        },
+        { root: true }
+      );
+      return true;
+    } else {
+      commit(
+        "snackbar/SHOW_SNACK",
+        {
+          snackbar: true,
+          color: "red",
+          snackText: "Algo salió mal, intente nuevamente..."
+        },
+        { root: true }
+      );
+    }
+  },
+  async updateSiniestroDePoliza({ commit }, siniestro) {
+    const resp = await http.put(API_URL, siniestro.id, siniestro);
+    if (resp.status === 200) {
+      commit("UPDATE_SINIESTRO_POLIZA", resp.data);
       commit(
         "snackbar/SHOW_SNACK",
         {

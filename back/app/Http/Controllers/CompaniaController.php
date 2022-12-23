@@ -10,6 +10,7 @@ use App\Models\Poliza;
 use App\Models\TipoRiesgo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
 
 
 class CompaniaController extends Controller
@@ -63,17 +64,12 @@ class CompaniaController extends Controller
         }
         return array_values($companiasConRaCount);
     }
-    // return  Compania::with('polizas_vigentes.riesgo_automotor')->orderBy('nombre')->get();
 
     private function countPorRiesgoYCompania($tipo_id, $companias)
     {
         $count = [];
         for ($i = 0; $i < count($companias); $i++) {
-            $cant = Poliza::where([['tipo_riesgo_id', $tipo_id], ['compania_id', $companias[$i]['id']]], function ($q) {
-                $q->Where('estado_poliza_id', 3)
-                    ->orWhere('estado_poliza_id', 4)
-                    ->orWhere('estado_poliza_id', 7);
-            })->count();
+            $cant = Poliza::where([['tipo_riesgo_id', $tipo_id], ['compania_id', $companias[$i]['id']]])->whereIn('estado_poliza_id', [3, 4, 7])->count();
             if ($cant > 0) {
                 $count[$i] = [
                     'nombre' => $companias[$i]['nombre'],

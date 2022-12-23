@@ -77,16 +77,16 @@
             >Atras</v-btn>
             <v-btn
               class="mb-2"
-              @click="update(riesgo)"
-              text
-              color="green"
-            >Guardar</v-btn>
-            <v-btn
-              class="mb-2"
               color="red"
               text
               @click="closeModal"
             >Cerrar</v-btn>
+            <v-btn
+              class="mb-2"
+              @click="update(riesgo)"
+              text
+              color="green"
+            >Guardar</v-btn>
           </v-card-actions>
         </v-tab-item>
       </v-tabs-items>
@@ -131,7 +131,6 @@ export default {
     async update(riesgo) {
       // if (this.$refs.form.validate()) {
       const updateResult = await this.updateRiesgoAutomotor(riesgo);
-      console.log(updateResult);
       // }
       if (updateResult) {
         this.closeModal();

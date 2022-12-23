@@ -241,7 +241,11 @@ export default {
     ...mapState("modal", ["modal", "modal3", "edicion3", "edicion"])
   },
   methods: {
-    ...mapActions("siniestro", ["createSiniestro", "updateSiniestro"]),
+    ...mapActions("siniestro", [
+      "createSiniestro",
+      "updateSiniestro",
+      "updateSiniestroDePoliza"
+    ]),
     ...mapMutations("siniestro", ["RESET_SINIESTRO"]),
     ...mapMutations("nota_siniestro", ["RESET_LISTA"]),
     ...mapMutations("modal", [
@@ -268,7 +272,12 @@ export default {
     },
     async update() {
       if (this.$refs.form.validate()) {
-        const updateResult = await this.updateSiniestro(this.siniestro);
+        var updateResult = false;
+        if (this.poliza.id != null) {
+          updateResult = await this.updateSiniestroDePoliza(this.siniestro);
+        } else {
+          updateResult = await this.updateSiniestro(this.siniestro);
+        }
         if (updateResult) {
           this.closeModal();
         }
