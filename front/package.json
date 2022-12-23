@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "vue-cli-service serve --open",
-    "serve": "vue-cli-service serve",
+    "serve": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
     "build": "vue-cli-service build --mode prod",
-    "lint": "eslint ./",
+    "lint": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service lint",
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'",
     "now-start": "vue-cli-service serve",
     "test:e2e": "vue-cli-service test:e2e",

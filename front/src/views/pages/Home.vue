@@ -10,6 +10,20 @@
         Polizas Automotor
       </v-card-subtitle>
       <v-row>
+        <v-data-table
+          class="mx-3 pa-2 elevation-1"
+          :headers="headers"
+          :items-per-page="10"
+          :items="polizas"
+          multi-sort
+          loading-text='Cargando...'
+        >
+          <template v-slot:[`item.compania`]="{ item }">
+            <div>{{ capitalizeFirstLetter(item.nombre) }}</div>
+          </template>
+        </v-data-table>
+      </v-row>
+      <!-- <v-row>
         <div
           v-for="c in companias_activas"
           :key="c.id"
@@ -34,10 +48,24 @@
           :subIcon="sumaTotalARenovar(companias_activas) > 0 ? 'mdi-alert' : ''"
           :subIconColor="sumaTotalARenovar(companias_activas) >0 ? 'red' :''"
         ></base-material-stats-card-compania>
-      </v-row>
+      </v-row> -->
       <v-card-subtitle>
         Polizas Otros Riesgos
       </v-card-subtitle>
+      <v-data-table
+        class="mx-3 pa-2 elevation-1"
+        :headers="headers"
+        :items-per-page="10"
+        :items="companias_activas_or"
+        multi-sort
+        loading-text='Cargando...'
+        group-by="nombre"
+        :groupable=false
+      >
+        <template v-slot:[`item.compania`]="{ item }">
+          <div>{{ capitalizeFirstLetter(item.nombre) }}</div>
+        </template>
+      </v-data-table>
       <v-row>
         <div
           v-for="r in companias_activas_or"
@@ -94,7 +122,36 @@ export default {
       "loading",
       "companias_activas_or",
       "loadingHome"
-    ])
+    ]),
+    polizas() {
+      var polizas = this.companias_activas;
+      var totalPolizas = this.sumaTotal(this.companias_activas);
+      var totalPolizasRonovar = this.sumaTotalARenovar(this.companias_activas);
+      return [
+        ...polizas,
+        {
+          nombre: "Total",
+          cantidad: totalPolizas,
+          renovar: totalPolizasRonovar
+        }
+      ];
+    },
+    headers() {
+      return [
+        {
+          text: "Compania",
+          value: "compania",
+          sortable: false,
+          align: "start"
+        },
+        {
+          text: "Vigentes",
+          value: "cantidad",
+          sortable: false
+        },
+        { text: "A renovar", value: "renovar", sortable: false }
+      ];
+    }
     // totalPolizas() {
     //   var total = 0;
     //   this.companias_activas.forEach(c => {

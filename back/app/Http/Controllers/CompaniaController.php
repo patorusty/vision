@@ -91,7 +91,7 @@ class CompaniaController extends Controller
         $tipos = TipoRiesgo::orderBy('nombre')->get();
         $companias =  Compania::orderBy('nombre')->get();
         $otros_riesgos = [];
-        for ($i = 2; $i < count($tipos); $i++) {
+        for ($i = 1; $i < count($tipos); $i++) {
             $companiaDelRiesgo = $this->countPorRiesgoYCompania($tipos[$i]['id'], $companias);
             if (count($companiaDelRiesgo) > 0) {
                 $otros_riesgos[$i] = [
