@@ -12,7 +12,7 @@ class Cobertura extends Model
         'nombre',
         'compania_id',
         'antiguedad',
-        'todo_riesgo',
+        'tipo_cobertura',
         'franquicia',
         'activo',
         'ajuste',

@@ -101,6 +101,17 @@
           </v-autocomplete>
         </v-col>
         <v-col>
+          <v-select
+            label="Tipo Cobertura"
+            :items="tipos_cobertura"
+            item-text="value"
+            item-id="value"
+            v-model="search.tipo_cobertura"
+            clearable
+          >
+          </v-select>
+        </v-col>
+        <v-col>
           <v-autocomplete
             no-data-text="Sin Datos"
             v-model="search.filtroFormaPago"
@@ -368,6 +379,7 @@ export default {
       "search"
     ]),
     ...mapState("compania", ["companias"]),
+    ...mapState("cobertura", ["tipos_cobertura"]),
     ...mapState("cliente", ["clientes"]),
     ...mapState("modal", ["modal"]),
     tableData() {
@@ -386,6 +398,16 @@ export default {
                   riesgo.patente.includes(this.search.patente)
                 )
             : item.otro_riesgo) &&
+          (item.tipo_riesgo_id == 1
+            ? this.search.tipo_cobertura == null && item.tipo_riesgo_id == 1
+              ? item.riesgo_automotor
+              : item.riesgo_automotor.find(
+                  riesgo =>
+                    riesgo.cobertura != null &&
+                    riesgo.cobertura.tipo_cobertura ==
+                      this.search.tipo_cobertura
+                )
+            : item.otro_riesgo) &&
           (this.search.filtroEstado.length > 0
             ? this.search.filtroEstado.includes(item.estado_poliza_id)
             : item.estado_poliza_id != 0) &&
@@ -402,7 +424,8 @@ export default {
         this.search.patente == "" &&
         this.search.poliza == "" &&
         this.search.filtroEstado.length == 0 &&
-        this.search.filtroFormaPago.length == 0
+        this.search.filtroFormaPago.length == 0 &&
+        this.search.tipo_cobertura == null
         ? []
         : tempPolizas.filter(item =>
             this.search.tipo_riesgo_id > 0

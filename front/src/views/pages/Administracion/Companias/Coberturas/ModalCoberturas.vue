@@ -21,10 +21,13 @@
           </v-row>
           <v-row>
             <v-col class="py-0">
-              <v-switch
-                v-model="cobertura.todo_riesgo"
-                label="Todo Riesgo"
-              ></v-switch>
+              <v-select
+                :items="tipos_cobertura"
+                item-text="value"
+                item-value="value"
+                v-model="cobertura.tipo_cobertura"
+                label="Tipo Cobertura"
+              ></v-select>
             </v-col>
             <v-col class="py-0">
               <v-text-field
@@ -115,7 +118,7 @@ export default {
   }),
   computed: {
     ...mapState("compania", ["compania"]),
-    ...mapState("cobertura", ["cobertura"]),
+    ...mapState("cobertura", ["cobertura", "tipos_cobertura"]),
     ...mapState("modal", ["modal3", "edicion3"])
   },
   methods: {

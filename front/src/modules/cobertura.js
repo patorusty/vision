@@ -8,6 +8,11 @@ const state = () => ({
     cobOriginal: "",
     activo: 1
   },
+  tipos_cobertura: [
+    { value: "Todo Riesgo" },
+    { value: "Robo" },
+    { value: "Resp. Civil" }
+  ],
   loading: false
 });
 const mutations = {

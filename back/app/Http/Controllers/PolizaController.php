@@ -18,7 +18,7 @@ class PolizaController extends Controller
     public function index()
     {
         $this->checkPolizas();
-        return Poliza::with(['codigo_productor:id,codigo_productor', 'estado:id,nombre', 'cliente:id,nombre,apellido,razon_social', 'compania:id,nombre', 'tipo_vigencias:id,vigencia', 'riesgo_automotor', 'otro_riesgo'])->orderBy('vigencia_hasta', 'DESC')->get(
+        return Poliza::with(['codigo_productor:id,codigo_productor', 'estado:id,nombre', 'cliente:id,nombre,apellido,razon_social', 'compania:id,nombre', 'tipo_vigencias:id,vigencia', 'riesgo_automotor', 'otro_riesgo', 'riesgo_automotor.cobertura:id,tipo_cobertura'])->orderBy('vigencia_hasta', 'DESC')->get(
             [
                 'numero',
                 'tipo_riesgo_id',

@@ -42,7 +42,8 @@ const state = () => ({
     anio: null,
     filtroEstado: [],
     filtroFormaPago: [],
-    estado: "Abierto"
+    estado: "Abierto",
+    tipo_cobertura: null
   }
 });
 const mutations = {
@@ -149,7 +150,8 @@ const mutations = {
         anio: null,
         filtroEstado: [],
         filtroFormaPago: [],
-        estado: "Abierto"
+        estado: "Abierto",
+        tipo_cobertura: null
       }
     );
   }
