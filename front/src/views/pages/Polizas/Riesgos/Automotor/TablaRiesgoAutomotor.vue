@@ -103,6 +103,7 @@ export default {
         // { text: "Tipo", value: "riesgo_automotor.tipo" },
         { text: "Marca", value: "marca.nombre" },
         { text: "Version", value: "version.nombre" },
+        { text: "Año", value: "anio.anio" },
         { text: "Patente", value: "patente" },
         {
           text: "Suma Asegurada",
