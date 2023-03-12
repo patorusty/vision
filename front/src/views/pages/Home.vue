@@ -34,7 +34,7 @@
                   {{ capitalizeFirstLetter(c.nombre) }}: {{ c.cantidad }}
                 </span>
                 <span v-if="c.renovar > 0">
-                  <v-icon class="mb-1" size="14" color="red">mdi-alert</v-icon><span
+                  <v-icon @clik="irArenovar(c.tipo, r.id)" class="mb-1" size="14" color="red">mdi-alert</v-icon><span
                     class="caption grey--text font-weight-light"> A renovar: {{ c.renovar }}</span>
                 </span>
               </div>
@@ -194,9 +194,9 @@ export default {
         letter.toUpperCase()
       );
     },
-    irARenovar(companiaId) {
+    irARenovar(companiaId, riesgoID = 1) {
       this.SET_SEARCH({
-        tipo_riesgo_id: 1,
+        tipo_riesgo_id: riesgoID,
         poliza: "",
         patente: "",
         compania_id: companiaId,
@@ -210,7 +210,7 @@ export default {
         tipo_cobertura: null
       })
       this.$router.push({ name: "Polizas" });
-    }
+    },
   },
   created() {
     this.getPolizasVigentes();
