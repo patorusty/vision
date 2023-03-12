@@ -13,9 +13,9 @@
                 <div>{{ capitalizeFirstLetter(item.nombre) }}</div>
               </template>
               <template v-slot:[`item.arenovar`]="{ item }">
-                <v-btn text class="pa-0" @click="irARenovar(item.id)" color="error" plain=false><span
-                    class="subtitle-2">{{
-                      item.renovar }}</span>
+                <v-btn v-if="item.renovar > 0" text class="pa-0" @click="irARenovar(item.id)" color="error"
+                  plain=false><span class="subtitle-2">{{
+                    item.renovar }}</span>
                 </v-btn>
               </template>
             </v-data-table>
