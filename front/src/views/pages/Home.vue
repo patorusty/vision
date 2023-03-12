@@ -1,29 +1,53 @@
 <template>
-  <div>
-    <v-card
-      color="transparent"
-      elevation="0"
-      class="mt-0 mx-4 pa-3"
-      v-if="!loading"
-    >
-      <v-card-subtitle>
-        Polizas Automotor
-      </v-card-subtitle>
-      <v-row>
-        <v-data-table
-          class="mx-3 pa-2 elevation-1"
-          :headers="headers"
-          :items-per-page="10"
-          :items="polizas"
-          multi-sort
-          loading-text='Cargando...'
-        >
-          <template v-slot:[`item.compania`]="{ item }">
-            <div>{{ capitalizeFirstLetter(item.nombre) }}</div>
-          </template>
-        </v-data-table>
-      </v-row>
-      <!-- <v-row>
+  <div class="mx-4  pa-3" v-if="!loading">
+    <v-row>
+      <v-col cols="4" class="py-0">
+        <v-card-subtitle class="mb-8">
+          Polizas Automotores
+        </v-card-subtitle>
+        <base-material-card color="success" class="mt-0" width="350" icon="mdi-car">
+          <v-row>
+            <v-data-table class="mx-3 pa-2 elevation-0" :headers="headers" :items-per-page="10" :items="polizas"
+              multi-sort loading-text='Cargando...' :hide-default-footer=true>
+              <template v-slot:[`item.compania`]="{ item }">
+                <div>{{ capitalizeFirstLetter(item.nombre) }}</div>
+              </template>
+              <template v-slot:[`item.arenovar`]="{ item }">
+                <v-btn text class="pa-0" @click="irARenovar(item.id)" color="error" plain=false><span
+                    class="subtitle-2">{{
+                      item.renovar }}</span>
+                </v-btn>
+              </template>
+            </v-data-table>
+          </v-row>
+        </base-material-card>
+      </v-col>
+      <v-col class="py-0">
+        <v-card-subtitle>
+          Polizas Otros Riesgos
+        </v-card-subtitle>
+        <v-row class="d-flex space-end">
+          <div v-for="r in companias_activas_or" :key="r.nombre">
+            <base-material-card class="mx-3" width="190" inline :color="colors(r)" :icon="cardIcon(r)">
+              <div :key="c.nombre" v-for="c in r.companias">
+                <span class=" text-sm mb-0 text-capitalize text-body font-weight-light ">
+                  {{ capitalizeFirstLetter(c.nombre) }}: {{ c.cantidad }}
+                </span>
+                <span v-if="c.renovar > 0">
+                  <v-icon class="mb-1" size="14" color="red">mdi-alert</v-icon><span
+                    class="caption grey--text font-weight-light"> A renovar: {{ c.renovar }}</span>
+                </span>
+              </div>
+              <v-divider />
+              <p class=" text-sm mb-0 text-capitalize text-body font-weight-regular "> Total: {{ sumaTotal(r.companias) }}
+              </p>
+            </base-material-card>
+          </div>
+        </v-row>
+      </v-col>
+    </v-row>
+
+    <!-- <v-row>
         <div
           v-for="c in companias_activas"
           :key="c.id"
@@ -49,72 +73,11 @@
           :subIconColor="sumaTotalARenovar(companias_activas) >0 ? 'red' :''"
         ></base-material-stats-card-compania>
       </v-row> -->
-      <v-card-subtitle>
-        Polizas Otros Riesgos
-      </v-card-subtitle>
-      <v-data-table
-        class="mx-3 pa-2 elevation-1"
-        :headers="headers"
-        :items-per-page="10"
-        :items="companias_activas_or"
-        multi-sort
-        loading-text='Cargando...'
-        group-by="nombre"
-        :groupable=false
-      >
-        <template v-slot:[`item.compania`]="{ item }">
-          <div>{{ capitalizeFirstLetter(item.nombre) }}</div>
-        </template>
-      </v-data-table>
-      <v-row>
-        <div
-          v-for="r in companias_activas_or"
-          :key="r.nombre"
-        >
-          <base-material-card
-            class="mx-3"
-            width="190"
-            inline
-            :color="colors(r)"
-            :icon="cardIcon(r)"
-          >
-            <div
-              :key="c.nombre"
-              v-for="c in r.companias"
-            >
-              <span class="
-                        text-sm
-                        mb-0
-                        text-capitalize text-body
-                        font-weight-light
-                      "> {{capitalizeFirstLetter(c.nombre)}}: {{c.cantidad}}
-              </span>
-              <span v-if="c.renovar > 0">
-                <v-icon
-                  class="mb-1"
-                  size="14"
-                  color="red"
-                >mdi-alert</v-icon><span class="caption grey--text font-weight-light"> A renovar: {{c.renovar}}</span>
-
-              </span>
-            </div>
-
-            <v-divider />
-            <p class="
-                        text-sm
-                        mb-0
-                        text-capitalize text-body
-                        font-weight-regular
-                      "> Total: {{sumaTotal(r.companias)}}</p>
-          </base-material-card>
-        </div>
-      </v-row>
-    </v-card>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 export default {
   computed: {
     ...mapState("compania", [
@@ -132,7 +95,8 @@ export default {
         {
           nombre: "Total",
           cantidad: totalPolizas,
-          renovar: totalPolizasRonovar
+          renovar: totalPolizasRonovar,
+          id: 0
         }
       ];
     },
@@ -149,19 +113,13 @@ export default {
           value: "cantidad",
           sortable: false
         },
-        { text: "A renovar", value: "renovar", sortable: false }
+        { text: "A renovar", value: "arenovar", sortable: false, align: 'center' }
       ];
     }
-    // totalPolizas() {
-    //   var total = 0;
-    //   this.companias_activas.forEach(c => {
-    //     if (c.cantidad > 0) total = total + c.cantidad;
-    //   });
-    //   return total;
-    // }
   },
   methods: {
     ...mapActions("compania", ["getPolizasVigentes"]),
+    ...mapMutations('poliza', ["SET_SEARCH"]),
     sumaTotal(companias) {
       var total = 0;
       companias.forEach(c => {
@@ -232,13 +190,26 @@ export default {
     },
     capitalizeFirstLetter(string) {
       string = string.toLowerCase();
-
       return string.replace(/(^\w{1})|(\s+\w{1})/g, letter =>
         letter.toUpperCase()
       );
-
-      // string = string.toLowerCase();
-      // return string[0].toUpperCase() + string.slice(1);
+    },
+    irARenovar(companiaId) {
+      this.SET_SEARCH({
+        tipo_riesgo_id: 1,
+        poliza: "",
+        patente: "",
+        compania_id: companiaId,
+        cliente: "",
+        cliente_id: 0,
+        siniestro: "",
+        anio: null,
+        filtroEstado: [4],
+        filtroFormaPago: [],
+        estado: "Abierto",
+        tipo_cobertura: null
+      })
+      this.$router.push({ name: "Polizas" });
     }
   },
   created() {
@@ -247,5 +218,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

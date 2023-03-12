@@ -1,21 +1,9 @@
 <template>
-  <v-navigation-drawer
-    id="core-navigation-drawer"
-    v-model="drawer"
-    :dark="barColor !== 'rgba(228, 226, 226, 1), rgba(255, 255, 255, 0.7)'"
-    :expand-on-hover="expandOnHover"
-    :right="$vuetify.rtl"
-    mobile-breakpoint="960"
-    app
-    mini-variant-width="80"
-    width="260"
-    v-bind="$attrs"
-  >
+  <v-navigation-drawer id="core-navigation-drawer" v-model="drawer"
+    :dark="barColor !== 'rgba(228, 226, 226, 1), rgba(255, 255, 255, 0.7)'" :expand-on-hover="expandOnHover"
+    :right="$vuetify.rtl" mobile-breakpoint="960" app mini-variant-width="80" width="260" v-bind="$attrs">
     <template v-slot:img="props">
-      <v-img
-        :gradient="`to bottom, ${barColor}`"
-        v-bind="props"
-      />
+      <v-img :gradient="`to bottom, ${barColor}`" v-bind="props" />
     </template>
 
     <v-list-item two-line>
@@ -38,29 +26,17 @@
 
     <v-divider class="mb-2" /> -->
 
-    <v-list
-      expand
-      nav
-    >
+    <v-list expand nav>
       <!-- Style cascading bug  -->
       <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
       <div />
 
       <template v-for="(item, i) in computedItems">
         <!-- <router-link :key="`group-${i}`" :to='item.to'> -->
-        <base-item-group
-          v-if="item.children"
-          :key="`group-${i}`"
-          :item="item"
-        >
+        <base-item-group v-if="item.children" :key="`group-${i}`" :item="item">
           <!--  -->
         </base-item-group>
-        <base-item
-          v-else
-          :key="`item-${i}`"
-          :item="item"
-          @click="i"
-        />
+        <base-item v-else :key="`item-${i}`" :item="item" @click="i" />
         <!-- </router-link> -->
       </template>
 
@@ -92,7 +68,7 @@ export default {
         icon: "mdi-view-dashboard",
         title: "Home",
         to: "/home",
-        event: () => {}
+        event: () => bus.$emit("cleanSearch", true)
       },
       {
         icon: "mdi-car",
@@ -104,7 +80,7 @@ export default {
         icon: "mdi-clipboard-clock",
         title: "Pendientes",
         to: "/pendientes",
-        event: () => {}
+        event: () => { }
       },
       {
         icon: "mdi-alert",
@@ -121,7 +97,7 @@ export default {
         icon: "mdi-account",
         title: "Clientes",
         to: "/clientes",
-        event: () => {}
+        event: () => { }
       },
       {
         group: "/administracion",
@@ -131,22 +107,22 @@ export default {
           {
             title: "Compañias",
             to: "companias",
-            event: () => {}
+            event: () => { }
           },
           {
             title: "Organizadores",
             to: "organizadores",
-            event: () => {}
+            event: () => { }
           },
           {
             title: "Productores",
             to: "productores",
-            event: () => {}
+            event: () => { }
           },
           {
             title: "Marca / Modelo / Version",
             to: "mmv",
-            event: () => {}
+            event: () => { }
           }
           // {
           //   title: "Estadisticas",
@@ -163,7 +139,7 @@ export default {
           {
             title: "Usuarios",
             to: "usuarios",
-            event: () => {}
+            event: () => { }
           }
         ]
       }

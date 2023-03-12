@@ -55,6 +55,7 @@ class CompaniaController extends Controller
                                                 AND (estado_poliza_id = 4)', [$companias[$i]['id']]);
             if ($polizasPorCompania[0]->{'raCount'} > 0) {
                 $companiasConRaCount[$i] = [
+                    'id' =>  $companias[$i]['id'],
                     'nombre' =>  $companias[$i]['nombre'],
                     'cantidad' => $polizasPorCompania[0]->{'raCount'},
                     'renovar' => $polizasVigentesRenovar[0]->{'renovarCount'},
@@ -87,7 +88,7 @@ class CompaniaController extends Controller
         $tipos = TipoRiesgo::orderBy('nombre')->get();
         $companias =  Compania::orderBy('nombre')->get();
         $otros_riesgos = [];
-        for ($i = 1; $i < count($tipos); $i++) {
+        for ($i = 2; $i < count($tipos); $i++) {
             $companiaDelRiesgo = $this->countPorRiesgoYCompania($tipos[$i]['id'], $companias);
             if (count($companiaDelRiesgo) > 0) {
                 $otros_riesgos[$i] = [
