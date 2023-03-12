@@ -514,50 +514,50 @@ const actions = {
       const resp = await http.get("estado_polizas");
       commit("SET_ESTADOS", resp.data);
     }
-  },
-  async getPolizasvigentes({ commit }) {
-    const resp = await http.get("polizas/vigentes");
-    console.log(resp.data);
-    // const sortedByRiesgo = resp.data.reduce(function(r, a) {
-    //   r[a.tipo_de_riesgo.nombre] = r[a.tipo_de_riesgo.nombre] || [];
-    //   r[a.tipo_de_riesgo.nombre].push(a);
-    //   return r;
-    // }, Object.create(null));
-    // console.log(sortedByRiesgo);
-    // const polizasAutoPorcompania = sortedByRiesgo.Automotor.reduce(function(
-    //   r,
-    //   a
-    // ) {
-    //   r[a.compania.nombre] = r[a.compania.nombre] || [];
-    //   r[a.compania.nombre].push(a);
-    //   return r;
-    // },
-    // Object.create(null));
-    // commit("SET_POLIZAS_RA_VIGENTES", polizasAutoPorcompania);
-    // console.log(polizasAutoPorcompania);
-  },
-
-  // async getPolizasOtrosRiesgosActivos({ commit }) {
-  //   const resp = await http.get("polizas/or_activos");
-  //   const sortedByRiesgo = resp.data.reduce(function(r, a) {
-  //     r[a.tipo_de_riesgo.nombre] = r[a.tipo_de_riesgo.nombre] || [];
-  //     r[a.tipo_de_riesgo.nombre].push(a);
-  //     // r.reduce(function(r2, a2) {
-  //     //   r2[a2.compania.nombre] = r2[a2.compania.nombre] || [];
-  //     //   r2[a2.compania.nombre].push(a2);
-  //     // });
-  //     return r;
-  //   });
-  // const sortedByCompania = sortedByRiesgo.reduce(function(r, a) {
-  //   r[a.compania.nombre] = r[a.compania.nombre] || [];
-  //   r[a.compania.nombre].push(a);
-  //   return r;
-  // }, Object.create(null));
-  // commit("SET_POLIZAS_OR_ACTIVAS", sortedByCompania);
-  // },
-  async checkPolizas() {
-    const resp = await http.get("checkpolizas");
   }
+  // async getPolizasvigentes({ commit }) {
+  //   const resp = await http.get("polizas/vigentes");
+  //   console.log(resp.data);
+  //   // const sortedByRiesgo = resp.data.reduce(function(r, a) {
+  //   //   r[a.tipo_de_riesgo.nombre] = r[a.tipo_de_riesgo.nombre] || [];
+  //   //   r[a.tipo_de_riesgo.nombre].push(a);
+  //   //   return r;
+  //   // }, Object.create(null));
+  //   // console.log(sortedByRiesgo);
+  //   // const polizasAutoPorcompania = sortedByRiesgo.Automotor.reduce(function(
+  //   //   r,
+  //   //   a
+  //   // ) {
+  //   //   r[a.compania.nombre] = r[a.compania.nombre] || [];
+  //   //   r[a.compania.nombre].push(a);
+  //   //   return r;
+  //   // },
+  //   // Object.create(null));
+  //   // commit("SET_POLIZAS_RA_VIGENTES", polizasAutoPorcompania);
+  //   // console.log(polizasAutoPorcompania);
+  // },
+
+  // // async getPolizasOtrosRiesgosActivos({ commit }) {
+  // //   const resp = await http.get("polizas/or_activos");
+  // //   const sortedByRiesgo = resp.data.reduce(function(r, a) {
+  // //     r[a.tipo_de_riesgo.nombre] = r[a.tipo_de_riesgo.nombre] || [];
+  // //     r[a.tipo_de_riesgo.nombre].push(a);
+  // //     // r.reduce(function(r2, a2) {
+  // //     //   r2[a2.compania.nombre] = r2[a2.compania.nombre] || [];
+  // //     //   r2[a2.compania.nombre].push(a2);
+  // //     // });
+  // //     return r;
+  // //   });
+  // // const sortedByCompania = sortedByRiesgo.reduce(function(r, a) {
+  // //   r[a.compania.nombre] = r[a.compania.nombre] || [];
+  // //   r[a.compania.nombre].push(a);
+  // //   return r;
+  // // }, Object.create(null));
+  // // commit("SET_POLIZAS_OR_ACTIVAS", sortedByCompania);
+  // // },
+  // async checkPolizas() {
+  //   const resp = await http.get("checkpolizas");
+  // }
 };
 export default {
   namespaced: true,

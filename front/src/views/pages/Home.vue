@@ -1,7 +1,7 @@
 <template>
   <div class="mx-4  pa-3" v-if="!loading">
     <v-row>
-      <v-col cols="4" class="py-0">
+      <v-col cols="4" class="py-0 pr-0">
         <v-card-subtitle class="mb-8">
           Polizas Automotores
         </v-card-subtitle>
@@ -22,20 +22,22 @@
           </v-row>
         </base-material-card>
       </v-col>
-      <v-col class="py-0">
+      <v-col class="pa-0">
         <v-card-subtitle>
           Polizas Otros Riesgos
         </v-card-subtitle>
         <v-row class="d-flex space-end">
           <div v-for="r in companias_activas_or" :key="r.nombre">
-            <base-material-card class="mx-3" width="190" inline :color="colors(r)" :icon="cardIcon(r)">
-              <div :key="c.nombre" v-for="c in r.companias">
-                <span class=" text-sm mb-0 text-capitalize text-body font-weight-light ">
+            <base-material-card class="mx-3" min-width="180" inline :color="colors(r)" :icon="cardIcon(r)">
+              <div class="line" :key="c.nombre" v-for="c in r.companias">
+                <span class="text-sm mb-0 text-capitalize text-body font-weight-light pa-0">
                   {{ capitalizeFirstLetter(c.nombre) }}: {{ c.cantidad }}
                 </span>
                 <span v-if="c.renovar > 0">
-                  <v-btn @clik="irArenovar(c.tipo, r.id)" icon color="red"><v-icon class="mb-1"
-                      size="14">mdi-alert</v-icon></v-btn><span class="caption grey--text font-weight-light"> A renovar:
+                  <v-btn @click="irARenovar(c.id, r.tipo)" icon color="red" class="ma-0 pa-0 pb-1 alert-button"><v-icon
+                      class="ma-0 pa-0" small>mdi-alert</v-icon></v-btn><span
+                    class="pb-0 text-body grey--text font-weight-light"> A
+                    renovar:
                     {{ c.renovar }}</span>
                 </span>
               </div>
@@ -196,6 +198,8 @@ export default {
       );
     },
     irARenovar(companiaId, riesgoID = 1) {
+      console.log(companiaId);
+      console.log(riesgoID);
       this.SET_SEARCH({
         tipo_riesgo_id: riesgoID,
         poliza: "",
@@ -219,4 +223,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.line {
+  max-height: 30px;
+}
+
+.alert-button {
+  max-width: 25px;
+}
+</style>
