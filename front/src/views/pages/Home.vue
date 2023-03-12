@@ -34,8 +34,9 @@
                   {{ capitalizeFirstLetter(c.nombre) }}: {{ c.cantidad }}
                 </span>
                 <span v-if="c.renovar > 0">
-                  <v-icon @clik="irArenovar(c.tipo, r.id)" class="mb-1" size="14" color="red">mdi-alert</v-icon><span
-                    class="caption grey--text font-weight-light"> A renovar: {{ c.renovar }}</span>
+                  <v-btn icon><v-icon @clik="irArenovar(c.tipo, r.id)" class="mb-1" size="14"
+                      color="red">mdi-alert</v-icon></v-btn><span class="caption grey--text font-weight-light"> A renovar:
+                    {{ c.renovar }}</span>
                 </span>
               </div>
               <v-divider />
