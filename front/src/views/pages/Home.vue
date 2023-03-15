@@ -111,12 +111,12 @@ export default {
           sortable: false,
           align: "start"
         },
+        { text: "A renovar", value: "arenovar", sortable: false, align: 'center' },
         {
           text: "Vigentes",
           value: "cantidad",
           sortable: false
         },
-        { text: "A renovar", value: "arenovar", sortable: false, align: 'center' }
       ];
     }
   },
