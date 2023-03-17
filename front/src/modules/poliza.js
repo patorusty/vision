@@ -312,7 +312,7 @@ const actions = {
       state.poliza.tipo_vigencia_id,
       "M"
     );
-    newPoliza.vigencia_hasta = vigencia_hasta;
+    newPoliza.vigencia_hasta = vigencia_hasta.add(1, "D");
     const respP = await http.post(API_URL, newPoliza);
     respStatus.push(respP.status);
     state.poliza.riesgo_automotor.forEach(async riesgo => {
