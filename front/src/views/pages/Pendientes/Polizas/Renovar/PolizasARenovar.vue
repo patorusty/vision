@@ -1,55 +1,48 @@
 <template>
-  <v-card
-    class="mt-0 mx-4 pa-3"
-    elevation="0"
-  >
+  <v-card class="mt-0 mx-4 pa-3" elevation="0">
     <v-card-title>
     </v-card-title>
-    <v-data-table
-      class="pa-2"
-      :headers="headers"
-      :items-per-page="10"
-      :items="polizas_a_renovar"
-      multi-sort
-      :loading="loading"
-    >
+    <v-data-table class="pa-2" :headers="headers" :items-per-page="10" :items="polizas_a_renovar" multi-sort
+      :loading="loading">
       <template v-slot:[`item.compania`]="{ item }">{{ item.compania.nombre }} <br />
         Cod.({{ item.codigo_productor.codigo_productor }})</template>
       <template v-slot:[`item.asegurado`]="{ item }">
-        <router-link
-          class="links"
-          :to=" {name: 'Editar Cliente', params: {id: item.cliente.id}}"
-          target="_blank"
-        >{{ nombreCompleto(item.cliente) }}
+        <router-link class="links" :to="{ name: 'Editar Cliente', params: { id: item.cliente.id } }" target="_blank">{{
+          nombreCompleto(item.cliente) }}
         </router-link>
       </template>
       <template v-slot:[`item.dominio`]="{ item }">
-        <span v-if="item.tipo_riesgo_id == 1">{{dominio(item)}}</span>
-        <v-icon v-else-if="item.tipo_riesgo_id == 2">mdi-account-group</v-icon>
+        <span v-if="item.tipo_riesgo_id == 1">{{ dominio(item) }}</span>
+        <v-icon v-else-if="item.tipo_riesgo_id == 2">mdi-home</v-icon>
         <v-icon v-else-if="item.tipo_riesgo_id == 3"> mdi-fire </v-icon>
         <span v-else-if="item.tipo_riesgo_id == 4">
           <v-icon>mdi-alpha-r </v-icon>
           <v-icon> mdi-alpha-c </v-icon>
         </span>
+        <span v-else-if="item.tipo_riesgo_id == 9">
+          <v-icon>mdi-alpha-s </v-icon>
+          <v-icon> mdi-alpha-t </v-icon>
+        </span>
+        <span v-else-if="item.tipo_riesgo_id == 10">
+          <v-icon>mdi-alpha-c </v-icon>
+          <v-icon> mdi-alpha-a </v-icon>
+          <v-icon> mdi-alpha-u </v-icon>
+        </span>
         <v-icon v-else-if="item.tipo_riesgo_id == 5"> mdi-storefront </v-icon>
-
         <v-icon v-else-if="item.tipo_riesgo_id == 6"> mdi-medical-bag </v-icon>
-
-        <v-icon v-else-if="item.tipo_riesgo_id == 7"> mdi-bicycle </v-icon>
-
+        <v-icon v-else-if="item.tipo_riesgo_id == 11"> mdi-truck </v-icon>
+        <v-icon v-else-if="item.tipo_riesgo_id == 12"> mdi-account-group </v-icon>
+        <span v-else-if="item.tipo_riesgo_id == 7">
+          <v-icon v-if="item.otro_riesgo.tipo == 'Monopatin Electrico'"> mdi-scooter </v-icon>
+          <v-icon v-else> mdi-bicycle </v-icon>
+        </span>
         <v-icon v-else-if="item.tipo_riesgo_id == 8"> mdi-sail-boat </v-icon>
-
       </template>
       <template v-slot:[`item.desde`]="{ item }">{{ dateToString(item.vigencia_desde) }} <br />
         {{ dateToString(item.vigencia_hasta) }}</template>
       <template v-slot:[`item.pago`]="{ item }">{{ formaDePago(item) }}</template>
       <template v-slot:[`item.actions`]="{ item }">
-        <v-icon
-          small
-          class="mr-2"
-          color="success"
-          v-on:click.stop="openModalPendiente(item)"
-        > mdi-pencil </v-icon>
+        <v-icon small class="mr-2" color="success" v-on:click.stop="openModalPendiente(item)"> mdi-pencil </v-icon>
         <!-- <v-icon
           class="ml-2"
           small
@@ -60,36 +53,18 @@
         </v-icon> -->
       </template>
     </v-data-table>
-    <v-dialog
-      :retain-focus="false"
-      @click:outside="closeModalPend"
-      @keydown.esc="closeModalPend"
-      :value="modal"
-      max-width="40%"
-    >
+    <v-dialog :retain-focus="false" @click:outside="closeModalPend" @keydown.esc="closeModalPend" :value="modal"
+      max-width="40%">
       <modal-polizas-a-renovar />
     </v-dialog>
-    <v-dialog
-      :retain-focus="false"
-      max-width="30%"
-      v-model="modalDelete"
-    >
+    <v-dialog :retain-focus="false" max-width="30%" v-model="modalDelete">
       <v-card class="pa-4">
         <v-card-text>
           <span>Esta seguro que desea eliminar esta Póliza?</span>
         </v-card-text>
         <v-card-actions class="py-0 pt-3 pr-6 d-flex justify-end">
-          <v-btn
-            dark
-            color="red"
-            @click="modalDelete = false"
-          >Cancelar</v-btn>
-          <v-btn
-            class="ml-4"
-            dark
-            color="success"
-            @click="deletePolicy"
-          >Confirmar</v-btn>
+          <v-btn dark color="red" @click="modalDelete = false">Cancelar</v-btn>
+          <v-btn class="ml-4" dark color="success" @click="deletePolicy">Confirmar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -207,6 +182,7 @@ export default {
 .links {
   text-decoration: none;
 }
+
 .titulo-polizas {
   display: flex;
   justify-content: space-evenly;
