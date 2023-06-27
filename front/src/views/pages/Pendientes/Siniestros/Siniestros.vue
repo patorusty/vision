@@ -1,29 +1,13 @@
 <template>
-  <v-card
-    class="mt-0 mx-4 pa-3"
-    elevation=0
-  >
+  <v-card class="mt-0 mx-4 pa-3" elevation=0>
     <v-card-title>
-      <v-dialog
-        :retain-focus="false"
-        @click:outside="HIDE_MODAL3(false)"
-        @keydown.esc="HIDE_MODAL3(false)"
-        :value="modal3"
-        :max-width='edicion3 ?"75%" :"45%"'
-      >
+      <v-dialog :retain-focus="false" @click:outside="HIDE_MODAL3(false)" @keydown.esc="HIDE_MODAL3(false)"
+        :value="modal3" :max-width='edicion3 ? "75%" : "45%"'>
         <modal-siniestros />
       </v-dialog>
     </v-card-title>
-    <v-data-table
-      class="pa-2"
-      :headers="headers"
-      :items-per-page="5"
-      :items="siniestros_activos"
-      :search="search"
-      multi-sort
-      :loading="loading"
-      :item-class="itemRowBackground"
-    >
+    <v-data-table class="pa-2" :headers="headers" :items-per-page="5" :items="siniestros_activos" :search="search"
+      multi-sort :loading="loading" :item-class="itemRowBackground">
       <template v-slot:[`item.tipo_reclamo`]="{ item }">
         {{ item.tipo_reclamo }}
       </template>
@@ -37,46 +21,26 @@
           dateToString(item.fecha_siniestro)
         }}
       </template>
+      <template v-slot:[`item.en_taller`]="{ item }">
+        <v-icon v-if="item.en_taller == 1">mdi-cog</v-icon>
+      </template>
       <template v-slot:[`item.actions`]="{ item }">
-        <v-icon
-          small
-          @click="editSiniestro(item.id)"
-          class="mr-2"
-          color="success"
-        >
+        <v-icon small @click="editSiniestro(item.id)" class="mr-2" color="success">
           mdi-pencil
         </v-icon>
-        <v-icon
-          class="ml-2"
-          small
-          @click="openDeleteModal(item.id)"
-          color="error"
-        >
+        <v-icon class="ml-2" small @click="openDeleteModal(item.id)" color="error">
           mdi-close
         </v-icon>
       </template>
     </v-data-table>
-    <v-dialog
-      :retain-focus="false"
-      max-width="30%"
-      v-model="modalDelete"
-    >
+    <v-dialog :retain-focus="false" max-width="30%" v-model="modalDelete">
       <v-card class="pa-4">
         <v-card-text>
           <span>Esta seguro que desea eliminar este Siniestro?</span>
         </v-card-text>
         <v-card-actions class="py-0 pt-3 pr-6 d-flex justify-end">
-          <v-btn
-            dark
-            color="red"
-            @click="modalDelete = false"
-          >Cancelar</v-btn>
-          <v-btn
-            class="ml-4"
-            dark
-            color="success"
-            @click="deleteSin"
-          >Confirmar</v-btn>
+          <v-btn dark color="red" @click="modalDelete = false">Cancelar</v-btn>
+          <v-btn class="ml-4" dark color="success" @click="deleteSin">Confirmar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -104,6 +68,7 @@ export default {
       { text: "Numero", value: "numero_siniestro" },
       { text: "Asegurado", value: "asegurado" },
       { text: "Tipo de Reclamo", value: "tipo_reclamo" },
+      { text: "En Taller", value: "en_taller", align: 'center' },
       { text: "Actions", value: "actions", sortable: false, align: "right" }
     ]
   }),
@@ -142,15 +107,19 @@ export default {
 .style-1 {
   background-color: rgb(253, 161, 40);
 }
+
 .style-2 {
   background-color: rgb(149, 57, 253);
 }
+
 .style-3 {
   background-color: rgb(134, 223, 107);
 }
+
 .style-4 {
   background-color: rgb(223, 215, 107);
 }
+
 .style-5 {
   background-color: rgb(255, 79, 79);
 }

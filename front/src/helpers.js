@@ -189,6 +189,8 @@ export const helpers = {
           return "yellow lighten-4";
         case "ROBO TOTAL":
           return "red lighten-4";
+        case "ACCIDENTE TOTAL":
+          return "red lighten-4";
         case "GRANIZO":
           return "indigo lighten-4";
       }

@@ -61,6 +61,9 @@
           dateToString(item.fecha_siniestro)
         }}
       </template>
+      <template v-slot:[`item.en_taller`]="{ item }">
+        <v-icon v-if="item.en_taller == 1">mdi-cog</v-icon>
+      </template>
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon small @click="editSiniestro(item.id)" class="mr-2" color="success">
           mdi-pencil
@@ -107,6 +110,7 @@ export default {
       { text: "Asegurado", value: "asegurado" },
       { text: "Tipo de Reclamo", value: "tipo_reclamo" },
       { text: "Estado", value: "estado_siniestro" },
+      { text: "En Taller", value: "en_taller", align: 'center' },
       { text: "Actions", value: "actions", sortable: false, align: "right" }
     ],
     estados: [{ value: "Abierto" }, { value: "Cerrado" }, { value: "Todos" }]

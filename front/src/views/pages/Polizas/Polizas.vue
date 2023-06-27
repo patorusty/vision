@@ -2,34 +2,15 @@
   <v-card class="mt-0 mx-4 pa-3">
     <v-card-title style="max-width: 1840px;">
       <v-row>
-        <v-col
-          cols="3"
-          class="pb-0"
-        >
-          <v-select
-            v-model="search.tipo_riesgo_id"
-            :items="riesgos"
-            item-value="id"
-            item-text="nombre"
-            label="Tipo Riesgo"
-            class="mr-5"
-          ></v-select>
+        <v-col cols="3" class="pb-0">
+          <v-select v-model="search.tipo_riesgo_id" :items="riesgos" item-value="id" item-text="nombre"
+            label="Tipo Riesgo" class="mr-5"></v-select>
         </v-col>
-        <v-col
-          cols="7"
-          class="pb-0"
-        >
+        <v-col cols="7" class="pb-0">
           <v-spacer></v-spacer>
         </v-col>
-        <v-col
-          cols="2"
-          class="pb-0 d-flex justify-end"
-        >
-          <v-btn
-            color="primary"
-            to="/polizas/automotor/create"
-            dark
-          >Crear</v-btn>
+        <v-col cols="2" class="pb-0 d-flex justify-end">
+          <v-btn color="primary" to="/polizas/automotor/create" dark>Crear</v-btn>
         </v-col>
       </v-row>
       <v-row>
@@ -42,87 +23,40 @@
             class="mr-3 ml-3"
             v-uppercase
           ></v-text-field> -->
-          <v-autocomplete
-            v-model="search.cliente_id"
-            :items="clientes"
-            item-value="id"
-            :item-text="nombreCompleto"
-            label="Cliente"
-            clearable
-            @click:clear="$nextTick(() => (search.cliente_id = 0))"
-          ></v-autocomplete>
+          <v-autocomplete v-model="search.cliente_id" :items="clientes" item-value="id" :item-text="nombreCompleto"
+            label="Cliente" clearable @click:clear="$nextTick(() => (search.cliente_id = 0))"></v-autocomplete>
         </v-col>
         <v-col>
-          <v-text-field
-            v-model="search.poliza"
-            label="Nro de Poliza"
-            single-line
-            hide-details
-            class="mr-3 ml-3"
-          ></v-text-field>
+          <v-text-field v-model="search.poliza" label="Nro de Poliza" single-line hide-details
+            class="mr-3 ml-3"></v-text-field>
         </v-col>
-        <v-col v-if="search.tipo_riesgo_id ==1">
-          <v-text-field
-            v-model="search.patente"
-            label="Patente"
-            single-line
-            hide-details
-            class="mr-3 ml-3"
-            v-uppercase
-          ></v-text-field>
+        <v-col v-if="search.tipo_riesgo_id == 1">
+          <v-text-field v-model="search.patente" label="Patente" single-line hide-details class="mr-3 ml-3"
+            v-uppercase></v-text-field>
         </v-col>
         <v-col>
-          <v-select
-            v-model="search.compania_id"
-            :items="companias"
-            item-value="id"
-            item-text="nombre"
-            label="Compania"
-            class="mr-5"
-            :clearable="search.compania_id != 0"
-            @click:clear="$nextTick(() => (search.compania_id = 0))"
-          ></v-select>
+          <v-select v-model="search.compania_id" :items="companias" item-value="id" item-text="nombre" label="Compania"
+            class="mr-5" :clearable="search.compania_id != 0"
+            @click:clear="$nextTick(() => (search.compania_id = 0))"></v-select>
         </v-col>
         <v-col>
-          <v-autocomplete
-            no-data-text="Sin Datos"
-            v-model="search.filtroEstado"
-            :items="estados"
-            multiple
-            item-text="nombre"
-            item-value="id"
-            label="Estado"
-            :clearable="search.filtroEstado != 0"
-            @click:clear="$nextTick(() => (search.filtroEstado = []))"
-          >
+          <v-autocomplete no-data-text="Sin Datos" v-model="search.filtroEstado" :items="estados" multiple
+            item-text="nombre" item-value="id" label="Estado" :clearable="search.filtroEstado != 0"
+            @click:clear="$nextTick(() => (search.filtroEstado = []))">
             <template v-slot:selection="{ item, index }">
               <span v-if="index === 0">{{ item.nombre }}</span>
             </template>
           </v-autocomplete>
         </v-col>
         <v-col>
-          <v-select
-            label="Tipo Cobertura"
-            :items="tipos_cobertura"
-            item-text="value"
-            item-id="value"
-            v-model="search.tipo_cobertura"
-            clearable
-          >
+          <v-select label="Tipo Cobertura" :items="tipos_cobertura" item-text="value" item-id="value"
+            v-model="search.tipo_cobertura" clearable>
           </v-select>
         </v-col>
         <v-col>
-          <v-autocomplete
-            no-data-text="Sin Datos"
-            v-model="search.filtroFormaPago"
-            :items="forma_pagos"
-            multiple
-            item-text="nombre"
-            item-value="id"
-            label="Forma de Pago"
-            :clearable="search.filtroFormaPago != 0"
-            @click:clear="$nextTick(() => (search.filtroFormaPago = []))"
-          >
+          <v-autocomplete no-data-text="Sin Datos" v-model="search.filtroFormaPago" :items="forma_pagos" multiple
+            item-text="nombre" item-value="id" label="Forma de Pago" :clearable="search.filtroFormaPago != 0"
+            @click:clear="$nextTick(() => (search.filtroFormaPago = []))">
             <template v-slot:selection="{ item, index }">
               <span v-if="index === 0">{{ item.nombre }}</span>
             </template>
@@ -130,36 +64,22 @@
         </v-col>
       </v-row>
     </v-card-title>
-    <v-data-table
-      class="pa-2"
-      :headers="headers"
-      :items-per-page="10"
-      :items="tableData"
-      multi-sort
-      :loading="loading"
+    <v-data-table class="pa-2" :headers="headers" :items-per-page="10" :items="tableData" multi-sort :loading="loading"
       :no-data-text='polizas.length === 0 ? "Polizas no cargadas" : "Aplique un filtro de busqueda"'
-      loading-text='Cargando...'
-      item-key="id"
-      :item-class="itemRowColor"
-    >
+      loading-text='Cargando...' item-key="id" :item-class="itemRowColor">
       <template v-slot:[`item.poliza`]="{ item }">
         <div v-if="item.numero">{{ item.numero }}</div>
       </template>
       <template v-slot:[`item.compania`]="{ item }">{{ item.compania.nombre }} <br />
         Cod.({{ item.codigo_productor.codigo_productor }})</template>
       <template v-slot:[`item.asegurado`]="{ item }">
-        <a
-          v-if="item.cliente"
-          class="links"
-          v-on:click.stop="editCliente(item.cliente.id)"
-          target="_blank"
-        >{{
+        <a v-if="item.cliente" class="links" v-on:click.stop="editCliente(item.cliente.id)" target="_blank">{{
           nombreCompleto(item.cliente)
         }}
         </a>
       </template>
       <template v-slot:[`item.dominio`]="{ item }">
-        <span v-if="item.tipo_riesgo_id == 1">{{dominio(item)}}</span>
+        <span v-if="item.tipo_riesgo_id == 1">{{ dominio(item) }}</span>
         <v-icon v-else-if="item.tipo_riesgo_id == 2">mdi-home</v-icon>
         <v-icon v-else-if="item.tipo_riesgo_id == 3"> mdi-fire </v-icon>
         <span v-else-if="item.tipo_riesgo_id == 4">
@@ -180,7 +100,7 @@
         <v-icon v-else-if="item.tipo_riesgo_id == 11"> mdi-truck </v-icon>
         <v-icon v-else-if="item.tipo_riesgo_id == 12"> mdi-account-group </v-icon>
         <span v-else-if="item.tipo_riesgo_id == 7">
-          <v-icon v-if="item.otro_riesgo.tipo == 'Monopatin Electrico'"> mdi-scooter </v-icon>
+          <v-icon v-if="item.otro_riesgo && item.otro_riesgo.tipo == 'Monopatin Electrico'"> mdi-scooter </v-icon>
           <v-icon v-else> mdi-bicycle </v-icon>
         </span>
         <v-icon v-else-if="item.tipo_riesgo_id == 8"> mdi-sail-boat </v-icon>
@@ -188,80 +108,56 @@
       <template v-slot:[`item.desde`]="{ item }">{{ dateToString(item.vigencia_desde) }} <br />
         {{ dateToString(item.vigencia_hasta) }}</template>
       <template v-slot:[`item.estado`]="{ item }">
-        <v-chip
-          dark
-          color="deep-orange lighten-1"
-          v-if="item.estado_poliza_id == 4"
-        >{{item.estado.nombre}}</v-chip>
-        <span v-else>{{item.estado.nombre}}</span>
+        <v-chip dark color="deep-orange lighten-1" v-if="item.estado_poliza_id == 4">{{ item.estado.nombre }}</v-chip>
+        <span v-else>{{ item.estado.nombre }}</span>
       </template>
       <template v-slot:[`item.envio`]="{ item }">
-        <div v-if="
-        item.fecha_recepcion !== null &&
-        item.fecha_entrega_original === null &&
-        item.fecha_entrega_email === null
-        ">
+        <div v-if="item.fecha_recepcion !== null &&
+          item.fecha_entrega_original === null &&
+          item.fecha_entrega_email === null
+          ">
           <v-tooltip top>
             <template v-slot:activator="{ on, attrs }">
-              <v-icon
-                color="blue"
-                v-bind="attrs"
-                v-on="on"
-              >mdi-file-check-outline</v-icon>
+              <v-icon color="blue" v-bind="attrs" v-on="on">mdi-file-check-outline</v-icon>
             </template>
             <span>Recibida</span>
           </v-tooltip>
         </div>
-        <div v-else-if="
-        item.fecha_recepcion !== null &&
-        item.fecha_entrega_original === null &&
-        item.fecha_entrega_email !== null
-      ">
+        <div v-else-if="item.fecha_recepcion !== null &&
+          item.fecha_entrega_original === null &&
+          item.fecha_entrega_email !== null
+          ">
           <v-tooltip top>
             <template v-slot:activator="{ on }">
-              <v-icon
-                color="success"
-                v-on="on"
-              >mdi-email-fast-outline</v-icon>
+              <v-icon color="success" v-on="on">mdi-email-fast-outline</v-icon>
             </template>
             <span>Email</span>
           </v-tooltip>
         </div>
-        <div v-else-if="
-        item.fecha_recepcion !== null &&
-        item.fecha_entrega_original !== null &&
-        item.fecha_entrega_email === null
-      ">
+        <div v-else-if="item.fecha_recepcion !== null &&
+          item.fecha_entrega_original !== null &&
+          item.fecha_entrega_email === null
+          ">
           <v-tooltip top>
             <template v-slot:activator="{ on }">
-              <v-icon
-                color="success"
-                v-on="on"
-              >mdi-hand-extended-outline</v-icon>
+              <v-icon color="success" v-on="on">mdi-hand-extended-outline</v-icon>
             </template>
             <span>Entregada</span>
           </v-tooltip>
         </div>
-        <div v-else-if="
-          item.fecha_recepcion !== null &&
+        <div v-else-if="item.fecha_recepcion !== null &&
           item.fecha_entrega_original !== null &&
           item.fecha_entrega_email !== null
           ">
           <v-tooltip top>
             <template v-slot:activator="{ on }">
-              <v-icon
-                color="success"
-                v-on="on"
-              >mdi-hand-extended-outline</v-icon>
+              <v-icon color="success" v-on="on">mdi-hand-extended-outline</v-icon>
             </template>
             <span>Entregada</span>
           </v-tooltip><span> / </span>
           <v-tooltip top>
             <template v-slot:activator="{ on }">
-              <v-icon
-                color="success"
-                v-on="on"
-              >mdi-email-fast-outline</v-icon>
+              <v-icon color="success" v-on="on">mdi-email-fast-outline</v-icon>
             </template>
             <span>Email</span>
           </v-tooltip>
@@ -269,10 +165,7 @@
         <div v-else>
           <v-tooltip top>
             <template v-slot:activator="{ on }">
-              <v-icon
-                color="red"
-                v-on="on"
-              >mdi-file-cancel-outline</v-icon>
+              <v-icon color="red" v-on="on">mdi-file-cancel-outline</v-icon>
             </template>
             <span>No Recibida</span>
           </v-tooltip>
@@ -280,75 +173,30 @@
       </template>
       <template v-slot:[`item.pago`]="{ item }">{{ formaDePago(item) }}</template>
       <template v-slot:[`item.actions`]="{ item }">
-        <router-link
-          class="links"
-          :to="{ name: 'Editar Poliza', params: { id: item.id } }"
-        >
-          <v-icon
-            small
-            :key="item.id"
-            class="mr-2"
-            color="success"
-          > mdi-pencil </v-icon>
+        <router-link class="links" :to="{ name: 'Editar Poliza', params: { id: item.id } }">
+          <v-icon small :key="item.id" class="mr-2" color="success"> mdi-pencil </v-icon>
         </router-link>
-        <v-icon
-          v-if="!item.isLoading"
-          small
-          v-on:click="openRenewModal(item)"
-          color="success"
-        >mdi-refresh
+        <v-icon v-if="!item.isLoading" small v-on:click="openRenewModal(item)" color="success">mdi-refresh
         </v-icon>
-        <v-icon
-          v-else
-          class="custom-loader"
-          small
-          dark
-          color="success"
-        >mdi-cached</v-icon>
+        <v-icon v-else class="custom-loader" small dark color="success">mdi-cached</v-icon>
 
-        <v-icon
-          class="ml-2"
-          small
-          v-on:click.stop="openDeleteModal(item.id)"
-          color="error"
-        >
+        <v-icon class="ml-2" small v-on:click.stop="openDeleteModal(item.id)" color="error">
           mdi-close
         </v-icon>
       </template>
     </v-data-table>
-    <v-dialog
-      fullscreen
-      hide-overlay
-      :retain-focus="false"
-      transition="dialog-bottom-transition"
-      @click:outside="HIDE_MODAL(false)"
-      @keydown.esc="HIDE_MODAL(false)"
-      :value="modal"
-      max-width="80%"
-    >
+    <v-dialog fullscreen hide-overlay :retain-focus="false" transition="dialog-bottom-transition"
+      @click:outside="HIDE_MODAL(false)" @keydown.esc="HIDE_MODAL(false)" :value="modal" max-width="80%">
       <modal-cliente />
     </v-dialog>
-    <v-dialog
-      :retain-focus="false"
-      max-width="30%"
-      v-model="modalDelete"
-    >
+    <v-dialog :retain-focus="false" max-width="30%" v-model="modalDelete">
       <v-card class="pa-4">
         <v-card-text>
           <span>Esta seguro que desea eliminar esta Póliza?</span>
         </v-card-text>
         <v-card-actions class="py-0 pt-3 pr-6 d-flex justify-end">
-          <v-btn
-            dark
-            color="red"
-            @click="modalDelete = false"
-          >Cancelar</v-btn>
-          <v-btn
-            class="ml-4"
-            dark
-            color="success"
-            @click="deletePolicy"
-          >Confirmar</v-btn>
+          <v-btn dark color="red" @click="modalDelete = false">Cancelar</v-btn>
+          <v-btn class="ml-4" dark color="success" @click="deletePolicy">Confirmar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -395,18 +243,18 @@ export default {
             ? this.search.patente == "" && item.tipo_riesgo_id == 1
               ? item.riesgo_automotor
               : item.riesgo_automotor.find(riesgo =>
-                  riesgo.patente.includes(this.search.patente)
-                )
+                riesgo.patente.includes(this.search.patente)
+              )
             : item.otro_riesgo) &&
           (item.tipo_riesgo_id == 1
             ? this.search.tipo_cobertura == null && item.tipo_riesgo_id == 1
               ? item.riesgo_automotor
               : item.riesgo_automotor.find(
-                  riesgo =>
-                    riesgo.cobertura != null &&
-                    riesgo.cobertura.tipo_cobertura ==
-                      this.search.tipo_cobertura
-                )
+                riesgo =>
+                  riesgo.cobertura != null &&
+                  riesgo.cobertura.tipo_cobertura ==
+                  this.search.tipo_cobertura
+              )
             : item.otro_riesgo) &&
           (this.search.filtroEstado.length > 0
             ? this.search.filtroEstado.includes(item.estado_poliza_id)
@@ -428,10 +276,10 @@ export default {
         this.search.tipo_cobertura == null
         ? []
         : tempPolizas.filter(item =>
-            this.search.tipo_riesgo_id > 0
-              ? item.tipo_riesgo_id === this.search.tipo_riesgo_id
-              : item.tipo_riesgo_id >= 0
-          );
+          this.search.tipo_riesgo_id > 0
+            ? item.tipo_riesgo_id === this.search.tipo_riesgo_id
+            : item.tipo_riesgo_id >= 0
+        );
     },
     riesgos() {
       var r = [...this.tipo_riesgos, { id: 0, nombre: "Todos" }];
@@ -574,41 +422,51 @@ export default {
 .links {
   text-decoration: none;
 }
+
 .titulo-polizas {
   display: flex;
   justify-content: space-evenly;
 }
+
 .custom-loader {
   animation: loader 1s infinite;
 }
+
 @-moz-keyframes loader {
   from {
     transform: rotate(0);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
+
 @-webkit-keyframes loader {
   from {
     transform: rotate(0);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
+
 @-o-keyframes loader {
   from {
     transform: rotate(0);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
+
 @keyframes loader {
   from {
     transform: rotate(0);
   }
+
   to {
     transform: rotate(360deg);
   }

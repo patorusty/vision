@@ -19,6 +19,7 @@ class SiniestroAutomotor extends Model
         "compania_tercero",
         "riesgo_id",
         "detalle",
+        'en_taller',
         "created_at",
         "updated_at",
     ];

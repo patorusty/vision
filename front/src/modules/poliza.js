@@ -20,9 +20,9 @@ const state = () => ({
   poliza: {
     estado_poliza_id: 100,
     tipo_riesgo_id: 1,
-    vigencia_desde: new Date(),
+    vigencia_desde: moment(),
     tipo_vigencia_id: 12,
-    fecha_solicitud: new Date(),
+    fecha_solicitud: moment(),
     endosos: []
   },
   loading: true,
@@ -65,6 +65,7 @@ const mutations = {
   },
   SET_POLIZA(state, poliza) {
     state.poliza = poliza;
+    state.poliza.vigencia_desde = moment(poliza.vigencia_desde);
     state.loading = false;
   },
   RESET_POLIZA(state) {
