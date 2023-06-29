@@ -21,6 +21,7 @@ const state = () => ({
     { value: "PARABRISAS" }, // Amarillo
     { value: "LUNETA" }, // Amarillo
     { value: "ROBO TOTAL" }, // Rojo
+    { value: "ACCIDENTE TOTAL" }, // Rojo
     { value: "ROBO PARCIAL" }, // Amarillo
     { value: "CHOQUE EN CADENA" }, // Naranja
     { value: "GRANIZO" }
