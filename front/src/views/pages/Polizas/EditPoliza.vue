@@ -45,23 +45,29 @@
                 <v-row>
                   <v-col>
                     <v-select v-model="poliza.tipo_vigencia_id" :items="tipo_vigencias" item-text="vigencia"
-                      item-value="id" label="Vigencia" @change="sumarMes"></v-select>
+                      item-value="id" label="Vigencia" @change="sumarMesEdit"></v-select>
+
                     <v-text-field label="Desde" v-mask="'##/##/####'" :value="dateToString(poliza.vigencia_desde)"
-                      clearable @click:clear="$nextTick(() => (poliza.vigencia_desde = null))" @change="updateVigencia" />
-                    <v-text-field label="Hasta" :value="dateToString(poliza.vigencia_hasta)" v-mask="'##/##/####'"
+                      clearable @click:clear="$nextTick(() => (poliza.vigencia_desde = null))" @blur="updateVigencia" />
+
+                    <v-text-field label="Hasta" v-mask="'##/##/####'" :value="dateToString(poliza.vigencia_hasta)"
                       clearable @click:clear="$nextTick(() => (poliza.vigencia_hasta = null))"
                       @change="poliza.vigencia_hasta = stringToDate($event)" />
+
                   </v-col>
                   <v-col>
                     <v-text-field label="Fecha Solicitud" :value="dateToString(poliza.fecha_solicitud)"
                       v-mask="'##/##/####'" @change="poliza.fecha_solicitud = stringToDate($event)"
                       @click:clear="$nextTick(() => (poliza.fecha_solicitud = null))" clearable />
+
                     <v-text-field label="Fecha Emision" :value="dateToString(poliza.fecha_emision)" v-mask="'##/##/####'"
                       @change="poliza.fecha_emision = stringToDate($event)"
                       @click:clear="$nextTick(() => (poliza.fecha_emision = null))" clearable />
+
                     <v-text-field label="Fecha Recepcion" :value="dateToString(poliza.fecha_recepcion)"
                       v-mask="'##/##/####'" @change="poliza.fecha_recepcion = stringToDate($event)"
                       @click:clear="$nextTick(() => (poliza.fecha_recepcion = null))" clearable />
+
                   </v-col>
                   <v-col>
                     <v-text-field label="Entrega Original" :value="dateToString(poliza.fecha_entrega_original)"
@@ -224,7 +230,6 @@ export default {
     await this.getTipoRiesgos();
     await this.getFormaPagos();
     await this.getTipoVigencias();
-    await this.sumarMes();
     await this.getCodigoProductores(this.poliza.compania_id);
   },
   beforeDestroy() {

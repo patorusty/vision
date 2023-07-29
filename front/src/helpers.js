@@ -78,6 +78,11 @@ export const helpers = {
         "M"
       );
     },
+    sumarMesEdit() {
+      this.poliza.vigencia_hasta = moment(this.poliza.vigencia_desde)
+        .add(this.poliza.tipo_vigencia_id, "M")
+        .add(1, "d");
+    },
     updateVigencia(value) {
       this.poliza.vigencia_desde = moment(value, "DD/MM/YYYY")
         .utc()

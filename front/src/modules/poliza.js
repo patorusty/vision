@@ -65,7 +65,7 @@ const mutations = {
   },
   SET_POLIZA(state, poliza) {
     state.poliza = poliza;
-    state.poliza.vigencia_desde = moment(poliza.vigencia_desde);
+    // state.poliza.vigencia_desde = moment(poliza.vigencia_desde);
     state.loading = false;
   },
   RESET_POLIZA(state) {
