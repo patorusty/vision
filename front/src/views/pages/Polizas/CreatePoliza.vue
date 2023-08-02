@@ -60,9 +60,11 @@
                     label="Vigencia" @change="sumarMes"></v-select>
                   <v-text-field label="Desde" v-mask="'##/##/####'" :value="dateToString(poliza.vigencia_desde)" clearable
                     @click:clear="$nextTick(() => (poliza.vigencia_desde = null))" @change="updateVigencia" />
+
                   <v-text-field label="Hasta" :value="dateToString(poliza.vigencia_hasta)" v-mask="'##/##/####'" clearable
                     @click:clear="$nextTick(() => (poliza.vigencia_hasta = null))"
                     @change="poliza.vigencia_hasta = stringToDate($event)" />
+
                 </v-col>
                 <v-col>
                   <v-text-field label="Fecha Solicitud" :value="dateToString(poliza.fecha_solicitud)"

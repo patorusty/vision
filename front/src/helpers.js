@@ -73,20 +73,15 @@ export const helpers = {
       }
     },
     sumarMes() {
+      console.log("entra");
       this.poliza.vigencia_hasta = moment(this.poliza.vigencia_desde).add(
         this.poliza.tipo_vigencia_id,
         "M"
       );
     },
-    sumarMesEdit() {
-      this.poliza.vigencia_hasta = moment(this.poliza.vigencia_desde)
-        .add(this.poliza.tipo_vigencia_id, "M")
-        .add(1, "d");
-    },
     updateVigencia(value) {
-      this.poliza.vigencia_desde = moment(value, "DD/MM/YYYY")
-        .utc()
-        .local();
+      console.log(value);
+      this.poliza.vigencia_desde = moment(value, "DD/MM/YYYY");
       this.sumarMes();
     },
     toUpper(nombre, e) {

@@ -45,10 +45,10 @@
                 <v-row>
                   <v-col>
                     <v-select v-model="poliza.tipo_vigencia_id" :items="tipo_vigencias" item-text="vigencia"
-                      item-value="id" label="Vigencia" @change="sumarMesEdit"></v-select>
+                      item-value="id" label="Vigencia" @change="sumarMes"></v-select>
 
                     <v-text-field label="Desde" v-mask="'##/##/####'" :value="dateToString(poliza.vigencia_desde)"
-                      clearable @click:clear="$nextTick(() => (poliza.vigencia_desde = null))" @blur="updateVigencia" />
+                      clearable @click:clear="$nextTick(() => (poliza.vigencia_desde = null))" @change="updateVigencia" />
 
                     <v-text-field label="Hasta" v-mask="'##/##/####'" :value="dateToString(poliza.vigencia_hasta)"
                       clearable @click:clear="$nextTick(() => (poliza.vigencia_hasta = null))"
