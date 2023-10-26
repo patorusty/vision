@@ -204,6 +204,7 @@ export default {
     ...mapMutations("endoso", ["RESET_ENDOSOS"]),
     ...mapMutations("siniestro", ["RESET_SINIESTROS"]),
     ...mapMutations("codigo_productor", ["RESET_CODIGO_PRODUCTORES"]),
+    ...mapMutations("riesgo", ["RESET_RIESGOS_AUTOMOTORES"]),
     ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL"]),
     volver() {
       this.$router.push({
@@ -236,6 +237,7 @@ export default {
     this.RESET_POLIZA();
     this.RESET_ENDOSOS();
     this.RESET_CODIGO_PRODUCTORES();
+    this.RESET_RIESGOS_AUTOMOTORES();
   }
 };
 </script>

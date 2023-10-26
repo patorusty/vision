@@ -435,6 +435,7 @@ const actions = {
     oldPoliza.renovada = 1;
     const res = await http.put(API_URL, oldPoliza.id, oldPoliza);
     commit("UPDATE_POLIZA", res.data);
+    commit("RESET_POLIZA");
   },
 
   async updatePolizaRenovada({ commit, dispatch }, poliza) {

@@ -193,6 +193,10 @@ export const helpers = {
           return "red lighten-4";
         case "GRANIZO":
           return "indigo lighten-4";
+        case "INUNDACION":
+          return "blue lighten-4";
+        case "OTROS":
+          return "grey lighten-4";
       }
     }
   },

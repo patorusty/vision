@@ -24,7 +24,9 @@ const state = () => ({
     { value: "ACCIDENTE TOTAL" }, // Rojo
     { value: "ROBO PARCIAL" }, // Amarillo
     { value: "CHOQUE EN CADENA" }, // Naranja
-    { value: "GRANIZO" }
+    { value: "GRANIZO" },
+    { value: "INUNDACION" },
+    { value: "OTROS" }
   ],
   estados: [
     { value: "Abierto" },
