@@ -22,6 +22,7 @@ class SiniestroAutomotor extends Model
         'en_taller',
         "created_at",
         "updated_at",
+        'inspeccion'
     ];
 
     public function poliza()

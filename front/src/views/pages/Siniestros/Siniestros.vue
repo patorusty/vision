@@ -61,6 +61,9 @@
           dateToString(item.fecha_siniestro)
         }}
       </template>
+      <template v-slot:[`item.inspeccion`]="{ item }">
+        <v-icon v-if="item.inspeccion == 1">mdi-file-check-outline</v-icon>
+      </template>
       <template v-slot:[`item.en_taller`]="{ item }">
         <v-icon v-if="item.en_taller == 1">mdi-cog</v-icon>
       </template>
@@ -110,6 +113,7 @@ export default {
       { text: "Asegurado", value: "asegurado" },
       { text: "Tipo de Reclamo", value: "tipo_reclamo" },
       { text: "Estado", value: "estado_siniestro" },
+      { text: "Inspección", value: "inspeccion", align: 'center' },
       { text: "En Taller", value: "en_taller", align: 'center' },
       { text: "Actions", value: "actions", sortable: false, align: "right" }
     ],

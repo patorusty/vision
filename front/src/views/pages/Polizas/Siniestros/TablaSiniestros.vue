@@ -1,33 +1,17 @@
 <template>
-  <v-card class="mt-0 ml-2 mr-4 pa-3">
+  <v-card class="mt-0 mr-2 ml-4 pa-3">
     <v-card-title>
       Siniestros
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
-      <v-btn
-        color="primary"
-        @click="SHOW_MODAL3(false)"
-        dark
-      >Crear</v-btn>
-      <v-dialog
-        @click:outside="HIDE_MODAL3(false)"
-        @keydown.esc="HIDE_MODAL3(false)"
-        :value="modal3"
-        :max-width='edicion3 ?"75%" :"45%"'
-        :retain-focus="false"
-      >
+      <v-btn color="primary" @click="SHOW_MODAL3(false)" dark>Crear</v-btn>
+      <v-dialog @click:outside="HIDE_MODAL3(false)" @keydown.esc="HIDE_MODAL3(false)" :value="modal3"
+        :max-width='edicion3 ? "75%" : "45%"' :retain-focus="false">
         <modal-siniestros />
       </v-dialog>
     </v-card-title>
-    <v-data-table
-      class="pa-2"
-      :headers="headers"
-      :items-per-page="5"
-      :items="siniestros_poliza"
-      :search="search"
-      multi-sort
-      :loading="loading"
-    >
+    <v-data-table class="pa-2" :headers="headers" :items-per-page="5" :items="siniestros_poliza" :search="search"
+      multi-sort :loading="loading">
       <template v-slot:[`item.fechaDenuncia`]="{ item }">
         {{
           dateToString(item.fecha_denuncia)
@@ -44,45 +28,22 @@
         }}
       </template>
       <template v-slot:[`item.actions`]="{ item }">
-        <v-icon
-          small
-          @click="editSiniestro(item.id)"
-          class="mr-2"
-          color="success"
-        >
+        <v-icon small @click="editSiniestro(item.id)" class="mr-2" color="success">
           mdi-pencil
         </v-icon>
-        <v-icon
-          class="ml-2"
-          small
-          @click="openDeleteModal(item.id)"
-          color="error"
-        >
+        <v-icon class="ml-2" small @click="openDeleteModal(item.id)" color="error">
           mdi-close
         </v-icon>
       </template>
     </v-data-table>
-    <v-dialog
-      :retain-focus="false"
-      max-width="30%"
-      v-model="modalDelete"
-    >
+    <v-dialog :retain-focus="false" max-width="30%" v-model="modalDelete">
       <v-card class="pa-4">
         <v-card-text>
           <span>Esta seguro que desea eliminar este Siniestro?</span>
         </v-card-text>
         <v-card-actions class="py-0 pt-3 pr-6 d-flex justify-end">
-          <v-btn
-            dark
-            color="red"
-            @click="modalDelete = false"
-          >Cancelar</v-btn>
-          <v-btn
-            class="ml-4"
-            dark
-            color="success"
-            @click="deleteSin"
-          >Confirmar</v-btn>
+          <v-btn dark color="red" @click="modalDelete = false">Cancelar</v-btn>
+          <v-btn class="ml-4" dark color="success" @click="deleteSin">Confirmar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -137,5 +98,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

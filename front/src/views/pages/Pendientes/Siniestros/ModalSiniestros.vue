@@ -67,6 +67,9 @@
                   </v-select>
                 </v-col>
                 <v-col class=" mt-0 py-0 d-flex justify-center">
+                  <v-checkbox v-model="siniestro.inspeccion" label="Inspección"></v-checkbox>
+                </v-col>
+                <v-col class=" mt-0 py-0 d-flex justify-center">
                   <v-checkbox v-model="siniestro.en_taller" label="En Taller"></v-checkbox>
                 </v-col>
               </v-row>
