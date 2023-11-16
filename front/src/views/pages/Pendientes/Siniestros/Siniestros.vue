@@ -25,7 +25,7 @@
         <v-icon v-if="item.inspeccion == 1">mdi-file-check-outline</v-icon>
       </template>
       <template v-slot:[`item.en_taller`]="{ item }">
-        <v-icon v-if="item.en_taller == 1">mdi-cog</v-icon>
+        <v-icon v-if="item.en_taller == 1">mdi-wrench</v-icon>
       </template>
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon small @click="editSiniestro(item.id)" class="mr-2" color="success">
