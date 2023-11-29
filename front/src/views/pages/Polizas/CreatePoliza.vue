@@ -105,7 +105,6 @@
 
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
-import moment from "moment";
 import ModalCliente from "../Clientes/ModalCliente.vue";
 import { helpers } from "../../../helpers";
 export default {

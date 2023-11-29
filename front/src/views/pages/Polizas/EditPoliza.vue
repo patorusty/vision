@@ -6,8 +6,23 @@
           <v-card-text>
             <v-row>
               <v-col :cols="3">
-                <v-select v-model="poliza.cliente_id" :items="clientes" item-value="id" :item-text="nombreCompleto"
-                  label="Asegurado" :rules="[rules.required]" :hint="dniOCuit" persistent-hint></v-select>
+                <v-autocomplete v-model="poliza.cliente_id" :items="clientes" item-value="id" :item-text="nombreCompleto"
+                  label="Asegurado" :rules="[rules.required]" :hint="dniOCuit" persistent-hint>
+                  <template v-slot:append-outer>
+                    <v-tooltip top>
+                      <template v-slot:activator="{ on }">
+                        <v-icon class="mr-1 icon-action" v-on="on"
+                          @click="verCliente">mdi-arrow-right-bold-circle-outline</v-icon>
+                        <v-dialog fullscreen hide-overlay transition="dialog-bottom-transition"
+                          @click:outside="HIDE_MODAL(false)" @keydown.esc="HIDE_MODAL(false)" :value="modal"
+                          max-width="80%" :retain-focus="false">
+                          <modal-cliente />
+                        </v-dialog>
+                      </template>
+                      <span>Ver Cliente</span>
+                    </v-tooltip>
+                  </template>
+                </v-autocomplete>
                 <v-select v-model="poliza.tipo_riesgo_id" disabled :items="tipo_riesgos" item-value="id"
                   item-text="nombre" label="Tipo Riesgo" :rules="[rules.required]"></v-select>
                 <v-select v-model="poliza.compania_id" @change="getCodigoProductores(poliza.compania_id)"
@@ -143,6 +158,8 @@ import TablaEndosos from "./Endosos/TablaEndosos";
 import TablaSiniestros from "./Siniestros/TablaSiniestros";
 import TablaRiesgoAutomotor from "./Riesgos/Automotor/TablaRiesgoAutomotor";
 import CardOtroRiesgo from "./Riesgos/Otros Riesgos/CardOtroRiesgo.vue";
+import ModalCliente from "../Clientes/ModalCliente.vue";
+
 
 export default {
   mixins: [helpers],
@@ -150,7 +167,8 @@ export default {
     TablaEndosos,
     TablaSiniestros,
     TablaRiesgoAutomotor,
-    CardOtroRiesgo
+    CardOtroRiesgo,
+    ModalCliente
   },
   data: () => ({
     plan_pagos: [
@@ -209,6 +227,7 @@ export default {
       "updatePoliza"
     ]),
     ...mapActions("compania", ["getCompanias"]),
+    ...mapActions("cliente", ["getCliente"]),
     ...mapActions("codigo_productor", ["getCodigoProductores"]),
     ...mapMutations("poliza", ["RESET_POLIZA"]),
     ...mapMutations("endoso", ["RESET_ENDOSOS"]),
@@ -232,7 +251,11 @@ export default {
           // this.RESET_POLIZA();
         }
       }
-    }
+    },
+    async verCliente() {
+      await this.getCliente(this.poliza.cliente_id);
+      this.SHOW_MODAL(true);
+    },
   },
   async created() {
     await this.getPoliza(this.$route.params.id);
