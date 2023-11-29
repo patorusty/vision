@@ -178,6 +178,7 @@ const actions = {
       commit("SET_POLIZA", resp.data);
     }
     commit("endoso/SET_ENDOSOS", state.poliza.endosos, { root: true });
+    commit("cliente/SET_CLIENTE", state.poliza.cliente, { root: true });
     commit("siniestro/SET_SINIESTROS_POLIZA", state.poliza.siniestros, {
       root: true
     });

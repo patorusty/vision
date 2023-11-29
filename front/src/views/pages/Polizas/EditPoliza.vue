@@ -7,7 +7,7 @@
             <v-row>
               <v-col :cols="3">
                 <v-select v-model="poliza.cliente_id" :items="clientes" item-value="id" :item-text="nombreCompleto"
-                  label="Asegurado" :rules="[rules.required]"></v-select>
+                  label="Asegurado" :rules="[rules.required]" :hint="dniOCuit" persistent-hint></v-select>
                 <v-select v-model="poliza.tipo_riesgo_id" disabled :items="tipo_riesgos" item-value="id"
                   item-text="nombre" label="Tipo Riesgo" :rules="[rules.required]"></v-select>
                 <v-select v-model="poliza.compania_id" @change="getCodigoProductores(poliza.compania_id)"
@@ -178,7 +178,7 @@ export default {
     }
   }),
   computed: {
-    ...mapState("cliente", ["clientes"]),
+    ...mapState("cliente", ["clientes", "cliente"]),
     ...mapState("compania", ["companias"]),
     ...mapState("codigo_productor", ["codigo_productores"]),
     ...mapState("poliza", [
@@ -187,7 +187,17 @@ export default {
       "forma_pagos",
       "tipo_vigencias"
     ]),
-    ...mapState("modal", ["modal", "modal_ra", "modal_or"])
+    ...mapState("modal", ["modal", "modal_ra", "modal_or"]),
+    dniOCuit() {
+      if (!this.poliza.cliente) return;
+      if (this.poliza.cliente.nro_dni) {
+        return `DNI: ${this.poliza.cliente.nro_dni}`;
+      } if (this.poliza.cliente.cuit) {
+        return `CUIT: ${this.poliza.cliente.cuit}`;
+      }
+
+
+    }
   },
   methods: {
     ...mapActions("cliente", ["getClientes"]),
@@ -204,7 +214,7 @@ export default {
     ...mapMutations("endoso", ["RESET_ENDOSOS"]),
     ...mapMutations("siniestro", ["RESET_SINIESTROS"]),
     ...mapMutations("codigo_productor", ["RESET_CODIGO_PRODUCTORES"]),
-    ...mapMutations("riesgo", ["RESET_RIESGOS_AUTOMOTORES"]),
+    ...mapMutations("riesgo", ["RESET_RIESGOS_AUTOMOTORES", "RESET_RIESGO_AUTOMOTOR"]),
     ...mapMutations("modal", ["SHOW_MODAL", "HIDE_MODAL"]),
     volver() {
       this.$router.push({
@@ -238,6 +248,7 @@ export default {
     this.RESET_ENDOSOS();
     this.RESET_CODIGO_PRODUCTORES();
     this.RESET_RIESGOS_AUTOMOTORES();
+    this.RESET_RIESGO_AUTOMOTOR();
   }
 };
 </script>
