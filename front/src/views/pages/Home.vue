@@ -189,6 +189,10 @@ export default {
           return "mdi-scooter";
         case 8:
           return " mdi-sail-boat";
+        case 13:
+          return " mdi-account-multiple-check";
+        case 14:
+          return " mdi-account-lock-outline";
       }
     },
     capitalizeFirstLetter(string) {

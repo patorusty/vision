@@ -124,7 +124,7 @@ export default new Router({
               name: "Usuarios",
               path: "usuarios",
               component: () =>
-                import("@/views/pages/Configuracion/Usuarios.vue"),
+                import("@/views/pages/configuracion/Usuarios.vue"),
               meta: { authOnly: true }
             }
           ]

@@ -184,6 +184,8 @@ export const helpers = {
           return "light-green lighten-4";
         case "CRISTALES LATERALES":
         case "PARABRISAS":
+        case "CERRADURAS":
+        case "TECHO PANORAMICO":
         case "LUNETA":
         case "ROBO PARCIAL":
           return "yellow lighten-4";

@@ -280,7 +280,6 @@ const actions = {
     const resp = await http.post(API_URL_OR, otro_riesgo);
     if (resp.status === 201) {
       commit("CREATE_OTRO_RIESGO", resp.data);
-      console.log(resp.data);
       const respUpdatedPoliza = await http.getOne(
         "/polizas",
         resp.data.poliza_id
@@ -311,7 +310,6 @@ const actions = {
     const resp = await http.put(API_URL_OR, otro_riesgo.id, otro_riesgo);
     if (resp.status === 200) {
       commit("UPDATE_OTRO_RIESGO", resp.data);
-      console.log(resp.data);
       commit(
         "snackbar/SHOW_SNACK",
         {

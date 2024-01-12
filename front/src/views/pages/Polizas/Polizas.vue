@@ -99,6 +99,8 @@
         <v-icon v-else-if="item.tipo_riesgo_id == 6"> mdi-medical-bag </v-icon>
         <v-icon v-else-if="item.tipo_riesgo_id == 11"> mdi-truck </v-icon>
         <v-icon v-else-if="item.tipo_riesgo_id == 12"> mdi-account-group </v-icon>
+        <v-icon v-else-if="item.tipo_riesgo_id == 13"> mdi-account-multiple-check </v-icon>
+        <v-icon v-else-if="item.tipo_riesgo_id == 14"> mdi-account-lock-outline </v-icon>
         <span v-else-if="item.tipo_riesgo_id == 7">
           <v-icon v-if="item.otro_riesgo && item.otro_riesgo.tipo == 'Monopatin Electrico'"> mdi-scooter </v-icon>
           <v-icon v-else> mdi-bicycle </v-icon>

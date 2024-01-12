@@ -19,6 +19,8 @@ const state = () => ({
     { value: "DAÑO A TERCERO (Sin Reclamo)" }, // Verde
     { value: "CRISTALES LATERALES" }, // Amarillo
     { value: "PARABRISAS" }, // Amarillo
+    { value: "CERRADURAS" }, // Amarillo
+    { value: "TECHO PANORAMICO" }, // Amarillo
     { value: "LUNETA" }, // Amarillo
     { value: "ROBO TOTAL" }, // Rojo
     { value: "ACCIDENTE TOTAL" }, // Rojo

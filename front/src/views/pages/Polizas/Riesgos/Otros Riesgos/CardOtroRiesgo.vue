@@ -13,7 +13,7 @@
     <v-card-text>
       <v-form :disabled="isFormDisabled">
         <v-row
-          v-if="poliza.tipo_riesgo_id == 3 || poliza.tipo_riesgo_id == 4 || poliza.tipo_riesgo_id == 5 || poliza.tipo_riesgo_id == 10 || poliza.tipo_riesgo_id == 9 || poliza.tipo_riesgo_id == 6 || poliza.tipo_riesgo_id == 11 || poliza.tipo_riesgo_id == 12">
+          v-if="poliza.tipo_riesgo_id == 3 || poliza.tipo_riesgo_id == 4 || poliza.tipo_riesgo_id == 5 || poliza.tipo_riesgo_id == 10 || poliza.tipo_riesgo_id == 9 || poliza.tipo_riesgo_id == 6 || poliza.tipo_riesgo_id == 11 || poliza.tipo_riesgo_id == 12 || poliza.tipo_riesgo_id == 13 || poliza.tipo_riesgo_id == 14">
           <v-col cols="4">
             <v-text-field label="Actividad" v-model="otro_riesgo.actividad" v-uppercase>
             </v-text-field>
